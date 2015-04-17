@@ -39,6 +39,10 @@
     // 初始化Navigation Bar右侧的完成按钮
     UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(clickedOnDoneButton)];
     self.navigationItem.rightBarButtonItem = button;
+    
+    // 注册键盘弹出响应的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 
 
 }
@@ -55,6 +59,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
+{
+    CGRect keyboardEndingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    CGRect keyboardEndingFrame = [self.view convertRect:keyboardEndingUncorrectedFrame fromView:nil];
+    return keyboardEndingFrame.size.height;
+}
+
+// 键盘出现后调整视图
+-(void)keyboardWillAppear:(NSNotification *)notification
+{
+    CGRect currentFrame = self.view.frame;
+    CGFloat change = [self keyboardEndingFrameHeight:[notification userInfo]];
+    currentFrame.size.height = currentFrame.size.height - change;
+    self.view.frame = currentFrame;
+}
+
+// 键盘消失后调整视图
+-(void)keyboardWillDisappear:(NSNotification *)notification
+{
+    CGRect currentFrame = self.view.frame;
+    CGFloat change = [self keyboardEndingFrameHeight:[notification userInfo]];
+    currentFrame.size.height = currentFrame.size.height + change;
+    self.view.frame = currentFrame;
+}
+
+
 // 读取存储在UserDefault中的用户的基本信息
 - (void)loadUserInfo {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -62,7 +92,7 @@
     NSData *udObject = [ud objectForKey:@"userInfo"];
     self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
     NSMutableArray *section1 = [[NSMutableArray alloc] initWithObjects:self.userInfo.name, nil];
-    NSMutableArray *section2 = [[NSMutableArray alloc] initWithObjects:self.userInfo.name, self.userInfo.sex, self.userInfo.studentNo, self.userInfo.email, nil];
+    NSMutableArray *section2 = [[NSMutableArray alloc] initWithObjects:self.userInfo.name, self.userInfo.sex, self.userInfo.userNo, self.userInfo.email, nil];
     NSMutableArray *section3 = [[NSMutableArray alloc] initWithObjects:self.userInfo.school, self.userInfo.major, nil];
     self.userInfoArray = [[NSMutableArray alloc] initWithObjects: section1, section2, section3, nil];
 }
@@ -77,7 +107,7 @@
     }
     self.userInfo.name = arr[1];
     self.userInfo.sex = arr[2];
-    self.userInfo.studentNo = arr[3];
+    self.userInfo.userNo = arr[3];
     self.userInfo.email = arr[4];
     self.userInfo.school = arr[5];
     self.userInfo.major = arr[6];

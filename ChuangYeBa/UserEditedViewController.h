@@ -12,7 +12,7 @@
 #import "EditedInfoCell.h"
 #import "EditedPhotoCell.h"
 #import "UserInfo.h"
-#import "NetworkUtils.h"
+#import "LoginNetworkUtils.h"
 
 @interface UserEditedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 

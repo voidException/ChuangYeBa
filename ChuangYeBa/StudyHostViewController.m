@@ -34,7 +34,7 @@
 }
 
 - (void)setNavigationBarAttributes {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:46.0/255 green:149.0/255 blue:251.0/255 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
@@ -69,7 +69,6 @@
 #pragma mark - 处理通知
 - (void)showStudyDetail:(NSNotification *)notification {
     // 接受通知
-    NSLog(@"recieve notif");
     self.hidesBottomBarWhenPushed = YES;
     [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
     self.hidesBottomBarWhenPushed = NO;
@@ -89,13 +88,13 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
     [label sizeToFit];
-    NSLog(@"??????");
     return label;
 }
 
 - (UIViewController *)viewPager:(ViewPagerController *)viewPager contentViewControllerForTabAtIndex:(NSUInteger)index {
     
     StudyContentViewController *studyContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudyContentViewController"];
+    studyContentViewController.tag = (NSInteger)index;
     return studyContentViewController;
 }
 
@@ -105,7 +104,7 @@
     
     switch (option) {
         case ViewPagerOptionStartFromSecondTab:
-            return 1.0;
+            return 0.0;
             break;
         case ViewPagerOptionCenterCurrentTab:
             return 0.0;
@@ -131,7 +130,7 @@
     
     switch (component) {
         case ViewPagerIndicator:
-            return [UIColor colorWithRed:46.0/255 green:149.0/255 blue:251.0/255 alpha:1];
+            return [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
             break;
         case ViewPagerTabsView:
             return [UIColor colorWithRed:243.0/255 green:244.0/255 blue:244.0/255 alpha:0.75];

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="CountingCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="commentCounting" translatesAutoresizingMaskIntoConstraints="NO" id="vjQ-io-GD0">
+                        <rect key="frame" x="175" y="8" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="VF6-lX-Qof"/>
+                            <constraint firstAttribute="height" constant="24" id="XUx-Xl-bAi"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="likeCounting" translatesAutoresizingMaskIntoConstraints="NO" id="YYS-Oy-XWH">
+                        <rect key="frame" x="241" y="8" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="FfF-6L-luf"/>
+                            <constraint firstAttribute="width" constant="24" id="SBe-OG-CLl"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="68" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCf-M9-dXw">
+                        <rect key="frame" x="273" y="8" width="32" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="cer-MO-1rF"/>
+                            <constraint firstAttribute="height" constant="24" id="z6t-En-aby"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-Nw-RHk">
+                        <rect key="frame" x="207" y="8" width="32" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="TpO-87-ax3"/>
+                            <constraint firstAttribute="width" constant="32" id="vYz-lF-aUx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="qCf-M9-dXw" firstAttribute="leading" secondItem="YYS-Oy-XWH" secondAttribute="trailing" constant="8" id="6ps-Ma-XYY"/>
+                    <constraint firstItem="hXT-Nw-RHk" firstAttribute="leading" secondItem="vjQ-io-GD0" secondAttribute="trailing" constant="8" id="FXG-kf-2Ll"/>
+                    <constraint firstItem="YYS-Oy-XWH" firstAttribute="leading" secondItem="hXT-Nw-RHk" secondAttribute="trailing" constant="2" id="OCH-SK-uee"/>
+                    <constraint firstItem="qCf-M9-dXw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OFt-3E-nU2"/>
+                    <constraint firstItem="hXT-Nw-RHk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="THy-FN-WfE"/>
+                    <constraint firstItem="vjQ-io-GD0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Tsx-eY-6js"/>
+                    <constraint firstAttribute="trailing" secondItem="qCf-M9-dXw" secondAttribute="trailing" constant="15" id="cZv-xB-vMm"/>
+                    <constraint firstItem="YYS-Oy-XWH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="g70-4p-v6J"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="commentCountingLabel" destination="hXT-Nw-RHk" id="c6Y-GW-ISe"/>
+                <outlet property="likeCountingLabel" destination="qCf-M9-dXw" id="gd4-7G-k0O"/>
+            </connections>
+            <point key="canvasLocation" x="169" y="303"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="commentCounting" width="18" height="18"/>
+        <image name="likeCounting" width="18" height="18"/>
+    </resources>
+</document>

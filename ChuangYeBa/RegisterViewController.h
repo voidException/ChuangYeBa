@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UserInfo.h"
-#import "NetworkUtils.h"
+#import "LoginNetworkUtils.h"
 
 @interface RegisterViewController : UIViewController <UITextFieldDelegate>
 

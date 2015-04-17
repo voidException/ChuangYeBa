@@ -11,10 +11,8 @@
 @implementation ArticleCell
 
 - (void)awakeFromNib {
-    
-    self.article.userInteractionEnabled = NO;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.article.font = [UIFont systemFontOfSize:14.0];
+    self.userInteractionEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

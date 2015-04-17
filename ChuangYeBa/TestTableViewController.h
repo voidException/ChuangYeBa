@@ -11,6 +11,8 @@
 #import "NewQuestionCell.h"
 #import "NewOptionCell.h"
 #import "ExplainCell.h"
+#import "ClassNetworkUtils.h"
+#import "ClassJsonParser.h"
 
 @interface TestTableViewController : UITableViewController <UIAlertViewDelegate>
 
@@ -31,7 +33,7 @@
 @property (nonatomic, strong) NSMutableArray *userSelection;
 
 // 和题目相关的属性
-// 题组
+// 题组，修改成普通Array
 @property (strong, nonatomic) NSMutableArray *quizs;
 // 实现测试题对象
 @property (strong, nonatomic) Quiz *quiz;

@@ -12,8 +12,6 @@
 
 @interface Quiz : NSObject
 
-// 问题号 好像不需要
-//@property (nonatomic) NSInteger *quizNo;
 // 问题题干
 @property (nonatomic, copy) NSString *question;
 // 选项数组（应该是4个NSString对象）

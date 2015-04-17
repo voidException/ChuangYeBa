@@ -28,7 +28,6 @@
     self.studentArray = [[NSArray alloc]initWithContentsOfFile:plistPath];
     self.imageView.image = [UIImage imageNamed:@"USA.png"];
     
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

@@ -17,55 +17,63 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 隐藏导航条
+    [self.navigationController setNavigationBarHidden:YES];
+    
     // 添加临时登陆信息
     self.email.text = @"zachary0513@126.com";
-    self.password.text = @"aaaaaa";
+    self.password.text = @"1111111";
     
     // 初始化TextField的委托对象
     self.email.delegate = self;
     self.password.delegate = self;
+    
+    [self modifiedFont];
 }
+
+- (void)modifiedFont {
+    if (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(320, 568))) {
+        self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        self.registerButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    } else if (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(414, 736))){
+        self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:20];
+        self.registerButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)clickOnLoginButton:(id)sender {
     if ([self isLoginInfoLegal]) {
         
-        // 测试登陆请求
-        // 使用封装的请求类 NetworkUtils
-        [NetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
-            
-            // TO do 可以把登陆返回信息加入并存储至本地
-            //NSDictionary *dic = obj;
-            
-            // 模拟成功加载了用户数据
-            
+        if (!self.userInfo) {
+            self.userInfo = [[UserInfo alloc]init];
+        }
+        
+        //[self addActivityBackgroundView];
+        
+      
+        [LoginNetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+            if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
+                self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
+                [self saveUserInfoToLocal:self.userInfo];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }];
-        [self loadUserInfo];
         
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:YES];
-        [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
-        [ud synchronize];
-        // 跳转到主屏幕
         
+        // 跳转到主屏幕，或者回到“我”界面
         [self dismissViewControllerAnimated:YES completion:nil];
-        
-        
-        //[self performSegueWithIdentifier:@"ShowMainScreen" sender:sender];
     }
     else {
         NSLog(@"返回错误警告");
@@ -73,8 +81,35 @@
 
 }
 
+// 添加透明指示栏
+- (void)addActivityBackgroundView {
+    if (self.activityBackgroundView == nil) {
+        self.activityBackgroundView = [[UIView alloc] initWithFrame:self.view.bounds];
+        self.activityBackgroundView.backgroundColor = [UIColor blackColor];
+        self.activityBackgroundView.alpha = 0.1f;
+        [self.view addSubview:self.activityBackgroundView];
+    }
+    if (![self.activityBackgroundView isDescendantOfView:self.view]) {
+        [self.view addSubview:self.activityBackgroundView];
+    }
+}
+
+// 移除透明指示栏
+- (void)removeActivityBackgroundView {
+    if (self.activityBackgroundView) {
+        if ([self.activityBackgroundView isDescendantOfView:self.view]) {
+            [self.activityBackgroundView removeFromSuperview];
+        }
+        self.activityBackgroundView = nil;
+    }
+}
+
 - (IBAction)clickOnRegisterButton:(id)sender {
-    
+    [self performSegueWithIdentifier:@"ShowRegister" sender:self];
+}
+
+- (IBAction)clickOnForgetPasswordButton:(id)sender {
+    [self performSegueWithIdentifier:@"ShowFindPassword" sender:self];
 }
 
 - (IBAction)didEndOnExit:(id)sender {
@@ -106,24 +141,14 @@
 
 
 
-#pragma mark - 零时添加测试数据
-- (void)loadUserInfo {
-    
-    // 基本信息
-    self.userInfo = [[UserInfo alloc]init];
-    self.userInfo.name = @"张三";
-    self.userInfo.sex = @"男";
-    self.userInfo.studentNo = @"12112112";
-    self.userInfo.email = @"zacharyapple001@126.com";
-    self.userInfo.school = @"北京大学";
-    self.userInfo.major = @"通信工程";
-    
+#pragma mark - 保存用户信息至NSUserDefault，同时记录登陆状态
+- (void)saveUserInfoToLocal:(UserInfo *)ui{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.userInfo];
+    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:ui];
     [ud setObject:udObject forKey:@"userInfo"];
+    NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:YES];
+    [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
     [ud synchronize];
-    NSLog(@"成功加入UserDefault");
-    
 }
 
 
@@ -156,5 +181,16 @@
         }
     }
 }
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
 
 @end

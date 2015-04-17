@@ -6,17 +6,21 @@
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
+
+
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#define screenWidth [UIScreen mainScreen].bounds.size.width
 
-
+// 测试题组类，对应itemtest表
 @interface TestGroup : NSObject
 
-@property (nonatomic) NSInteger *questionID;
-@property (nonatomic, copy) NSString *question;
-@property (nonatomic, strong) NSArray *options;
+// 题组的标题
+@property (nonatomic, copy) NSString *itemTitle;
+// 题组的简单描述
+@property (nonatomic, copy) NSString *discription;
+// itemPhoto的URL
+@property (nonatomic, copy) NSString *itemPhoto;
+// bool量，该题的状态。
+@property (nonatomic, copy) NSString *activity;
 
-- (float)getHeightOfTestGroup;
 
 @end

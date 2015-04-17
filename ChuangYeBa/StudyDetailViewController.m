@@ -13,7 +13,7 @@ static NSString *mediaCellIndentifer = @"MediaCell";
 static NSString *commentCellIndentifier = @"CommentCell";
 
 // 测试文章
-static NSString *artical = @"那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现/n 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 那些年错过的大雨 那些年错过的爱情";
+static NSString *artical = @"那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现\n\n 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 再一次相遇我会紧紧抱着你 紧紧抱着你 那些年错过的大雨 那些年错过的爱情 好想拥抱你 拥抱错过的勇气 曾经想征服全世界 到最后回首才发现 这世界滴滴点点全部都是你 那些年错过的大雨 那些年错过的爱情 好想告诉你 告诉你我没有忘记 那天晚上满天星星 平行时空下的约定 那些年错过的大雨 那些年错过的爱情";
 
 @interface StudyDetailViewController ()
 
@@ -136,8 +136,8 @@ static NSString *artical = @"那些年错过的大雨 那些年错过的爱情 �
 
 - (ArticleCell *)articleCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ArticleCell *articleCell = (ArticleCell *)[self.tableView dequeueReusableCellWithIdentifier:articleCellIndentifier];
-    articleCell.title.text = @"第一篇实验文章";
-    articleCell.article.text = artical;
+    //articleCell.title.text = @"第一篇实验文章";
+    //articleCell.article.text = artical;
     return articleCell;
 }
 
@@ -150,8 +150,8 @@ static NSString *artical = @"那些年错过的大雨 那些年错过的爱情 �
 - (CommentCell *)commentCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CommentCell *commentCell = (CommentCell *)[self.tableView dequeueReusableCellWithIdentifier:commentCellIndentifier];
     NSDictionary *dic = self.userComment[indexPath.row];
-    commentCell.userName.text = [dic objectForKey:@"userName"];
-    commentCell.comment.text = [dic objectForKey:@"comment"];
+    //commentCell.userName.text = [dic objectForKey:@"userName"];
+    //commentCell.comment.text = [dic objectForKey:@"comment"];
     return commentCell;
 }
 

@@ -10,8 +10,7 @@
 
 @interface ArticleCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *title;
 
-@property (weak, nonatomic) IBOutlet UITextView *article;
+@property (weak, nonatomic) IBOutlet UITextView *content;
 
 @end

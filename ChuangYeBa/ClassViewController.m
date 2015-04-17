@@ -73,6 +73,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+// 请求加入班级
+- (void)requestAddClass:(NSString *)classNo{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSData *udObject = [ud objectForKey:@"userInfo"];
+    UserInfo *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    
+    [ClassNetworkUtils requestTestGroupByStudentId:userInfo.userNo andClassNo:classNo andCallback:^(id obj) {
+        NSLog(@"callback");
+    }];
+}
+
 - (void)clickOnTableViewBlank {
     [self addClass];
 }
@@ -81,7 +92,6 @@
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"输入添加班级" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView show];
-
 }
 
 #pragma mark - UITableViewDelegate
@@ -167,6 +177,7 @@
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    // 用户输入的班级号
     NSString *inputClassNumber = [alertView textFieldAtIndex:0].text;
     if (buttonIndex == 1 && ![inputClassNumber isEqualToString:@""]) {
         isUserAddedClass = YES;
@@ -174,6 +185,8 @@
         NSNumber *number = [[NSNumber alloc]initWithBool:YES];
         [ud setObject:number forKey:@"isUserAddedClass"];
         [ud synchronize];
+        
+        [self requestAddClass:inputClassNumber];
         
         // 移除点击动作的手势
         [self.tableView removeGestureRecognizer:self.singleTap];
@@ -183,6 +196,7 @@
         [self.tableView reloadData];
     }
 }
+
 
 #pragma mark - ClassInfoCellDelegate
 - (void)userClickOnaddAndSettingButton:(ClassInfoCell *)classInfoCell {

@@ -10,22 +10,29 @@
 
 @interface UserInfo : NSObject <NSCoding>
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *studentNo;
-@property (strong, nonatomic) NSString *major;
-@property (strong, nonatomic) NSString *school;
-@property (strong, nonatomic) NSString *classNo;
-@property (strong, nonatomic) NSString *department;
-@property (strong, nonatomic) NSString *college;
-@property (strong, nonatomic) NSString *universityNo;
-@property (strong, nonatomic) NSString *universityName;
-@property (strong, nonatomic) NSString *sex;
+// 学生老师共有的数据表参数
+@property (copy, nonatomic) NSString *userId;
+@property (copy, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *userNo;
+@property (copy, nonatomic) NSString *major;
+@property (copy, nonatomic) NSString *school;
+@property (copy, nonatomic) NSString *classNo;
+@property (copy, nonatomic) NSString *department;
+@property (copy, nonatomic) NSString *college;
+@property (copy, nonatomic) NSString *universityNo;
+@property (copy, nonatomic) NSString *universityName;
+@property (copy, nonatomic) NSString *sex;
 @property (strong, nonatomic) NSDate *inCollegeDate;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *password;
-@property (strong, nonatomic) NSString *passwordConfirm;
-@property (strong, nonatomic) NSString *photoPath;
-@property BOOL isPhotoUpload;
+@property (copy, nonatomic) NSString *email;
+@property (copy, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *photoPath;
+@property (copy, nonatomic) NSString *isPhotoUpload;
+
+// 只要老师才有的数据
+@property (copy, nonatomic) NSString *tel;
+
+// 非数据表参数
+@property (copy, nonatomic) NSString *passwordConfirm;
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 

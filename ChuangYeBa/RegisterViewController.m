@@ -40,8 +40,8 @@
     userInfo.password = self.password.text;
     userInfo.passwordConfirm = self.passwordConfirm.text;
     userInfo.name = self.userName.text;
-    userInfo.studentNo = self.userID.text;
-    [NetworkUtils registerUserInfo:userInfo andCallBack:^(id obj){
+    userInfo.userNo = self.userID.text;
+    [LoginNetworkUtils registerUserInfo:userInfo andCallBack:^(id obj){
         NSLog(@"进入注册回调");
     }];
     // 返回到登陆菜单，需要点击登陆

@@ -6,12 +6,13 @@
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
-#import "NetworkUtils.h"
+#import "LoginNetworkUtils.h"
 
-static NSString *serverIP = @"http://localhost:8080";
+//static NSString *serverIP = @"http://localhost:8080";
+static NSString *serverIP = @"http://10.174.90.146:8080/";
 
 
-@implementation NetworkUtils
+@implementation LoginNetworkUtils
 
 
 // 用户登陆类方法
@@ -42,7 +43,7 @@ static NSString *serverIP = @"http://localhost:8080";
     path = [serverIP stringByAppendingString:path];
      NSLog(@"Request Path = %@",path);
     
-    NSDictionary *params = @{@"stuName": userInfo.name, @"stuNo": userInfo.studentNo, @"stuPassword": userInfo.password, @"stuPasswordRepeat": userInfo.passwordConfirm, @"stuEmail": userInfo.email};
+    NSDictionary *params = @{@"stuName": userInfo.name, @"stuNo": userInfo.userNo, @"stuPassword": userInfo.password, @"stuPasswordRepeat": userInfo.passwordConfirm, @"stuEmail": userInfo.email};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
@@ -78,6 +79,7 @@ static NSString *serverIP = @"http://localhost:8080";
         callback(nil);
     }];
 }
+
 
 
 @end
