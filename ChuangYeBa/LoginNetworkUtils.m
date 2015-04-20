@@ -7,9 +7,13 @@
 //
 
 #import "LoginNetworkUtils.h"
+#import "GlobalDefine.h"
 
-//static NSString *serverIP = @"http://localhost:8080";
-static NSString *serverIP = @"http://10.174.90.146:8080/";
+// 公司
+//static NSString *serverIP = @"http://10.174.90.146:8080/";
+// 家
+static NSString *serverIP = SERVER_IP;
+
 
 
 @implementation LoginNetworkUtils
@@ -32,6 +36,7 @@ static NSString *serverIP = @"http://10.174.90.146:8080/";
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
+        callback(nil);
     }];
 }
 

@@ -2,31 +2,46 @@
 //  StudyDetailViewController.h
 //  ChuangYeBa
 //
-//  Created by Developer on 15/4/2.
+//  Created by Developer on 15/4/17.
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "StudyNetworkUtils.h"
 #import "ArticleCell.h"
-#import "MediaCell.h"
+#import "ArticleTitleCell.h"
 #import "CommentCell.h"
+#import "CountingCell.h"
+#import "MediaCell.h"
+#import "ArticleInfo.h"
+#import "UserInfo.h"
+#import "CommentInputView.h"
 
-#define kAvatarSize 10.0
-#define kMinimumHeight 40.0
+@interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CommentInputViewDelegate>
 
-#define ArticleSection 0
-#define MediaSection 1
-#define CommentSection 2
+@property (strong, nonatomic) ArticleInfo *articleInfo;
+@property (strong, nonatomic) UserInfo *userInfo;
 
-@interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) CommentInputView *commentInputView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextField *textInputBar;
-@property (strong, nonatomic) NSMutableArray *userComment;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightOfTitle;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightOfArtical;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
+@property (weak, nonatomic) IBOutlet UIButton *downLoadButton;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (strong, nonatomic) UINavigationItem *customItem;
+@property (strong, nonatomic) UINavigationBar *customBar;
+@property (strong, nonatomic) UIBarButtonItem *leftButton;
+@property (weak, nonatomic) IBOutlet UIView *toolbarView;
+@property (nonatomic) BOOL isLiked;
+@property (nonatomic) BOOL isDownloaded;
 
+@property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSDictionary *comment;
 
-- (IBAction)clickOnSendButton:(id)sender;
+@property (strong, nonatomic) UIView *activityBackgroundView;
+- (IBAction)clickOnCommentButton:(id)sender;
+- (IBAction)clickOnLikeButton:(id)sender;
+- (IBAction)clickOnDownloadButton:(id)sender;
+
 
 @end

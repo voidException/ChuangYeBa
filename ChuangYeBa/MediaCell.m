@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
 }
 
@@ -21,4 +22,7 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)clickOnMediaButton:(id)sender {
+    [self.delegate clickOnMedia:self];
+}
 @end

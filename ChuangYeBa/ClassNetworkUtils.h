@@ -29,6 +29,13 @@ typedef void (^Callback)(id obj);
 // 请求接口5，学生插入测试结果
 + (void)submitTestResult:(NSArray *)testResult andCallback:(Callback)callback;
 
+// 请求接口6，返回班级信息以及老师名字，学生列表
++ (void)requestClassInfoByClassNo:(NSString *)classNo andCallback:(Callback)callback;
+
+// 请求接口7，退出班级
++ (void)submitQuitClassWithUserId:(NSString *)stuId andClassId:(NSString *)classId andCallback:(Callback)callback;
+
+
 // 辅助方法
 + (void)failureAction:(NSError *) error;
 

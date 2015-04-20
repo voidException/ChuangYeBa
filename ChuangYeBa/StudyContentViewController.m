@@ -12,10 +12,14 @@
 
 @end
 
+
+
 @implementation StudyContentViewController
 @synthesize tag;
 @synthesize page;
 @synthesize pageSize;
+@synthesize articleInfo;
+@synthesize userInfo;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,7 +27,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    NSLog(@"tag = %ld", (long)tag);
+    
+    
+    // 初始化Article模型
+    articleInfo = [[ArticleInfo alloc] init];
+    userInfo = [[UserInfo alloc] init];
     
     // 增加下啦刷新
     
@@ -37,6 +45,19 @@
         NSLog(@"上啦刷新");
         //[self.tableView.footer endRefreshing];
     }];
+    
+    // TEST
+    NSLog(@"tag = %ld", (long)tag);
+    page = 0;
+    pageSize = 10;
+
+    
+    // 从本地读取用户信息
+    [self loadUserInfoFromLocal];
+    // TEST 请求
+    
+#warning 严重！以下的方法在当用户在没有登陆过的情况下，第一次启动应用的时候会产生崩溃！因此暂时注释掉
+    //[self requestArticleList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,17 +65,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)loadUserInfoFromLocal {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSData *udObject = [ud objectForKey:@"userInfo"];
+    userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
 }
-*/
 
-
+- (void)requestArticleList {
+    [StudyNetworkUtils requestArticalWichToken:userInfo.email userId:userInfo.userId tag:tag page:page pageSize:pageSize andCallback:^(id obj){
+        self.articleInfo = obj;
+        NSLog(@"article callback");
+    }];
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -77,5 +100,17 @@
     studyContentCell.introductionLabel.text = @"大学生生涯是职业生涯积累也是一个过程……";
     return studyContentCell;
 }
+
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
 
 @end

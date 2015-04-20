@@ -8,6 +8,8 @@
 
 #import "UserInfo.h"
 
+#define NO_VALUE @"NO_VALUE"
+
 @implementation UserInfo
 
 @synthesize userId;
@@ -27,6 +29,29 @@
 @synthesize photoPath;
 @synthesize isPhotoUpload;
 @synthesize tel;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        userId = NO_VALUE;
+        name = NO_VALUE;
+        userNo = NO_VALUE;
+        major = NO_VALUE;
+        school = NO_VALUE;
+        classNo = NO_VALUE;
+        department = NO_VALUE;
+        college = NO_VALUE;
+        universityNo= NO_VALUE;
+        universityName = NO_VALUE;
+        sex = NO_VALUE;
+        email = NO_VALUE;
+        password = NO_VALUE;
+        photoPath = NO_VALUE;
+        isPhotoUpload = NO_VALUE;
+        tel = NO_VALUE;
+    }
+    return self;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self =[super init]) {

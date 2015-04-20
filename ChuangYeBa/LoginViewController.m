@@ -14,6 +14,8 @@
 
 @implementation LoginViewController
 
+
+#pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -31,6 +33,12 @@
     [self modifiedFont];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Private Method
 - (void)modifiedFont {
     if (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(320, 568))) {
         self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -41,86 +49,37 @@
     }
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (IBAction)clickOnLoginButton:(id)sender {
-    if ([self isLoginInfoLegal]) {
-        
-        if (!self.userInfo) {
-            self.userInfo = [[UserInfo alloc]init];
+- (void)sendingDataToServer {
+    
+    if (!self.userInfo) {
+        self.userInfo = [[UserInfo alloc]init];
+    }
+    
+    [LoginNetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
+        // 隐藏HUD
+        [self.hud hide:YES];
+        if (obj) {
+        NSDictionary *dic = obj;
+        NSNumber *error = [dic objectForKey:@"error"];
+        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+        if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
+            self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
+            [self saveUserInfoToLocal:self.userInfo];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+            [alert show];
         }
-        
-        //[self addActivityBackgroundView];
-        
-      
-        [LoginNetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
-            NSDictionary *dic = obj;
-            NSNumber *error = [dic objectForKey:@"error"];
-            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-            if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
-                self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
-                [self saveUserInfoToLocal:self.userInfo];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-        
-        
-        // 跳转到主屏幕，或者回到“我”界面
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    else {
-        NSLog(@"返回错误警告");
-    }
-
-}
-
-// 添加透明指示栏
-- (void)addActivityBackgroundView {
-    if (self.activityBackgroundView == nil) {
-        self.activityBackgroundView = [[UIView alloc] initWithFrame:self.view.bounds];
-        self.activityBackgroundView.backgroundColor = [UIColor blackColor];
-        self.activityBackgroundView.alpha = 0.1f;
-        [self.view addSubview:self.activityBackgroundView];
-    }
-    if (![self.activityBackgroundView isDescendantOfView:self.view]) {
-        [self.view addSubview:self.activityBackgroundView];
-    }
-}
-
-// 移除透明指示栏
-- (void)removeActivityBackgroundView {
-    if (self.activityBackgroundView) {
-        if ([self.activityBackgroundView isDescendantOfView:self.view]) {
-            [self.activityBackgroundView removeFromSuperview];
+        } else {
+            NSLog(@"hidden");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错了" delegate:self cancelButtonTitle:@"真难过" otherButtonTitles:nil, nil];
+            [alert show];
         }
-        self.activityBackgroundView = nil;
-    }
+    }];
 }
 
-- (IBAction)clickOnRegisterButton:(id)sender {
-    [self performSegueWithIdentifier:@"ShowRegister" sender:self];
-}
-
-- (IBAction)clickOnForgetPasswordButton:(id)sender {
-    [self performSegueWithIdentifier:@"ShowFindPassword" sender:self];
-}
-
-- (IBAction)didEndOnExit:(id)sender {
-    [self.password becomeFirstResponder];
-}
-
-- (IBAction)backgroundTap:(id)sender {
-    [self.email resignFirstResponder];
-    [self.password resignFirstResponder];
-}
-#pragma mark - 判断用户信息和邮箱有效性
+#pragma mark  判断用户信息和邮箱有效性
 // 在本地判断是否登陆信息有效
 - (BOOL)isLoginInfoLegal {
     if (self.email.text.length > 30 || self.password.text.length < 4 || self.password.text.length > 10) {
@@ -140,8 +99,7 @@
 }
 
 
-
-#pragma mark - 保存用户信息至NSUserDefault，同时记录登陆状态
+#pragma mark  保存用户信息至NSUserDefault，同时记录登陆状态
 - (void)saveUserInfoToLocal:(UserInfo *)ui{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:ui];
@@ -151,7 +109,37 @@
     [ud synchronize];
 }
 
+#pragma mark - Action
+- (IBAction)clickOnLoginButton:(id)sender {
+    
+    if ([self isLoginInfoLegal]) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.hud.removeFromSuperViewOnHide = YES;
+        [self sendingDataToServer];
+    }
+    else {
+        NSLog(@"返回错误警告");
+    }
 
+}
+
+- (IBAction)clickOnRegisterButton:(id)sender {
+    [self performSegueWithIdentifier:@"ShowRegister" sender:self];
+}
+
+- (IBAction)clickOnForgetPasswordButton:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"找回密码", nil];
+    [actionSheet showInView:self.view];
+}
+
+- (IBAction)didEndOnExit:(id)sender {
+    [self.password becomeFirstResponder];
+}
+
+- (IBAction)backgroundTap:(id)sender {
+    [self.email resignFirstResponder];
+    [self.password resignFirstResponder];
+}
 
 #pragma mark - Text Feild Delegate
 
@@ -179,6 +167,13 @@
             [alerView show];
             //textField.textColor = [UIColor redColor];
         }
+    }
+}
+
+#pragma mark - Action Sheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self performSegueWithIdentifier:@"ShowFindPassword" sender:self];
     }
 }
 

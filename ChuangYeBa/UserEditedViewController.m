@@ -41,7 +41,7 @@
     self.navigationItem.rightBarButtonItem = button;
     
     // 注册键盘弹出响应的通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
 
 
@@ -56,7 +56,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
@@ -91,9 +91,34 @@
     self.userInfo = [[UserInfo alloc]init];
     NSData *udObject = [ud objectForKey:@"userInfo"];
     self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    
+    NSMutableArray *section1 = [[NSMutableArray alloc] init];
+    NSMutableArray *section2 = [[NSMutableArray alloc] init];
+    NSMutableArray *section3 = [[NSMutableArray alloc] init];
+    
+    // SECTION1
+    if (self.userInfo.name) [section1 addObject:self.userInfo.name];
+    else [section1 addObject:@"NO_VALUE"];
+    // SECTION2
+    if (self.userInfo.name) [section2 addObject:self.userInfo.name];
+    else [section2 addObject:@"NO_VALUE"];
+    if (self.userInfo.sex) [section2 addObject:self.userInfo.sex];
+    else [section2 addObject:@"NO_VALUE"];
+    if (self.userInfo.userNo) [section2 addObject:self.userInfo.userNo];
+    else [section2 addObject:@"NO_VALUE"];
+    if (self.userInfo.email) [section2 addObject:self.userInfo.email];
+    else [section2 addObject:@"NO_VALUE"];
+    // SECTION3
+    if (self.userInfo.school) [section3 addObject:self.userInfo.school];
+    else [section3 addObject:@"NO_VALUE"];
+    if (self.userInfo.major) [section3 addObject:self.userInfo.major];
+    else [section3 addObject:@"NO_VALUE"];
+    
+    /*
     NSMutableArray *section1 = [[NSMutableArray alloc] initWithObjects:self.userInfo.name, nil];
     NSMutableArray *section2 = [[NSMutableArray alloc] initWithObjects:self.userInfo.name, self.userInfo.sex, self.userInfo.userNo, self.userInfo.email, nil];
     NSMutableArray *section3 = [[NSMutableArray alloc] initWithObjects:self.userInfo.school, self.userInfo.major, nil];
+     */
     self.userInfoArray = [[NSMutableArray alloc] initWithObjects: section1, section2, section3, nil];
 }
 

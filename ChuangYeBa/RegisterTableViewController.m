@@ -60,6 +60,7 @@
     CGRect keyboardBeginingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey]CGRectValue];
     CGRect keyboardEndingFrame = [self.view convertRect:keyboardBeginingUncorrectedFrame fromView:nil];
     NSLog(@"keyB height = %f", keyboardEndingFrame.size.height);
+    NSLog(@"keyB orgin X = %f", keyboardEndingFrame.origin.y);
     return keyboardEndingFrame.size.height;
 }
 
@@ -68,8 +69,10 @@
 {
     CGRect currentFrame = self.tableView.frame;
     CGFloat change = [self keyboardEndingFrameHeight:[notification userInfo]];
-    currentFrame.size.height = currentFrame.size.height - change;
-    self.tableView.frame = currentFrame;
+    if (change) {
+        currentFrame.size.height = currentFrame.size.height - change;
+        self.tableView.frame = currentFrame;
+    }
 }
 
 // 键盘消失后调整视图

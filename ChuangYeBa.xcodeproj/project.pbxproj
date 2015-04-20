@@ -35,6 +35,9 @@
 		8B9C6E631ACD2EBD00A4EF54 /* StudyHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E621ACD2EBD00A4EF54 /* StudyHostViewController.m */; };
 		8B9C6E661ACD2FF100A4EF54 /* StudyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E651ACD2FF100A4EF54 /* StudyContentViewController.m */; };
 		8B9C6E691ACD3AF500A4EF54 /* StudyContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E681ACD3AF500A4EF54 /* StudyContentCell.m */; };
+		8B9E7A4C1AE39B8A00C69273 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */; };
+		8B9E7A4E1AE3EC0500C69273 /* YY.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E7A4D1AE3E3A000C69273 /* YY.mp4 */; };
+		8BBF360C1AE161EA0029072C /* StudyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */; };
 		8BC289B11AD0448E00E1B632 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC289B01AD0448E00E1B632 /* MessageTableViewCell.m */; };
 		8BC289B41AD04B5000E1B632 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC289B31AD04B5000E1B632 /* MessageViewController.m */; };
 		8BCF39991ACCE09C0071C016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
@@ -49,7 +52,6 @@
 		8BD01A931ACF71E100E339D6 /* EditedPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A921ACF71E100E339D6 /* EditedPhotoCell.m */; };
 		8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A951ACF71F500E339D6 /* EditedInfoCell.m */; };
 		8BD01A981ACF7D3800E339D6 /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BD01A971ACF7D3800E339D6 /* setting.plist */; };
-		8BD281821ACD6EC50030005D /* StudyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD281811ACD6EC50030005D /* StudyDetailViewController.m */; };
 		8BD281851ACD80360030005D /* ClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD281841ACD80360030005D /* ClassViewController.m */; };
 		8BD281AD1ACD99880030005D /* appSetting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BD281871ACD99880030005D /* appSetting.plist */; };
 		8BD281AE1ACD99880030005D /* classroom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BD281881ACD99880030005D /* classroom.plist */; };
@@ -173,6 +175,12 @@
 		8B9C6E651ACD2FF100A4EF54 /* StudyContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyContentViewController.m; path = ChuangYeBa/StudyContentViewController.m; sourceTree = "<group>"; };
 		8B9C6E671ACD3AF500A4EF54 /* StudyContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyContentCell.h; path = ChuangYeBa/StudyContentCell.h; sourceTree = "<group>"; };
 		8B9C6E681ACD3AF500A4EF54 /* StudyContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyContentCell.m; path = ChuangYeBa/StudyContentCell.m; sourceTree = "<group>"; };
+		8B9E7A4A1AE39B8A00C69273 /* MediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaViewController.h; path = ChuangYeBa/MediaViewController.h; sourceTree = "<group>"; };
+		8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaViewController.m; path = ChuangYeBa/MediaViewController.m; sourceTree = "<group>"; };
+		8B9E7A4D1AE3E3A000C69273 /* YY.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = YY.mp4; sourceTree = "<group>"; };
+		8BBF36091AE137410029072C /* GlobalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
+		8BBF360A1AE161EA0029072C /* StudyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyDetailViewController.h; path = ChuangYeBa/StudyDetailViewController.h; sourceTree = "<group>"; };
+		8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyDetailViewController.m; path = ChuangYeBa/StudyDetailViewController.m; sourceTree = "<group>"; };
 		8BC289AF1AD0448E00E1B632 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = ChuangYeBa/MessageTableViewCell.h; sourceTree = "<group>"; };
 		8BC289B01AD0448E00E1B632 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTableViewCell.m; path = ChuangYeBa/MessageTableViewCell.m; sourceTree = "<group>"; };
 		8BC289B21AD04B5000E1B632 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageViewController.h; path = ChuangYeBa/MessageViewController.h; sourceTree = "<group>"; };
@@ -199,8 +207,6 @@
 		8BD01A941ACF71F500E339D6 /* EditedInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditedInfoCell.h; path = ChuangYeBa/EditedInfoCell.h; sourceTree = "<group>"; };
 		8BD01A951ACF71F500E339D6 /* EditedInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditedInfoCell.m; path = ChuangYeBa/EditedInfoCell.m; sourceTree = "<group>"; };
 		8BD01A971ACF7D3800E339D6 /* setting.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = setting.plist; sourceTree = "<group>"; };
-		8BD281801ACD6EC50030005D /* StudyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyDetailViewController.h; path = ChuangYeBa/StudyDetailViewController.h; sourceTree = "<group>"; };
-		8BD281811ACD6EC50030005D /* StudyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyDetailViewController.m; path = ChuangYeBa/StudyDetailViewController.m; sourceTree = "<group>"; };
 		8BD281831ACD80360030005D /* ClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassViewController.h; path = ChuangYeBa/ClassViewController.h; sourceTree = "<group>"; };
 		8BD281841ACD80360030005D /* ClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassViewController.m; path = ChuangYeBa/ClassViewController.m; sourceTree = "<group>"; };
 		8BD281871ACD99880030005D /* appSetting.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appSetting.plist; sourceTree = "<group>"; };
@@ -312,8 +318,6 @@
 				8BC289B01AD0448E00E1B632 /* MessageTableViewCell.m */,
 				8BD281D31ACD9A580030005D /* RegisterViewController.m */,
 				8BD281D21ACD9A380030005D /* RegisterViewController.h */,
-				8BD281801ACD6EC50030005D /* StudyDetailViewController.h */,
-				8BD281811ACD6EC50030005D /* StudyDetailViewController.m */,
 				8BE0A5521AD4D679006B348E /* QuestionCell.h */,
 				8BE0A5531AD4D679006B348E /* QuestionCell.m */,
 				8BE0A55B1AD57BA2006B348E /* OptionCell.h */,
@@ -375,7 +379,6 @@
 				8B5826B31ACD0D92005E39E0 /* Me */,
 				8B5826B21ACD0D8E005E39E0 /* Class */,
 				8B5826B11ACD0D84005E39E0 /* Study */,
-				8B5826B01ACD0D75005E39E0 /* Login */,
 			);
 			name = V;
 			sourceTree = "<group>";
@@ -418,6 +421,10 @@
 				8BDFE6691AD361D00081310A /* DetailImageViewController.m */,
 				8B451AED1ADF837D002C4CA9 /* StudyDetailTableViewController.h */,
 				8B451AEE1ADF837D002C4CA9 /* StudyDetailTableViewController.m */,
+				8BBF360A1AE161EA0029072C /* StudyDetailViewController.h */,
+				8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */,
+				8B9E7A4A1AE39B8A00C69273 /* MediaViewController.h */,
+				8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -455,13 +462,6 @@
 				8BD4C07D1ACEB7AB004D96AF /* MoreDetailViewController.m */,
 			);
 			name = More;
-			sourceTree = "<group>";
-		};
-		8B5826B01ACD0D75005E39E0 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Login;
 			sourceTree = "<group>";
 		};
 		8B5826B11ACD0D84005E39E0 /* Study */ = {
@@ -521,12 +521,12 @@
 				8B9C6E5F1ACD196400A4EF54 /* LoginNetworkUtils.m */,
 				8B451ADB1ADCBC31002C4CA9 /* ClassNetworkUtils.h */,
 				8B451ADC1ADCBC31002C4CA9 /* ClassNetworkUtils.m */,
+				8B451AE41ADF5A9D002C4CA9 /* StudyNetworkUtils.h */,
+				8B451AE51ADF5A9D002C4CA9 /* StudyNetworkUtils.m */,
 				8B451ADE1ADCCDAD002C4CA9 /* ClassJsonParser.h */,
 				8B451ADF1ADCCDAD002C4CA9 /* ClassJsonParser.m */,
 				8B451AE11ADEB507002C4CA9 /* LoginJsonParser.h */,
 				8B451AE21ADEB507002C4CA9 /* LoginJsonParser.m */,
-				8B451AE41ADF5A9D002C4CA9 /* StudyNetworkUtils.h */,
-				8B451AE51ADF5A9D002C4CA9 /* StudyNetworkUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -566,6 +566,7 @@
 				8BCF39A31ACCE09C0071C016 /* Images.xcassets */,
 				8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */,
 				8BCF39961ACCE09C0071C016 /* Supporting Files */,
+				8BBF36091AE137410029072C /* GlobalDefine.h */,
 			);
 			path = ChuangYeBa;
 			sourceTree = "<group>";
@@ -599,6 +600,7 @@
 		8BD281861ACD99880030005D /* TestData */ = {
 			isa = PBXGroup;
 			children = (
+				8B9E7A4D1AE3E3A000C69273 /* YY.mp4 */,
 				8BD281871ACD99880030005D /* appSetting.plist */,
 				8BD281881ACD99880030005D /* classroom.plist */,
 				8BD281891ACD99880030005D /* dropDownMenu.plist */,
@@ -752,6 +754,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B9E7A4E1AE3EC0500C69273 /* YY.mp4 in Resources */,
 				8BD281C01ACD99880030005D /* Honduras.png in Resources */,
 				8B451AFA1ADF8886002C4CA9 /* ArticleTitleCell.xib in Resources */,
 				8BD281B91ACD99880030005D /* Denmark.png in Resources */,
@@ -856,6 +859,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BBF360C1AE161EA0029072C /* StudyDetailViewController.m in Sources */,
 				8BE0A55D1AD57BA2006B348E /* OptionCell.m in Sources */,
 				8BD4C0811ACEF6D2004D96AF /* MeViewController.m in Sources */,
 				8B451AEF1ADF837D002C4CA9 /* StudyDetailTableViewController.m in Sources */,
@@ -884,6 +888,7 @@
 				8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */,
 				8B451AE31ADEB507002C4CA9 /* LoginJsonParser.m in Sources */,
 				8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */,
+				8B9E7A4C1AE39B8A00C69273 /* MediaViewController.m in Sources */,
 				8B9C6E661ACD2FF100A4EF54 /* StudyContentViewController.m in Sources */,
 				8BD281D41ACD9A580030005D /* RegisterViewController.m in Sources */,
 				8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */,
@@ -901,7 +906,6 @@
 				8BE3278C1AD116D9007F79C3 /* ArticleCell.m in Sources */,
 				8B451ADA1ADB9559002C4CA9 /* RegisterTableViewController.m in Sources */,
 				8B451AEC1ADF81B4002C4CA9 /* ArticleInfo.m in Sources */,
-				8BD281821ACD6EC50030005D /* StudyDetailViewController.m in Sources */,
 				8BDA58B71AD94DF100E59EE8 /* NewQuestionCell.m in Sources */,
 				8B451B081ADFED74002C4CA9 /* CommentInputView.m in Sources */,
 				8B9C6E5D1ACD193E00A4EF54 /* UserInfo.m in Sources */,

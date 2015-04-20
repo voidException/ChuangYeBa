@@ -14,6 +14,8 @@
 
 @implementation StudyHostViewController
 
+
+#pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,7 +44,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     // Dispose of any resources that can be recreated.
 }
@@ -56,6 +57,7 @@
         [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
     }
 }
+
 /*
 #pragma mark - Navigation
 
@@ -70,6 +72,7 @@
 - (void)showStudyDetail:(NSNotification *)notification {
     // 接受通知
     self.hidesBottomBarWhenPushed = YES;
+    
     [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
     self.hidesBottomBarWhenPushed = NO;
     

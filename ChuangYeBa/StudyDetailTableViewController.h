@@ -15,7 +15,7 @@
 #import "ArticleInfo.h"
 #import "CommentInputView.h"
 
-@interface StudyDetailTableViewController : UITableViewController <CommentInputViewDelegate>
+@interface StudyDetailTableViewController : UITableViewController <CommentInputViewDelegate, MediaCellDelegate>
 
 @property (strong, nonatomic) ArticleInfo *articleInfo;
 @property (weak, nonatomic) CommentInputView *commentInputView;
