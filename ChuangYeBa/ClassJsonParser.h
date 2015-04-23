@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "Quiz.h"
+#import "ClassInfo.h"
+#import "TestGroup.h"
 
 @interface ClassJsonParser : NSObject
 
+// 解析1，解析题组信息
++ (TestGroup *)parseTestGropu:(NSDictionary *)dic;
+
 // 解析3，解析获取题组内所有题目信息，返回一个题目数组
 + (NSMutableArray *) parseQuizs:(NSDictionary *) dic;
+
+// 解析6
++ (ClassInfo *)parseClassInfo:(NSDictionary *) dic;
+
 + (Quiz *) parseQuiz:(NSDictionary *) dic;
 
 @end

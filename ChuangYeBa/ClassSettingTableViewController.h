@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ClassViewController.h"
+#import "ClassNetworkUtils.h"
+#import "ClassInfoCell.h"
+#import "ClassInfo.h"
+#import "UserInfo.h"
 
 @interface ClassSettingTableViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
-@property (weak, nonatomic) IBOutlet UIButton *exitClassButton;
-@property (weak, nonatomic) IBOutlet UIView *classInfoView;
+@property (strong, nonatomic) ClassInfo *classInfo;
+@property (strong, nonatomic) UserInfo *userInfo;
+@property (strong, nonatomic) NSArray *studentArray;
 
 - (IBAction)clickOnExitClassButton:(id)sender;
 

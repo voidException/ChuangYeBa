@@ -11,7 +11,7 @@
 @interface UserInfo : NSObject <NSCoding>
 
 // 学生老师共有的数据表参数
-@property (copy, nonatomic) NSString *userId;
+@property (copy, nonatomic) NSNumber *userId;
 @property (copy, nonatomic) NSString *name;
 @property (copy, nonatomic) NSString *userNo;
 @property (copy, nonatomic) NSString *major;

@@ -2,7 +2,7 @@
 //  ClassInfoCell.m
 //  ChuangYeBa
 //
-//  Created by Developer on 15/4/3.
+//  Created by Developer on 15/4/21.
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.userInteractionEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,7 +21,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)clickOnAddAndSettingButton:(id)sender {
-    [self.delegate userClickOnaddAndSettingButton:self];
-}
 @end

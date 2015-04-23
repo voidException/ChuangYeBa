@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+// 模型文件
+#import "ClassInfo.h"
 #import "Quiz.h"
+#import "UserInfo.h"
+// 视图
 #import "NewQuestionCell.h"
 #import "NewOptionCell.h"
 #import "ExplainCell.h"
+#import "TestStateCell.h"
+// 网络和解析
 #import "ClassNetworkUtils.h"
 #import "ClassJsonParser.h"
 
@@ -20,25 +26,33 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *submitButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 
+// 左上角的返回按钮
 @property (strong, nonatomic) UIBarButtonItem *backButton;
 // 点击导航条左上角的返回键的警告框
 @property (strong, nonatomic) UIAlertView *backAlertView;
 // 点击提交键的警告框
 @property (strong, nonatomic) UIAlertView *submitAlertView;
-
 // 用户在当前题目所选择的小区IndexPath
 @property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
-
 // 用户选择的答案保存
 @property (nonatomic, strong) NSMutableArray *userSelection;
 
 // 和题目相关的属性
+// 题组号，用来请求下载题组
+@property (strong, nonatomic) NSNumber *itemId;
 // 题组，修改成普通Array
 @property (strong, nonatomic) NSMutableArray *quizs;
 // 实现测试题对象
 @property (strong, nonatomic) Quiz *quiz;
 // 题目号
-@property (nonatomic) NSUInteger quizNo;
+@property (nonatomic) NSInteger quizNo;
+
+// 班级对象
+@property (strong, nonatomic) ClassInfo *classInfo;
+// 学生对象
+@property (strong, nonatomic) UserInfo *userInfo;
+
+@property (strong, nonatomic) NSMutableArray *testResultArray;
 
 // 是否显示解析
 @property (nonatomic) BOOL isDisplayExplain;

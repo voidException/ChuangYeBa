@@ -16,53 +16,7 @@ static NSString *serverIP = SERVER_IP;
 @implementation ClassNetworkUtils
 
 // 接口1
-+ (void)requestQuizsByitemId:(NSString *)quizsID andCallback:(Callback)callback {
-    NSString *path = @"/startup/student/test/getTest";
-    path = [serverIP stringByAppendingString:path];
-    
-    // 修改这里的参数
-    quizsID = @"1";
-    
-    NSDictionary *params = @{@"itemId":quizsID};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        callback(responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
-    }];
-}
-
-// 接口2
-+ (void)requestTestGroupByStudentId:(NSString *)stuId andClassNo:(NSString *)classNo andCallback:(Callback)callback {
-    NSString *path = @"/startup/student/class/addClass";
-    path = [serverIP stringByAppendingString:path];
-    
-    // 修改这里的参数
-    NSDictionary *params = @{@"classNo": classNo, @"stuId": stuId};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        callback(responseObject);
-        NSLog(@"请求成功 返回参数为 = %@", responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
-    }];
-
-}
-
-// 接口3
-+ (void)requestClassByStudentId:(NSString *)stuId andCallback:(Callback)callback {
++ (void)requestTestGroupByStudentId:(NSNumber *)stuId andCallback:(Callback)callback {
     NSString *path = @"/startup/student/class/getItemtest";
     path = [serverIP stringByAppendingString:path];
     
@@ -75,8 +29,62 @@ static NSString *serverIP = SERVER_IP;
     
     [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        // 测试，打印读取的结果
         NSLog(@"请求的结果为 = %@", responseObject);
+        
+        NSDictionary *dic = responseObject;
+        NSArray *testGroupsDic = [dic objectForKey:@"itemTest"];
+        NSMutableArray *testGroups = [[NSMutableArray alloc] init];
+        for (NSDictionary *testGroup in testGroupsDic) {
+            TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
+            [testGroups addObject:tg];
+        }
+        
+        callback(testGroups);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+    }];
+}
+
+
+// 接口2
++ (void)requestAddClassByStudentId:(NSString *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
+    NSString *path = @"/startup/student/class/addClass";
+    path = [serverIP stringByAppendingString:path];
+    
+    // 修改这里的参数
+    NSDictionary *params = @{@"classNo": classNo, @"stuId": stuId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"请求成功 返回参数为 = %@", responseObject);
+
+        callback(responseObject);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+        callback(nil);
+    }];
+
+}
+// 接口3
++ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback {
+    NSString *path = @"/startup/student/test/getTest";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *params = @{@"itemId":itemId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"请求成功，返回对象为 %@", responseObject);
         callback(responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -112,11 +120,13 @@ static NSString *serverIP = SERVER_IP;
     NSString *path = @"/startup/student/test/addTestResult";
     path = [serverIP stringByAppendingString:path];
     
+    NSDictionary *prarm = @{@"testResult":testResult};
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
-    [manager POST:path parameters:testResult success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:path parameters:prarm success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 测试，打印读取的结果
         NSLog(@"请求的结果为 = %@", responseObject);
         callback(responseObject);
@@ -146,11 +156,12 @@ static NSString *serverIP = SERVER_IP;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ClassNetworkUtils failureAction:error];
+        callback(nil);
     }];
 }
 
 // 接口7
-+ (void)submitQuitClassWithUserId:(NSString *)stuId andClassId:(NSString *)classId andCallback:(Callback)callback {
++ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback {
     NSString *path = @"/startup/student/class/quitClass";
     path = [serverIP stringByAppendingString:path];
     
@@ -171,6 +182,27 @@ static NSString *serverIP = SERVER_IP;
         [ClassNetworkUtils failureAction:error];
     }];
 
+}
+
++ (void)submitToClearResultByStudentId:(NSString *)stuId andClassId:(NSString *)classId andItemId:(NSString *)itemId {
+    NSString *path = @"/startup/student/test/deleteTestResult";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *params = @{@"stuId": stuId, @"classId": classId, @"itemId": itemId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager POST:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 测试，打印读取的结果
+        NSLog(@"请求的结果为 = %@", responseObject);
+        NSString *errorMessage = [responseObject objectForKey:@"errorMessage"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+    }];
 }
 
 // 辅助方法，处理失败请求

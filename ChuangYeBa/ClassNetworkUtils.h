@@ -16,12 +16,13 @@ typedef void (^Callback)(id obj);
 @interface ClassNetworkUtils : NSObject
 
 // 请求接口1，学生获取班级题组
-+ (void)requestClassByStudentId:(NSString *)stuId andCallback:(Callback)callback;
++ (void)requestTestGroupByStudentId:(NSNumber *)stuId andCallback:(Callback)callback;
+
 // 请求接口2，学生加入班级返回题组
-+ (void)requestTestGroupByStudentId:(NSString *)stuId andClassNo:(NSString *)classNo andCallback:(Callback)callback;
++ (void)requestAddClassByStudentId:(NSString *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
 
 // 请求接口3，获取题组内所有题目信息
-+ (void)requestQuizsByitemId:(NSString *)quizsID andCallback:(Callback)callback;
++ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback;
 
 // 请求接口4，获取学生题目结果
 + (void)requestTestResultByStuId:(NSString *)stuId andClassId:(NSString *)classId andItemId:(NSString *)itemId andCallback:(Callback)callback;
@@ -33,7 +34,10 @@ typedef void (^Callback)(id obj);
 + (void)requestClassInfoByClassNo:(NSString *)classNo andCallback:(Callback)callback;
 
 // 请求接口7，退出班级
-+ (void)submitQuitClassWithUserId:(NSString *)stuId andClassId:(NSString *)classId andCallback:(Callback)callback;
++ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback;
+
+// 请求接口8，清空学生题目结果
++ (void)submitToClearResultByStudentId:(NSString *)stuId andClassId:(NSNumber *)classId andItemId:(NSString *)itemId;
 
 
 // 辅助方法

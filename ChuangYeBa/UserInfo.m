@@ -33,7 +33,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        userId = NO_VALUE;
+        userId = [NSNumber numberWithInteger:0];
         name = NO_VALUE;
         userNo = NO_VALUE;
         major = NO_VALUE;

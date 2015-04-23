@@ -28,7 +28,6 @@ static NSString *serverIP = SERVER_IP;
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         NSDictionary *dic = responseObject;
         NSString *errorMessage = [dic objectForKey:@"errorMessage"];
         NSLog(@"errorMessage = %@", errorMessage);

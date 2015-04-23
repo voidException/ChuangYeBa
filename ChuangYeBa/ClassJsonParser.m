@@ -34,5 +34,27 @@
     return quiz;
 }
 
++ (ClassInfo *)parseClassInfo:(NSDictionary *) dic {
+    ClassInfo *classInfo = [[ClassInfo alloc] init];
+    classInfo.classId = [dic objectForKey:@"classid"];
+    classInfo.classNo = [dic objectForKey:@"classno"];
+    classInfo.classroomName = [dic objectForKey:@"classroomname"];
+    classInfo.photo = [dic objectForKey:@"photo"];
+    classInfo.realStudentNum =  [dic objectForKey:@"realstudentnum"];
+    classInfo.studentNum = [dic objectForKey:@"studentnum"];
+    classInfo.universityName = [dic objectForKey:@"universityname"];
+    classInfo.universityNo = [dic objectForKey:@"universityno"];
+    return classInfo;
+}
+
++ (TestGroup *)parseTestGropu:(NSDictionary *)dic {
+    TestGroup *testGroup = [[TestGroup alloc] init];
+    testGroup.itemId = [dic objectForKey:@"itemid"];
+    testGroup.itemTitle = [dic objectForKey:@"itemtitle"];
+    testGroup.describe = [dic objectForKey:@"description"];
+    testGroup.itemPhoto = [dic objectForKey:@"itemphoto"];
+    testGroup.activity = [dic objectForKey:@"activity"];
+    return testGroup;
+}
 
 @end

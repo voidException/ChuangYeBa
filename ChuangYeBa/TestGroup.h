@@ -12,15 +12,16 @@
 
 // 测试题组类，对应itemtest表
 @interface TestGroup : NSObject
-
+// 题组唯一标识号
+@property (nonatomic, strong) NSNumber *itemId;
 // 题组的标题
 @property (nonatomic, copy) NSString *itemTitle;
 // 题组的简单描述
-@property (nonatomic, copy) NSString *discription;
+@property (nonatomic, copy) NSString *describe;
 // itemPhoto的URL
 @property (nonatomic, copy) NSString *itemPhoto;
 // bool量，该题的状态。
-@property (nonatomic, copy) NSString *activity;
+@property (nonatomic, copy) NSNumber *activity;
 
 
 @end

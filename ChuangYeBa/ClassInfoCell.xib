@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="ClassInfoCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="146"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PKUIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xLt-Pf-Ugq">
+                        <rect key="frame" x="15" y="8" width="78" height="78"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="78" id="h8r-Cv-24K"/>
+                            <constraint firstAttribute="height" constant="78" id="pZ1-VM-vr9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="职业生涯规划" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2Z-04-95I">
+                        <rect key="frame" x="113" y="19" width="199" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="PXi-fW-OY3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookMarkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="f0m-Up-Ub7">
+                        <rect key="frame" x="113" y="110" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="3CQ-WW-UAs"/>
+                            <constraint firstAttribute="height" constant="25" id="KoS-zr-V1O"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徐晓东老师" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrZ-RC-nkj">
+                        <rect key="frame" x="155" y="112" width="157" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="ZRE-tA-xxB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京大学" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m77-MC-AIo">
+                        <rect key="frame" x="155" y="79" width="157" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="BIi-kk-jSx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100000000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwm-rM-1wj">
+                        <rect key="frame" x="113" y="48" width="199" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="306-g4-Z4l">
+                        <rect key="frame" x="113" y="77" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="cGh-TM-VaS"/>
+                            <constraint firstAttribute="height" constant="25" id="nYL-0q-hZx"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Z2Z-04-95I" firstAttribute="leading" secondItem="fwm-rM-1wj" secondAttribute="leading" id="2Wf-Zd-J3X"/>
+                    <constraint firstItem="f0m-Up-Ub7" firstAttribute="leading" secondItem="Z2Z-04-95I" secondAttribute="leading" id="3mu-Q6-7Sf"/>
+                    <constraint firstItem="m77-MC-AIo" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="6Ah-kj-2Ai"/>
+                    <constraint firstItem="fwm-rM-1wj" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="6UY-4y-jQ9"/>
+                    <constraint firstItem="OrZ-RC-nkj" firstAttribute="top" secondItem="m77-MC-AIo" secondAttribute="bottom" constant="12" id="9hQ-O5-exq"/>
+                    <constraint firstItem="Z2Z-04-95I" firstAttribute="leading" secondItem="xLt-Pf-Ugq" secondAttribute="trailing" constant="20" id="AOP-BT-1CC"/>
+                    <constraint firstItem="m77-MC-AIo" firstAttribute="top" secondItem="fwm-rM-1wj" secondAttribute="bottom" constant="10" id="DBP-uW-l2g"/>
+                    <constraint firstItem="xLt-Pf-Ugq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="DF4-M1-Kne"/>
+                    <constraint firstItem="Z2Z-04-95I" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="HA5-N8-mKQ"/>
+                    <constraint firstItem="306-g4-Z4l" firstAttribute="leading" secondItem="Z2Z-04-95I" secondAttribute="leading" id="I97-hZ-heR"/>
+                    <constraint firstItem="OrZ-RC-nkj" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="QYP-RQ-Z6P"/>
+                    <constraint firstItem="306-g4-Z4l" firstAttribute="top" secondItem="fwm-rM-1wj" secondAttribute="bottom" constant="8" id="ej6-DI-JRv"/>
+                    <constraint firstItem="m77-MC-AIo" firstAttribute="leading" secondItem="306-g4-Z4l" secondAttribute="trailing" constant="17" id="gCz-GJ-UAO"/>
+                    <constraint firstItem="f0m-Up-Ub7" firstAttribute="top" secondItem="306-g4-Z4l" secondAttribute="bottom" constant="8" id="h8Y-mn-CFQ"/>
+                    <constraint firstItem="xLt-Pf-Ugq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="jcK-mi-Hc5"/>
+                    <constraint firstItem="Z2Z-04-95I" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="kbF-at-s5L"/>
+                    <constraint firstItem="OrZ-RC-nkj" firstAttribute="leading" secondItem="f0m-Up-Ub7" secondAttribute="trailing" constant="17" id="vW9-Jz-n6X"/>
+                    <constraint firstItem="fwm-rM-1wj" firstAttribute="top" secondItem="Z2Z-04-95I" secondAttribute="bottom" constant="8" id="xhD-L4-RcW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="classNameLabel" destination="Z2Z-04-95I" id="kcK-yX-5n9"/>
+                <outlet property="classNoLabel" destination="fwm-rM-1wj" id="wSY-8i-bM0"/>
+                <outlet property="photo" destination="xLt-Pf-Ugq" id="hua-Bg-Skd"/>
+                <outlet property="teacherNameLabel" destination="OrZ-RC-nkj" id="94o-26-POU"/>
+                <outlet property="universityNameLabel" destination="m77-MC-AIo" id="cab-t6-Bf4"/>
+            </connections>
+            <point key="canvasLocation" x="270" y="351"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="PKUIcon" width="65" height="65"/>
+        <image name="bookMarkIcon" width="22" height="22"/>
+        <image name="locationIcon" width="22" height="22"/>
+    </resources>
+</document>

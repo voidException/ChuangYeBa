@@ -8,14 +8,17 @@
 
 #import "ClassSettingTableViewController.h"
 
+static NSString *classInfoCellIdentifier = @"ClassInfoCell";
+
 @interface ClassSettingTableViewController ()
 
-@property (strong, nonatomic) NSArray *studentArray;
+
 
 @end
 
 @implementation ClassSettingTableViewController
-
+@synthesize classInfo;
+@synthesize userInfo;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -24,16 +27,11 @@
     NSBundle *bunble = [NSBundle mainBundle];
     NSString *plistPath = [bunble pathForResource:@"studentAndNumber" ofType:@"plist"];
     
-    self.classInfoView.frame = CGRectMake(0, 0, self.view.frame.size.width, 140);
+    
+    [self loadClassInfoFormLocal];
     self.studentArray = [[NSArray alloc]initWithContentsOfFile:plistPath];
-    self.imageView.image = [UIImage imageNamed:@"USA.png"];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
     
 }
 
@@ -42,39 +40,94 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)clickOnExitClassButton:(id)sender {
-    // 修改UserDeaults中的isUserAddedClass的值，修改为NO
+#pragma mark - Private Method
+- (void)loadClassInfoFormLocal {
+    self.classInfo = [[ClassInfo alloc] init];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSNumber *number = [[NSNumber alloc]initWithBool:NO];
-    [ud setObject:number forKey:@"isUserAddedClass"];
-    [ud synchronize];
-    // 返回上级菜单
-    [self.navigationController popViewControllerAnimated:YES];
+    NSData *udObject = [ud objectForKey:@"classInfo"];
+    self.classInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    udObject = [ud objectForKey:@"userInfo"];
+    userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    
+    
+}
+
+
+- (void)requestClassInfoFormServer {
+    
+}
+
+#pragma mark - Action
+- (IBAction)clickOnExitClassButton:(id)sender {
+    
+    
+    [ClassNetworkUtils submitQuitClassWithUserId:userInfo.userId andClassId:classInfo.classId andCallback:^(id obj) {
+    
+        NSLog(@"%@", obj);
+        // 修改UserDeaults中的isUserAddedClass的值，修改为NO
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSNumber *number = [[NSNumber alloc]initWithBool:NO];
+        [ud setObject:number forKey:@"isUserAddedClass"];
+        [ud removeObjectForKey:@"classInfo"];
+        [ud synchronize];
+        // 返回上级菜单
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+        
+        
+        
+
+    }];
+    
+}
+
+#pragma mark - Tbale view delegaet
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 146;
+    } else {
+        return 44;
+    }
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.studentArray count];
+    if (section == 0) {
+        return 1;
+    } else {
+        return [self.studentArray count];
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *studentInfoCellIndentifier = @"StudentInfoCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:studentInfoCellIndentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:studentInfoCellIndentifier];
+    if (indexPath.section == 0) {
+        ClassInfoCell *classInfoCell = [tableView dequeueReusableCellWithIdentifier:classInfoCellIdentifier];
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
+        classInfoCell.classNoLabel.text = classNoString;
+        classInfoCell.classNameLabel.text = classInfo.classroomName;
+        classInfoCell.teacherNameLabel.text = classInfo.teacherName;
+        classInfoCell.universityNameLabel.text = classInfo.universityName;
+        return classInfoCell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:studentInfoCellIndentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:studentInfoCellIndentifier];
+        }
+        NSInteger row = [indexPath row];
+        NSDictionary *dic = [self.studentArray objectAtIndex:row];
+        cell.textLabel.text = [dic objectForKey:@"name"];
+        cell.detailTextLabel.text = [dic objectForKey:@"number"];
+        return cell;
     }
-    NSInteger row = [indexPath row];
-    NSDictionary *dic = [self.studentArray objectAtIndex:row];
-    cell.textLabel.text = [dic objectForKey:@"name"];
-    cell.detailTextLabel.text = [dic objectForKey:@"number"];
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
