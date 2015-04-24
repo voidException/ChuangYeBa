@@ -12,6 +12,14 @@
 		8B05E5F61AD9688300E87347 /* NewOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* NewOptionCell.xib */; };
 		8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34B1761AE8C0E500A39F8F /* TestStateCell.m */; };
 		8B34B1791AE8C0FD00A39F8F /* TestStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */; };
+		8B356C551AE8D4D4004CC161 /* TestResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */; };
+		8B356C5B1AE8D5D2004CC161 /* TestScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C591AE8D5D2004CC161 /* TestScoreCell.m */; };
+		8B356C5C1AE8D5D2004CC161 /* TestScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5A1AE8D5D2004CC161 /* TestScoreCell.xib */; };
+		8B356C601AE8D7B9004CC161 /* AnswerSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C5E1AE8D7B9004CC161 /* AnswerSheetCell.m */; };
+		8B356C611AE8D7B9004CC161 /* AnswerSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5F1AE8D7B9004CC161 /* AnswerSheetCell.xib */; };
+		8B356C651AE8E631004CC161 /* QuizCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C631AE8E631004CC161 /* QuizCollectionCell.m */; };
+		8B356C661AE8E631004CC161 /* QuizCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */; };
+		8B356C691AE9E296004CC161 /* TestDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C681AE9E296004CC161 /* TestDetailViewController.m */; };
 		8B451AD71ADB8170002C4CA9 /* FindPasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */; };
 		8B451ADA1ADB9559002C4CA9 /* RegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD91ADB9559002C4CA9 /* RegisterTableViewController.m */; };
 		8B451ADD1ADCBC31002C4CA9 /* ClassNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451ADC1ADCBC31002C4CA9 /* ClassNetworkUtils.m */; };
@@ -140,6 +148,19 @@
 		8B34B1751AE8C0E500A39F8F /* TestStateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestStateCell.h; path = ChuangYeBa/TestStateCell.h; sourceTree = "<group>"; };
 		8B34B1761AE8C0E500A39F8F /* TestStateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestStateCell.m; path = ChuangYeBa/TestStateCell.m; sourceTree = "<group>"; };
 		8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TestStateCell.xib; path = ChuangYeBa/TestStateCell.xib; sourceTree = "<group>"; };
+		8B356C531AE8D4D4004CC161 /* TestResultTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestResultTableViewController.h; path = ChuangYeBa/TestResultTableViewController.h; sourceTree = "<group>"; };
+		8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestResultTableViewController.m; path = ChuangYeBa/TestResultTableViewController.m; sourceTree = "<group>"; };
+		8B356C581AE8D5D2004CC161 /* TestScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestScoreCell.h; path = ChuangYeBa/TestScoreCell.h; sourceTree = "<group>"; };
+		8B356C591AE8D5D2004CC161 /* TestScoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestScoreCell.m; path = ChuangYeBa/TestScoreCell.m; sourceTree = "<group>"; };
+		8B356C5A1AE8D5D2004CC161 /* TestScoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TestScoreCell.xib; path = ChuangYeBa/TestScoreCell.xib; sourceTree = "<group>"; };
+		8B356C5D1AE8D7B9004CC161 /* AnswerSheetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerSheetCell.h; path = ChuangYeBa/AnswerSheetCell.h; sourceTree = "<group>"; };
+		8B356C5E1AE8D7B9004CC161 /* AnswerSheetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnswerSheetCell.m; path = ChuangYeBa/AnswerSheetCell.m; sourceTree = "<group>"; };
+		8B356C5F1AE8D7B9004CC161 /* AnswerSheetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnswerSheetCell.xib; path = ChuangYeBa/AnswerSheetCell.xib; sourceTree = "<group>"; };
+		8B356C621AE8E631004CC161 /* QuizCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuizCollectionCell.h; path = ChuangYeBa/QuizCollectionCell.h; sourceTree = "<group>"; };
+		8B356C631AE8E631004CC161 /* QuizCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuizCollectionCell.m; path = ChuangYeBa/QuizCollectionCell.m; sourceTree = "<group>"; };
+		8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuizCollectionCell.xib; path = ChuangYeBa/QuizCollectionCell.xib; sourceTree = "<group>"; };
+		8B356C671AE9E296004CC161 /* TestDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailViewController.h; path = ChuangYeBa/TestDetailViewController.h; sourceTree = "<group>"; };
+		8B356C681AE9E296004CC161 /* TestDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailViewController.m; path = ChuangYeBa/TestDetailViewController.m; sourceTree = "<group>"; };
 		8B451AD51ADB8170002C4CA9 /* FindPasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPasswordTableViewController.h; path = ChuangYeBa/FindPasswordTableViewController.h; sourceTree = "<group>"; };
 		8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPasswordTableViewController.m; path = ChuangYeBa/FindPasswordTableViewController.m; sourceTree = "<group>"; };
 		8B451AD81ADB9559002C4CA9 /* RegisterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterTableViewController.h; path = ChuangYeBa/RegisterTableViewController.h; sourceTree = "<group>"; };
@@ -338,6 +359,41 @@
 			name = Trash;
 			sourceTree = "<group>";
 		};
+		8B356C561AE8D4FC004CC161 /* TestView */ = {
+			isa = PBXGroup;
+			children = (
+				8BDA58B41AD94DF100E59EE8 /* NewQuestionCell.h */,
+				8BDA58B51AD94DF100E59EE8 /* NewQuestionCell.m */,
+				8BDA58B61AD94DF100E59EE8 /* NewQuestionCell.xib */,
+				8B05E5F21AD9688300E87347 /* NewOptionCell.h */,
+				8B05E5F31AD9688300E87347 /* NewOptionCell.m */,
+				8B05E5F41AD9688300E87347 /* NewOptionCell.xib */,
+				8BEDFEEC1ADA19B7004C5845 /* ExplainCell.h */,
+				8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */,
+				8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */,
+				8B34B1751AE8C0E500A39F8F /* TestStateCell.h */,
+				8B34B1761AE8C0E500A39F8F /* TestStateCell.m */,
+				8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */,
+			);
+			name = TestView;
+			sourceTree = "<group>";
+		};
+		8B356C571AE8D520004CC161 /* TestResultView */ = {
+			isa = PBXGroup;
+			children = (
+				8B356C581AE8D5D2004CC161 /* TestScoreCell.h */,
+				8B356C591AE8D5D2004CC161 /* TestScoreCell.m */,
+				8B356C5A1AE8D5D2004CC161 /* TestScoreCell.xib */,
+				8B356C5D1AE8D7B9004CC161 /* AnswerSheetCell.h */,
+				8B356C5E1AE8D7B9004CC161 /* AnswerSheetCell.m */,
+				8B356C5F1AE8D7B9004CC161 /* AnswerSheetCell.xib */,
+				8B356C621AE8E631004CC161 /* QuizCollectionCell.h */,
+				8B356C631AE8E631004CC161 /* QuizCollectionCell.m */,
+				8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */,
+			);
+			name = TestResultView;
+			sourceTree = "<group>";
+		};
 		8B451AE91ADF7EEF002C4CA9 /* Article */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +505,10 @@
 				8BB23BA11AE5311B00621F91 /* ClassTableViewController.m */,
 				8BB23BAF1AE6359F00621F91 /* ConditionViewController.h */,
 				8BB23BB01AE6359F00621F91 /* ConditionViewController.m */,
+				8B356C531AE8D4D4004CC161 /* TestResultTableViewController.h */,
+				8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */,
+				8B356C671AE9E296004CC161 /* TestDetailViewController.h */,
+				8B356C681AE9E296004CC161 /* TestDetailViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -488,24 +548,14 @@
 		8B5826B21ACD0D8E005E39E0 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				8BDA58B41AD94DF100E59EE8 /* NewQuestionCell.h */,
-				8BDA58B51AD94DF100E59EE8 /* NewQuestionCell.m */,
-				8BDA58B61AD94DF100E59EE8 /* NewQuestionCell.xib */,
-				8B05E5F21AD9688300E87347 /* NewOptionCell.h */,
-				8B05E5F31AD9688300E87347 /* NewOptionCell.m */,
-				8B05E5F41AD9688300E87347 /* NewOptionCell.xib */,
-				8BEDFEEC1ADA19B7004C5845 /* ExplainCell.h */,
-				8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */,
-				8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */,
+				8B356C571AE8D520004CC161 /* TestResultView */,
+				8B356C561AE8D4FC004CC161 /* TestView */,
 				8BB23BA31AE531D300621F91 /* TestGroupCell.h */,
 				8BB23BA41AE531D300621F91 /* TestGroupCell.m */,
 				8BB23BA51AE531D300621F91 /* TestGroupCell.xib */,
 				8BB23BB21AE641AA00621F91 /* ClassInfoCell.h */,
 				8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */,
 				8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */,
-				8B34B1751AE8C0E500A39F8F /* TestStateCell.h */,
-				8B34B1761AE8C0E500A39F8F /* TestStateCell.m */,
-				8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -800,6 +850,7 @@
 				8BD281B01ACD99880030005D /* studentAndNumber.plist in Resources */,
 				8BD281C71ACD99880030005D /* Paraguay.png in Resources */,
 				8BDA58B81AD94DF100E59EE8 /* NewQuestionCell.xib in Resources */,
+				8B356C5C1AE8D5D2004CC161 /* TestScoreCell.xib in Resources */,
 				8BD281BA1ACD99880030005D /* England.png in Resources */,
 				8BD281CA1ACD99880030005D /* Slovakia.png in Resources */,
 				8BD01A981ACF7D3800E339D6 /* setting.plist in Resources */,
@@ -823,6 +874,7 @@
 				8BEDFEF01ADA19B7004C5845 /* ExplainCell.xib in Resources */,
 				8BCF39A71ACCE09C0071C016 /* LaunchScreen.xib in Resources */,
 				8BD281B41ACD99880030005D /* Australia.png in Resources */,
+				8B356C661AE8E631004CC161 /* QuizCollectionCell.xib in Resources */,
 				8BD281AE1ACD99880030005D /* classroom.plist in Resources */,
 				8BD281CE1ACD99880030005D /* Spain.png in Resources */,
 				8BD281C51ACD99880030005D /* Nigeria.png in Resources */,
@@ -837,6 +889,7 @@
 				8BD281CB1ACD99880030005D /* Slovenia.png in Resources */,
 				8BE0A5621AD63533006B348E /* quizs.plist in Resources */,
 				8B451AE81ADF7B24002C4CA9 /* ArticleCell.xib in Resources */,
+				8B356C611AE8D7B9004CC161 /* AnswerSheetCell.xib in Resources */,
 				8BCF39A41ACCE09C0071C016 /* Images.xcassets in Resources */,
 				8BD281CF1ACD99880030005D /* Switzerland.png in Resources */,
 			);
@@ -910,10 +963,12 @@
 				8B451AF91ADF8886002C4CA9 /* ArticleTitleCell.m in Sources */,
 				8BB23BA61AE531D300621F91 /* TestGroupCell.m in Sources */,
 				8BD4C0841ACEF703004D96AF /* UserInfoCell.m in Sources */,
+				8B356C551AE8D4D4004CC161 /* TestResultTableViewController.m in Sources */,
 				8BB23BAB1AE5E50700621F91 /* AddClassTableViewController.m in Sources */,
 				8B9C6E5C1ACD193E00A4EF54 /* ClassInfo.m in Sources */,
 				8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */,
 				8BE0A5601AD62AC1006B348E /* Quiz.m in Sources */,
+				8B356C601AE8D7B9004CC161 /* AnswerSheetCell.m in Sources */,
 				8B9C6E601ACD196400A4EF54 /* LoginNetworkUtils.m in Sources */,
 				8BEDFEEF1ADA19B7004C5845 /* ExplainCell.m in Sources */,
 				8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */,
@@ -931,7 +986,9 @@
 				8BB23BB51AE641AA00621F91 /* ClassInfoCell.m in Sources */,
 				8B05E5F51AD9688300E87347 /* NewOptionCell.m in Sources */,
 				8BCF39991ACCE09C0071C016 /* main.m in Sources */,
+				8B356C651AE8E631004CC161 /* QuizCollectionCell.m in Sources */,
 				8BB23BB11AE6359F00621F91 /* ConditionViewController.m in Sources */,
+				8B356C5B1AE8D5D2004CC161 /* TestScoreCell.m in Sources */,
 				8BC289B11AD0448E00E1B632 /* MessageTableViewCell.m in Sources */,
 				8BC289B41AD04B5000E1B632 /* MessageViewController.m in Sources */,
 				8BE3278C1AD116D9007F79C3 /* ArticleCell.m in Sources */,
@@ -940,6 +997,7 @@
 				8BDA58B71AD94DF100E59EE8 /* NewQuestionCell.m in Sources */,
 				8B451B081ADFED74002C4CA9 /* CommentInputView.m in Sources */,
 				8BB23BA21AE5311B00621F91 /* ClassTableViewController.m in Sources */,
+				8B356C691AE9E296004CC161 /* TestDetailViewController.m in Sources */,
 				8B9C6E5D1ACD193E00A4EF54 /* UserInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

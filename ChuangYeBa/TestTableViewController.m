@@ -386,6 +386,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         [self packageAction];
         [ClassNetworkUtils submitTestResult:self.testResultArray andCallback:^(id obj) {
             NSLog(@"提交成功");
+            [self performSegueWithIdentifier:@"ShowTestResult" sender:self];
         }];
     }
 }
@@ -403,5 +404,14 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         }
     }
 }
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowTestResult"]) {
+        id destinationVC = [segue destinationViewController];
+        [destinationVC setValue:self.testResultArray forKey:@"testResultArray"];
+    }
+}
+
 
 @end
