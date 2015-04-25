@@ -56,7 +56,7 @@
 - (CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
 {
     //CGRect keyboardEndingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
-#warning 真机测试中切换不同的键盘时会出现高度BUG。
+#warning 重要！真机测试中切换不同的键盘时会出现高度BUG。
     CGRect keyboardBeginingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey]CGRectValue];
     CGRect keyboardEndingFrame = [self.view convertRect:keyboardBeginingUncorrectedFrame fromView:nil];
     NSLog(@"keyB height = %f", keyboardEndingFrame.size.height);
@@ -125,7 +125,8 @@
         userInfo.name = self.userName.text;
         [LoginNetworkUtils registerUserInfo:userInfo andCallBack:^(id obj) {
             NSDictionary *dic = obj;
-            NSNumber *error = [dic objectForKey:@"error"];
+#warning 重要！！功能没有做完！！！！！
+            //NSNumber *error = [dic objectForKey:@"error"];
             NSString *errorMessage = [dic objectForKey:@"errorMessage"];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
             [alert show];

@@ -73,7 +73,7 @@ static NSString *commentCellIdentifier = @"CommentCell";
 }
 
 - (void)setNavigationBarAttributes {
-#warning 导航条修改颜色有问题
+#warning 普通！导航条修改颜色有问题
     /*
     self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];

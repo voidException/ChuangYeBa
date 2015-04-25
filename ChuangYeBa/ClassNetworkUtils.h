@@ -25,7 +25,7 @@ typedef void (^Callback)(id obj);
 + (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback;
 
 // 请求接口4，获取学生题目结果
-+ (void)requestTestResultByStuId:(NSString *)stuId andClassId:(NSString *)classId andItemId:(NSString *)itemId andCallback:(Callback)callback;
++ (void)requestTestResultByStuId:(NSNumber *)stuId andClassId:(NSNumber *)classId andItemId:(NSNumber *)itemId andCallback:(Callback)callback;
 
 // 请求接口5，学生插入测试结果
 + (void)submitTestResult:(NSArray *)testResult andCallback:(Callback)callback;

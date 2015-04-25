@@ -11,7 +11,7 @@
 @implementation TestScoreCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.userInteractionEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

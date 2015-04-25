@@ -1,25 +1,24 @@
 //
-//  TestTableViewController.m
+//  TestViewController.m
 //  ChuangYeBa
 //
-//  Created by Developer on 15/4/11.
+//  Created by Developer on 15/4/25.
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
-#import "TestTableViewController.h"
+#import "TestViewController.h"
 
 static NSString *questionCellIdentifer = @"NewQuestionCell";
 static NSString *optionCellIdentifer = @"NewOptionCell";
 static NSString *explainCellIdentifer = @"ExplainCell";
 static NSString *testStateCellIdentifier = @"TestStateCell";
 
-@interface TestTableViewController ()
 
+@interface TestViewController ()
 @property (strong, nonatomic) NSNumber *numQuizNo;
-
 @end
 
-@implementation TestTableViewController
+@implementation TestViewController
 
 @synthesize quizNo;
 @synthesize isShowExplain;
@@ -29,32 +28,35 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 初始化委托
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
     // 注册xib的题干和选项的cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"NewQuestionCell" bundle:nil] forCellReuseIdentifier:questionCellIdentifer];
-    [self.tableView registerNib:[UINib nibWithNibName:@"NewOptionCell" bundle:nil] forCellReuseIdentifier:optionCellIdentifer];
+    [self.tableView registerNib:[UINib nibWithNibName:@"QuestionCell" bundle:nil] forCellReuseIdentifier:questionCellIdentifer];
+    [self.tableView registerNib:[UINib nibWithNibName:@"OptionCell" bundle:nil] forCellReuseIdentifier:optionCellIdentifer];
     [self.tableView registerNib:[UINib nibWithNibName:@"TestStateCell" bundle:nil] forCellReuseIdentifier:testStateCellIdentifier];
     // 如果需要显示答案，注册显示答案的cell
     if ([isShowExplain isEqual:@YES]) {
         [self.tableView registerNib:[UINib nibWithNibName:@"ExplainCell" bundle:nil] forCellReuseIdentifier:explainCellIdentifer];
     }
     // 初始化导航条左键
-    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnBackButton)];
+    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnBackButton)];
     self.navigationItem.leftBarButtonItem = self.backButton;
     
     // 初始化tableView设置
     self.title = @"练习题";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //self.tableView.backgroundColor = [UIColor whiteColor];
     
     // 初始化用户选择答案的数组
-    self.userSelection = [[NSMutableArray alloc] init];
+    if (!isShowExplain) {
+        self.userSelection = [[NSMutableArray alloc] init];
+    }
     // 初始化题目对象
     self.quiz = [[Quiz alloc] init];
     
     // 初始化存储测试结果的数组
     self.testResultArray = [[NSMutableArray alloc] init];
-    // 初始化上一题按钮，上一题按钮不可用
-    [self.lastButton setEnabled:NO];
     
     // 从本地取得教室信息
     [self loadClassInfoFromLocal];
@@ -65,27 +67,43 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         
     } else {
         self.quizNo = [self.numQuizNo integerValue];
-        self.submitButton.title = nil;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-        //btn.center = CGPointMake(self.view.frame.size.width/2, self.navigationController.toolbar.frame.size.height/2);
-        //btn.frame.size = CGSizeMake(100, 44);
-        btn.titleLabel.text = @"出来出来出来";
-        [self.view insertSubview:btn aboveSubview:self.navigationController.toolbar];
     }
+    // 根据题号初始化按钮状态，上一题按钮不可用
+    if (quizNo == 1) {
+        [self.lastButton setEnabled:NO];
+    } else if (quizNo == self.quizs.count) {
+        [self.nextButton setEnabled:NO];
+    } else {
+        [self.lastButton setEnabled:YES];
+        [self.nextButton setEnabled:YES];
+    }
+    
+    if (isShowExplain) {
+        self.submitButton.hidden = YES;
+    }
+    
     // 加载题目
     [self loadQuiz:quizNo];
-    // 初始化记录用户选择的数组,和记录用户存储的数组
-    for (int i = 0; i < self.quizs.count; i++) {
-        [self.userSelection addObject:[NSNumber numberWithBool:NO]];
+    
+    // 初始化记录用户选择的数组,如果在答题状态,将用户选择数组全部装入NO
+    if (!isShowExplain) {
+        for (int i = 0; i < self.quizs.count; i++) {
+            [self.userSelection addObject:[NSNumber numberWithBool:NO]];
+        }
+    } else {
+        self.anwserSelection = [[NSMutableArray alloc] init];
+        
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.toolbarHidden = NO;
+    if (isShowExplain) {
+        // 加载题目的时候就可以立刻看到当前题目的用户选项
+        [self changeQuizAction];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,39 +112,6 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 
 
 #pragma mark - Private Method
-// 从服务器请求题组
-/*
-- (void)requestQuizsFromServer {
-    [ClassNetworkUtils requestQuizsByitemId:itemId andCallback:^(id obj){
-        // 接回调对象
-        NSDictionary *dic = obj;
-        // 接受错误信息
-        NSNumber *error = [dic objectForKey:@"error"];
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-        
-        if ([error integerValue] == 1) {
-            // 给题组赋值
-            NSArray *quizsArr = [dic objectForKey:@"test"];
-            
-            for (NSDictionary *quizsDic in quizsArr) {
-                Quiz *qz = [ClassJsonParser parseQuiz:quizsDic];
-                [self.quizs addObject:qz];
-            }
-            // 加载题目
-             [self loadQuiz:quizNo];
-            // 初始化记录用户选择的数组,和记录用户存储的数组
-            for (int i = 0; i < self.quizs.count; i++) {
-                [self.userSelection addObject:[NSNumber numberWithBool:NO]];
-            }
-            // 重新加载tabelview
-            [self.tableView reloadData];
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
-}
-*/
 - (void)loadClassInfoFromLocal {
     self.classInfo = [[ClassInfo alloc] init];
     self.userInfo = [[UserInfo alloc] init];
@@ -208,17 +193,17 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OptionCell *cell = (OptionCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     if (self.selectedCellIndexPath) {
-         OptionCell *lastSelectedCell = (OptionCell *)[self.tableView cellForRowAtIndexPath:self.selectedCellIndexPath];
+        OptionCell *lastSelectedCell = (OptionCell *)[self.tableView cellForRowAtIndexPath:self.selectedCellIndexPath];
         if (![self.selectedCellIndexPath isEqual:indexPath]) {
-            lastSelectedCell.checkImage.hidden = YES;
+            [lastSelectedCell setState:OptionCellStateUnselected];
         }
     }
-    if (cell.checkImage.isHidden) {
-        cell.checkImage.hidden = NO;
+    if (cell.state == OptionCellStateUnselected) {
+        [cell setState:OptionCellStateSelected];
         self.selectedCellIndexPath = indexPath;
         [self.userSelection replaceObjectAtIndex:(quizNo - 1) withObject:self.selectedCellIndexPath];
     } else {
-        cell.checkImage.hidden = YES;
+        [cell setState:OptionCellStateUnselected];
         self.selectedCellIndexPath = nil;
         [self.userSelection replaceObjectAtIndex:(quizNo - 1) withObject:[NSNumber numberWithBool:NO]];
     }
@@ -256,49 +241,118 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     } else return 0;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == 0) {
-        TestStateCell *testStateCell = [tableView dequeueReusableCellWithIdentifier:testStateCellIdentifier];
-        testStateCell.typeLabel.text = @"单项选择题";
-        testStateCell.currentLabel.text = [NSString stringWithFormat:@"%lu", quizNo];
-        testStateCell.totalLabel.text = [NSString stringWithFormat:@"%lu", self.quizs.count];
-        return testStateCell;
+        // 答题状态条小区
+        return [self tableView:tableView testStateCellForRowAtIndexPath:indexPath];
     } else if (indexPath.section == 1) {
+        // 题干小区
         if (indexPath.row == 0) {
-            QuestionCell *questionCell = [tableView dequeueReusableCellWithIdentifier:questionCellIdentifer];
-            questionCell.textView.text = self.quiz.question;
-            return questionCell;
+            return [self tableView:tableView questionCellForRowAtIndexPath:indexPath];
         } else {
-            QuestionCell *optionCell = [tableView dequeueReusableCellWithIdentifier:optionCellIdentifer];
-            optionCell.textView.text = self.quiz.options[indexPath.row - 1];
-            return optionCell;
+            // 选项小区
+            return [self tableView:tableView  optionCellForRowAtIndexPath:indexPath];
         }
     } else {
-        ExplainCell *explainCell = [tableView dequeueReusableCellWithIdentifier:explainCellIdentifer];
-        explainCell.explainTextView.text = self.quiz.answerExplain;
-        
-        // 显示正确答案
-        switch ([self.quiz.answerOption integerValue]) {
-            case 1:
-                explainCell.anwserLabel.text = @"A";
-                break;
-            case 2:
-                explainCell.anwserLabel.text = @"B";
-                break;
-            case 3:
-                explainCell.anwserLabel.text = @"C";
-                break;
-            case 4:
-                explainCell.anwserLabel.text = @"D";
-                break;
-            default:
-                explainCell.anwserLabel.text = nil;
-                break;
-        }
-        return explainCell;
+        // 解释小区
+        return [self tableView:tableView explainCellForRowAtIndexPath:indexPath];
     }
+}
+
+- (TestStateCell *)tableView:(UITableView *)tableView testStateCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TestStateCell *testStateCell = [tableView dequeueReusableCellWithIdentifier:testStateCellIdentifier];
+    testStateCell.typeLabel.text = @"单项选择题";
+    testStateCell.currentLabel.text = [NSString stringWithFormat:@"%lu", quizNo];
+    testStateCell.totalLabel.text = [NSString stringWithFormat:@"%lu", self.quizs.count];
+    return testStateCell;
+
+}
+
+- (QuestionCell *)tableView:(UITableView *)tableView questionCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QuestionCell *questionCell = [tableView dequeueReusableCellWithIdentifier:questionCellIdentifer];
+    questionCell.textView.text = self.quiz.question;
+    return questionCell;
+}
+
+- (ExplainCell *)tableView:(UITableView *)tableView explainCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ExplainCell *explainCell = [tableView dequeueReusableCellWithIdentifier:explainCellIdentifer];
+    explainCell.explainTextView.text = self.quiz.answerExplain;
+    
+    // 显示正确答案
+    switch ([self.quiz.answerOption integerValue]) {
+        case 1:
+            explainCell.anwserLabel.text = @"A";
+            break;
+        case 2:
+            explainCell.anwserLabel.text = @"B";
+            break;
+        case 3:
+            explainCell.anwserLabel.text = @"C";
+            break;
+        case 4:
+            explainCell.anwserLabel.text = @"D";
+            break;
+        default:
+            explainCell.anwserLabel.text = nil;
+            break;
+    }
+    return explainCell;
+
+}
+
+- (OptionCell *)tableView:(UITableView *)tableView optionCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    OptionCell *optionCell = [tableView dequeueReusableCellWithIdentifier:optionCellIdentifer];
+    // 设置显示
+    switch (indexPath.row) {
+        case 1:
+            optionCell.checkLabel.text = @"A";
+            break;
+        case 2:
+            optionCell.checkLabel.text = @"B";
+            break;
+        case 3:
+            optionCell.checkLabel.text = @"C";
+            break;
+        case 4:
+            optionCell.checkLabel.text = @"D";
+            break;
+        default:
+            optionCell.checkLabel.text = nil;
+            break;
+    }
+    // 显示选项题干
+    optionCell.textView.text = self.quiz.options[indexPath.row - 1];
+    
+    if (isShowExplain) {
+        // 在显示解释的状态下，用户是不能选择小区的
+        optionCell.userInteractionEnabled = NO;
+        [optionCell setState:OptionCellStateUnable];
+        NSIndexPath *userSelected = self.userSelection[quizNo - 1];
+        NSIndexPath *answerOption = [NSIndexPath indexPathForRow:[self.quiz.answerOption integerValue] inSection:1];
+        if ([userSelected isEqual:answerOption]) {
+            if ([userSelected isEqual:indexPath]) {
+                [optionCell setState:OptionCellStateCorrect];
+            }
+        } else {
+            if ([userSelected isEqual:indexPath]) {
+                [optionCell setState:OptionCellStateError];
+            } else if ([answerOption isEqual:indexPath]) {
+                [optionCell setState:OptionCellStateCorrect];
+            }
+        }
+    } else {
+        // 设置默认的状态为未选择状态
+        [optionCell setState:OptionCellStateUnselected];
+        // 读取该题用户是否已经做过选择，如果有则帮助用户选取已经选过的选项
+        if (![self.userSelection[quizNo - 1] isEqual:[NSNumber numberWithBool:NO]]) {
+            self.selectedCellIndexPath = self.userSelection[quizNo - 1];
+            if ([self.selectedCellIndexPath isEqual:indexPath]) {
+                [optionCell setState:OptionCellStateSelected];
+            }
+        }
+    }
+    return optionCell;
+
 }
 
 #pragma mark - Action
@@ -330,6 +384,12 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         }
         [self changeQuizAction];
     }
+}
+
+- (void)changeQuizAction {
+    // 加载下一个题目
+    [self loadQuiz:quizNo];
+    [self.tableView reloadData];
 }
 
 // 重要！封装用户选择到testResultArrat
@@ -373,21 +433,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     }
 }
 
-- (void)changeQuizAction {
-    // 加载下一个题目
-    [self loadQuiz:quizNo];
-    [self.tableView reloadData];
-    OptionCell *thisOption = (OptionCell *)[self.tableView cellForRowAtIndexPath:self.selectedCellIndexPath];
-    thisOption.checkImage.hidden = YES;
-    self.selectedCellIndexPath = nil;
-    
-    // 读取该题用户是否已经做过选择，如果有则帮助用户选取已经选过的选项
-    if (![self.userSelection[quizNo - 1] isEqual:[NSNumber numberWithBool:NO]]) {
-        self.selectedCellIndexPath = self.userSelection[quizNo - 1];
-        OptionCell *cell = (OptionCell *)[self.tableView cellForRowAtIndexPath:self.selectedCellIndexPath];
-        cell.checkImage.hidden = NO;
-    }
-}
+
 
 - (IBAction)clickOnSubmitButton:(id)sender {
     if (!isShowExplain) {
@@ -435,6 +481,5 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         [destinationVC setValue:self.testResultArray forKey:@"testResultArray"];
     }
 }
-
 
 @end

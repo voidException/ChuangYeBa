@@ -13,8 +13,12 @@
 #import "AnswerSheetCell.h"
 
 
-@interface TestResultTableViewController : UITableViewController
+@interface TestResultTableViewController : UITableViewController <AnswerSheetDelegate>
 
 @property (strong, nonatomic) NSMutableArray *testResultArray;
+@property (strong, nonatomic) NSMutableArray *userSelection;
+
+// 用来传递下载下来的题组数组
+@property (strong, nonatomic) NSMutableArray *quizs;
 
 @end

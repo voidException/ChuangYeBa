@@ -24,16 +24,15 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 
+// 用于显示和保存列表的数组
 @property (strong, nonatomic) NSMutableArray *allTestGroups;
 @property (strong, nonatomic) NSMutableArray *testedGroup;
 @property (strong, nonatomic) NSMutableArray *unTestedGroup;
 @property (strong, nonatomic) NSMutableArray *displayTestGroup;
 
+// 用户模型
 @property (strong, nonatomic) UserInfo *userInfo;
-
-@property (strong, nonatomic) NSNumber *selectedTestGroupId;
-
-@property (nonatomic) BOOL isUserAddedClass;
+@property (strong, nonatomic) TestGroup *selectedTestGroup;
 
 
 @end

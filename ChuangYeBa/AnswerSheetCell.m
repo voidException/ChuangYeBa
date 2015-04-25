@@ -18,6 +18,7 @@ static NSString *quizCollectionCellIdentifier = @"QuizCollectionCell";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerNib:[UINib nibWithNibName:@"QuizCollectionCell" bundle:nil] forCellWithReuseIdentifier:quizCollectionCellIdentifier];
     self.collectionView.bounces = NO;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
 }
 
@@ -45,6 +46,7 @@ static NSString *quizCollectionCellIdentifier = @"QuizCollectionCell";
 
 #pragma Collection View Delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate answerSheet:self didSelectedAtIndexPath:indexPath];
     NSLog(@"选择了题目：%lu", indexPath.row + 1);
 }
 

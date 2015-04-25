@@ -14,10 +14,12 @@
 #endif
 
 // 家里的地址
-//#define SERVER_IP @"http://192.168.1.9:8080/"
+#define SERVER_IP @"http://192.168.1.9:8080/"
 // 错误的地址
 //#define SERVER_IP @"http://192.168.1.9"
 // 公司的地址
 //#define SERVER_IP @"http://10.174.91.15:8080/"
 
-#define SERVER_IP @"http://192.168.0.102:8080/"
+//#define SERVER_IP @"http://192.168.0.102:8080/"
+
+//#define SERVER_IP @"http://123.56.112.178:8080/"

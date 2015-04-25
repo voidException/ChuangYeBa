@@ -32,7 +32,7 @@
         } else {
             userInfo.sex = @"女";
         }
-#warning inColleageDate 没有配置
+#warning 待做！inColleageDate 没有配置
         //userInfo.inCollegeDate =
         userInfo.email = [dic objectForKey:@"email"];
         userInfo.password = [dic objectForKey:@"password"];

@@ -93,7 +93,7 @@ static NSString *serverIP = SERVER_IP;
 }
 
 // 接口4
-+ (void)requestTestResultByStuId:(NSString *)stuId andClassId:(NSString *)classId andItemId:(NSString *)itemId andCallback:(Callback)callback {
++ (void)requestTestResultByStuId:(NSNumber *)stuId andClassId:(NSNumber *)classId andItemId:(NSNumber *)itemId andCallback:(Callback)callback {
     NSString *path = @"/startup/student/test/getTestResult";
     path = [serverIP stringByAppendingString:path];
     

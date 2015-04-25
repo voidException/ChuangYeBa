@@ -15,7 +15,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 @end
 
 @implementation ClassTableViewController
-@synthesize isUserAddedClass;
 @synthesize allTestGroups;
 
 #pragma mark - Lifecycle
@@ -41,13 +40,16 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [self.tableView addLegendHeaderWithRefreshingBlock:^{
         [weakSelf requestTestGroupsFromServer];
     }];
-    
+    [self.tableView.header beginRefreshing];
+
     [self setNavigationBarAttributes];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -128,10 +130,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TestGroup *tg = [[TestGroup alloc] init];
-    tg = self.displayTestGroup[indexPath.row];
-    self.selectedTestGroupId = [NSNumber numberWithInteger:[tg.itemId integerValue  ]];
-    [self performSegueWithIdentifier:@"ShowTestGroup" sender:self];
+    self.selectedTestGroup = [[TestGroup alloc] init];
+    self.selectedTestGroup = self.displayTestGroup[indexPath.row];
+    [self performSegueWithIdentifier:@"ShowTestDetail" sender:self];
 }
 
 #pragma mark - Table view data source
@@ -159,9 +160,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowTestGroup"]) {
+    if ([segue.identifier isEqualToString:@"ShowTestDetail"]) {
         id destinationVC =  [segue destinationViewController];
-        [destinationVC setValue:self.selectedTestGroupId forKey:@"itemId"];
+        [destinationVC setValue:self.selectedTestGroup forKey:@"testGroup"];
     }
 }
 

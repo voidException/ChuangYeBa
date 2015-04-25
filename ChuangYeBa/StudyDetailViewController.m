@@ -80,7 +80,7 @@ static NSString *commentCellIdentifier = @"CommentCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     // 隐藏系统自带导航条
-#warning 隐藏时会造成上一个界面的侧滑滚动条消失
+#warning 普通！隐藏时会造成上一个界面的侧滑滚动条消失
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
@@ -353,9 +353,7 @@ static NSString *commentCellIdentifier = @"CommentCell";
 }
 
 
- #pragma mark - Navigation
-
-
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"ShowMedia"]) {
         id destinationVC = [segue destinationViewController];

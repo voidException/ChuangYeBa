@@ -1,8 +1,8 @@
 //
-//  TestTableViewController.h
+//  TestViewController.h
 //  ChuangYeBa
 //
-//  Created by Developer on 15/4/11.
+//  Created by Developer on 15/4/25.
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
@@ -20,11 +20,11 @@
 #import "ClassNetworkUtils.h"
 #import "ClassJsonParser.h"
 
-@interface TestTableViewController : UITableViewController <UIAlertViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *lastButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *submitButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
+@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *lastButton;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 // 左上角的返回按钮
 @property (strong, nonatomic) UIBarButtonItem *backButton;
@@ -36,6 +36,8 @@
 @property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
 // 用户选择的答案保存
 @property (nonatomic, strong) NSMutableArray *userSelection;
+// 正确的答案保存
+@property (nonatomic, strong) NSMutableArray *anwserSelection;
 
 // 和题目相关的属性
 // 题组号，用来请求下载题组
@@ -62,5 +64,6 @@
 - (IBAction)clickOnNextButton:(id)sender;
 - (IBAction)clickOnSubmitButton:(id)sender;
 - (void)clickOnBackButton;
+
 
 @end

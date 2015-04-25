@@ -47,6 +47,14 @@
     return classInfo;
 }
 
++ (NSNumber *)paresUserSelection:(NSDictionary *)dic {
+    NSNumber *userSelection = [[NSNumber alloc] init];
+    userSelection = [dic objectForKey:@"testresult"];
+    NSInteger change = [userSelection integerValue]/10;
+    userSelection = [NSNumber numberWithInteger:change];
+    return userSelection;
+}
+
 + (TestGroup *)parseTestGropu:(NSDictionary *)dic {
     TestGroup *testGroup = [[TestGroup alloc] init];
     testGroup.itemId = [dic objectForKey:@"itemid"];

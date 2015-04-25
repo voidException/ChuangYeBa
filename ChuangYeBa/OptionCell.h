@@ -1,20 +1,27 @@
 //
-//  OptionCell.h
+//  NewOptionCell.h
 //  ChuangYeBa
 //
-//  Created by Developer on 15/4/8.
+//  Created by Developer on 15/4/11.
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "TestGroup.h"
-#define screenWidth [UIScreen mainScreen].bounds.size.width
 
+typedef enum {
+    OptionCellStateUnselected = 1, // 普通闲置状态
+    OptionCellStateSelected, // 正在刷新中的状态
+    OptionCellStateCorrect,
+    OptionCellStateError,
+    OptionCellStateUnable// 所有数据加载完毕，没有更多的数据了
+} OptionCellState;
 
-@interface OptionCell : UITableViewCell <UITextFieldDelegate>
+@interface OptionCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIImageView *checkImage;
+@property (weak, nonatomic) IBOutlet UILabel *checkLabel;
+@property (nonatomic) OptionCellState state;
 
-@property (nonatomic, strong) UITextView *textView;
-
-@property (nonatomic) float heightOfTextView;
+- (void)setState:(OptionCellState)state;
 
 @end
