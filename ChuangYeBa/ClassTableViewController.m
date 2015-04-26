@@ -22,6 +22,8 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [super viewDidLoad];
     
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     // 注册xib的cell
     [self.tableView registerNib:[UINib nibWithNibName:@"TestGroupCell" bundle:nil] forCellReuseIdentifier:testGroupCellIdentifier];
 
@@ -126,7 +128,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    return 64;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -147,7 +149,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestGroupCell *testGroupCell = [tableView dequeueReusableCellWithIdentifier:testGroupCellIdentifier];
-    testGroupCell.testImage.image = [UIImage imageNamed:@"USA.png"];
+    //testGroupCell.testImage.image = [UIImage imageNamed:@"USA.png"];
     NSInteger row = [indexPath row];
     TestGroup *tg = [[TestGroup alloc] init];
     tg = self.displayTestGroup[row];

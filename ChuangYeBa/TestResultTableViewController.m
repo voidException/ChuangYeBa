@@ -26,17 +26,8 @@ static NSString *articleCellIdentifier = @"ArticleCell";
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // 注册Xib小区
-    [self.tableView registerNib:[UINib nibWithNibName:@"TestScoreCell" bundle:nil] forCellReuseIdentifier:testScroeCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"AnswerSheetCell" bundle:nil] forCellReuseIdentifier:answerSheetCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleCell" bundle:nil] forCellReuseIdentifier:articleCellIdentifier];
-    // 设置分割线的风格
-    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    
-    UIBarButtonItem *quitButton = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnQuitButton)];
-    self.navigationItem.leftBarButtonItem = quitButton;
-    
+
+    [self initUI];
     [self parseTestResultArray];
 }
 
@@ -50,6 +41,19 @@ static NSString *articleCellIdentifier = @"ArticleCell";
 }
 
 #pragma mark - Private Method
+- (void)initUI {
+    self.title = @"练习报告";
+    // 注册Xib小区
+    [self.tableView registerNib:[UINib nibWithNibName:@"TestScoreCell" bundle:nil] forCellReuseIdentifier:testScroeCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"AnswerSheetCell" bundle:nil] forCellReuseIdentifier:answerSheetCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleCell" bundle:nil] forCellReuseIdentifier:articleCellIdentifier];
+    // 设置分割线的风格
+    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    
+    UIBarButtonItem *quitButton = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnQuitButton)];
+    self.navigationItem.leftBarButtonItem = quitButton;
+}
+
 - (void)parseTestResultArray {
     // 这里放到TestResultTVC中！
     // 初始化并分配内存
@@ -79,8 +83,16 @@ static NSString *articleCellIdentifier = @"ArticleCell";
             return 220;
             break;
         case 1:
-            return 300;
+        {
+            NSUInteger rowOfCollectionCell;
+            if (self.quizs.count % 5) {
+                rowOfCollectionCell = self.quizs.count/5 + 1;
+            } else {
+                rowOfCollectionCell = self.quizs.count/5;
+            }
+            return rowOfCollectionCell * 58 + 90;
             break;
+        }
         case 2:
             return 100;
             break;

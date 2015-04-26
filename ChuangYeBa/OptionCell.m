@@ -9,6 +9,8 @@
 
 #import "OptionCell.h"
 
+#define THEME_BLUE colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1
+
 @implementation OptionCell
 
 @synthesize textLabel;
@@ -28,6 +30,15 @@
     // Configure the view for the selected state
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 6;
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15],NSForegroundColorAttributeName:[UIColor colorWithRed:81.0/255 green:82.0/255 blue:83.0/255 alpha:1.0], NSParagraphStyleAttributeName:paragraphStyle};
+    //self.textView.textColor = [UIColor redColor];
+    self.textView.attributedText = [[NSAttributedString alloc] initWithString:self.textView.text attributes:attributes];
+}
+
 - (void)setState:(OptionCellState)state {
     if (_state == state) {
         return;
@@ -36,7 +47,7 @@
     
     switch (state) {
         case OptionCellStateUnselected:
-            checkLabel.textColor = [UIColor blueColor];
+            checkLabel.textColor = [UIColor THEME_BLUE];
             checkImage.image = [UIImage imageNamed:@"optionIconBlueCircle"];
             break;
         case OptionCellStateSelected:

@@ -43,6 +43,38 @@ static NSString *quizCollectionCellIdentifier = @"QuizCollectionCell";
     }
 }
 
+#pragma mark --UICollectionViewDelegateFlowLayout
+// 定义每个UICollectionView 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    float screenWidth = [UIScreen mainScreen].bounds.size.width;
+    if (screenWidth == 375) {
+        return CGSizeMake(45, 45);
+    } else if (screenWidth == 320) {
+        return CGSizeMake(38, 38);
+    } else if (screenWidth == 414) {
+        return CGSizeMake(50, 50);
+    } else {
+        return CGSizeMake(45, 45);
+    }
+}
+
+// 定义每个UICollectionView 的间距
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(0, 0, 0, 0);
+}
+// cell的最小列间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 12;
+}
+
+// cell的最小行间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 22;
+}
+
+
 
 #pragma Collection View Delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

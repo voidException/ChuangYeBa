@@ -614,15 +614,15 @@
                             <rect key="frame" x="-61" y="-14" width="123" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="最新发布"/>
-                                <segment title="我的考试"/>
+                                <segment title="最新发布" width="100"/>
+                                <segment title="我的考试" width="100"/>
                             </segments>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="olm-UZ-bUm">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="olm-UZ-bUm">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VNY-Fg-m7R">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="download">
+                                <state key="normal" image="classSettingButtonIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1483,7 +1483,7 @@
                         <viewControllerLayoutGuide type="top" id="XSn-Ty-Pg7"/>
                         <viewControllerLayoutGuide type="bottom" id="kxH-SF-qfL"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hGz-Jn-oIb">
+                    <view key="view" contentMode="scaleToFill" id="hGz-Jn-oIb" customClass="TestDetailView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1495,9 +1495,13 @@
                                     </constraint>
                                     <constraint firstAttribute="width" secondItem="KIU-zc-3ve" secondAttribute="height" multiplier="82:19" id="d7R-JG-PCr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="查看分数" backgroundImage="loginButtonBG">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" backgroundImage="testDetailButtonDisableBG">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1527,6 +1531,9 @@
                                 <state key="normal" title="开始考试" backgroundImage="loginButtonBG">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" backgroundImage="testDetailButtonDisableBG">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1662,7 +1669,7 @@
                             <constraint firstAttribute="trailing" secondItem="evs-dQ-Kr6" secondAttribute="trailing" constant="24" id="Fdo-o0-ZNq">
                                 <variation key="heightClass=regular-widthClass=compact" constant="30"/>
                             </constraint>
-                            <constraint firstItem="oRX-B4-3Zc" firstAttribute="top" secondItem="XSn-Ty-Pg7" secondAttribute="bottom" constant="25" id="GjG-z7-KY6"/>
+                            <constraint firstItem="oRX-B4-3Zc" firstAttribute="top" secondItem="XSn-Ty-Pg7" secondAttribute="bottom" constant="12" id="GjG-z7-KY6"/>
                             <constraint firstItem="KIU-zc-3ve" firstAttribute="top" secondItem="oRX-B4-3Zc" secondAttribute="bottom" constant="8" id="Hm2-Bz-52x"/>
                             <constraint firstItem="Fox-Ur-Va6" firstAttribute="top" secondItem="QXM-TA-ad3" secondAttribute="bottom" constant="12" id="L2Q-hs-Ttd">
                                 <variation key="heightClass=regular-widthClass=compact" constant="8"/>
@@ -1795,29 +1802,62 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJ5-oO-Hdn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfw-DL-Jlv">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfw-DL-Jlv">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <state key="normal" title="上一题">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="PnN-Uo-0OT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="上一题" image="lastButtonIcon">
+                                            <color key="titleColor" red="0.52941176469999995" green="0.53333333329999999" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="PnN-Uo-0OT"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="PnN-Uo-0OT"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <action selector="clickOnLastButton:" destination="DAi-qb-qIb" eventType="touchUpInside" id="abo-NH-eMG"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZ7-h6-LDQ">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <state key="normal" title="提交">
+                                        <state key="normal" title="提交" backgroundImage="submitTestButtonDisableBG">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="clickOnSubmitButton:" destination="DAi-qb-qIb" eventType="touchUpInside" id="BoG-eb-hUj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dy8-QY-Koo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dy8-QY-Koo">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <state key="normal" title="下一题">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="125" id="Gj7-R3-jgm"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="63" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="下一题" image="nextButtonIcon">
+                                            <color key="titleColor" red="0.52941176469999995" green="0.53333333329999999" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Gj7-R3-jgm"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="Gj7-R3-jgm"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <action selector="clickOnNextButton:" destination="DAi-qb-qIb" eventType="touchUpInside" id="69s-xq-HZd"/>
                                         </connections>
@@ -1825,13 +1865,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Xfw-DL-Jlv" firstAttribute="leading" secondItem="hJ5-oO-Hdn" secondAttribute="leading" constant="16" id="1rg-bs-zSf"/>
+                                    <constraint firstAttribute="centerY" secondItem="Xfw-DL-Jlv" secondAttribute="centerY" id="1U2-4I-nac"/>
                                     <constraint firstAttribute="centerX" secondItem="SZ7-h6-LDQ" secondAttribute="centerX" id="F8v-hq-bwu"/>
+                                    <constraint firstAttribute="centerY" secondItem="dy8-QY-Koo" secondAttribute="centerY" id="GQ1-cx-4cP"/>
                                     <constraint firstAttribute="centerY" secondItem="SZ7-h6-LDQ" secondAttribute="centerY" id="YZ5-Ol-v7e"/>
-                                    <constraint firstAttribute="centerY" secondItem="Xfw-DL-Jlv" secondAttribute="centerY" id="p1D-4w-1ie"/>
-                                    <constraint firstAttribute="centerY" secondItem="dy8-QY-Koo" secondAttribute="centerY" id="qii-if-2B4"/>
+                                    <constraint firstAttribute="trailing" secondItem="dy8-QY-Koo" secondAttribute="trailing" constant="-46" id="rfB-7W-oOP"/>
                                     <constraint firstAttribute="height" constant="44" id="smg-th-Qhb"/>
-                                    <constraint firstAttribute="trailing" secondItem="dy8-QY-Koo" secondAttribute="trailing" constant="16" id="uQn-yH-5Yn"/>
+                                    <constraint firstItem="Xfw-DL-Jlv" firstAttribute="leading" secondItem="hJ5-oO-Hdn" secondAttribute="leading" constant="8" id="uKq-sN-kMQ"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
@@ -1841,12 +1881,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="smg-th-Qhb"/>
-                                        <exclude reference="1rg-bs-zSf"/>
-                                        <exclude reference="p1D-4w-1ie"/>
+                                        <exclude reference="1U2-4I-nac"/>
+                                        <exclude reference="uKq-sN-kMQ"/>
                                         <exclude reference="F8v-hq-bwu"/>
                                         <exclude reference="YZ5-Ol-v7e"/>
-                                        <exclude reference="qii-if-2B4"/>
-                                        <exclude reference="uQn-yH-5Yn"/>
+                                        <exclude reference="GQ1-cx-4cP"/>
+                                        <exclude reference="rfB-7W-oOP"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -1857,12 +1897,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="smg-th-Qhb"/>
-                                        <include reference="1rg-bs-zSf"/>
-                                        <include reference="p1D-4w-1ie"/>
+                                        <include reference="1U2-4I-nac"/>
+                                        <include reference="uKq-sN-kMQ"/>
                                         <include reference="F8v-hq-bwu"/>
                                         <include reference="YZ5-Ol-v7e"/>
-                                        <include reference="qii-if-2B4"/>
-                                        <include reference="uQn-yH-5Yn"/>
+                                        <include reference="GQ1-cx-4cP"/>
+                                        <include reference="rfB-7W-oOP"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1888,14 +1928,14 @@
                                 <exclude reference="hJ5-oO-Hdn"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="joD-H4-EKp"/>
+                                <exclude reference="0gg-VK-OFr"/>
+                                <exclude reference="GBu-g1-A9N"/>
+                                <exclude reference="lqJ-Vm-Za6"/>
                                 <exclude reference="Aef-Zx-Qox"/>
                                 <exclude reference="IxW-Cx-vga"/>
                                 <exclude reference="eCK-TQ-Z0C"/>
                                 <exclude reference="l9J-h2-tYt"/>
-                                <exclude reference="0gg-VK-OFr"/>
-                                <exclude reference="GBu-g1-A9N"/>
-                                <exclude reference="lqJ-Vm-Za6"/>
-                                <exclude reference="joD-H4-EKp"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1904,14 +1944,14 @@
                                 <include reference="hJ5-oO-Hdn"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="joD-H4-EKp"/>
+                                <include reference="0gg-VK-OFr"/>
+                                <include reference="GBu-g1-A9N"/>
+                                <include reference="lqJ-Vm-Za6"/>
                                 <include reference="Aef-Zx-Qox"/>
                                 <include reference="IxW-Cx-vga"/>
                                 <include reference="eCK-TQ-Z0C"/>
                                 <include reference="l9J-h2-tYt"/>
-                                <include reference="0gg-VK-OFr"/>
-                                <include reference="GBu-g1-A9N"/>
-                                <include reference="lqJ-Vm-Za6"/>
-                                <exclude reference="joD-H4-EKp"/>
                             </mask>
                         </variation>
                     </view>
@@ -2895,17 +2935,21 @@
     <resources>
         <image name="Algeria.png" width="29" height="20"/>
         <image name="articleImage" width="90" height="67"/>
+        <image name="classSettingButtonIcon" width="32" height="32"/>
         <image name="comment" width="12" height="12"/>
         <image name="commentIcon" width="17" height="19"/>
-        <image name="download" width="35" height="33"/>
+        <image name="lastButtonIcon" width="10" height="18"/>
         <image name="likeClicked" width="35" height="33"/>
         <image name="loginBG" width="375" height="667"/>
         <image name="loginButtonBG" width="290" height="40"/>
         <image name="love" width="12" height="12"/>
+        <image name="nextButtonIcon" width="10" height="18"/>
+        <image name="submitTestButtonDisableBG" width="75" height="26"/>
+        <image name="testDetailButtonDisableBG" width="157" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="cbf-4c-GZF"/>
+        <segue reference="9lk-td-3Wt"/>
         <segue reference="g2E-UV-XDc"/>
-        <segue reference="guy-zl-U2C"/>
-        <segue reference="NjU-tj-9B7"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,6 +8,8 @@
 
 #import "TestViewController.h"
 
+#define THEME_BLUE colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1
+
 static NSString *questionCellIdentifer = @"NewQuestionCell";
 static NSString *optionCellIdentifer = @"NewOptionCell";
 static NSString *explainCellIdentifer = @"ExplainCell";
@@ -32,21 +34,8 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    // 注册xib的题干和选项的cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"QuestionCell" bundle:nil] forCellReuseIdentifier:questionCellIdentifer];
-    [self.tableView registerNib:[UINib nibWithNibName:@"OptionCell" bundle:nil] forCellReuseIdentifier:optionCellIdentifer];
-    [self.tableView registerNib:[UINib nibWithNibName:@"TestStateCell" bundle:nil] forCellReuseIdentifier:testStateCellIdentifier];
-    // 如果需要显示答案，注册显示答案的cell
-    if ([isShowExplain isEqual:@YES]) {
-        [self.tableView registerNib:[UINib nibWithNibName:@"ExplainCell" bundle:nil] forCellReuseIdentifier:explainCellIdentifer];
-    }
-    // 初始化导航条左键
-    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnBackButton)];
-    self.navigationItem.leftBarButtonItem = self.backButton;
     
-    // 初始化tableView设置
-    self.title = @"练习题";
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self initUI];
     
     // 初始化用户选择答案的数组
     if (!isShowExplain) {
@@ -109,9 +98,35 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+#pragma mark - 绘图
 
 #pragma mark - Private Method
+- (void)initUI {
+    // 初始化tableView设置
+    self.title = @"练习题";
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // 注册xib的题干和选项的cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"QuestionCell" bundle:nil] forCellReuseIdentifier:questionCellIdentifer];
+    [self.tableView registerNib:[UINib nibWithNibName:@"OptionCell" bundle:nil] forCellReuseIdentifier:optionCellIdentifer];
+    [self.tableView registerNib:[UINib nibWithNibName:@"TestStateCell" bundle:nil] forCellReuseIdentifier:testStateCellIdentifier];
+    // 如果需要显示答案，注册显示答案的cell
+    if ([isShowExplain isEqual:@YES]) {
+        [self.tableView registerNib:[UINib nibWithNibName:@"ExplainCell" bundle:nil] forCellReuseIdentifier:explainCellIdentifer];
+    }
+    // 初始化导航条左键
+    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnBackButton)];
+    self.navigationItem.leftBarButtonItem = self.backButton;
+    
+    // 设置提交键状态
+    [self.submitButton setBackgroundImage:[UIImage imageNamed:@"submitTestButtonDisableBG"] forState:UIControlStateDisabled];
+    [self.submitButton setBackgroundImage:[UIImage imageNamed:@"submitTestButtonNormalBG"] forState:UIControlStateNormal];
+    [self.submitButton setBackgroundImage:[UIImage imageNamed:@"submitTestButtonSelectedBG"] forState:UIControlStateSelected];
+    [self.submitButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    [self.submitButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateNormal];
+    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+}
+
 - (void)loadClassInfoFromLocal {
     self.classInfo = [[ClassInfo alloc] init];
     self.userInfo = [[UserInfo alloc] init];
@@ -167,18 +182,28 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         return 44;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            return [self.quiz getHeightOfQuizString:self.quiz.question];
+            return [self.quiz getHeightOfQuizString:self.quiz.question
+                                        lineSpacing:8
+                                         fontOfSize:17
+                                        widthOffset:44.0];
         } else {
-            float heigth = [self.quiz getHeightOfQuizString:self.quiz.options[indexPath.row - 1]];
-            if (heigth < 50) {
-                return 50;
+            float heigth = [self.quiz getHeightOfQuizString:self.quiz.options[indexPath.row - 1]
+                                                lineSpacing:6
+                                                 fontOfSize:15
+                                                widthOffset:67.0];
+            if (heigth < 52) {
+                return 52;
             } else {
                 return heigth;
             }
         }
     } else {
-        // TODO 需要增加explainCell两个label的高度。
-        return [self.quiz getHeightOfQuizString:self.quiz.answerExplain] + 40;
+        // 加上除了解析的textView的另外两个控件的高度
+        float extraHeigth = 53.0;
+        return [self.quiz getHeightOfQuizString:self.quiz.answerExplain
+                                    lineSpacing:10
+                                     fontOfSize:18
+                                    widthOffset:16.0] + extraHeigth;
     }
 }
 
@@ -261,7 +286,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 
 - (TestStateCell *)tableView:(UITableView *)tableView testStateCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestStateCell *testStateCell = [tableView dequeueReusableCellWithIdentifier:testStateCellIdentifier];
-    testStateCell.typeLabel.text = @"单项选择题";
+    testStateCell.typeLabel.text = @"单项选择练习";
     testStateCell.currentLabel.text = [NSString stringWithFormat:@"%lu", quizNo];
     testStateCell.totalLabel.text = [NSString stringWithFormat:@"%lu", self.quizs.count];
     return testStateCell;
@@ -270,34 +295,60 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 
 - (QuestionCell *)tableView:(UITableView *)tableView questionCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QuestionCell *questionCell = [tableView dequeueReusableCellWithIdentifier:questionCellIdentifer];
+    questionCell.quizNoLabel.text = [NSString stringWithFormat:@"%lu", quizNo];
     questionCell.textView.text = self.quiz.question;
     return questionCell;
 }
 
 - (ExplainCell *)tableView:(UITableView *)tableView explainCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ExplainCell *explainCell = [tableView dequeueReusableCellWithIdentifier:explainCellIdentifer];
-    explainCell.explainTextView.text = self.quiz.answerExplain;
     
-    // 显示正确答案
-    switch ([self.quiz.answerOption integerValue]) {
-        case 1:
-            explainCell.anwserLabel.text = @"A";
-            break;
-        case 2:
-            explainCell.anwserLabel.text = @"B";
-            break;
-        case 3:
-            explainCell.anwserLabel.text = @"C";
-            break;
-        case 4:
-            explainCell.anwserLabel.text = @"D";
-            break;
-        default:
-            explainCell.anwserLabel.text = nil;
-            break;
-    }
-    return explainCell;
+    // 显示解析
+    explainCell.explainTextView.text = self.quiz.answerExplain;
+    NSIndexPath *userSelected = self.userSelection[quizNo - 1];
 
+    if (userSelected.row == [self.quiz.answerOption integerValue]) {
+        [explainCell setState:ExplainCellStateCorrect];
+    } else {
+        [explainCell setState:ExplainCellStateError];
+        // 显示正确答案
+        switch ([self.quiz.answerOption integerValue]) {
+            case 1:
+                explainCell.anwserLabel.text = @"A";
+                break;
+            case 2:
+                explainCell.anwserLabel.text = @"B";
+                break;
+            case 3:
+                explainCell.anwserLabel.text = @"C";
+                break;
+            case 4:
+                explainCell.anwserLabel.text = @"D";
+                break;
+            default:
+                explainCell.anwserLabel.text = nil;
+                break;
+        }
+        // 显示用户选择的答案
+        switch ([userSelected row]) {
+            case 1:
+                explainCell.optionLabel.text = @"A";
+                break;
+            case 2:
+                explainCell.optionLabel.text = @"B";
+                break;
+            case 3:
+                explainCell.optionLabel.text = @"C";
+                break;
+            case 4:
+                explainCell.optionLabel.text = @"D";
+                break;
+            default:
+                explainCell.optionLabel.text = nil;
+                break;
+        }
+    }
+        return explainCell;
 }
 
 - (OptionCell *)tableView:(UITableView *)tableView optionCellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -479,6 +530,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     if ([segue.identifier isEqualToString:@"ShowTestResult"]) {
         id destinationVC = [segue destinationViewController];
         [destinationVC setValue:self.testResultArray forKey:@"testResultArray"];
+        [destinationVC setValue:self.quizs forKey:@"quizs"];
     }
 }
 

@@ -7,17 +7,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="QuizCollectionCell">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testResultSheetCorrectBG" translatesAutoresizingMaskIntoConstraints="NO" id="HhR-xv-Geq">
-                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGf-nY-xAm">
-                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                        <rect key="frame" x="0.0" y="1" width="45" height="45"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="24"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -27,17 +27,19 @@
             <constraints>
                 <constraint firstItem="HhR-xv-Geq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="01P-se-cNN"/>
                 <constraint firstItem="HhR-xv-Geq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FDf-j1-511"/>
-                <constraint firstAttribute="bottom" secondItem="qGf-nY-xAm" secondAttribute="bottom" id="HD8-XO-87y"/>
-                <constraint firstItem="qGf-nY-xAm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="c3S-Kk-Iuk"/>
+                <constraint firstAttribute="bottom" secondItem="qGf-nY-xAm" secondAttribute="bottom" constant="-1" id="HD8-XO-87y"/>
+                <constraint firstItem="qGf-nY-xAm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="c3S-Kk-Iuk"/>
                 <constraint firstAttribute="trailing" secondItem="qGf-nY-xAm" secondAttribute="trailing" id="dxb-ed-dys"/>
                 <constraint firstAttribute="bottom" secondItem="HhR-xv-Geq" secondAttribute="bottom" id="hGy-xL-gY3"/>
                 <constraint firstAttribute="trailing" secondItem="HhR-xv-Geq" secondAttribute="trailing" id="vYU-qG-wqa"/>
                 <constraint firstItem="qGf-nY-xAm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="xJE-yN-ORM"/>
             </constraints>
+            <size key="customSize" width="45" height="45"/>
             <connections>
                 <outlet property="imageView" destination="HhR-xv-Geq" id="w7F-dB-dn2"/>
                 <outlet property="quizNoLabel" destination="qGf-nY-xAm" id="fRp-yw-9Of"/>
             </connections>
+            <point key="canvasLocation" x="245.5" y="346.5"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -13,7 +13,6 @@
 @interface QuestionCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-
-@property (nonatomic) float heightOfTextView;
+@property (weak, nonatomic) IBOutlet UILabel *quizNoLabel;
 
 @end

@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    ExplainCellStateCorrect = 1,
+    ExplainCellStateError
+}ExplainCellState;
+
 @interface ExplainCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *anwserLabel;
 @property (weak, nonatomic) IBOutlet UITextView *explainTextView;
+@property (weak, nonatomic) IBOutlet UILabel *optionLabel;
+@property (assign, nonatomic) ExplainCellState state;
+
+- (void)setState:(ExplainCellState)state;
 
 @end

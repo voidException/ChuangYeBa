@@ -22,6 +22,5 @@
 // 答案解析
 @property (nonatomic, copy) NSString *answerExplain;
 
-- (float)getHeightOfQuizString:(NSString *)string;
-
+- (float)getHeightOfQuizString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset;
 @end

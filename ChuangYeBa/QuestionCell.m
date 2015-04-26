@@ -9,17 +9,6 @@
 #import "QuestionCell.h"
 
 @implementation QuestionCell
-@synthesize heightOfTextView;
-
-/*
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.textView.frame = CGRectMake(0, 0, screenWidth, 0);
-    }
-    return self;
-}
- */
 
 - (void)awakeFromNib {
     
@@ -29,14 +18,17 @@
     self.textView.font = [UIFont systemFontOfSize:16];
     self.textView.backgroundColor = [UIColor clearColor];
     self.textView.text = nil;
+    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    //self.textView.frame = CGRectMake(0, 0, screenWidth, heightOfTextView);
-    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 8;
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17], NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:[UIColor colorWithRed:83.0/255 green:84.0/255 blue:85.0/255 alpha:1.0]};
+    self.textView.attributedText = [[NSAttributedString alloc] initWithString:self.textView.text attributes:attributes];
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

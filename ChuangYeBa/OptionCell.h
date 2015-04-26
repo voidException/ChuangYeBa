@@ -20,7 +20,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIImageView *checkImage;
 @property (weak, nonatomic) IBOutlet UILabel *checkLabel;
-@property (nonatomic) OptionCellState state;
+@property (assign, nonatomic) OptionCellState state;
 
 - (void)setState:(OptionCellState)state;
 

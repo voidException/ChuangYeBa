@@ -22,10 +22,20 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    
-    [[UIColor colorWithRed:245.0/255 green:245.0/255 blue:245.0/255 alpha:1] setStroke];
-    CGRect frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 2);
+    // 绘制底部边缘线
+    [[UIColor grayColor] setStroke];
+    CGRect frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
     UIRectFrame(frame);
+    
+    // 绘制斜杠
+    CGPoint startPoint =  CGPointMake(self.frame.size.width - 35, 24);
+    CGPoint endPoint = CGPointMake(self.frame.size.width - 38, 35);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextMoveToPoint(context, startPoint.x, startPoint.y);
+    CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
+    CGContextClosePath(context);
+    [[UIColor grayColor] setStroke];
+    CGContextDrawPath(context, kCGPathStroke);
 }
 
 @end

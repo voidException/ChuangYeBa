@@ -13,22 +13,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="220-aZ-6ge">
-                        <rect key="frame" x="8" y="8" width="304" height="83"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="在iOS专业技能增长的同时,其他的相关因素也至关重要,如学习能力和开发思维,都是iOS开发工作中发展的必备条件,学员在选择机构参加培训时," translatesAutoresizingMaskIntoConstraints="NO" id="220-aZ-6ge">
+                        <rect key="frame" x="36" y="8" width="276" height="83"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.32549019607843138" green="0.32941176470588235" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP9-oh-sTF">
+                        <rect key="frame" x="0.0" y="8" width="35" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="31" id="Yng-Iq-NE3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                        <color key="textColor" red="0.58039215686274515" green="0.5607843137254902" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="220-aZ-6ge" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="P2w-BP-sjK"/>
                     <constraint firstAttribute="trailing" secondItem="220-aZ-6ge" secondAttribute="trailing" constant="8" id="Tos-G9-C4G"/>
                     <constraint firstAttribute="bottom" secondItem="220-aZ-6ge" secondAttribute="bottom" constant="8" id="Zq9-qW-cmx"/>
-                    <constraint firstItem="220-aZ-6ge" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="aSB-PJ-bAX"/>
+                    <constraint firstItem="220-aZ-6ge" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="36" id="aSB-PJ-bAX"/>
+                    <constraint firstItem="220-aZ-6ge" firstAttribute="leading" secondItem="NP9-oh-sTF" secondAttribute="trailing" constant="1" id="dZj-sj-1HZ"/>
+                    <constraint firstItem="NP9-oh-sTF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="mQB-gA-gnL"/>
+                    <constraint firstItem="NP9-oh-sTF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="vhj-Nm-ng7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="quizNoLabel" destination="NP9-oh-sTF" id="Yt6-Zr-B5I"/>
                 <outlet property="textView" destination="220-aZ-6ge" id="n3F-4p-86l"/>
             </connections>
             <point key="canvasLocation" x="380" y="397"/>

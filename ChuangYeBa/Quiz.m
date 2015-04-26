@@ -11,10 +11,14 @@
 @implementation Quiz
 
 // 计算文本高度的方法
-- (float)getHeightOfQuizString:(NSString *)string {
+- (float)getHeightOfQuizString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset {
     // 计算问题文本的高度
     // TODO 应该加上添加margin的输入参数
-    CGRect frame = [string boundingRectWithSize:CGSizeMake(screenWidth - 16, 999) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18]} context:nil];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = lineSpacing;
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:fontOfSize], NSParagraphStyleAttributeName:paragraphStyle};
+    
+    CGRect frame = [string boundingRectWithSize:CGSizeMake(screenWidth - widthOffset, 999) options:NSStringDrawingUsesLineFragmentOrigin  attributes:attributes context:nil];
     // 加上文本高度
     float height = frame.size.height;
     // 文本高度应该加上一点点边？？

@@ -24,20 +24,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 设置导航条题目
-    self.title = @"试卷详情";
-    // 设置题目开头
-    self.titleLabel.text = self.testGroup.itemTitle;
+    [self initUI];
     
-    // 根据是否已经测试，加载相应的状态
+    // 根据是否已经测试，加载对应的数据
     if ([self.testGroup.activity isEqual: @3]) {
-        self.startTestButton.enabled = YES;
-        self.showTestResultButton.enabled = NO;
         isShowExplain = NO;
         [self requestQuizsFromServer];
     } else {
-        self.startTestButton.enabled = NO;
-        self.showTestResultButton.enabled = YES;
         isShowExplain = YES;
         [self loadUserInfoAndClassInfoFromLocal];
         [self requestTestResultFromServer];
@@ -49,6 +42,16 @@
 }
 
 #pragma Private Method
+- (void)initUI {
+    // 设置导航条题目
+    self.title = @"试卷详情";
+    // 设置题目开头
+    self.titleLabel.text = self.testGroup.itemTitle;
+    // 没有加载的时候两个键都不可用
+    self.startTestButton.enabled = NO;
+    self.showTestResultButton.enabled = NO;
+}
+
 - (void)loadUserInfoAndClassInfoFromLocal {
     self.userInfo = [[UserInfo alloc] init];
     self.classInfo = [[ClassInfo alloc] init];
@@ -67,6 +70,15 @@
     [ClassNetworkUtils requestQuizsByitemId:self.testGroup.itemId andCallback:^(id obj){
         // 隐藏HUD
         [hud hide:YES];
+        
+        
+        // 根据是否已经测试，加载相应的状态
+        if ([self.testGroup.activity isEqual: @3]) {
+            self.startTestButton.enabled = YES;
+        } else {
+            self.showTestResultButton.enabled = YES;
+        }
+
         
         // 接回调对象
         NSDictionary *dic = obj;

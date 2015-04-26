@@ -16,6 +16,7 @@
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="霉女还特指美国著名歌手——泰勒·斯威夫特（Taylor Swift）。霉女的称法最早从Taylor的相关贴吧传出。泰勒刚开始是被称为小美女，美和“霉”读音相同，" translatesAutoresizingMaskIntoConstraints="NO" id="E9d-dA-aiZ">
                         <rect key="frame" x="59" y="8" width="253" height="83"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.31764705882352939" green="0.32156862745098042" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>

@@ -39,6 +39,7 @@
 		8B451B051ADFE836002C4CA9 /* CommentInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451B041ADFE836002C4CA9 /* CommentInputView.xib */; };
 		8B451B081ADFED74002C4CA9 /* CommentInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451B071ADFED74002C4CA9 /* CommentInputView.m */; };
 		8B6840061ADAB0DC007C264A /* studyCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B6840051ADAB0DC007C264A /* studyCategory.plist */; };
+		8B6918811AED116C00D616DC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
 		8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
 		8B9C6E5C1ACD193E00A4EF54 /* ClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E591ACD193E00A4EF54 /* ClassInfo.m */; };
 		8B9C6E5D1ACD193E00A4EF54 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5B1ACD193E00A4EF54 /* UserInfo.m */; };
@@ -109,7 +110,6 @@
 		8BD4C0841ACEF703004D96AF /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C0831ACEF703004D96AF /* UserInfoCell.m */; };
 		8BD4C0871ACEFE47004D96AF /* UserEditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C0861ACEFE47004D96AF /* UserEditedViewController.m */; };
 		8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */; };
-		8BDA58B11AD9136800E59EE8 /* TestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA58B01AD9136800E59EE8 /* TestTableViewController.m */; };
 		8BDA58B71AD94DF100E59EE8 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA58B51AD94DF100E59EE8 /* QuestionCell.m */; };
 		8BDA58B81AD94DF100E59EE8 /* QuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BDA58B61AD94DF100E59EE8 /* QuestionCell.xib */; };
 		8BDC80851AD2D62D006CE482 /* MediaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC80841AD2D62D006CE482 /* MediaCell.m */; };
@@ -188,6 +188,8 @@
 		8B451B061ADFED74002C4CA9 /* CommentInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentInputView.h; path = ChuangYeBa/CommentInputView.h; sourceTree = "<group>"; };
 		8B451B071ADFED74002C4CA9 /* CommentInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentInputView.m; path = ChuangYeBa/CommentInputView.m; sourceTree = "<group>"; };
 		8B6840051ADAB0DC007C264A /* studyCategory.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = studyCategory.plist; sourceTree = "<group>"; };
+		8B69187F1AED116C00D616DC /* TestDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailView.h; path = ChuangYeBa/TestDetailView.h; sourceTree = "<group>"; };
+		8B6918801AED116C00D616DC /* TestDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailView.m; path = ChuangYeBa/TestDetailView.m; sourceTree = "<group>"; };
 		8B9C6E521ACD14DA00A4EF54 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ChuangYeBa/LoginViewController.h; sourceTree = "<group>"; };
 		8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ChuangYeBa/LoginViewController.m; sourceTree = "<group>"; };
 		8B9C6E581ACD193E00A4EF54 /* ClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassInfo.h; path = ChuangYeBa/ClassInfo.h; sourceTree = "<group>"; };
@@ -287,8 +289,6 @@
 		8BD4C0861ACEFE47004D96AF /* UserEditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEditedViewController.m; path = ChuangYeBa/UserEditedViewController.m; sourceTree = "<group>"; };
 		8BDA58AC1AD8E1C200E59EE8 /* ClassSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassSettingTableViewController.h; path = ChuangYeBa/ClassSettingTableViewController.h; sourceTree = "<group>"; };
 		8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassSettingTableViewController.m; path = ChuangYeBa/ClassSettingTableViewController.m; sourceTree = "<group>"; };
-		8BDA58AF1AD9136800E59EE8 /* TestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTableViewController.h; path = ChuangYeBa/TestTableViewController.h; sourceTree = "<group>"; };
-		8BDA58B01AD9136800E59EE8 /* TestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestTableViewController.m; path = ChuangYeBa/TestTableViewController.m; sourceTree = "<group>"; };
 		8BDA58B41AD94DF100E59EE8 /* QuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionCell.h; path = ChuangYeBa/QuestionCell.h; sourceTree = "<group>"; };
 		8BDA58B51AD94DF100E59EE8 /* QuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionCell.m; path = ChuangYeBa/QuestionCell.m; sourceTree = "<group>"; };
 		8BDA58B61AD94DF100E59EE8 /* QuestionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuestionCell.xib; path = ChuangYeBa/QuestionCell.xib; sourceTree = "<group>"; };
@@ -335,8 +335,6 @@
 		8B05E5F71AD980D600E87347 /* Trash */ = {
 			isa = PBXGroup;
 			children = (
-				8BDA58AF1AD9136800E59EE8 /* TestTableViewController.h */,
-				8BDA58B01AD9136800E59EE8 /* TestTableViewController.m */,
 				8B451AED1ADF837D002C4CA9 /* StudyDetailTableViewController.h */,
 				8B451AEE1ADF837D002C4CA9 /* StudyDetailTableViewController.m */,
 			);
@@ -358,6 +356,8 @@
 				8B34B1751AE8C0E500A39F8F /* TestStateCell.h */,
 				8B34B1761AE8C0E500A39F8F /* TestStateCell.m */,
 				8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */,
+				8B69187F1AED116C00D616DC /* TestDetailView.h */,
+				8B6918801AED116C00D616DC /* TestDetailView.m */,
 			);
 			name = TestView;
 			sourceTree = "<group>";
@@ -945,7 +945,6 @@
 				8B9C6E691ACD3AF500A4EF54 /* StudyContentCell.m in Sources */,
 				8BD4C07E1ACEB7AB004D96AF /* MoreDetailViewController.m in Sources */,
 				8BE0A5571AD4EF5A006B348E /* TestGroup.m in Sources */,
-				8BDA58B11AD9136800E59EE8 /* TestTableViewController.m in Sources */,
 				8B451AF91ADF8886002C4CA9 /* ArticleTitleCell.m in Sources */,
 				8BB23BA61AE531D300621F91 /* TestGroupCell.m in Sources */,
 				8BD4C0841ACEF703004D96AF /* UserInfoCell.m in Sources */,
@@ -959,6 +958,7 @@
 				8B9C6E601ACD196400A4EF54 /* LoginNetworkUtils.m in Sources */,
 				8BEDFEEF1ADA19B7004C5845 /* ExplainCell.m in Sources */,
 				8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */,
+				8B6918811AED116C00D616DC /* TestDetailView.m in Sources */,
 				8BB23BAE1AE6100F00621F91 /* AddClassConfirmTableViewController.m in Sources */,
 				8B451AE31ADEB507002C4CA9 /* LoginJsonParser.m in Sources */,
 				8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */,

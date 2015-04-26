@@ -30,7 +30,7 @@
     NSArray *optionArray = [[NSArray alloc]initWithObjects:[dic objectForKey:@"optiona"] ,[dic objectForKey:@"optionb"] ,[dic objectForKey:@"optionc"] ,[dic objectForKey:@"optiond"] , nil];
     quiz.options = optionArray;
     quiz.answerOption = [dic objectForKey:@"answer"];
-    quiz.answerExplain = [dic objectForKey:@"whySo"];
+    quiz.answerExplain = [dic objectForKey:@"whyso"];
     return quiz;
 }
 
