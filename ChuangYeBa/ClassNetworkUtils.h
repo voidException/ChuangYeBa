@@ -19,7 +19,7 @@ typedef void (^Callback)(id obj);
 + (void)requestTestGroupByStudentId:(NSNumber *)stuId andCallback:(Callback)callback;
 
 // 请求接口2，学生加入班级返回题组
-+ (void)requestAddClassByStudentId:(NSString *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
++ (void)requestAddClassByStudentId:(NSNumber *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
 
 // 请求接口3，获取题组内所有题目信息
 + (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback;
@@ -31,7 +31,7 @@ typedef void (^Callback)(id obj);
 + (void)submitTestResult:(NSArray *)testResult andCallback:(Callback)callback;
 
 // 请求接口6，返回班级信息以及老师名字，学生列表
-+ (void)requestClassInfoByClassNo:(NSString *)classNo andCallback:(Callback)callback;
++ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
 
 // 请求接口7，退出班级
 + (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback;

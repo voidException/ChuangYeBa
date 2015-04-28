@@ -29,7 +29,6 @@
 		8B451AE61ADF5A9D002C4CA9 /* StudyNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AE51ADF5A9D002C4CA9 /* StudyNetworkUtils.m */; };
 		8B451AE81ADF7B24002C4CA9 /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */; };
 		8B451AEC1ADF81B4002C4CA9 /* ArticleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AEB1ADF81B4002C4CA9 /* ArticleInfo.m */; };
-		8B451AEF1ADF837D002C4CA9 /* StudyDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AEE1ADF837D002C4CA9 /* StudyDetailTableViewController.m */; };
 		8B451AF91ADF8886002C4CA9 /* ArticleTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AF71ADF8886002C4CA9 /* ArticleTitleCell.m */; };
 		8B451AFA1ADF8886002C4CA9 /* ArticleTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AF81ADF8886002C4CA9 /* ArticleTitleCell.xib */; };
 		8B451AFC1ADF8A44002C4CA9 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFB1ADF8A44002C4CA9 /* CommentCell.xib */; };
@@ -121,8 +120,11 @@
 		8BE3278C1AD116D9007F79C3 /* ArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3278B1AD116D9007F79C3 /* ArticleCell.m */; };
 		8BE3278E1AD18D45007F79C3 /* userComment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3278D1AD18D45007F79C3 /* userComment.plist */; };
 		8BE327911AD18FED007F79C3 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE327901AD18FED007F79C3 /* CommentCell.m */; };
+		8BE66F0F1AEDFEA80075D9E9 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */; };
+		8BE66F131AEE7A4A0075D9E9 /* StudyJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */; };
 		8BEDFEEF1ADA19B7004C5845 /* ExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */; };
 		8BEDFEF01ADA19B7004C5845 /* ExplainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */; };
+		8BF68F8C1AEF7ABF007D5F5D /* CommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF68F8B1AEF7ABF007D5F5D /* CommentInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,8 +176,6 @@
 		8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArticleCell.xib; path = ChuangYeBa/ArticleCell.xib; sourceTree = "<group>"; };
 		8B451AEA1ADF81B4002C4CA9 /* ArticleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleInfo.h; path = ChuangYeBa/ArticleInfo.h; sourceTree = "<group>"; };
 		8B451AEB1ADF81B4002C4CA9 /* ArticleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleInfo.m; path = ChuangYeBa/ArticleInfo.m; sourceTree = "<group>"; };
-		8B451AED1ADF837D002C4CA9 /* StudyDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyDetailTableViewController.h; path = ChuangYeBa/StudyDetailTableViewController.h; sourceTree = "<group>"; };
-		8B451AEE1ADF837D002C4CA9 /* StudyDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyDetailTableViewController.m; path = ChuangYeBa/StudyDetailTableViewController.m; sourceTree = "<group>"; };
 		8B451AF61ADF8886002C4CA9 /* ArticleTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleTitleCell.h; path = ChuangYeBa/ArticleTitleCell.h; sourceTree = "<group>"; };
 		8B451AF71ADF8886002C4CA9 /* ArticleTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleTitleCell.m; path = ChuangYeBa/ArticleTitleCell.m; sourceTree = "<group>"; };
 		8B451AF81ADF8886002C4CA9 /* ArticleTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArticleTitleCell.xib; path = ChuangYeBa/ArticleTitleCell.xib; sourceTree = "<group>"; };
@@ -307,9 +307,15 @@
 		8BE3278D1AD18D45007F79C3 /* userComment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = userComment.plist; sourceTree = "<group>"; };
 		8BE3278F1AD18FED007F79C3 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = ChuangYeBa/CommentCell.h; sourceTree = "<group>"; };
 		8BE327901AD18FED007F79C3 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCell.m; path = ChuangYeBa/CommentCell.m; sourceTree = "<group>"; };
+		8BE66F0D1AEDFEA80075D9E9 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewController.h; path = ChuangYeBa/UserListTableViewController.h; sourceTree = "<group>"; };
+		8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListTableViewController.m; path = ChuangYeBa/UserListTableViewController.m; sourceTree = "<group>"; };
+		8BE66F111AEE7A4A0075D9E9 /* StudyJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyJsonParser.h; path = ChuangYeBa/StudyJsonParser.h; sourceTree = "<group>"; };
+		8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyJsonParser.m; path = ChuangYeBa/StudyJsonParser.m; sourceTree = "<group>"; };
 		8BEDFEEC1ADA19B7004C5845 /* ExplainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExplainCell.h; path = ChuangYeBa/ExplainCell.h; sourceTree = "<group>"; };
 		8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExplainCell.m; path = ChuangYeBa/ExplainCell.m; sourceTree = "<group>"; };
 		8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExplainCell.xib; path = ChuangYeBa/ExplainCell.xib; sourceTree = "<group>"; };
+		8BF68F8A1AEF7ABF007D5F5D /* CommentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentInfo.h; path = ChuangYeBa/CommentInfo.h; sourceTree = "<group>"; };
+		8BF68F8B1AEF7ABF007D5F5D /* CommentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentInfo.m; path = ChuangYeBa/CommentInfo.m; sourceTree = "<group>"; };
 		FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -335,8 +341,6 @@
 		8B05E5F71AD980D600E87347 /* Trash */ = {
 			isa = PBXGroup;
 			children = (
-				8B451AED1ADF837D002C4CA9 /* StudyDetailTableViewController.h */,
-				8B451AEE1ADF837D002C4CA9 /* StudyDetailTableViewController.m */,
 			);
 			name = Trash;
 			sourceTree = "<group>";
@@ -429,6 +433,8 @@
 				8BE0A55F1AD62AC1006B348E /* Quiz.m */,
 				8B451AEA1ADF81B4002C4CA9 /* ArticleInfo.h */,
 				8B451AEB1ADF81B4002C4CA9 /* ArticleInfo.m */,
+				8BF68F8A1AEF7ABF007D5F5D /* CommentInfo.h */,
+				8BF68F8B1AEF7ABF007D5F5D /* CommentInfo.m */,
 			);
 			name = M;
 			sourceTree = "<group>";
@@ -489,10 +495,9 @@
 		8B5826AD1ACD0D53005E39E0 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				8BE66F101AEDFEB50075D9E9 /* ClassSetting */,
 				8B356C6A1AEA032B004CC161 /* Test */,
 				8BB23BA81AE5E4AA00621F91 /* AddClass */,
-				8BDA58AC1AD8E1C200E59EE8 /* ClassSettingTableViewController.h */,
-				8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */,
 				8BB23BA01AE5311B00621F91 /* ClassTableViewController.h */,
 				8BB23BA11AE5311B00621F91 /* ClassTableViewController.m */,
 				8BB23BAF1AE6359F00621F91 /* ConditionViewController.h */,
@@ -581,6 +586,8 @@
 				8B451ADF1ADCCDAD002C4CA9 /* ClassJsonParser.m */,
 				8B451AE11ADEB507002C4CA9 /* LoginJsonParser.h */,
 				8B451AE21ADEB507002C4CA9 /* LoginJsonParser.m */,
+				8BE66F111AEE7A4A0075D9E9 /* StudyJsonParser.h */,
+				8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -718,6 +725,17 @@
 				8BD281AC1ACD99880030005D /* USA.png */,
 			);
 			path = "球队图片";
+			sourceTree = "<group>";
+		};
+		8BE66F101AEDFEB50075D9E9 /* ClassSetting */ = {
+			isa = PBXGroup;
+			children = (
+				8BE66F0D1AEDFEA80075D9E9 /* UserListTableViewController.h */,
+				8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */,
+				8BDA58AC1AD8E1C200E59EE8 /* ClassSettingTableViewController.h */,
+				8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */,
+			);
+			name = ClassSetting;
 			sourceTree = "<group>";
 		};
 		9FB07484698B67F4D94AC67A /* Frameworks */ = {
@@ -930,9 +948,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE66F0F1AEDFEA80075D9E9 /* UserListTableViewController.m in Sources */,
 				8BBF360C1AE161EA0029072C /* StudyDetailViewController.m in Sources */,
 				8BD4C0811ACEF6D2004D96AF /* MeViewController.m in Sources */,
-				8B451AEF1ADF837D002C4CA9 /* StudyDetailTableViewController.m in Sources */,
 				8BE327911AD18FED007F79C3 /* CommentCell.m in Sources */,
 				8BDC80851AD2D62D006CE482 /* MediaCell.m in Sources */,
 				8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */,
@@ -946,6 +964,8 @@
 				8BD4C07E1ACEB7AB004D96AF /* MoreDetailViewController.m in Sources */,
 				8BE0A5571AD4EF5A006B348E /* TestGroup.m in Sources */,
 				8B451AF91ADF8886002C4CA9 /* ArticleTitleCell.m in Sources */,
+				8BE66F131AEE7A4A0075D9E9 /* StudyJsonParser.m in Sources */,
+				8BF68F8C1AEF7ABF007D5F5D /* CommentInfo.m in Sources */,
 				8BB23BA61AE531D300621F91 /* TestGroupCell.m in Sources */,
 				8BD4C0841ACEF703004D96AF /* UserInfoCell.m in Sources */,
 				8B356C551AE8D4D4004CC161 /* TestResultTableViewController.m in Sources */,

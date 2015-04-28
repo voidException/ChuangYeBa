@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum{
+    MediaCellStateNormal = 1,
+    MediaCellStateLongImage = 2,
+    MediaCellStateVideo
+} MediaCellState;
+
 @class MediaCell;
 
 @protocol MediaCellDelegate
@@ -18,7 +24,10 @@
 
 @interface MediaCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *smallImage;
+@property (weak, nonatomic) IBOutlet UIImageView *centerImage;
 @property (weak, nonatomic) IBOutlet UIButton *mediaButton;
+
+@property (assign, nonatomic) MediaCellState state;
 
 - (IBAction)clickOnMediaButton:(id)sender;
 

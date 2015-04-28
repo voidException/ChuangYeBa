@@ -7,6 +7,9 @@
 //
 
 #import "StudyContentViewController.h"
+#import "GlobalDefine.h"
+
+static NSInteger const kPageSize = 5;
 
 @interface StudyContentViewController ()
 
@@ -21,43 +24,36 @@
 @synthesize articleInfo;
 @synthesize userInfo;
 
+
+#pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    
+    [self initUI];
     
     // 初始化Article模型
     articleInfo = [[ArticleInfo alloc] init];
-    userInfo = [[UserInfo alloc] init];
     
-    // 增加下啦刷新
-    
-    [self.tableView addLegendHeaderWithRefreshingBlock:^{
-        NSLog(@"load refresh");
-        [self.tableView.header endRefreshing];
-    }];
-    [self.tableView.legendHeader beginRefreshing];
-    
-    [self.tableView addLegendFooterWithRefreshingBlock:^{
-        NSLog(@"上啦刷新");
-        //[self.tableView.footer endRefreshing];
-    }];
+    // 初始化数组
+    self.articleList = [[NSMutableArray alloc] init];
     
     // TEST
     NSLog(@"tag = %ld", (long)tag);
-    page = 0;
-    pageSize = 10;
-
+    page = 1;
+    pageSize = kPageSize;
+    tag = 12;
     
     // 从本地读取用户信息
     [self loadUserInfoFromLocal];
     // TEST 请求
     
-#warning 严重！以下的方法在当用户在没有登陆过的情况下，第一次启动应用的时候会产生崩溃！因此暂时注释掉
-    //[self requestArticleList];
+#warning 严重！以下的方法在当用户在没有登陆过的情况下，第一次启动应用有可能造成崩溃！
+    if (userInfo.userId) {
+        [self.tableView.legendHeader beginRefreshing];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,52 +61,120 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Private Method
+- (void)initUI {
+    // 增加下啦刷新
+    [self.tableView addLegendHeaderWithRefreshingBlock:^{
+        // YES说明是下拉刷新
+        [self requestArticleListFromServer:YES];
+    }];
+    
+    // 增加上啦刷新
+    [self.tableView addLegendFooterWithRefreshingBlock:^{
+        NSLog(@"上啦刷新");
+        // NO说明是上拉刷新
+        [self requestArticleListFromServer:NO];
+    }];
+}
+
+- (void)pullUpReload:(NSArray *)articleListArr{
+    // 不移除全部数据
+    for (NSDictionary *articleDic in articleListArr) {
+        ArticleInfo *article = [StudyJsonParser parseArticleList:articleDic];
+        [self.articleList addObject:article];
+    }
+    [self.tableView reloadData];
+}
+
+- (void)pullDownReload:(NSArray *)articleListArr{
+    // 移除原来全部数据，并刷新
+    [self.articleList removeAllObjects];
+    for (NSDictionary *articleDic in articleListArr) {
+        ArticleInfo *article = [StudyJsonParser parseArticleList:articleDic];
+        [self.articleList addObject:article];
+    }
+    [self.tableView reloadData];
+}
 
 - (void)loadUserInfoFromLocal {
+    userInfo = [[UserInfo alloc] init];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [ud objectForKey:@"userInfo"];
     userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
 }
 
-- (void)requestArticleList {
-    [StudyNetworkUtils requestArticalWichToken:userInfo.email userId:userInfo.userId tag:tag page:page pageSize:pageSize andCallback:^(id obj){
-        self.articleInfo = obj;
-        NSLog(@"article callback");
+- (void)requestArticleListFromServer:(BOOL)isPullDownReload{
+    NSInteger requestPage;
+    NSInteger requestPageSize;
+    page = self.articleList.count;
+    if (self.articleList.count) {
+        if (isPullDownReload) {
+            requestPage = 0;
+            requestPageSize = self.articleList.count;
+        }
+        
+        else {
+            requestPage = self.articleList.count;
+            requestPageSize = kPageSize;
+        }
+    }
+    else {
+        requestPage = 0;
+        requestPageSize = kPageSize;
+    }
+    
+    [StudyNetworkUtils requestArticalWichToken:userInfo.email userId:userInfo.userId tag:tag page:requestPage pageSize:requestPageSize andCallback:^(id obj){
+        
+        if (obj) {
+            NSDictionary *dic = obj;
+            NSArray *articleListArr = [dic objectForKey:@"article"];
+            //NSArray *arr = [dic objectForKey:@"article"];
+            // 如果是下拉刷新整个文章列表
+            if (isPullDownReload) {
+                [self.tableView.header endRefreshing];
+                [self pullDownReload:articleListArr];
+            }
+            // 如果是上拉刷新增加文章列表
+            else {
+                if (articleListArr.count) {
+                    [self.tableView.footer endRefreshing];
+                    [self pullUpReload:articleListArr];
+                } else {
+                    [self.tableView.footer noticeNoMoreData];
+                }
+            }
+        }
     }];
 }
 
-#pragma mark - UITableViewDataSource
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark -  Table View DataSource
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 发送通知
     NSLog(@"send notif");
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowStudyDetail" object:self userInfo:nil];
+    ArticleInfo *article = self.articleList[indexPath.row];
+    NSNumber *articleId = article.articleId;
+    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:articleId,@"articleId", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowStudyDetail" object:self userInfo:dic];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    return self.articleList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *studyContentCellIndentifier = @"StudyContentCell";
     StudyContentCell *studyContentCell = [tableView dequeueReusableCellWithIdentifier:studyContentCellIndentifier];
-    studyContentCell.titleLabel.text = @"什么是生涯";
-    NSURL *imageURL = [[NSURL alloc]initWithString:@"http://cdn.cocimg.com/bbs/images/face/none.gif"];
-    [studyContentCell.mainImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"USA.png"]];
-    studyContentCell.introductionLabel.text = @"大学生生涯是职业生涯积累也是一个过程……";
+    ArticleInfo *article = self.articleList[indexPath.row];
+    studyContentCell.titleLabel.text = article.title;
+    
+    NSString *path = article.miniPhotoURL;
+    static NSString *serverIP = SERVER_IP;
+    path = [serverIP stringByAppendingString:path];
+
+    [studyContentCell.mainImage setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    studyContentCell.introductionLabel.text = article.viceTitle;
     return studyContentCell;
 }
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 
 @end

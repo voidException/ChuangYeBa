@@ -10,6 +10,7 @@
 #import <MJRefresh.h>
 #import "StudyContentCell.h"
 #import "StudyNetworkUtils.h"
+#import "StudyJsonParser.h"
 #import "ArticleInfo.h"
 #import "UserInfo.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
@@ -20,9 +21,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) ArticleInfo *articleInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
+@property (strong, nonatomic) NSMutableArray *articleList;
 
+// 当前的VC属于哪一个分类Tag
 @property (nonatomic) NSInteger tag;
+// 当前的Page
 @property (nonatomic) NSInteger page;
+// 每下拉刷新出现的个数
 @property (nonatomic) NSInteger pageSize;
 
 

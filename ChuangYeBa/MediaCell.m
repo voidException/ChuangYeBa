@@ -25,4 +25,26 @@
 - (IBAction)clickOnMediaButton:(id)sender {
     [self.delegate clickOnMedia:self];
 }
+
+- (void)setState:(MediaCellState)state {
+    if (_state == state) {
+        return;
+    }
+    _state = state;
+    switch (state) {
+        case MediaCellStateNormal:
+            self.centerImage.hidden = YES;
+            self.smallImage.hidden = YES;
+            break;
+        case MediaCellStateLongImage:
+            self.centerImage.hidden = YES;
+            self.smallImage.hidden = NO;
+            break;
+        case MediaCellStateVideo:
+            self.centerImage.hidden = NO;
+            self.smallImage.hidden = YES;
+            break;
+    }
+}
+
 @end

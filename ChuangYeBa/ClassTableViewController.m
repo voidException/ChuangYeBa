@@ -21,7 +21,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [self initUI];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 注册xib的cell
@@ -50,8 +50,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar addSubview:self.rightButton];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.rightButton removeFromSuperview];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -59,6 +64,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 }
 
 #pragma mark - Private Method
+
+- (void)initUI {
+    float rightButtonWidth = 44.0;
+    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - rightButtonWidth, 0, rightButtonWidth, 44)];
+    [self.rightButton setImage:[UIImage imageNamed:@"classSettingButtonIcon"] forState:UIControlStateNormal];
+    [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
+}
 
 - (void)setNavigationBarAttributes {
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
@@ -70,34 +82,35 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)requestTestGroupsFromServer {
     __weak typeof(self) weakSelf = self;
     [ClassNetworkUtils requestTestGroupByStudentId:self.userInfo.userId andCallback:^(id obj) {
-        self.allTestGroups = obj;
-        // 请求成功后清空已经保存的题组
-        [self.testedGroup removeAllObjects];
-        [self.unTestedGroup removeAllObjects];
-        // 区分做过的题组合没做过的题组
-        for (TestGroup *tg in self.allTestGroups) {
-            if ([tg.activity integerValue] == 3) {
-                [self.unTestedGroup addObject:tg];
-            } else if ([tg.activity integerValue] == 4) {
-                [self.testedGroup addObject:tg];
+        if (obj) {
+            self.allTestGroups = obj;
+            // 请求成功后清空已经保存的题组
+            [self.testedGroup removeAllObjects];
+            [self.unTestedGroup removeAllObjects];
+            // 区分做过的题组合没做过的题组
+            for (TestGroup *tg in self.allTestGroups) {
+                if ([tg.activity integerValue] == 3) {
+                    [self.unTestedGroup addObject:tg];
+                } else if ([tg.activity integerValue] == 4) {
+                    [self.testedGroup addObject:tg];
+                }
+            }
+            // 显示在界面上
+            switch (self.segmentedControl.selectedSegmentIndex) {
+                case 0:
+                    self.displayTestGroup = self.unTestedGroup;
+                    // 重新加载tableView
+                    [weakSelf.tableView reloadData];
+                    break;
+                case 1:
+                    self.displayTestGroup = self.testedGroup;
+                    // 重新加载tableView
+                    [weakSelf.tableView reloadData];
+                    break;
+                default:
+                    break;
             }
         }
-        // 显示在界面上
-        switch (self.segmentedControl.selectedSegmentIndex) {
-            case 0:
-                self.displayTestGroup = self.unTestedGroup;
-                // 重新加载tableView
-                [weakSelf.tableView reloadData];
-                break;
-            case 1:
-                self.displayTestGroup = self.testedGroup;
-                // 重新加载tableView
-                [weakSelf.tableView reloadData];
-                break;
-            default:
-                break;
-        }
-        
         // 停止下拉刷新动画
         [weakSelf.tableView.header endRefreshing];
     }];
@@ -110,6 +123,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 }
 
 #pragma mark - Action
+- (void)clickOnRightButton {
+    [self performSegueWithIdentifier:@"ShowClassSetting" sender:self];
+}
+
 - (void)doSomethingInSegment:(UISegmentedControl *)seg {
     NSInteger index = seg.selectedSegmentIndex;
     switch (index) {
@@ -155,8 +172,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     tg = self.displayTestGroup[row];
     
     testGroupCell.titleLabel.text = tg.itemTitle;
-    // TEST
-    //testGroupCell.stateLabel.text = tg.activity;
+    
+    // 暂时不需要状态条的功能
+    testGroupCell.stateLabel.hidden = YES;
     return testGroupCell;
 }
 

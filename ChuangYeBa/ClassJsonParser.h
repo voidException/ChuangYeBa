@@ -10,6 +10,7 @@
 #import "Quiz.h"
 #import "ClassInfo.h"
 #import "TestGroup.h"
+#import "UserInfo.h"
 
 @interface ClassJsonParser : NSObject
 
@@ -22,8 +23,10 @@
 // 解析4，解析用户的选择的选项，返回一个NSNumber对象
 + (NSNumber *)paresUserSelection:(NSDictionary *)dic;
 
-// 解析6
+// 解析6.1
 + (ClassInfo *)parseClassInfo:(NSDictionary *) dic;
+// 解析6.2
++ (UserInfo *)parseUserInfo:(NSDictionary *) dic;
 
 + (Quiz *)parseQuiz:(NSDictionary *) dic;
 

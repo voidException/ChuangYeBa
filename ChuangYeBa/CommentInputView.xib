@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csg-Ca-hUP">
-                    <rect key="frame" x="8" y="4" width="30" height="30"/>
+                    <rect key="frame" x="15" y="6" width="30" height="30"/>
                     <state key="normal" title="取消">
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -21,20 +21,13 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="写评论" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGr-6X-EdB">
-                    <rect key="frame" x="135" y="8" width="51" height="21"/>
+                    <rect key="frame" x="135" y="10" width="51" height="21"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nab-9d-pHB">
-                    <rect key="frame" x="8" y="37" width="304" height="105"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvE-6g-8yg">
-                    <rect key="frame" x="282" y="4" width="30" height="30"/>
+                    <rect key="frame" x="275" y="6" width="30" height="30"/>
                     <state key="normal" title="发送">
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,19 +36,25 @@
                         <action selector="clickOnSendButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="KCw-2u-Fnk"/>
                     </connections>
                 </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="我很喜欢这篇文章" translatesAutoresizingMaskIntoConstraints="NO" id="Nab-9d-pHB">
+                    <rect key="frame" x="15" y="42" width="290" height="93"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
             <constraints>
-                <constraint firstItem="Nab-9d-pHB" firstAttribute="top" secondItem="dvE-6g-8yg" secondAttribute="bottom" constant="3" id="3Nh-6Y-fn7"/>
-                <constraint firstItem="Nab-9d-pHB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="7mJ-pz-G3f"/>
-                <constraint firstItem="dGr-6X-EdB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="BGf-Xq-OMe"/>
+                <constraint firstItem="Nab-9d-pHB" firstAttribute="top" secondItem="dvE-6g-8yg" secondAttribute="bottom" constant="6" id="3Nh-6Y-fn7"/>
+                <constraint firstItem="Nab-9d-pHB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="7mJ-pz-G3f"/>
+                <constraint firstItem="dGr-6X-EdB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="BGf-Xq-OMe"/>
                 <constraint firstAttribute="centerX" secondItem="dGr-6X-EdB" secondAttribute="centerX" id="FNr-zW-Pcg"/>
-                <constraint firstAttribute="bottom" secondItem="Nab-9d-pHB" secondAttribute="bottom" constant="8" id="W3E-UR-KPY"/>
-                <constraint firstItem="dvE-6g-8yg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="auf-Gg-oJV"/>
-                <constraint firstAttribute="trailing" secondItem="dvE-6g-8yg" secondAttribute="trailing" constant="8" id="bMM-Sh-Fgc"/>
-                <constraint firstItem="csg-Ca-hUP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="eaE-E9-VBN"/>
-                <constraint firstItem="csg-Ca-hUP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="jSe-Va-Qjw"/>
-                <constraint firstAttribute="trailing" secondItem="Nab-9d-pHB" secondAttribute="trailing" constant="8" id="vCw-hF-Iyo"/>
+                <constraint firstAttribute="bottom" secondItem="Nab-9d-pHB" secondAttribute="bottom" constant="15" id="W3E-UR-KPY"/>
+                <constraint firstItem="dvE-6g-8yg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="auf-Gg-oJV"/>
+                <constraint firstAttribute="trailing" secondItem="dvE-6g-8yg" secondAttribute="trailing" constant="15" id="bMM-Sh-Fgc"/>
+                <constraint firstItem="csg-Ca-hUP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="eaE-E9-VBN"/>
+                <constraint firstItem="csg-Ca-hUP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="jSe-Va-Qjw"/>
+                <constraint firstAttribute="trailing" secondItem="Nab-9d-pHB" secondAttribute="trailing" constant="15" id="vCw-hF-Iyo"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

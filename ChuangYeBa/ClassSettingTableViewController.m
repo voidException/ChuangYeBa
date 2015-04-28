@@ -22,17 +22,14 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"班级设置";
     
-    NSBundle *bunble = [NSBundle mainBundle];
-    NSString *plistPath = [bunble pathForResource:@"studentAndNumber" ofType:@"plist"];
+    [self initUI];
     
+    // 初始化数组
+    self.studentArray = [[NSMutableArray alloc] init];
     
     [self loadClassInfoFormLocal];
-    self.studentArray = [[NSArray alloc]initWithContentsOfFile:plistPath];
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
-    
+    [self requestClassInfoFormServer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +38,16 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 #pragma mark - Private Method
+- (void)initUI {
+    self.title = @"班级设置";
+    self.tableView.tableFooterView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 60);
+    // 注册XIB小区
+    [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
+    self.navigationItem.leftBarButtonItem = btn;
+    
+}
+
 - (void)loadClassInfoFormLocal {
     self.classInfo = [[ClassInfo alloc] init];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -48,21 +55,34 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     self.classInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
     udObject = [ud objectForKey:@"userInfo"];
     userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-    
-    
+}
+
+- (void)saveClassInfoToLocal {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
+    [ud setObject:udObject forKey:@"classInfo"];
+    [ud synchronize];
 }
 
 
 - (void)requestClassInfoFormServer {
-    
+    [ClassNetworkUtils requestClassInfoByClassNo:self.classInfo.classNo andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            self.classInfo = [ClassJsonParser parseClassInfo:[dic objectForKey:@"oneClass"]];
+            [self saveClassInfoToLocal];
+            NSArray *userListArr = [dic objectForKey:@"studentTwoVo"];
+            for (NSDictionary *userInfoDic in userListArr) {
+                UserInfo *aUser = [ClassJsonParser parseUserInfo:userInfoDic];
+                [self.studentArray addObject:aUser];
+            }
+            [self.tableView reloadData];
+        }
+    }];
 }
 
-#pragma mark - Action
-- (IBAction)clickOnExitClassButton:(id)sender {
-    
-    
+- (void)submitQuitClassToServer {
     [ClassNetworkUtils submitQuitClassWithUserId:userInfo.userId andClassId:classInfo.classId andCallback:^(id obj) {
-    
         NSLog(@"%@", obj);
         // 修改UserDeaults中的isUserAddedClass的值，修改为NO
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -71,15 +91,18 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         [ud removeObjectForKey:@"classInfo"];
         [ud synchronize];
         // 返回上级菜单
-        
         [self.navigationController popToRootViewControllerAnimated:YES];
-
-        
-        
-        
-
     }];
-    
+}
+
+#pragma mark - Action
+- (void)clickOnBackButton {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)clickOnExitClassButton:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出班级" otherButtonTitles:nil, nil];
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Tbale view delegaet
@@ -87,27 +110,64 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     if (indexPath.section == 0) {
         return 146;
     } else {
-        return 44;
+        return 50;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    } else {
+        return 22;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]]) {
+        if (self.studentArray.count) {
+            [self performSegueWithIdentifier:@"ShowUserList" sender:self];
+            
+            // 设置返回按钮
+            UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:nil];
+            self.navigationItem.backBarButtonItem = btn;
+        }
     }
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    } else {
-        return [self.studentArray count];
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 1;
+            break;
+        case 2:
+            return 1;
+            break;
+        default:
+            return 0;
+            break;
     }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *studentInfoCellIndentifier = @"StudentInfoCell";
+    static NSString *cellIndentifier = @"Cell";
     if (indexPath.section == 0) {
         ClassInfoCell *classInfoCell = [tableView dequeueReusableCellWithIdentifier:classInfoCellIdentifier];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -117,26 +177,41 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         classInfoCell.teacherNameLabel.text = classInfo.teacherName;
         classInfoCell.universityNameLabel.text = classInfo.universityName;
         return classInfoCell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:studentInfoCellIndentifier];
+    } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:studentInfoCellIndentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
         }
-        NSInteger row = [indexPath row];
-        NSDictionary *dic = [self.studentArray objectAtIndex:row];
-        cell.textLabel.text = [dic objectForKey:@"name"];
-        cell.detailTextLabel.text = [dic objectForKey:@"number"];
+        cell.textLabel.text = @"我的信息";
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         return cell;
+    } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]]) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
+        }
+        cell.textLabel.text = @"班级成员";
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu人",(unsigned long)self.studentArray.count];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        return cell;
+    } else return nil;
+}
+
+#pragma mark - Action Sheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self submitQuitClassToServer];
     }
 }
 
-- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"did hightlight %ld", (long)indexPath.row);
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowUserList"]) {
+        id destinationVC= [segue destinationViewController];
+        [destinationVC setValue:self.studentArray forKey:@"studentArray"];
+    }
 }
 
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"did UN hightlight %ld", (long)indexPath.row);
-}
 
 /*
 // Override to support conditional editing of the table view.
@@ -172,15 +247,8 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 
 @end

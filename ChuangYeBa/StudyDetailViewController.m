@@ -7,6 +7,15 @@
 //
 
 #import "StudyDetailViewController.h"
+#import "StudyNetworkUtils.h"
+#import "StudyJsonParser.h"
+#import <MBProgressHUD.h>
+#import <MJRefresh.h>
+
+typedef enum {
+    StudyDetailStateNormal = 1,
+    StudyDetailStateNoneMedia,
+} StudyDetailState;
 
 static NSString *articleTitleCellIdentifier = @"ArticleTitleCell";
 static NSString *articleCellIdentifier = @"ArticleCell";
@@ -14,6 +23,16 @@ static NSString *mediaCellIdentifier = @"MediaCell";
 static NSString *countCellIdentifier = @"CountingCell";
 static NSString *commentCellIdentifier = @"CommentCell";
 
+static NSInteger const kPageSize = 2;
+
+
+@interface StudyDetailViewController ()
+
+@property (strong, nonatomic) NSNumber *articleId;
+
+@property (assign, nonatomic) StudyDetailState state;
+
+@end
 
 @implementation StudyDetailViewController
 
@@ -25,43 +44,8 @@ static NSString *commentCellIdentifier = @"CommentCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"学习详情";
-    
-    // TableView初始化设置
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    // 注册xib的cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleTitleCell" bundle:nil] forCellReuseIdentifier:articleTitleCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleCell" bundle:nil] forCellReuseIdentifier:articleCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"MediaCell" bundle:nil] forCellReuseIdentifier:mediaCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"CountingCell" bundle:nil] forCellReuseIdentifier:countCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellReuseIdentifier:commentCellIdentifier];
-    
-    // 初始化CommentInputView
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentInputView" owner:self options:nil];
-    self.commentInputView = [nib objectAtIndex:0];
-    self.commentInputView.delegate = self;
-    
-    // 添加评论窗口并隐藏
-    [self.view addSubview:self.commentInputView];
-    self.commentInputView.hidden = YES;
-    
-    // 设置底端的评论按钮宽度
-    [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
-    
     // 初始化UI
     [self initUI];
-    
-    // 读取用户评论
-    [self requestCommentsFromServer];
-    
-    // 读取文章
-    [self loadArticle];
-    
-    // 读取用户信息
-    [self loadUserInfoFromLocal];
     
     // 注册键盘出现通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
@@ -70,12 +54,15 @@ static NSString *commentCellIdentifier = @"CommentCell";
     // 初始化Bool参数，应该从网络和本地确定
     isDownloaded = NO;
     isLiked = NO;
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    // 读取用户信息
+    [self loadUserInfoFromLocal];
+    // 读取文章信息
+    [self requestArticleInfoFromServer];
+    // 读取用户评论
+    [self requestCommentsFromServer];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,10 +75,35 @@ static NSString *commentCellIdentifier = @"CommentCell";
     [self.navigationController setNavigationBarHidden:NO];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Private Method
 // 初始化UI
 - (void)initUI {
-        // 初始化自定义导航条
+    self.title = @"学习详情";
+    // TableView初始化设置
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // 注册xib的cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleTitleCell" bundle:nil] forCellReuseIdentifier:articleTitleCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ArticleCell" bundle:nil] forCellReuseIdentifier:articleCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"MediaCell" bundle:nil] forCellReuseIdentifier:mediaCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"CountingCell" bundle:nil] forCellReuseIdentifier:countCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellReuseIdentifier:commentCellIdentifier];
+    // 初始化CommentInputView
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentInputView" owner:self options:nil];
+    self.commentInputView = [nib objectAtIndex:0];
+    self.commentInputView.delegate = self;
+    
+    // 添加评论窗口并隐藏
+    [self.view addSubview:self.commentInputView];
+    self.commentInputView.hidden = YES;
+    
+    // 初始化自定义导航条
     self.customBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:@"学习" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnLeftButton)];
     self.customItem = [[UINavigationItem alloc] initWithTitle:@"学习详情"];
@@ -100,21 +112,53 @@ static NSString *commentCellIdentifier = @"CommentCell";
     [self.customBar pushNavigationItem:self.customItem animated:YES];
     self.customItem.leftBarButtonItem = self.leftButton;
     [self.view addSubview:self.customBar];
-    
     // 初始化工具条按钮图片
     [self.likeButton setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
     [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
     [self.commentButton setBackgroundImage:[UIImage imageNamed:@"commentBG"] forState:UIControlStateNormal];
+    // 设置底端的评论按钮宽度
+    [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
     
-    //self.commentButton.showsTouchWhenHighlighted = YES;
+    // 增加上拉刷新
+    [self.tableView addLegendFooterWithRefreshingBlock:^{
+        [self requestCommentsFromServer];
+    }];
+    self.tableView.footer.automaticallyRefresh = NO;
+    
+}
+
+- (void)setState:(StudyDetailState)state {
+    if (_state == state) {
+        return;
+    }
+    _state = state;
 }
 
 - (void)requestCommentsFromServer {
-    //模拟数据
-    self.comment = [[NSDictionary alloc] init];
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"userComment" ofType:@"plist"];
-    self.comments = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    NSInteger requestPage;
+    NSInteger requestPageSize;
+    if (self.comments.count) {
+        requestPage = self.comments.count;
+        requestPageSize = kPageSize;
+    }
+    else {
+        requestPage = 0;
+        requestPageSize = kPageSize;
+    }
+    
+    [StudyNetworkUtils requestCommentsWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId page:requestPage pageSize:requestPageSize andCallback:^(id obj) {
+        
+        if (self.tableView.footer == self.tableView.legendFooter) {
+            [self.tableView.footer endRefreshing];
+        }
+        
+        // 把解析好的评论列表赋给内存中的评论列表数组
+        self.comments = obj;
+        [self.tableView reloadData];
+        
+#warning 可选！可以研究一下怎么reload一个section。
+        //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
 }
 
 - (void)loadUserInfoFromLocal {
@@ -124,15 +168,74 @@ static NSString *commentCellIdentifier = @"CommentCell";
     self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
 }
 
-- (void)loadArticle {
-    self.articleInfo = [[ArticleInfo alloc] init];
-    self.articleInfo.articleId = @"1";
-    self.articleInfo.title = @"习近平接受九国新任驻华大使递交国书国书国书国书国书国书国书国书";
-    self.articleInfo.viceTitle = @"木有东西";
-    self.articleInfo.content = @"央视网消息(新闻联播)：国家主席习近平4月14日在人民大会堂接受9国新任驻华大使递交国书。他们是：马拉维驻华大使纳蒙德维、中非驻华大使姆巴佐阿、汤加驻华大使乌塔阿图、英国驻华大使吴百纳、泰国驻华大使醍乐堃、南非驻华大使姆西曼、哈萨克斯坦驻华大使努雷舍夫、韩国驻华大使金章洙、安提瓜和巴布达驻华大使斯图亚特-杨。\n\n习近平欢迎外国使节们来华履新，请他们转达对各有关国家领导人和人民的诚挚问候和良好祝愿。习近平表示，中国愿继续加强与各国的友好务实合作，并共同为维护人类和平、促进世界繁荣而努力。中国政府将为各位使节履职提供便利和支持，希望各位使节为推动中国同有关国家双边关系发展、促进中国同有关国家人民之间的友谊作出积极贡献。\n\n外国使节们转达了各自国家领导人对习近平的亲切问候，祝愿中国繁荣富强，并在国际事务中发挥越来越重要的作用。使节们表示，中国的发展对世界是重要机遇，各国高度重视对华关系，赞赏和支持中方发起的“一带一路”和亚洲基础设施投资银行等倡议。使节们表示，能够在此时出使中国深感荣幸，将为增进各自国家同中国的友谊与合作积极努力。";
-    self.articleInfo.comments = @"9";
-    self.articleInfo.likes = @"8";
-    self.articleInfo.publishDate = [NSDate date];
+- (void)requestArticleInfoFromServer {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    hud.removeFromSuperViewOnHide = YES;
+    [StudyNetworkUtils requestArticleDetailWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
+        [hud hide:YES];
+        if (obj) {
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+            if ([error isEqual: @1]) {
+                self.articleInfo = [StudyJsonParser parseArticleInfo:[dic objectForKey:@"article"]];
+                
+                if ([self.articleInfo.articleType isEqual:@1]) {
+                    [self setState:StudyDetailStateNoneMedia];
+                } else {
+                    [self setState:StudyDetailStateNormal];
+                }
+                
+                [self.tableView reloadData];
+                
+                // 请求评论列表
+                [self requestCommentsFromServer];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }
+    }];
+}
+
+- (void)submitCommentToServer {
+    NSDate *nowDate = [NSDate date];
+    NSLog(@"%@", self.commentInputView.textView.text);
+    [StudyNetworkUtils submitCommentWithArticleId:self.articleInfo userInfo:self.userInfo commitDate:nowDate content:self.commentInputView.textView.text andCallback:^(id obj){
+        NSDictionary *dic = obj;
+        NSNumber *error = [dic objectForKey:@"error"];
+        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+        if ([error integerValue] == 1) {
+            
+            // 添加评论并且更新视图
+            
+            [self.tableView beginUpdates];
+            
+            // 把刚刚提交的
+            CommentInfo *commentInfo = [[CommentInfo alloc] init];
+            commentInfo.userName = self.userInfo.name;
+            commentInfo.content = self.commentInputView.textView.text;
+            commentInfo.commentTime = nowDate;
+            
+            [self.comments insertObject:commentInfo atIndex:0];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationBottom];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+            [self.tableView endUpdates];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            
+            // 隐藏评论席位
+            self.commentInputView.hidden = YES;
+            [self removeActivityBackgroundView];
+            [self.commentInputView.textView resignFirstResponder];
+            
+            
+            
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
 }
 
 #pragma mark 调整再键盘弹出时的Frame
@@ -161,16 +264,14 @@ static NSString *commentCellIdentifier = @"CommentCell";
 {
     [self removeActivityBackgroundView];
     self.commentInputView.hidden = YES;
-    
 }
 
 
 #pragma mark - Action
 - (IBAction)clickOnCommentButton:(id)sender {
     [self addActivityBackgroundView];
-    
+    //[self.view addSubview:self.commentInputView];
     [self.commentInputView.textView becomeFirstResponder];
-    
 }
 
 - (IBAction)clickOnLikeButton:(id)sender {
@@ -206,11 +307,26 @@ static NSString *commentCellIdentifier = @"CommentCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            return [self.articleInfo getHeightOfArticleString:self.articleInfo.title fontOfSize:20] + 36;
+            return [self.articleInfo getHeightOfArticleString:self.articleInfo.title
+                                                  lineSpacing:4.0
+                                                   fontOfSize:23.0
+                                                  widthOffset:16] + 16;
         } else if (indexPath.row == 1) {
-            return [self.articleInfo getHeightOfArticleString:self.articleInfo.content fontOfSize:16] + 20;
+            return [self.articleInfo getHeightOfArticleString:self.articleInfo.content
+                                                  lineSpacing:4
+                                                   fontOfSize:17.0
+                                                  widthOffset:24];
         } else if (indexPath.row == 2) {
-            return 150;
+            switch (_state) {
+                case StudyDetailStateNormal:
+                    return 150;
+                    break;
+                case StudyDetailStateNoneMedia:
+                    return 44;
+                    break;
+                default:
+                    break;
+            }
         } else if (indexPath.row == 3) {
             return 44;
         }
@@ -219,7 +335,6 @@ static NSString *commentCellIdentifier = @"CommentCell";
         // 最小值为89 字数多的时候行数会增加。
         return 89;
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -233,96 +348,115 @@ static NSString *commentCellIdentifier = @"CommentCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.comments.count) {
+    // 如果有文章就返回2 没有文章则什么都不显示
+    if (self.articleInfo) {
         return 2;
     } else {
-        return 1;
+        return 0;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 4;
-    } else {
-        return self.comments.count;
+    switch (_state) {
+        case StudyDetailStateNormal:
+            if (self.articleInfo) {
+                if (section == 0) {
+                    return 4;
+                } else {
+                    return self.comments.count;
+                }
+            } else {
+                return 0;
+            }
+            break;
+        case StudyDetailStateNoneMedia:
+            if (self.articleInfo) {
+                if (section == 0) {
+                    return 3;
+                } else {
+                    return self.comments.count;
+                }
+            }
+        default:
+            return 0;
+            break;
     }
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            ArticleTitleCell *articleTitleCell = [tableView dequeueReusableCellWithIdentifier:articleTitleCellIdentifier];
-            articleTitleCell.title.text = self.articleInfo.title;
-            articleTitleCell.category.text = @"自我管理";
-            articleTitleCell.publishDate.text = @"05-14 5:04";
-            return articleTitleCell;
+            return [self tableView:tableView articleTitleCellForRowAtIndexPath:indexPath];
         } else if (indexPath.row == 1) {
-            ArticleCell *articleCell = [tableView dequeueReusableCellWithIdentifier:articleCellIdentifier];
-            articleCell.content.text = self.articleInfo.content;
-            return articleCell;
+            return [self tableView:tableView articleCellForRowAtIndexPath:indexPath];
         } else if (indexPath.row == 2){
-            MediaCell *mediaCell = [tableView dequeueReusableCellWithIdentifier:mediaCellIdentifier];
-            mediaCell.delegate = self;
-            return mediaCell;
-            
+            switch (_state) {
+                case StudyDetailStateNormal:
+                    return [self tableView:tableView mediaCellForRowAtIndexPath:indexPath];
+                    break;
+                case StudyDetailStateNoneMedia:
+                    return [self tableView:tableView countingCellForRowAtIndexPath:indexPath];
+            }
         } else if (indexPath.row == 3) {
-            CountingCell *countingCell = [tableView dequeueReusableCellWithIdentifier:countCellIdentifier];
-            countingCell.likeCountingLabel.text = @"68";
-            countingCell.commentCountingLabel.text = @"32";
-            return countingCell;
+            return [self tableView:tableView countingCellForRowAtIndexPath:indexPath];
         }
         return nil;
     } else {
-        CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:commentCellIdentifier];
-        NSInteger row = [indexPath row];
-        self.comment = [self.comments objectAtIndex:row];
-        commentCell.userInfoLabel.text = [self.comment objectForKey:@"userName"];
-        commentCell.commentTextView.text = [self.comment objectForKey:@"comment"];
-        return commentCell;
+        return [self tableView:tableView commentCellForRowAtIndexPath:indexPath];
     }
 }
 
+
+
+- (ArticleTitleCell *)tableView:(UITableView *)tableView articleTitleCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ArticleTitleCell *articleTitleCell = [tableView dequeueReusableCellWithIdentifier:articleTitleCellIdentifier];
+    articleTitleCell.title.text = self.articleInfo.title;
+    articleTitleCell.category.text = @"自我管理";
+    articleTitleCell.publishDate.text = @"05-14 5:04";
+    return articleTitleCell;
+}
+
+- (ArticleCell *)tableView:(UITableView *)tableView articleCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ArticleCell *articleCell = [tableView dequeueReusableCellWithIdentifier:articleCellIdentifier];
+    articleCell.content.text = self.articleInfo.content;
+    return articleCell;
+}
+
+- (MediaCell *)tableView:(UITableView *)tableView mediaCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MediaCell *mediaCell = [tableView dequeueReusableCellWithIdentifier:mediaCellIdentifier];
+    [mediaCell setState:MediaCellStateNormal];
+    mediaCell.delegate = self;
+    return mediaCell;
+}
+
+- (CountingCell *)tableView:(UITableView *)tableView countingCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CountingCell *countingCell = [tableView dequeueReusableCellWithIdentifier:countCellIdentifier];
+    countingCell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
+    countingCell.commentCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.comments];
+    return countingCell;
+}
+
+- (CommentCell *)tableView:(UITableView *)tableView commentCellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:commentCellIdentifier];
+    NSInteger row = [indexPath row];
+    CommentInfo *commentInfo = self.comments[row];
+    commentCell.userInfoLabel.text = commentInfo.userName;
+    commentCell.commentTextView.text = commentInfo.content;
+    return commentCell;
+}
+
+
 #pragma mark - CommentInputView Delegate
 -(void)commentInputView:(CommentInputView *)commentInputView clickOnCommentButtonAtIndex:(NSInteger)index {
-    
     // 没能测试
     if (index == 1) {
-        //NSDate *date = [NSDate date];
-        //nsdate
-        
-        
-        [StudyNetworkUtils submitCommentWithArticleId:self.articleInfo userInfo:self.userInfo commitDate:nil content:self.commentInputView.textView.text andCallback:^(id obj){
-            NSDictionary *dic = obj;
-            NSNumber *error = [dic objectForKey:@"error"];
-            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-            if ([error integerValue] == 1) {
-                // 隐藏评论席位
-                self.commentInputView.hidden = YES;
-                [self removeActivityBackgroundView];
-                [self.commentInputView.textView resignFirstResponder];
-                // 添加评论并且更新视图
-                [self.tableView beginUpdates];
-                //[self.userComment insertObject:dic atIndex:0];
-                [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationBottom];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-                [self.tableView endUpdates];
-                
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                
-                
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
+        [self submitCommentToServer];
     } else {
         self.commentInputView.hidden = YES;
         [self removeActivityBackgroundView];
         [self.commentInputView.textView resignFirstResponder];
     }
 }
-
 
 // 添加透明指示栏
 - (void)addActivityBackgroundView {

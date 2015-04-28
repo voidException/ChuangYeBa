@@ -25,7 +25,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     self.buttonView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 150);
     // 注册xib，班级信息的小区
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
-    
     [self loadUserInfoFromLocal];
 }
 
@@ -40,7 +39,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 #pragma mark - Private Method
-
 - (void)loadUserInfoFromLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [ud objectForKey:@"userInfo"];
@@ -48,11 +46,12 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 - (void)saveClassInfoToLocal {
-    /*
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:self.classInfo forKey:@"classInfo"];
+    NSNumber *number = [NSNumber numberWithBool:YES];
+    [ud setObject:number forKey:@"isUserAddedClass"];
+    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
+    [ud setObject:udObject forKey:@"classInfo"];
     [ud synchronize];
-     */
 }
 
 #pragma mark - Action
@@ -64,22 +63,16 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
             NSNumber *error = [dic objectForKey:@"error"];
             NSString *errorMessage = [dic objectForKey:@"errorMessage"];
             
-            if ([error integerValue] == 3) {
-                NSLog(@"successful adding class");
+            if ([error isEqual:@3]||[error isEqual:@2]) {
+                // 保存教室的信息到本地同时修改isUserAddedClass的值
+                [self saveClassInfoToLocal];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
                 [alert show];
             }
         }
     }];
-    
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSNumber *number = [NSNumber numberWithBool:YES];
-    [ud setObject:number forKey:@"isUserAddedClass"];
-    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
-    [ud setObject:udObject forKey:@"classInfo"];
-    [ud synchronize];
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view delegate

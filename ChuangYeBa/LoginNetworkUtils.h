@@ -19,9 +19,8 @@ typedef void (^Callback)(id obj);
 
 + (void)subbmitEditedUserInfo:(UserInfo *)userInfo andCallback:(Callback)callback;
 
++ (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback;
 
-// 需要移到其他的类来封装更好
-
-
++ (void)failureAction:(NSError *) error;
 
 @end

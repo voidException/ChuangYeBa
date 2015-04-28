@@ -38,7 +38,9 @@
 
 #pragma mark - Private Method
 - (void)sendingDataToServer {
-    [ClassNetworkUtils requestClassInfoByClassNo:self.classNoTextField.text andCallback:^(id obj) {
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    NSNumber *classNo = [fmt numberFromString:self.classNoTextField.text];
+    [ClassNetworkUtils requestClassInfoByClassNo:classNo andCallback:^(id obj) {
         [self.hud hide:YES];
         self.tableView.userInteractionEnabled = YES;
         if (obj) {
@@ -65,14 +67,10 @@
 
 #pragma mark - Action
 - (IBAction)clickOnAddClassButton:(id)sender {
-    
     self.hud = [MBProgressHUD showHUDAddedTo:self.buttonView animated:YES];
     self.tableView.userInteractionEnabled = NO;
-    
     self.hud.removeFromSuperViewOnHide = YES;
     [self sendingDataToServer];
-
-    
 }
 
 #pragma mark - Table view data source

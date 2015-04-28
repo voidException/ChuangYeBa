@@ -21,7 +21,7 @@
 @interface ClassTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
+@property (strong, nonatomic) UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 
 // 用于显示和保存列表的数组

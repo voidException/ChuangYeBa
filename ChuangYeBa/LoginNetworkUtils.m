@@ -36,6 +36,7 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
+        [LoginNetworkUtils failureAction:error];
         callback(nil);
     }];
 }
@@ -59,6 +60,7 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"注册失败: %@", [error localizedDescription]);
+        [LoginNetworkUtils failureAction:error];
     }];
 }
 
@@ -80,9 +82,34 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"提交失败");
-        // 没有回调
+        [LoginNetworkUtils failureAction:error];
         callback(nil);
     }];
+}
+
++ (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback {
+    NSString *path = @"/startup/student/findPassword";
+    path = [serverIP stringByAppendingString:path];
+    NSDictionary *params = @{@"studentEmail": email};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        NSLog(@"找回密码成功: %@", dic);
+        callback(dic);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"找回密码失败: %@", [error localizedDescription]);
+        [LoginNetworkUtils failureAction:error];
+        callback(nil);
+    }];
+}
+
+// 辅助方法，处理失败请求
++ (void)failureAction:(NSError *) error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请求失败了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+    [alert show];
+    NSLog(@"请求失败: %@", [error localizedDescription]);
+    
 }
 
 

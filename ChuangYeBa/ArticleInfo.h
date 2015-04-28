@@ -12,19 +12,20 @@
 
 @interface ArticleInfo : NSObject
 
-@property (copy, nonatomic) NSString *articleId;
+@property (copy, nonatomic) NSNumber *articleId;
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *viceTitle;
 @property (copy, nonatomic) NSString *miniPhotoURL;
 @property (copy, nonatomic) NSString *realURL;
 @property (copy, nonatomic) NSString *content;
-@property (copy, nonatomic) NSString *articleType;
+@property (copy, nonatomic) NSNumber *articleType;
 @property (copy, nonatomic) NSString *labelOne;
 @property (copy, nonatomic) NSString *labelTwe;
-@property (copy, nonatomic) NSString *comments;
-@property (copy, nonatomic) NSString *likes;
-@property (copy, nonatomic) NSString *collects;
+@property (copy, nonatomic) NSNumber *comments;
+@property (copy, nonatomic) NSNumber *likes;
+@property (copy, nonatomic) NSNumber *collects;
 @property (strong, nonatomic) NSDate *publishDate;
-- (float)getHeightOfArticleString:(NSString *)string fontOfSize:(NSUInteger)fontOfSize;
+
+- (float)getHeightOfArticleString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset;
 
 @end

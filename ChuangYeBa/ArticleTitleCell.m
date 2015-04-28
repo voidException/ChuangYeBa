@@ -12,7 +12,6 @@
 
 - (void)awakeFromNib {
     self.userInteractionEnabled = NO;
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,5 +19,14 @@
 
     // Configure the view for the selected state
 }
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 4;
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:22], NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:[UIColor blackColor]};
+    self.title.attributedText = [[NSAttributedString alloc] initWithString:self.title.text attributes:attributes];
+}
+
 
 @end

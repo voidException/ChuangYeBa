@@ -34,6 +34,7 @@
     return quiz;
 }
 
+// 解析6.1
 + (ClassInfo *)parseClassInfo:(NSDictionary *) dic {
     ClassInfo *classInfo = [[ClassInfo alloc] init];
     classInfo.classId = [dic objectForKey:@"classid"];
@@ -45,6 +46,14 @@
     classInfo.universityName = [dic objectForKey:@"universityname"];
     classInfo.universityNo = [dic objectForKey:@"universityno"];
     return classInfo;
+}
+// 解析6.2
++ (UserInfo *)parseUserInfo:(NSDictionary *)dic {
+    UserInfo *userInfo = [[UserInfo alloc] init];
+    userInfo.name = [dic objectForKey:@"stuName"];
+    userInfo.userNo = [dic objectForKey:@"stuNo"];
+    userInfo.photoPath = [dic objectForKey:@"stuPhoto"];
+    return userInfo;
 }
 
 + (NSNumber *)paresUserSelection:(NSDictionary *)dic {

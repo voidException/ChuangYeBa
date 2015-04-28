@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,31 +34,32 @@
                             <constraint firstAttribute="height" constant="18" id="fKw-l3-2z2"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="长图" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-dR-Xdx">
-                        <rect key="frame" x="149" y="8" width="34" height="21"/>
+                    <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="USA.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ke0-7S-hAo">
+                        <rect key="frame" x="44" y="42" width="83" height="75"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="34" id="IDP-hD-Lyh"/>
-                            <constraint firstAttribute="height" constant="21" id="d4J-gH-JhH"/>
+                            <constraint firstAttribute="width" constant="83" id="57e-60-hnS"/>
+                            <constraint firstAttribute="height" constant="75" id="yDS-ya-999"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="tgq-nL-HgB" firstAttribute="top" secondItem="nIW-I9-Ipr" secondAttribute="top" constant="18" id="Blr-cN-gTJ"/>
                     <constraint firstItem="Mlc-o3-H1b" firstAttribute="centerX" secondItem="tgq-nL-HgB" secondAttribute="centerX" constant="74" id="KeI-oQ-bba"/>
+                    <constraint firstItem="tgq-nL-HgB" firstAttribute="centerY" secondItem="Ke0-7S-hAo" secondAttribute="centerY" id="OpK-KE-vEp"/>
                     <constraint firstItem="Mlc-o3-H1b" firstAttribute="centerY" secondItem="tgq-nL-HgB" secondAttribute="centerY" constant="-60.5" id="eL3-lL-EhA"/>
-                    <constraint firstItem="nmZ-dR-Xdx" firstAttribute="centerX" secondItem="tgq-nL-HgB" secondAttribute="centerX" constant="80.5" id="lTf-9g-ea1"/>
-                    <constraint firstItem="nmZ-dR-Xdx" firstAttribute="centerY" secondItem="tgq-nL-HgB" secondAttribute="centerY" constant="-61" id="uAU-6N-eG8"/>
                     <constraint firstItem="tgq-nL-HgB" firstAttribute="leading" secondItem="nIW-I9-Ipr" secondAttribute="leading" constant="8" id="wQN-Wj-YuL"/>
+                    <constraint firstItem="tgq-nL-HgB" firstAttribute="centerX" secondItem="Ke0-7S-hAo" secondAttribute="centerX" id="zph-UF-Ec9"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="centerImage" destination="Ke0-7S-hAo" id="qb4-qs-Sqm"/>
                 <outlet property="mediaButton" destination="tgq-nL-HgB" id="HeY-hD-c88"/>
                 <outlet property="smallImage" destination="Mlc-o3-H1b" id="65m-RB-nuD"/>
             </connections>
             <point key="canvasLocation" x="297" y="299"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="USA.png" width="29" height="20"/>
+    </resources>
 </document>

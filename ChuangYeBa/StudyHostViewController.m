@@ -10,6 +10,8 @@
 
 @interface StudyHostViewController ()
 
+@property (strong, nonatomic) NSNumber *articleId;
+
 @end
 
 @implementation StudyHostViewController
@@ -45,12 +47,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    //self.tabBarController.tabBar.hidden = NO;
-    
+    [super viewDidAppear:animated];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSNumber *isUserDidLogin = [ud objectForKey:@"isUserDidLogin"];
     if ([isUserDidLogin isEqualToNumber:[NSNumber numberWithBool:NO]]) {
@@ -58,24 +58,23 @@
     }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ShowStudyDetail"]) {
+        id destinationVC = [segue destinationViewController];
+        [destinationVC setValue:self.articleId forKey:@"articleId"];
+    }
 }
-*/
+
 
 #pragma mark - 处理通知
 - (void)showStudyDetail:(NSNotification *)notification {
     // 接受通知
+    self.articleId = [notification.userInfo objectForKey:@"articleId"];
     self.hidesBottomBarWhenPushed = YES;
-    
     [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
     self.hidesBottomBarWhenPushed = NO;
-    
 }
 
 #pragma mark - ViewPagerDataSource

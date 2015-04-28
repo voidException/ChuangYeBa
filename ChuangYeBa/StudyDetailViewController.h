@@ -16,6 +16,7 @@
 #import "ArticleInfo.h"
 #import "UserInfo.h"
 #import "CommentInputView.h"
+#import "CommentInfo.h"
 
 @interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CommentInputViewDelegate>
 
@@ -35,7 +36,7 @@
 @property (nonatomic) BOOL isLiked;
 @property (nonatomic) BOOL isDownloaded;
 
-@property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSDictionary *comment;
 
 @property (strong, nonatomic) UIView *activityBackgroundView;

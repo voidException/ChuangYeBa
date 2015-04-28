@@ -43,12 +43,13 @@ static NSString *serverIP = SERVER_IP;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ClassNetworkUtils failureAction:error];
+        callback(nil);
     }];
 }
 
 
 // 接口2
-+ (void)requestAddClassByStudentId:(NSString *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
++ (void)requestAddClassByStudentId:(NSNumber *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
     NSString *path = @"/startup/student/class/addClass";
     path = [serverIP stringByAppendingString:path];
     
@@ -137,7 +138,7 @@ static NSString *serverIP = SERVER_IP;
 }
 
 // 接口6
-+ (void)requestClassInfoByClassNo:(NSString *)classNo andCallback:(Callback)callback {
++ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
     NSString *path = @"/startup/student/class/getClassMessage";
     path = [serverIP stringByAppendingString:path];
     

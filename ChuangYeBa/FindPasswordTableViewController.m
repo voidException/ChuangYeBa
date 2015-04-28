@@ -7,6 +7,7 @@
 //
 
 #import "FindPasswordTableViewController.h"
+#import "LoginNetworkUtils.h"
 
 @interface FindPasswordTableViewController ()
 
@@ -39,8 +40,17 @@
 }
 
 - (IBAction)clickOnButton:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"Your password have been sent to your email" delegate:self cancelButtonTitle:@"Fine" otherButtonTitles:nil, nil];
-    [alert show];
+    
+    [LoginNetworkUtils requestFindPasswordByEmail:self.email.text andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            //NSNumber *error = [dic objectForKey:@"error"];
+            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
 }
 
 - (void)clickOnBackground {

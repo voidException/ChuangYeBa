@@ -12,11 +12,11 @@
 #import "ClassInfo.h"
 #import "UserInfo.h"
 
-@interface ClassSettingTableViewController : UITableViewController
+@interface ClassSettingTableViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (strong, nonatomic) NSArray *studentArray;
+@property (strong, nonatomic) NSMutableArray *studentArray;
 
 - (IBAction)clickOnExitClassButton:(id)sender;
 

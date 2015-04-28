@@ -16,8 +16,15 @@ typedef void (^Callback)(id obj);
 @interface StudyNetworkUtils : NSObject
 
 // 请求文章列表
-+ (void)requestArticalWichToken:(NSString *)token userId:(NSString *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
++ (void)requestArticalWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
 
+// 提交一条评论
 + (void)submitCommentWithArticleId:(ArticleInfo *)articleInfo userInfo:(UserInfo *)userInfo commitDate:(NSDate *)commiteDate content:(NSString *)content andCallback:(Callback)callback;
+
+// 请求具体的一篇文章
++ (void)requestArticleDetailWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback;
+
+// 请求评论列表
++ (void)requestCommentsWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
 
 @end

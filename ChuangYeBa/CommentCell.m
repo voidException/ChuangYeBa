@@ -15,6 +15,10 @@
     self.commentTextView.editable = NO;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    self.photoImage.layer.masksToBounds = YES;
+    self.photoImage.layer.cornerRadius = 15;
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
