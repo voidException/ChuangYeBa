@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ID0-j2-X3d">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -11,7 +12,7 @@
         <!--Study Host View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="StudyHostViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="StudyHostViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -24,7 +25,7 @@
                     <navigationItem key="navigationItem" id="C0h-iB-HBZ"/>
                     <connections>
                         <segue destination="ugt-4V-8yf" kind="presentation" identifier="ShowLoginView" id="g2E-UV-XDc"/>
-                        <segue destination="XEC-lG-d9I" kind="show" identifier="ShowStudyDetail" id="4PW-dd-gR9"/>
+                        <segue destination="XEC-lG-d9I" kind="custom" identifier="ShowStudyDetail" customClass="CustomSegue" id="O44-49-i9R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -46,6 +47,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="q3b-Ms-vOZ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3EN-kc-W8X">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -268,6 +270,7 @@
                         </variation>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="8g9-3g-tZe"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="commentButton" destination="4Bq-NS-hDW" id="iG9-Bv-O0t"/>
@@ -276,11 +279,13 @@
                         <outlet property="tableView" destination="q3b-Ms-vOZ" id="5Md-fL-XfX"/>
                         <outlet property="toolbarView" destination="MBw-aG-PcQ" id="5xo-Fd-lq1"/>
                         <segue destination="KfC-2q-puq" kind="presentation" identifier="ShowMedia" id="C6k-Pz-LlP"/>
+                        <segue destination="2w7-fj-pRt" kind="unwind" identifier="BackToMain" unwindAction="returnFromSegueAction:" id="a2O-xx-iHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wKb-qU-KKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="2w7-fj-pRt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-232.5" y="-2098.5"/>
+            <point key="canvasLocation" x="-100.5" y="-2098.5"/>
         </scene>
         <!--Study Content View Controller-->
         <scene sceneID="0pC-RY-jZT">
@@ -309,6 +314,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="133" y="11" width="172" height="24"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="articleImage" translatesAutoresizingMaskIntoConstraints="NO" id="Pwj-6f-lA7">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -341,7 +349,8 @@
                                                             <exclude reference="p1I-Ho-dBD"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="238" y="77" width="15" height="15"/>
                                                         <mask key="constraints">
                                                             <include reference="JM2-bF-dxv"/>
                                                             <include reference="p1I-Ho-dBD"/>
@@ -360,7 +369,8 @@
                                                             <exclude reference="s1h-Qg-jw0"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="275" y="77" width="15" height="15"/>
                                                         <mask key="constraints">
                                                             <include reference="jcL-9J-3ob"/>
                                                             <include reference="s1h-Qg-jw0"/>
@@ -382,7 +392,8 @@
                                                             <exclude reference="m6L-Im-T04"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="254" y="74" width="20" height="21"/>
                                                         <mask key="constraints">
                                                             <include reference="NQ9-oi-1Wh"/>
                                                             <include reference="m6L-Im-T04"/>
@@ -404,7 +415,8 @@
                                                             <exclude reference="j22-vH-80V"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="292" y="74" width="20" height="21"/>
                                                         <mask key="constraints">
                                                             <include reference="Lfg-LG-602"/>
                                                             <include reference="j22-vH-80V"/>
@@ -424,7 +436,8 @@
                                                             <exclude reference="BR1-3X-rXa"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="129" y="35" width="183" height="52"/>
                                                         <mask key="constraints">
                                                             <include reference="BR1-3X-rXa"/>
                                                         </mask>
@@ -580,7 +593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZ7-gp-Mmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="681" y="-2098.5"/>
+            <point key="canvasLocation" x="795" y="-2098.5"/>
         </scene>
         <!--Class Table View Controller-->
         <scene sceneID="c52-A2-IDZ">
@@ -597,15 +610,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="0Na-e6-pJs">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="7ZY-oY-MRd">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ej3-Id-YTm">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="likeClicked">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ZfP-Ld-r31">
                             <rect key="frame" x="-61" y="-14" width="123" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -616,7 +620,6 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="leftButton" destination="7ZY-oY-MRd" id="cct-m5-PL4"/>
                         <outlet property="segmentedControl" destination="ZfP-Ld-r31" id="kTk-ji-xQd"/>
                         <segue destination="RNi-tv-RBW" kind="show" identifier="ShowTestDetail" id="BGS-lj-H0u"/>
                         <segue destination="pOA-7T-aQ2" kind="show" identifier="ShowClassSetting" id="X51-EQ-XVM"/>
@@ -630,7 +633,7 @@
         <scene sceneID="EYb-GH-LQL">
             <objects>
                 <navigationController id="D8S-q3-Zqi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" image="Algeria.png" id="W45-uX-EId"/>
+                    <tabBarItem key="tabBarItem" title="我" id="W45-uX-EId"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ToN-PG-rxp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -896,7 +899,7 @@
         <scene sceneID="vv8-Cf-f19">
             <objects>
                 <navigationController id="Zp6-ti-kqF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="更多" image="Algeria.png" id="a7v-np-DJC"/>
+                    <tabBarItem key="tabBarItem" title="更多" id="a7v-np-DJC"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qk1-Xl-BXT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1348,7 +1351,7 @@
         <scene sceneID="LgG-FW-Kxn">
             <objects>
                 <navigationController id="Qfg-V1-sIX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="教室" image="Algeria.png" id="t7N-3O-Zy7"/>
+                    <tabBarItem key="tabBarItem" title="教室" id="t7N-3O-Zy7"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9GV-pA-qvx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1992,8 +1995,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="oqZ-JS-fPf"/>
                     <connections>
-                        <segue destination="A6k-mC-Zoh" kind="show" identifier="ShowAddClass" id="CcI-Wc-5Bk"/>
-                        <segue destination="R08-4O-DQm" kind="show" identifier="ShowClassMain" id="j6o-Uu-Dhs"/>
+                        <segue destination="A6k-mC-Zoh" kind="custom" identifier="ShowAddClass" customClass="PushSegueNoAnimation" id="CcI-Wc-5Bk"/>
+                        <segue destination="R08-4O-DQm" kind="custom" identifier="ShowClassMain" customClass="PushSegueNoAnimation" id="j6o-Uu-Dhs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55P-cd-Kh6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2003,7 +2006,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="SIJ-UJ-gJp">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ID0-j2-X3d" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ID0-j2-X3d" customClass="TabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="S3c-zO-wtc">
@@ -2011,6 +2014,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="mainTabBar" destination="S3c-zO-wtc" id="91E-S5-V0E"/>
                         <segue destination="prY-9N-D1G" kind="relationship" relationship="viewControllers" id="3m9-mR-8SW"/>
                         <segue destination="Qfg-V1-sIX" kind="relationship" relationship="viewControllers" id="isK-Qi-zxg"/>
                         <segue destination="Zp6-ti-kqF" kind="relationship" relationship="viewControllers" id="ly2-ND-T3w"/>
@@ -2678,7 +2682,7 @@
         <scene sceneID="4VB-Dn-SL1">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="prY-9N-D1G" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="学习" image="Algeria.png" id="GT0-Nj-DbK"/>
+                    <tabBarItem key="tabBarItem" title="学习" id="GT0-Nj-DbK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wJA-Qp-YAY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2920,12 +2924,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Algeria.png" width="29" height="20"/>
         <image name="articleImage" width="90" height="67"/>
         <image name="comment" width="12" height="12"/>
         <image name="commentIcon" width="17" height="19"/>
         <image name="lastButtonIcon" width="10" height="18"/>
-        <image name="likeClicked" width="35" height="33"/>
         <image name="loginBG" width="375" height="667"/>
         <image name="loginButtonBG" width="290" height="40"/>
         <image name="love" width="12" height="12"/>

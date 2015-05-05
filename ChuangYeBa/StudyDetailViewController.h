@@ -17,8 +17,9 @@
 #import "UserInfo.h"
 #import "CommentInputView.h"
 #import "CommentInfo.h"
+#import "FXBlurView.h"
 
-@interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CommentInputViewDelegate>
+@interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CommentInputViewDelegate, CommentCellDelegate, MediaCellDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) ArticleInfo *articleInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
@@ -39,7 +40,7 @@
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSDictionary *comment;
 
-@property (strong, nonatomic) UIView *activityBackgroundView;
+@property (strong, nonatomic) FXBlurView *activityBackgroundView;
 - (IBAction)clickOnCommentButton:(id)sender;
 - (IBAction)clickOnLikeButton:(id)sender;
 - (IBAction)clickOnDownloadButton:(id)sender;

@@ -56,6 +56,10 @@
     if ([isUserDidLogin isEqualToNumber:[NSNumber numberWithBool:NO]]) {
         [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
     }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
 }
 
 
@@ -74,6 +78,7 @@
     self.articleId = [notification.userInfo objectForKey:@"articleId"];
     self.hidesBottomBarWhenPushed = YES;
     [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
+    
     self.hidesBottomBarWhenPushed = NO;
 }
 

@@ -36,14 +36,12 @@
     } else {
         [self performSegueWithIdentifier:@"ShowClassMain" sender:self];
     }
-
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

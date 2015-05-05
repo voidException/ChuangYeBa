@@ -7,6 +7,8 @@
 //
 
 #import "TestViewController.h"
+// test
+#import <MJRefresh.h>
 
 #define THEME_BLUE colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1
 
@@ -125,6 +127,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     [self.submitButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [self.submitButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateNormal];
     [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    
 }
 
 - (void)loadClassInfoFromLocal {

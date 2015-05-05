@@ -11,6 +11,7 @@
 #import "StudyJsonParser.h"
 #import <MBProgressHUD.h>
 #import <MJRefresh.h>
+#import "PullUpRefreshView.h"
 
 typedef enum {
     StudyDetailStateNormal = 1,
@@ -23,13 +24,16 @@ static NSString *mediaCellIdentifier = @"MediaCell";
 static NSString *countCellIdentifier = @"CountingCell";
 static NSString *commentCellIdentifier = @"CommentCell";
 
+static NSInteger const kCommentInputViewHeight = 150;
+
 static NSInteger const kPageSize = 2;
 
 
 @interface StudyDetailViewController ()
 
 @property (strong, nonatomic) NSNumber *articleId;
-
+@property (strong, nonatomic) PullUpRefreshView *refreshView;
+@property (strong, nonatomic) CommentCell *deletingCommentCell;
 @property (assign, nonatomic) StudyDetailState state;
 
 @end
@@ -57,22 +61,10 @@ static NSInteger const kPageSize = 2;
     
     // 读取用户信息
     [self loadUserInfoFromLocal];
-    // 读取文章信息
+    // 读取文章信息 读取文章信息后再请求评论列表
     [self requestArticleInfoFromServer];
-    // 读取用户评论
-    [self requestCommentsFromServer];
     
     
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    // 隐藏系统自带导航条
-#warning 普通！隐藏时会造成上一个界面的侧滑滚动条消失
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,6 +80,8 @@ static NSInteger const kPageSize = 2;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    
     // 注册xib的cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ArticleTitleCell" bundle:nil] forCellReuseIdentifier:articleTitleCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ArticleCell" bundle:nil] forCellReuseIdentifier:articleCellIdentifier];
@@ -97,11 +91,14 @@ static NSInteger const kPageSize = 2;
     // 初始化CommentInputView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentInputView" owner:self options:nil];
     self.commentInputView = [nib objectAtIndex:0];
+    self.commentInputView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kCommentInputViewHeight);
     self.commentInputView.delegate = self;
-    
     // 添加评论窗口并隐藏
     [self.view addSubview:self.commentInputView];
     self.commentInputView.hidden = YES;
+    
+    // 设置底端的评论按钮宽度
+    [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
     
     // 初始化自定义导航条
     self.customBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
@@ -116,15 +113,37 @@ static NSInteger const kPageSize = 2;
     [self.likeButton setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
     [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
     [self.commentButton setBackgroundImage:[UIImage imageNamed:@"commentBG"] forState:UIControlStateNormal];
-    // 设置底端的评论按钮宽度
-    [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
+    
+    /*
+    // 添加自定义的上拉刷新块
+    self.refreshView = [[PullUpRefreshView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    //self.tableView.tableFooterView = self.refreshView;
+    typeof(self) weakSelf = self;
+    [self.refreshView addPullUpRefreshingBlock:^{
+        [weakSelf requestCommentsFromServer:YES];
+    }];
+    */
     
     // 增加上拉刷新
     [self.tableView addLegendFooterWithRefreshingBlock:^{
-        [self requestCommentsFromServer];
+        [self requestCommentsFromServer:YES];
     }];
     self.tableView.footer.automaticallyRefresh = NO;
     
+    //
+    /*
+    self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
+    //self.activityBackgroundView.backgroundColor = [UIColor redColor];
+    self.activityBackgroundView.blurRadius = 0;
+    [self.view insertSubview:self.activityBackgroundView atIndex:0];
+    */
+    
+    
+    
+}
+
+- (void)loadMoreData {
+    [self.tableView.footer endRefreshing];
 }
 
 - (void)setState:(StudyDetailState)state {
@@ -134,16 +153,24 @@ static NSInteger const kPageSize = 2;
     _state = state;
 }
 
-- (void)requestCommentsFromServer {
+- (void)requestCommentsFromServer:(BOOL)isPullupRefresh {
     NSInteger requestPage;
     NSInteger requestPageSize;
-    if (self.comments.count) {
-        requestPage = self.comments.count;
-        requestPageSize = kPageSize;
+    // 如果是上拉刷新
+    if (isPullupRefresh) {
+        if (self.comments.count) {
+            requestPage = self.comments.count;
+            requestPageSize = kPageSize;
+        }
+        else {
+            requestPage = 0;
+            requestPageSize = kPageSize;
+        }
     }
+    // 如果是直接刷新（添加评论所造成的刷新动作）
     else {
         requestPage = 0;
-        requestPageSize = kPageSize;
+        requestPageSize = self.comments.count + 1;
     }
     
     [StudyNetworkUtils requestCommentsWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId page:requestPage pageSize:requestPageSize andCallback:^(id obj) {
@@ -151,13 +178,33 @@ static NSInteger const kPageSize = 2;
         if (self.tableView.footer == self.tableView.legendFooter) {
             [self.tableView.footer endRefreshing];
         }
-        
+        /*
+        // 自定义的上拉刷新
+        if (self.refreshView.state == PullUpRefreshViewStateRefreshing) {
+            [self.refreshView endRefreshing];
+        }
+         */
+        if (!self.comments) {
+            self.comments = [[NSMutableArray alloc] init];
+        }
         // 把解析好的评论列表赋给内存中的评论列表数组
-        self.comments = obj;
-        [self.tableView reloadData];
+        NSMutableArray *mArr = obj;
         
-#warning 可选！可以研究一下怎么reload一个section。
-        //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (!isPullupRefresh) {
+            [self.comments removeAllObjects];
+        } else {
+            if (!mArr.count) {
+                //[self.refreshView noticeNoMoreData];
+                [self.tableView.footer noticeNoMoreData];
+            }
+        }
+        
+        for (int i = 0; i < mArr.count; i++) {
+            CommentInfo *ci = mArr[i];
+            [self.comments addObject:ci];
+        }
+        
+        [self.tableView reloadData];
     }];
 }
 
@@ -189,7 +236,7 @@ static NSInteger const kPageSize = 2;
                 [self.tableView reloadData];
                 
                 // 请求评论列表
-                [self requestCommentsFromServer];
+                [self requestCommentsFromServer:YES];
                 
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
@@ -207,36 +254,23 @@ static NSInteger const kPageSize = 2;
         NSNumber *error = [dic objectForKey:@"error"];
         NSString *errorMessage = [dic objectForKey:@"errorMessage"];
         if ([error integerValue] == 1) {
-            
-            // 添加评论并且更新视图
-            
-            [self.tableView beginUpdates];
-            
-            // 把刚刚提交的
-            CommentInfo *commentInfo = [[CommentInfo alloc] init];
-            commentInfo.userName = self.userInfo.name;
-            commentInfo.content = self.commentInputView.textView.text;
-            commentInfo.commentTime = nowDate;
-            
-            [self.comments insertObject:commentInfo atIndex:0];
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationBottom];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-            [self.tableView endUpdates];
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-            
-            // 隐藏评论席位
-            self.commentInputView.hidden = YES;
+            // 重新请求一次评论的列表并且刷新
+            [self requestCommentsFromServer:NO];
+            // 隐藏评论席位,并清空TextView
+            self.commentInputView.textView.text = @"";
             [self removeActivityBackgroundView];
             [self.commentInputView.textView resignFirstResponder];
-            
-            
-            
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
 }
+
+- (void)submitDeleteCommentToServer:(CommentCell *)commentCell {
+    
+}
+
 
 #pragma mark 调整再键盘弹出时的Frame
 - (CGFloat)keyboardBeginingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
@@ -248,22 +282,27 @@ static NSInteger const kPageSize = 2;
 }
 
 // 键盘出现后调整视图
--(void)keyboardWillAppear:(NSNotification *)notification
+- (void)keyboardWillAppear:(NSNotification *)notification
 {
     CGFloat keyboardHeight = [self keyboardBeginingFrameHeight:[notification userInfo]];
 
     if (keyboardHeight) {
-        self.commentInputView.frame = CGRectMake(0, self.view.frame.size.height - keyboardHeight - 150, self.view.frame.size.width, 150);
+        self.commentInputView.frame = CGRectMake(0, self.view.frame.size.height - keyboardHeight - kCommentInputViewHeight, self.view.frame.size.width, kCommentInputViewHeight);
         self.commentInputView.hidden = NO;
         [self.view bringSubviewToFront:self.commentInputView];
+        
     }
 }
 
 // 键盘消失后调整视图
--(void)keyboardWillDisappear:(NSNotification *)notification
+- (void)keyboardWillDisappear:(NSNotification *)notification
 {
     [self removeActivityBackgroundView];
-    self.commentInputView.hidden = YES;
+    CGFloat keyboardHeight = [self keyboardBeginingFrameHeight:[notification userInfo]];
+    [UIView animateWithDuration:1.0 animations:^{
+        self.commentInputView.frame = CGRectOffset(self.commentInputView.frame, 0, keyboardHeight + kCommentInputViewHeight);
+        self.activityBackgroundView.blurRadius = 0;
+    }];
 }
 
 
@@ -298,7 +337,7 @@ static NSInteger const kPageSize = 2;
 }
 
 - (void)clickOnLeftButton {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self performSegueWithIdentifier:@"BackToMain" sender:self];
 }
 
 
@@ -341,9 +380,6 @@ static NSInteger const kPageSize = 2;
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
-}
 
 #pragma mark - Table view data source
 
@@ -384,6 +420,8 @@ static NSInteger const kPageSize = 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%lu", self.tableView.subviews.count);
+    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             return [self tableView:tableView articleTitleCellForRowAtIndexPath:indexPath];
@@ -424,8 +462,21 @@ static NSInteger const kPageSize = 2;
 
 - (MediaCell *)tableView:(UITableView *)tableView mediaCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaCell *mediaCell = [tableView dequeueReusableCellWithIdentifier:mediaCellIdentifier];
-    [mediaCell setState:MediaCellStateNormal];
     mediaCell.delegate = self;
+    switch ([self.articleInfo.articleType integerValue]) {
+        case 1:
+            [mediaCell setState:MediaCellStateNormal];
+            break;
+        case 2:
+            [mediaCell setState:MediaCellStateLongImage];
+            break;
+        case 3:
+            [mediaCell setState:MediaCellStateVideo];
+            break;
+        default:
+            [mediaCell setState:MediaCellStateNormal];
+            break;
+    }
     return mediaCell;
 }
 
@@ -438,13 +489,23 @@ static NSInteger const kPageSize = 2;
 
 - (CommentCell *)tableView:(UITableView *)tableView commentCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:commentCellIdentifier];
+    commentCell.delegate = self;
     NSInteger row = [indexPath row];
-    CommentInfo *commentInfo = self.comments[row];
-    commentCell.userInfoLabel.text = commentInfo.userName;
-    commentCell.commentTextView.text = commentInfo.content;
+    commentCell.commentInfo = self.comments[row];
+    commentCell.indexPath = indexPath;
+    // 如果不是自己发送的，那么不要现实删除按键
+    if (![self.userInfo.userId isEqual:commentCell.commentInfo.userId]) {
+        [commentCell.deleteButton setHidden:YES];
+    }
     return commentCell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    view.backgroundColor = [UIColor whiteColor];
+    return view;
+    
+}
 
 #pragma mark - CommentInputView Delegate
 -(void)commentInputView:(CommentInputView *)commentInputView clickOnCommentButtonAtIndex:(NSInteger)index {
@@ -452,7 +513,7 @@ static NSInteger const kPageSize = 2;
     if (index == 1) {
         [self submitCommentToServer];
     } else {
-        self.commentInputView.hidden = YES;
+        //self.commentInputView.hidden = YES;
         [self removeActivityBackgroundView];
         [self.commentInputView.textView resignFirstResponder];
     }
@@ -461,14 +522,14 @@ static NSInteger const kPageSize = 2;
 // 添加透明指示栏
 - (void)addActivityBackgroundView {
     if (self.activityBackgroundView == nil) {
-        self.activityBackgroundView = [[UIView alloc] initWithFrame:self.view.bounds];
-        self.activityBackgroundView.backgroundColor = [UIColor blackColor];
-        self.activityBackgroundView.alpha = 0.5f;
-        [self.view addSubview:self.activityBackgroundView];
+        self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
+        self.activityBackgroundView.tintColor = [UIColor blackColor];
+        self.activityBackgroundView.blurRadius = 10;
     }
     if (![self.activityBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.activityBackgroundView];
     }
+    
 }
 
 // 移除透明指示栏
@@ -486,13 +547,32 @@ static NSInteger const kPageSize = 2;
     [self performSegueWithIdentifier:@"ShowMedia" sender:self];
 }
 
+#pragma mark - CommentCell Delegate
+- (void)clickOnCommentCellDeleteButton:(CommentCell *)commentCell {
+    self.deletingCommentCell = commentCell;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除评论" otherButtonTitles:nil, nil];
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark - ActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [StudyNetworkUtils submitDeleteCommentWithToken:self.userInfo.email userId:self.userInfo.userId commentId:self.deletingCommentCell.commentInfo.commentId andCallback:^(id obj) {
+            NSNumber *error = [obj objectForKey:@"error"];
+            if ([error isEqual:@1]) {
+                [self.tableView reloadData];
+                [self.comments removeObjectAtIndex:self.deletingCommentCell.indexPath.row];
+                [self.tableView deleteRowsAtIndexPaths:@[self.deletingCommentCell.indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        }];
+    }
+}
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"ShowMedia"]) {
         id destinationVC = [segue destinationViewController];
-        NSInteger mediaType = 1;
-        [destinationVC setValue:[NSNumber numberWithInteger:mediaType] forKey:@"mediaType"];
+        [destinationVC setValue:self.articleInfo.articleType forKey:@"mediaType"];
     }
 }
 

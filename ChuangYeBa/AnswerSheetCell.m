@@ -79,7 +79,6 @@ static NSString *quizCollectionCellIdentifier = @"QuizCollectionCell";
 #pragma Collection View Delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.delegate answerSheet:self didSelectedAtIndexPath:indexPath];
-    NSLog(@"选择了题目：%lu", indexPath.row + 1);
 }
 
 #pragma Collection View Data Source

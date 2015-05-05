@@ -27,4 +27,7 @@ typedef void (^Callback)(id obj);
 // 请求评论列表
 + (void)requestCommentsWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
 
+// 删除一条评论
++ (void)submitDeleteCommentWithToken:(NSString *)token userId:(NSNumber *)userId commentId:(NSNumber *)commentId andCallback:(Callback)callback;
+
 @end

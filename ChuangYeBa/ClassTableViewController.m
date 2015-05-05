@@ -51,11 +51,18 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar addSubview:self.rightButton];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.rightButton setAlpha:1.0];
+        //self.rightButton.frame = CGRectOffset(self.rightButton.frame, 30, 0);
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.rightButton removeFromSuperview];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.rightButton setAlpha:0.0];
+        //self.rightButton.frame = CGRectOffset(self.rightButton.frame, -30, 0);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,8 +75,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)initUI {
     float rightButtonWidth = 44.0;
     self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - rightButtonWidth, 0, rightButtonWidth, 44)];
-    [self.rightButton setImage:[UIImage imageNamed:@"classSettingButtonIcon"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    item.title = @"";
+    self.navigationItem.leftBarButtonItem = item;
+    //self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)setNavigationBarAttributes {
@@ -124,6 +136,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 #pragma mark - Action
 - (void)clickOnRightButton {
+    
     [self performSegueWithIdentifier:@"ShowClassSetting" sender:self];
 }
 

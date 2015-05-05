@@ -119,4 +119,22 @@ static NSString *serverIP = SERVER_IP;
     }];
 }
 
+// 删除一条评论
++ (void)submitDeleteCommentWithToken:(NSString *)token userId:(NSNumber *)userId commentId:(NSNumber *)commentId andCallback:(Callback)callback {
+    NSString *path = @"/startup/learn/article/delComment";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *param = @{@"token":token, @"iD":userId, @"commentiD":commentId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"成功删除一条评论%@", responseObject);
+        callback(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"删除评论失败, %@", [error localizedDescription]);
+    }];
+}
+
 @end

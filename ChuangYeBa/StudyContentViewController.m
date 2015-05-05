@@ -69,12 +69,14 @@ static NSInteger const kPageSize = 5;
         [self requestArticleListFromServer:YES];
     }];
     
+    
     // 增加上啦刷新
     [self.tableView addLegendFooterWithRefreshingBlock:^{
         NSLog(@"上啦刷新");
         // NO说明是上拉刷新
         [self requestArticleListFromServer:NO];
     }];
+    self.tableView.footer.hidden = YES;
 }
 
 - (void)pullUpReload:(NSArray *)articleListArr{
@@ -126,6 +128,9 @@ static NSInteger const kPageSize = 5;
     [StudyNetworkUtils requestArticalWichToken:userInfo.email userId:userInfo.userId tag:tag page:requestPage pageSize:requestPageSize andCallback:^(id obj){
         
         if (obj) {
+            // 请求成功后显示上拉刷新的模块
+            self.tableView.footer.hidden = NO;
+            
             NSDictionary *dic = obj;
             NSArray *articleListArr = [dic objectForKey:@"article"];
             //NSArray *arr = [dic objectForKey:@"article"];

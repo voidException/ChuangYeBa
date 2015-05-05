@@ -6,7 +6,17 @@
 //  Copyright (c) 2015年 Su Ziming. All rights reserved.
 //
 
+
 #import <UIKit/UIKit.h>
+
+@class CommentInfo;
+@class CommentCell;
+
+@protocol CommentCellDelegate <NSObject>
+
+- (void)clickOnCommentCellDeleteButton:(CommentCell *)commentCell;
+
+@end
 
 @interface CommentCell : UITableViewCell
 
@@ -16,8 +26,14 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (weak, nonatomic) id <CommentCellDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UIButton *clickOnLikeButton;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+- (IBAction)clickOnDeleteButton:(id)sender;
+
+@property (strong, nonatomic) CommentInfo *commentInfo;
+
 
 @end

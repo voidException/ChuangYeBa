@@ -15,12 +15,12 @@
 
 @end
 
-@interface CommentInputView : UIView
+@interface CommentInputView : UIView <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
-@property (weak,nonatomic) id <CommentInputViewDelegate> delegate;
+@property (weak, nonatomic) id <CommentInputViewDelegate> delegate;
 
 - (IBAction)clickOnSendButton:(id)sender;
 - (IBAction)clickOnCancelButton:(id)sender;

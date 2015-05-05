@@ -23,10 +23,14 @@
 @property (strong, nonatomic) MPMoviePlayerController *moviePlayer;
 @property (nonatomic) NSNumber *mediaType;
 
+@property (nonatomic) BOOL isClickOnDone;
+
 @end
 
 @implementation MediaViewController
 @synthesize mediaType;
+
+@synthesize isClickOnDone;
 
 
 #pragma mark - Lifecycle
@@ -34,6 +38,7 @@
     [super viewDidLoad];
     
     [self initUI];
+    isClickOnDone = NO;
     
     self.view.backgroundColor = [UIColor blackColor];
     
@@ -46,10 +51,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if ([mediaType integerValue]) {
-        [self downloadLongImage:nil];
-    } else {
-        [self loadVideo:nil];
+    if (!isClickOnDone) {
+        if ([mediaType integerValue] == 2) {
+            [self downloadLongImage:nil];
+        } else {
+            [self loadVideo:nil];
+        }
     }
 }
 
@@ -71,9 +78,7 @@
     
     self.imageView.userInteractionEnabled = YES;
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressImage)];
-    [self.imageView addGestureRecognizer:longPress];
-    //[self.navigationController.navigationBar setHidden:YES];
-    
+    [self.scrollView addGestureRecognizer:longPress];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -126,8 +131,7 @@
 
 }
 
-- (void) playbackFinished4MoviePlayerController: (NSNotification*) notification
-{
+- (void) playbackFinished4MoviePlayerController: (NSNotification*) notification {
     NSLog(@"使用MPMoviePlayerController播放完成.");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_moviePlayer stop];
@@ -136,14 +140,14 @@
 }
 
 
--(void)doneButtonClick:(NSNotification*)aNotification
-{
-    NSLog(@"退出全屏.");
+-(void)doneButtonClick:(NSNotification*)aNotification {
+
     if (_moviePlayer.playbackState == MPMoviePlaybackStateStopped)
     {
         [_moviePlayer.view removeFromSuperview];
         _moviePlayer = nil;
     }
+    isClickOnDone = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
