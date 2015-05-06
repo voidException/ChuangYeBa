@@ -33,6 +33,10 @@
     [self modifiedFont];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self loadLoginEmailFromLocal];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -65,6 +69,7 @@
         if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
             self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
             [self saveUserInfoToLocal:self.userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLogin" object:nil];
             [self dismissViewControllerAnimated:YES completion:nil];
             
         } else {
@@ -99,13 +104,19 @@
 }
 
 
-#pragma mark  保存用户信息至NSUserDefault，同时记录登陆状态
+- (void)loadLoginEmailFromLocal {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    self.email.text = [ud objectForKey:@"loginEmail"];
+}
+
+// 保存用户信息至NSUserDefault，同时记录登陆状态
 - (void)saveUserInfoToLocal:(UserInfo *)ui{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:ui];
     [ud setObject:udObject forKey:@"userInfo"];
     NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:YES];
     [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
+    [ud setObject:ui.email forKey:@"loginEmail"];
     [ud synchronize];
 }
 

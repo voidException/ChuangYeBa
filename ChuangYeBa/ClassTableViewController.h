@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) UIButton *rightButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
+@property (strong, nonatomic) UIButton *leftButton;
 
 // 用于显示和保存列表的数组
 @property (strong, nonatomic) NSMutableArray *allTestGroups;

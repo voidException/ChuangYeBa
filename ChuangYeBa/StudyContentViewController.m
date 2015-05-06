@@ -49,10 +49,18 @@ static NSInteger const kPageSize = 5;
     // 从本地读取用户信息
     [self loadUserInfoFromLocal];
     // TEST 请求
-    
-#warning 严重！以下的方法在当用户在没有登陆过的情况下，第一次启动应用有可能造成崩溃！
+    // 注册接受用户登陆的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUserInfoFromLocal) name:@"UserLogin" object:nil];
+}
+
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // 如果用户没有登陆，则不刷新列表
     if (userInfo.userId) {
         [self.tableView.legendHeader beginRefreshing];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 
@@ -177,6 +185,7 @@ static NSInteger const kPageSize = 5;
     path = [serverIP stringByAppendingString:path];
 
     [studyContentCell.mainImage setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    
     studyContentCell.introductionLabel.text = article.viceTitle;
     return studyContentCell;
 }

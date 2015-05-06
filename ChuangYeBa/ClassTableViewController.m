@@ -51,8 +51,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar addSubview:self.rightButton];
+    [self.navigationController.navigationBar addSubview:self.leftButton];
     [UIView animateWithDuration:0.3 animations:^{
         [self.rightButton setAlpha:1.0];
+        [self.leftButton setAlpha:1.0];
         //self.rightButton.frame = CGRectOffset(self.rightButton.frame, 30, 0);
     }];
 }
@@ -61,6 +63,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [super viewWillDisappear:animated];
     [UIView animateWithDuration:0.3 animations:^{
         [self.rightButton setAlpha:0.0];
+        [self.leftButton setAlpha:0.0];
         //self.rightButton.frame = CGRectOffset(self.rightButton.frame, -30, 0);
     }];
 }
@@ -73,10 +76,17 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 #pragma mark - Private Method
 
 - (void)initUI {
-    float rightButtonWidth = 44.0;
-    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - rightButtonWidth, 0, rightButtonWidth, 44)];
+    // 初始化右导航条按钮
+    float buttonWidth = 44.0;
+    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, 44)];
     [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 初始化左导航条按钮
+    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonWidth, 44)];
+    self.leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [self.leftButton setImage:[self circleImage:[UIImage imageNamed:@"PKUIcon"] withParam:8.0] forState:UIControlStateNormal];
+    
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
@@ -90,6 +100,23 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
+// 裁剪头像图片为圆形
+- (UIImage*)circleImage:(UIImage*)image withParam:(CGFloat)inset {
+    UIGraphicsBeginImageContext(image.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 2);
+    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+    CGRect rect = CGRectMake(inset, inset, image.size.width - inset * 2.0f, image.size.height - inset * 2.0f);
+    CGContextAddEllipseInRect(context, rect);
+    CGContextClip(context);
+    
+    [image drawInRect:rect];
+    //CGContextAddEllipseInRect(context, rect);
+    //CGContextStrokePath(context);
+    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newimg;
+}
 
 - (void)requestTestGroupsFromServer {
     __weak typeof(self) weakSelf = self;

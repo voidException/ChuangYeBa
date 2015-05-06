@@ -56,7 +56,6 @@
     if ([isUserDidLogin isEqualToNumber:[NSNumber numberWithBool:NO]]) {
         [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
     }
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -90,10 +89,21 @@
     
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:15.0];
+    label.font = [UIFont systemFontOfSize:14.0 weight:0.1];
     label.text = self.categoryArray[index];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
+    [label sizeToFit];
+    return label;
+}
+
+- (UIView *)viewPager:(ViewPagerController *)viewPager activeViewForTabAtIndex:(NSUInteger)index {
+    UILabel *label = [UILabel new];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:19.0 weight:0.1];
+    label.text = self.categoryArray[index];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
     [label sizeToFit];
     return label;
 }

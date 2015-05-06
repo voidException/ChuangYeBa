@@ -14,7 +14,7 @@
 
 @implementation RegisterTableViewController
 
-#pragma mark - 视图生命周期
+#pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 初始化标题
@@ -126,11 +126,18 @@
         [LoginNetworkUtils registerUserInfo:userInfo andCallBack:^(id obj) {
             NSDictionary *dic = obj;
 #warning 重要！！功能没有做完！！！！！
-            //NSNumber *error = [dic objectForKey:@"error"];
-            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
-            NSLog(@"注册成功");
+            NSNumber *error = [dic objectForKey:@"error"];
+            if ([error isEqual:@9]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                // 保存用户登陆邮箱
+                NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+                [ud setObject:self.email.text forKey:@"loginEmail"];
+                [ud synchronize];
+            } else {
+                NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }];
     } else {
         NSLog(@"返回本地警告信息");
