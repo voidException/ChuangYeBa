@@ -16,7 +16,7 @@ typedef void (^Callback)(id obj);
 @interface StudyNetworkUtils : NSObject
 
 // 请求文章列表
-+ (void)requestArticalWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
++ (void)requestArticlesWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback;
 
 // 提交一条评论
 + (void)submitCommentWithArticleId:(ArticleInfo *)articleInfo userInfo:(UserInfo *)userInfo commitDate:(NSDate *)commiteDate content:(NSString *)content andCallback:(Callback)callback;
@@ -29,5 +29,8 @@ typedef void (^Callback)(id obj);
 
 // 删除一条评论
 + (void)submitDeleteCommentWithToken:(NSString *)token userId:(NSNumber *)userId commentId:(NSNumber *)commentId andCallback:(Callback)callback;
+
+// 增加一条赞
++ (void)submitAddLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback;
 
 @end

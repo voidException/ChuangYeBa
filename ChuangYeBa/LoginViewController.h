@@ -14,7 +14,7 @@
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) MBProgressHUD *hud;
+@property (strong, nonatomic) MBProgressHUD *HUD;
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;

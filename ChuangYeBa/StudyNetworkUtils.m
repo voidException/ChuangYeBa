@@ -19,7 +19,7 @@ static NSString *serverIP = SERVER_IP;
 @implementation StudyNetworkUtils
 
 // 请求文章列表
-+ (void)requestArticalWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback {
++ (void)requestArticlesWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback {
     NSString *path = @"/startup/learn/articleList";
     path = [serverIP stringByAppendingString:path];
     
@@ -48,7 +48,7 @@ static NSString *serverIP = SERVER_IP;
 
 // 提交一条评论
 + (void)submitCommentWithArticleId:(ArticleInfo *)articleInfo userInfo:(UserInfo *)userInfo commitDate:(NSDate *)commiteDate content:(NSString *)content andCallback:(Callback)callback {
-    NSString *path = @"startup/learn/article/comment";
+    NSString *path = @"/startup/learn/article/comment";
     path = [serverIP stringByAppendingString:path];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -116,6 +116,7 @@ static NSString *serverIP = SERVER_IP;
         callback(comments);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取评论列表失败, %@", [error localizedDescription]);
+        callback(nil);
     }];
 }
 
@@ -135,6 +136,27 @@ static NSString *serverIP = SERVER_IP;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"删除评论失败, %@", [error localizedDescription]);
     }];
+}
+
+// 添加一个赞
++ (void)submitAddLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback {
+    NSString *path = @"/startup/learn/article/addLove";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *param = @{@"token":token, @"iD":userId, @"articleiD":articleId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"成功增加一条赞 %@", responseObject);
+        NSDictionary *dic = responseObject;
+        NSNumber *loves = [dic objectForKey:@"love"];
+        callback(loves);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"删除评论失败, %@", [error localizedDescription]);
+    }];
+
 }
 
 @end

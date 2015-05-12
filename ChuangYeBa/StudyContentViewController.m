@@ -8,14 +8,15 @@
 
 #import "StudyContentViewController.h"
 #import "GlobalDefine.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "ArticleInfoDAO.h"
+#import <MBProgressHUD.h>
 
 static NSInteger const kPageSize = 5;
 
 @interface StudyContentViewController ()
 
 @end
-
-
 
 @implementation StudyContentViewController
 @synthesize tag;
@@ -44,22 +45,26 @@ static NSInteger const kPageSize = 5;
     NSLog(@"tag = %ld", (long)tag);
     page = 1;
     pageSize = kPageSize;
-    tag = 12;
     
     // 从本地读取用户信息
     [self loadUserInfoFromLocal];
-    // TEST 请求
+    
+    // 从本地读取存储的cache
+    [self loadArticleListCache];
+    
     // 注册接受用户登陆的通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUserInfoFromLocal) name:@"UserLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUserInfoFromLocal) name:@"UpdateUserInfo" object:nil];
 }
 
 
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    // 如果用户没有登陆，则不刷新列表
+    
+    // 重要！如果用户没有登陆，则不刷新列表，否则可能造成崩溃！
     if (userInfo.userId) {
-        [self.tableView.legendHeader beginRefreshing];
+        //[self.tableView.legendHeader beginRefreshing];
+        
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
@@ -71,20 +76,35 @@ static NSInteger const kPageSize = 5;
 
 #pragma mark - Private Method
 - (void)initUI {
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     // 增加下啦刷新
     [self.tableView addLegendHeaderWithRefreshingBlock:^{
         // YES说明是下拉刷新
         [self requestArticleListFromServer:YES];
     }];
-    
-    
     // 增加上啦刷新
     [self.tableView addLegendFooterWithRefreshingBlock:^{
         NSLog(@"上啦刷新");
         // NO说明是上拉刷新
         [self requestArticleListFromServer:NO];
     }];
+    self.tableView.footer.automaticallyRefresh = NO;
     self.tableView.footer.hidden = YES;
+}
+
+
+
+- (void)loadArticleListCache {
+    ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+    self.articleList = [dao findAll:tag];
+    if (!self.articleList.count) {
+        [self.tableView.header beginRefreshing];
+    } else {
+        [self.tableView reloadData];
+        self.tableView.footer.hidden = NO;
+    }
 }
 
 - (void)pullUpReload:(NSArray *)articleListArr{
@@ -94,6 +114,8 @@ static NSInteger const kPageSize = 5;
         [self.articleList addObject:article];
     }
     [self.tableView reloadData];
+    
+    
 }
 
 - (void)pullDownReload:(NSArray *)articleListArr{
@@ -104,6 +126,16 @@ static NSInteger const kPageSize = 5;
         [self.articleList addObject:article];
     }
     [self.tableView reloadData];
+    
+    // 创建文章列表缓存（最多7条）(以后文章多了改成20条)
+    ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+    NSInteger max = 7;
+    if (self.articleList.count > max) {
+        NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[self.articleList objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, max)]]];
+        [dao create:arr tag:tag];
+    } else {
+        [dao create:self.articleList tag:tag];
+    }
 }
 
 - (void)loadUserInfoFromLocal {
@@ -133,8 +165,12 @@ static NSInteger const kPageSize = 5;
         requestPageSize = kPageSize;
     }
     
-    [StudyNetworkUtils requestArticalWichToken:userInfo.email userId:userInfo.userId tag:tag page:requestPage pageSize:requestPageSize andCallback:^(id obj){
+    [StudyNetworkUtils requestArticlesWichToken:userInfo.email userId:userInfo.userId tag:tag page:requestPage pageSize:requestPageSize andCallback:^(id obj){
         
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        
+        // 如果请求成功
         if (obj) {
             // 请求成功后显示上拉刷新的模块
             self.tableView.footer.hidden = NO;
@@ -144,7 +180,6 @@ static NSInteger const kPageSize = 5;
             //NSArray *arr = [dic objectForKey:@"article"];
             // 如果是下拉刷新整个文章列表
             if (isPullDownReload) {
-                [self.tableView.header endRefreshing];
                 [self pullDownReload:articleListArr];
             }
             // 如果是上拉刷新增加文章列表
@@ -156,6 +191,15 @@ static NSInteger const kPageSize = 5;
                     [self.tableView.footer noticeNoMoreData];
                 }
             }
+        } else { // 请求失败
+            MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            [self.view addSubview:HUD];
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.animationType = MBProgressHUDAnimationZoomIn;
+            HUD.labelText = @"网络出错了>_<";
+            [HUD show:YES];
+            [HUD hide:YES afterDelay:1.0];
         }
     }];
 }
@@ -181,10 +225,8 @@ static NSInteger const kPageSize = 5;
     studyContentCell.titleLabel.text = article.title;
     
     NSString *path = article.miniPhotoURL;
-    static NSString *serverIP = SERVER_IP;
-    path = [serverIP stringByAppendingString:path];
-
-    [studyContentCell.mainImage setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    //[studyContentCell.mainImage setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    [studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
     
     studyContentCell.introductionLabel.text = article.viceTitle;
     return studyContentCell;

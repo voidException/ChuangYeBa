@@ -10,6 +10,47 @@
 
 @implementation ArticleInfo
 
+@synthesize articleId;
+@synthesize title;
+@synthesize viceTitle;
+@synthesize miniPhotoURL;
+@synthesize realURL;
+@synthesize articleType;
+@synthesize comments;
+@synthesize likes;
+@synthesize collects;
+@synthesize publishDate;
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self =[super init]) {
+        articleId = [aDecoder decodeObjectForKey:@"articleId"];
+        title = [aDecoder decodeObjectForKey:@"title"];
+        viceTitle = [aDecoder decodeObjectForKey:@"viceTitle"];
+        miniPhotoURL = [aDecoder decodeObjectForKey:@"miniPhotoURL"];
+        realURL = [aDecoder decodeObjectForKey:@"realURL"];
+        articleType = [aDecoder decodeObjectForKey:@"articleType"];
+        comments = [aDecoder decodeObjectForKey:@"comments"];
+        likes = [aDecoder decodeObjectForKey:@"likes"];
+        collects = [aDecoder decodeObjectForKey:@"collects"];
+        publishDate = [aDecoder decodeObjectForKey:@"publishDate"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:articleId forKey:@"articleId"];
+    [aCoder encodeObject:title forKey:@"title"];
+    [aCoder encodeObject:viceTitle forKey:@"viceTitle"];
+    [aCoder encodeObject:miniPhotoURL forKey:@"miniPhotoURL"];
+    [aCoder encodeObject:realURL forKey:@"realURL"];
+    [aCoder encodeObject:articleType forKey:@"articleType"];
+    [aCoder encodeObject:comments forKey:@"comments"];
+    [aCoder encodeObject:likes forKey:@"likes"];
+    [aCoder encodeObject:collects forKey:@"collects"];
+    [aCoder encodeObject:publishDate forKey:@"publishDate"];
+}
+
+
 - (float)getHeightOfArticleString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset {
     // 计算问题文本的高度
     // TODO 应该加上添加margin的输入参数

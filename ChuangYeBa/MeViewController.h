@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "UserInfoCell.h"
 
-@interface MeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)clickOnLogoutButton:(id)sender;
+- (void)clickOnLogoutButton:(id)sender;
 
 @end

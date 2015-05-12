@@ -131,6 +131,12 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
+        self.navigationController.hidesBottomBarWhenPushed = YES;
+        [self performSegueWithIdentifier:@"ShowUserDetail" sender:self];
+    }
+    
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]]) {
         if (self.studentArray.count) {
             [self performSegueWithIdentifier:@"ShowUserList" sender:self];

@@ -7,10 +7,12 @@
 //
 
 #import "StudyHostViewController.h"
+#import "ArticleInfoDAO.h"
 
 @interface StudyHostViewController ()
 
 @property (strong, nonatomic) NSNumber *articleId;
+@property (strong, nonatomic) NSMutableArray *contentViewControllers;
 
 @end
 
@@ -35,6 +37,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStudyDetail:) name:@"ShowStudyDetail" object:nil];
     // 配置导航条颜色字体等属性
     [self setNavigationBarAttributes];
+    
+    
+    [self initContentViewController];
 }
 
 - (void)setNavigationBarAttributes {
@@ -42,7 +47,6 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -61,6 +65,16 @@
 - (void)viewWillDisappear:(BOOL)animated {
 }
 
+#pragma mark - Private Method
+- (void)initContentViewController{
+    self.contentViewControllers = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.categoryArray.count; i++) {
+        StudyContentViewController *studyContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudyContentViewController"];
+        NSDictionary *dic = self.categoryArray[i];
+        studyContentViewController.tag = [[dic objectForKey:@"tag"] integerValue];
+        [self.contentViewControllers addObject:studyContentViewController];
+    }
+}
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -90,7 +104,8 @@
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:14.0 weight:0.1];
-    label.text = self.categoryArray[index];
+    NSDictionary *dic = self.categoryArray[index];
+    label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
     [label sizeToFit];
@@ -101,7 +116,8 @@
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:19.0 weight:0.1];
-    label.text = self.categoryArray[index];
+    NSDictionary *dic = self.categoryArray[index];
+    label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
     [label sizeToFit];
@@ -109,10 +125,7 @@
 }
 
 - (UIViewController *)viewPager:(ViewPagerController *)viewPager contentViewControllerForTabAtIndex:(NSUInteger)index {
-    
-    StudyContentViewController *studyContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudyContentViewController"];
-    studyContentViewController.tag = (NSInteger)index;
-    return studyContentViewController;
+    return [self.contentViewControllers objectAtIndex:index];
 }
 
 #pragma mark - ViewPagerDelegate
@@ -157,5 +170,6 @@
     }
     return color;
 }
+
 
 @end

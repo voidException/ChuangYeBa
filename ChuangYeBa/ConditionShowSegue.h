@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PushSegueNoAnimation : UIStoryboardSegue
+@interface ConditionShowSegue : UIStoryboardSegue
 
 @end

@@ -19,12 +19,13 @@
     [super viewDidLoad];
     self.buttonView.frame = CGRectMake(0, 0, self.view.frame.size.width, 250);
     
-    // 只能通过这种办法来去掉系统自带的
-    UIBarButtonItem *temp = [[UIBarButtonItem alloc] init];
-    temp.title = @"";
-    self.navigationItem.leftBarButtonItem = temp;
+    self.classNoTextField.delegate = self;
     
-    self.title = @"查找班级";
+    if (self.classNoTextField.text.length) {
+        self.findClassButton.enabled = YES;
+    } else {
+        self.findClassButton.enabled = NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,6 +87,17 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"请输入您要添加的班级号:";
 }
+
+#pragma mark - Text Field Delegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField.text.length > 0) {
+        self.findClassButton.enabled = YES;
+    } else {
+        self.findClassButton.enabled = NO;
+    }
+    return YES;
+}
+
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

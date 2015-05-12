@@ -11,7 +11,7 @@
 @implementation EditedInfoCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,6 +20,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)didEndOnExit:(id)sender {
-}
 @end

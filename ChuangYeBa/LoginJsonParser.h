@@ -13,4 +13,6 @@
 
 + (UserInfo *)parseUserInfoInLogin:(NSDictionary *)dic isTeacher:(BOOL)isTeacher;
 
++ (NSDictionary *)packageUserInfo:(UserInfo *)userInfo;
+
 @end

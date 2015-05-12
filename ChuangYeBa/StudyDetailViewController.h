@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UINavigationBar *customBar;
 @property (strong, nonatomic) UIBarButtonItem *leftButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbarView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic) BOOL isLiked;
 @property (nonatomic) BOOL isDownloaded;
 

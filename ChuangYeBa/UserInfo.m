@@ -7,6 +7,7 @@
 //
 
 #import "UserInfo.h"
+#import "GlobalDefine.h"
 
 #define NO_VALUE @"NO_VALUE"
 
@@ -47,10 +48,43 @@
         email = NO_VALUE;
         password = NO_VALUE;
         photoPath = NO_VALUE;
-        isPhotoUpload = NO_VALUE;
+        isPhotoUpload = @NO;
         tel = NO_VALUE;
     }
     return self;
+}
+
+- (instancetype)initWithUserDefault {
+    self = [super init];
+    if (self) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSData *udObject = [ud objectForKey:@"userInfo"];
+        self = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    }
+    return self;
+}
+
+- (void)saveUserInfoToLocal {
+    if (self) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self];
+        [ud setObject:udObject forKey:@"userInfo"];
+        [ud synchronize];
+    }
+}
+
+- (void)deleteUserInfoFromLocal {
+    if (self) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud removeObjectForKey:@"userInfo"];
+        [ud synchronize];
+    }
+}
+
+- (void)setPhotoPathWithStorageURL:(NSString *)key {
+    NSString *url = STORAGE_URL;
+    NSString *str = [NSString stringWithFormat:@"%@%@", url, key];
+    self.photoPath = str;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -94,6 +128,30 @@
     [aCoder encodeObject:photoPath forKey:@"photoPath"];
     [aCoder encodeObject:isPhotoUpload forKey:@"isPhotoUpload"];
     [aCoder encodeObject:tel forKey:@"tel"];
+}
+
+#pragma mark - Copying delegate
+
+- (id)copyWithZone:(NSZone *)zone {
+    UserInfo *copy = [[[self class] allocWithZone:zone] init];
+    copy.name = self.name;
+    copy.userId = self.userId;
+    copy.userNo = self.userNo;
+    copy.school = self.school;
+    copy.major = self.major;
+    copy.classNo = self.classNo;
+    copy.department = self.department;
+    copy.college = self.college;
+    copy.universityNo = self.universityNo;
+    copy.universityName = self.universityName;
+    copy.sex = self.sex;
+    copy.inCollegeDate = self.inCollegeDate;
+    copy.email = self.email;
+    copy.password = self.password;
+    copy.photoPath = self.photoPath;
+    copy.isPhotoUpload = self.isPhotoUpload;
+    copy.tel = self.tel;
+    return copy;
 }
 
 @end

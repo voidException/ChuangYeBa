@@ -11,9 +11,10 @@
 @interface CommentInfo : NSObject
 
 @property (strong, nonatomic) NSNumber *commentId;
-@property (strong, nonatomic) NSString *content;
+@property (copy, nonatomic) NSString *content;
 @property (strong, nonatomic) NSDate *commentTime;
-@property (strong, nonatomic) NSString *userName;
+@property (copy, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSNumber *userId;
+@property (copy, nonatomic) NSString *userPhotoPath;
 
 @end

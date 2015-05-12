@@ -77,18 +77,13 @@ static NSString *cellIdentifier = @"Cell";
     cell.textLabel.text = userInfo.name;
     cell.detailTextLabel.text = userInfo.userNo;
     NSString *path = userInfo.photoPath;
-    static NSString *serverIP = @"http://192.168.1.9:8080";
     
-#warning 重要！这是判断照片空值的语句，可能需要移到模型或者解析中！
-    if ((NSNull *)path != [NSNull null]) {
-        path = [serverIP stringByAppendingString:path];
-    } else {
-        path = serverIP;
-    }
     cell.imageView.layer.masksToBounds = YES;
-    cell.imageView.layer.cornerRadius = 5;
-    
-    [cell.imageView setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    cell.imageView.layer.cornerRadius = 20;
+    CGPoint center = cell.imageView.center;
+    cell.imageView.frame = CGRectMake(0, 0, 28, 28);
+    cell.imageView.center = center;
+    [cell.imageView setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

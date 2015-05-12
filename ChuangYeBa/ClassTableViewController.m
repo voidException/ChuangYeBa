@@ -7,6 +7,7 @@
 //
 
 #import "ClassTableViewController.h"
+#import <SDWebImage/UIButton+WebCache.h>
 
 static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
@@ -15,11 +16,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 @end
 
 @implementation ClassTableViewController
-@synthesize allTestGroups;
 
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 读取本地的用户信息
+    self.userInfo = [[UserInfo alloc] initWithUserDefault];
     
     [self initUI];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -27,15 +30,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // 注册xib的cell
     [self.tableView registerNib:[UINib nibWithNibName:@"TestGroupCell" bundle:nil] forCellReuseIdentifier:testGroupCellIdentifier];
 
-    [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
     
     // 初始化数组
     self.unTestedGroup = [[NSMutableArray alloc] init];
     self.testedGroup = [[NSMutableArray alloc] init];
     self.displayTestGroup = [[NSMutableArray alloc] init];
     
-    // 读取本地的用户信息
-    [self loadUserInfoFromLocal];
+    NSLog(@"%f", self.tableView.frame.origin.y);
     
     // 增加下啦刷新
     __weak typeof(self) weakSelf = self;
@@ -52,9 +53,11 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar addSubview:self.rightButton];
     [self.navigationController.navigationBar addSubview:self.leftButton];
+    [self.navigationController.navigationBar addSubview:self.segmentedControl];
     [UIView animateWithDuration:0.3 animations:^{
         [self.rightButton setAlpha:1.0];
         [self.leftButton setAlpha:1.0];
+        [self.segmentedControl setAlpha:1.0];
         //self.rightButton.frame = CGRectOffset(self.rightButton.frame, 30, 0);
     }];
 }
@@ -64,7 +67,12 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [UIView animateWithDuration:0.3 animations:^{
         [self.rightButton setAlpha:0.0];
         [self.leftButton setAlpha:0.0];
-        //self.rightButton.frame = CGRectOffset(self.rightButton.frame, -30, 0);
+        [self.segmentedControl setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [self.rightButton removeFromSuperview];
+        [self.leftButton removeFromSuperview];
+        [self.segmentedControl removeFromSuperview];
+        //self.segmentedControl = nil;
     }];
 }
 
@@ -79,14 +87,28 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // 初始化右导航条按钮
     float buttonWidth = 44.0;
     self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, 44)];
-    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateSelected];
     [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
     
     // 初始化左导航条按钮
-    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonWidth, 44)];
+    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 4, 36, 36)];
     self.leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [self.leftButton setImage:[self circleImage:[UIImage imageNamed:@"PKUIcon"] withParam:8.0] forState:UIControlStateNormal];
+
+    [self.leftButton sd_setImageWithURL:[NSURL URLWithString:_userInfo.photoPath] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self.leftButton setImage:[self circleImage:image withParam:8.0] forState:UIControlStateNormal];
+    }];
+    [self.leftButton addTarget:self action:@selector(clickOnLeftButton) forControlEvents:UIControlEventTouchUpInside];
     
+    // 初始化导航条中部的分段控件
+    NSArray *segmentedTitle = @[@"最新发布", @"我的考试"];
+    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentedTitle];
+    [self.segmentedControl setWidth:100 forSegmentAtIndex:0];
+    [self.segmentedControl setWidth:100 forSegmentAtIndex:1];
+    self.segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 20);
+    self.segmentedControl.selectedSegmentIndex = 0;
+    [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
+
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
@@ -163,8 +185,11 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 #pragma mark - Action
 - (void)clickOnRightButton {
-    
     [self performSegueWithIdentifier:@"ShowClassSetting" sender:self];
+}
+
+- (void)clickOnLeftButton {
+    [self performSegueWithIdentifier:@"ShowUserDetail" sender:self];
 }
 
 - (void)doSomethingInSegment:(UISegmentedControl *)seg {

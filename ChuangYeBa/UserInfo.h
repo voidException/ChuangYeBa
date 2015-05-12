@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserInfo : NSObject <NSCoding>
+@interface UserInfo : NSObject <NSCoding, NSCopying>
 
 // 学生老师共有的数据表参数
 @property (copy, nonatomic) NSNumber *userId;
@@ -26,7 +26,7 @@
 @property (copy, nonatomic) NSString *email;
 @property (copy, nonatomic) NSString *password;
 @property (copy, nonatomic) NSString *photoPath;
-@property (copy, nonatomic) NSString *isPhotoUpload;
+@property (copy, nonatomic) NSNumber *isPhotoUpload;
 
 // 只要老师才有的数据
 @property (copy, nonatomic) NSString *tel;
@@ -34,8 +34,17 @@
 // 非数据表参数
 @property (copy, nonatomic) NSString *passwordConfirm;
 
+- (instancetype)initWithUserDefault;
+
+- (void)saveUserInfoToLocal;
+
+- (void)deleteUserInfoFromLocal;
+
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
+
+// Setter
+- (void)setPhotoPathWithStorageURL:(NSString *)key;
 
 @end

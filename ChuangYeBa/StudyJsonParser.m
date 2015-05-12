@@ -48,7 +48,11 @@
     commentInfo.content = [dic objectForKey:@"content"];
     commentInfo.userName = [dic objectForKey:@"username"];
     commentInfo.userId = [dic objectForKey:@"userid"];
-    commentInfo.commentTime = [dic objectForKey:@"commenttime"];
+    NSString *stringTime = [dic objectForKey:@"stringtime"];
+    //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    //commentInfo.commentTime = [dateFormatter dateFromString:stringTime];
+    commentInfo.userPhotoPath = [dic objectForKey:@"photoUrl"];
     return commentInfo;
 }
 

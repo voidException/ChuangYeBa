@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #define screenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface ArticleInfo : NSObject
+@interface ArticleInfo : NSObject <NSCoding>
 
 @property (copy, nonatomic) NSNumber *articleId;
 @property (copy, nonatomic) NSString *title;

@@ -14,13 +14,12 @@
 
 @implementation UserEditedViewController
 
+#pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"个人信息";
     
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    [self initUI];
     
     // 读取设置的数据
     NSBundle *bundle = [NSBundle mainBundle];
@@ -57,6 +56,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Private Method
+- (void)initUI {
+    self.title = @"个人信息";
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EditedPhotoView" owner:self options:nil];
+    self.tableView.tableHeaderView = [nib objectAtIndex:0];
+    UIView *headerView = [nib objectAtIndex:0];
+    //headerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 225);
+    self.tableView.tableHeaderView = headerView;
 }
 
 -(CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
@@ -243,11 +255,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 80;
-    }else {
-        return 44;
-    }
+    return 44;
 }
 
 // 点击修改照片的响应
@@ -264,42 +272,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *editedInfoCellIndentifier = @"EditedInfoCell";
-    static NSString *editedPhotoCellIndentifier = @"EditedPhotoCell";
     
+    // 创建编辑用户信息的cell
+    EditedInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:editedInfoCellIndentifier forIndexPath:indexPath];
     
-    if (indexPath.section == 0) {
-        // 创建编辑照片的cell
-        EditedPhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:editedPhotoCellIndentifier forIndexPath:indexPath];
-        [photoCell.photoImage setImage:[UIImage imageNamed:@"France.png"]];
-        UIImageView *imageView = photoCell.photoImage;
-        [self.photoArray addObject:imageView];
-        photoCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return photoCell;
-        
-    } else {
-        // 创建编辑用户信息的cell
-        EditedInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:editedInfoCellIndentifier forIndexPath:indexPath];
-        
-        // 给cell中label文字赋值
-        NSString *key = self.editedTitleRow[indexPath.section];
-        NSArray *nameSection = self.editedTitleSection[key];
-        infoCell.label.text = nameSection[indexPath.row];
-        
-        // 给cell中的textFied赋值（给出用户之前的值，从NSUserDefault中读取）
-        NSMutableArray *valueSection = self.userInfoArray[indexPath.section - 1];
-        infoCell.textField.text = valueSection[indexPath.row];
-        
-        // 设置cell的侧边附件类型
-        infoCell.accessoryType = UITableViewCellAccessoryNone;
-        
-        // TODO 设置创建cell中textField映射的数目。（当创建足够的映射后不再创建）
-        // 在这里只能用固定值7去手动设置总共可以编辑的数目。需要找办法去计算出这个值。
-        if (self.textFieldArray.count < 7) {
-            UITextField *textField = infoCell.textField;
-            [self.textFieldArray addObject:textField];
-        }
-        return infoCell;
+    // 给cell中label文字赋值
+    NSString *key = self.editedTitleRow[indexPath.section];
+    NSArray *nameSection = self.editedTitleSection[key];
+    infoCell.label.text = nameSection[indexPath.row];
+    
+    // 给cell中的textFied赋值（给出用户之前的值，从NSUserDefault中读取）
+    NSMutableArray *valueSection = self.userInfoArray[indexPath.section];
+    infoCell.textField.text = valueSection[indexPath.row];
+    
+    // 设置cell的侧边附件类型
+    infoCell.accessoryType = UITableViewCellAccessoryNone;
+    
+    // TODO 设置创建cell中textField映射的数目。（当创建足够的映射后不再创建）
+    // 在这里只能用固定值7去手动设置总共可以编辑的数目。需要找办法去计算出这个值。
+    if (self.textFieldArray.count < 7) {
+        UITextField *textField = infoCell.textField;
+        [self.textFieldArray addObject:textField];
     }
+    return infoCell;
+    
 }
 
 #pragma mark - actionSheetDelegate

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CircleImageView.h"
 
 @interface UserInfoCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *photoImage;
-@property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet UILabel *schoolName;
+@property (weak, nonatomic) IBOutlet CircleImageView *photoImage;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 
 @end

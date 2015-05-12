@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FindPasswordTableViewController : UITableViewController
+@interface FindPasswordTableViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *email;
 

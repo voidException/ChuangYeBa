@@ -20,7 +20,7 @@
 
 @interface ClassTableViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) UIButton *rightButton;
 @property (strong, nonatomic) UIButton *leftButton;
 

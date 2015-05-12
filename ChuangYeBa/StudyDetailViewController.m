@@ -11,7 +11,7 @@
 #import "StudyJsonParser.h"
 #import <MBProgressHUD.h>
 #import <MJRefresh.h>
-#import "PullUpRefreshView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 typedef enum {
     StudyDetailStateNormal = 1,
@@ -32,9 +32,11 @@ static NSInteger const kPageSize = 2;
 @interface StudyDetailViewController ()
 
 @property (strong, nonatomic) NSNumber *articleId;
-@property (strong, nonatomic) PullUpRefreshView *refreshView;
+//@property (strong, nonatomic) PullUpRefreshView *refreshView;
 @property (strong, nonatomic) CommentCell *deletingCommentCell;
 @property (assign, nonatomic) StudyDetailState state;
+
+@property (strong, nonatomic) UIButton *refreshButton;
 
 @end
 
@@ -98,6 +100,7 @@ static NSInteger const kPageSize = 2;
     self.commentInputView.hidden = YES;
     
     // 设置底端的评论按钮宽度
+    self.toolBar.hidden = YES;
     [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
     
     // 初始化自定义导航条
@@ -114,32 +117,12 @@ static NSInteger const kPageSize = 2;
     [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
     [self.commentButton setBackgroundImage:[UIImage imageNamed:@"commentBG"] forState:UIControlStateNormal];
     
-    /*
-    // 添加自定义的上拉刷新块
-    self.refreshView = [[PullUpRefreshView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    //self.tableView.tableFooterView = self.refreshView;
-    typeof(self) weakSelf = self;
-    [self.refreshView addPullUpRefreshingBlock:^{
-        [weakSelf requestCommentsFromServer:YES];
-    }];
-    */
-    
     // 增加上拉刷新
     [self.tableView addLegendFooterWithRefreshingBlock:^{
         [self requestCommentsFromServer:YES];
     }];
     self.tableView.footer.automaticallyRefresh = NO;
-    
-    //
-    /*
-    self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
-    //self.activityBackgroundView.backgroundColor = [UIColor redColor];
-    self.activityBackgroundView.blurRadius = 0;
-    [self.view insertSubview:self.activityBackgroundView atIndex:0];
-    */
-    
-    
-    
+    self.tableView.footer.hidden = YES;
 }
 
 - (void)loadMoreData {
@@ -174,37 +157,32 @@ static NSInteger const kPageSize = 2;
     }
     
     [StudyNetworkUtils requestCommentsWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId page:requestPage pageSize:requestPageSize andCallback:^(id obj) {
-        
         if (self.tableView.footer == self.tableView.legendFooter) {
             [self.tableView.footer endRefreshing];
         }
-        /*
-        // 自定义的上拉刷新
-        if (self.refreshView.state == PullUpRefreshViewStateRefreshing) {
-            [self.refreshView endRefreshing];
-        }
-         */
-        if (!self.comments) {
-            self.comments = [[NSMutableArray alloc] init];
-        }
-        // 把解析好的评论列表赋给内存中的评论列表数组
-        NSMutableArray *mArr = obj;
-        
-        if (!isPullupRefresh) {
-            [self.comments removeAllObjects];
-        } else {
-            if (!mArr.count) {
-                //[self.refreshView noticeNoMoreData];
-                [self.tableView.footer noticeNoMoreData];
+        if (obj) {
+            if (!self.comments) {
+                self.comments = [[NSMutableArray alloc] init];
             }
+            // 把解析好的评论列表赋给内存中的评论列表数组
+            NSMutableArray *mArr = obj;
+            
+            if (!isPullupRefresh) {
+                [self.comments removeAllObjects];
+            } else {
+                if (!mArr.count) {
+                    //[self.refreshView noticeNoMoreData];
+                    [self.tableView.footer noticeNoMoreData];
+                }
+            }
+            
+            for (int i = 0; i < mArr.count; i++) {
+                CommentInfo *ci = mArr[i];
+                [self.comments addObject:ci];
+            }
+            
+            [self.tableView reloadData];
         }
-        
-        for (int i = 0; i < mArr.count; i++) {
-            CommentInfo *ci = mArr[i];
-            [self.comments addObject:ci];
-        }
-        
-        [self.tableView reloadData];
     }];
 }
 
@@ -216,11 +194,24 @@ static NSInteger const kPageSize = 2;
 }
 
 - (void)requestArticleInfoFromServer {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    
+    if (self.refreshButton) {
+        [self.refreshButton removeFromSuperview];
+        self.refreshButton = nil;
+    }
+    
+    
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.removeFromSuperViewOnHide = YES;
     [StudyNetworkUtils requestArticleDetailWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
         [hud hide:YES];
+        
         if (obj) {
+            // 有文章就显示评论的上拉刷新
+            self.tableView.footer.hidden = NO;
+            // 有文章就显示底端的评论条
+            self.toolBar.hidden = NO;
             NSDictionary *dic = obj;
             NSNumber *error = [dic objectForKey:@"error"];
             NSString *errorMessage = [dic objectForKey:@"errorMessage"];
@@ -238,10 +229,34 @@ static NSInteger const kPageSize = 2;
                 // 请求评论列表
                 [self requestCommentsFromServer:YES];
                 
+                
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
                 [alert show];
             }
+        } else {
+            
+            
+            //UIButton *refreshButton = [[UIButton alloc] init];
+            if (!self.refreshButton) {
+                self.refreshButton = [[UIButton alloc] init];
+            }
+            _refreshButton.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+            [_refreshButton setTitle:@"点击重新加载页面" forState:UIControlStateNormal];
+            [_refreshButton setBackgroundColor:[UIColor grayColor]];
+            [_refreshButton addTarget:self action:@selector(requestArticleInfoFromServer) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:_refreshButton];
+            
+            MBProgressHUD *errorHud = [[MBProgressHUD alloc] initWithView:self.view];
+            [self.view addSubview:errorHud];
+            errorHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
+            // Set custom view mode
+            errorHud.mode = MBProgressHUDModeCustomView;
+            errorHud.animationType = MBProgressHUDAnimationZoomIn;
+            //HUD.delegate = self;
+            errorHud.labelText = @"网络出错了>_<";
+            [errorHud show:YES];
+            [errorHud hide:YES afterDelay:1.0];
         }
     }];
 }
@@ -316,11 +331,29 @@ static NSInteger const kPageSize = 2;
 - (IBAction)clickOnLikeButton:(id)sender {
     if (isLiked) {
         isLiked = NO;
+        
+        
         [self.likeButton setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
         
     } else {
         isLiked = YES;
-        [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeClicked"] forState:UIControlStateNormal];
+        [StudyNetworkUtils submitAddLoveWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
+            
+            // 更新ArticleInfo中的赞的数量
+            self.articleInfo.likes = obj;
+            
+            // 改变likeButton的样子
+            [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeClicked"] forState:UIControlStateNormal];
+            
+            // 给计算赞和评论的小区的赞label位置加1
+            CountingCell *cell = [[CountingCell alloc] init];
+            if (self.state == StudyDetailStateNormal) {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+            } else {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            }
+            cell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
+        }];
     }
 }
 
@@ -572,7 +605,7 @@ static NSInteger const kPageSize = 2;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"ShowMedia"]) {
         id destinationVC = [segue destinationViewController];
-        [destinationVC setValue:self.articleInfo.articleType forKey:@"mediaType"];
+        [destinationVC setValue:_articleInfo forKey:@"articleInfo"];
     }
 }
 

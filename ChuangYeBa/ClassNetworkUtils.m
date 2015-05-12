@@ -34,10 +34,13 @@ static NSString *serverIP = SERVER_IP;
         NSDictionary *dic = responseObject;
         NSArray *testGroupsDic = [dic objectForKey:@"itemTest"];
         NSMutableArray *testGroups = [[NSMutableArray alloc] init];
-        for (NSDictionary *testGroup in testGroupsDic) {
-            TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
-            [testGroups addObject:tg];
+        if (testGroupsDic.count) {
+            for (NSDictionary *testGroup in testGroupsDic) {
+                TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
+                [testGroups addObject:tg];
+            }
         }
+        
         
         callback(testGroups);
         

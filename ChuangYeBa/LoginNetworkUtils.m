@@ -36,7 +36,7 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
-        [LoginNetworkUtils failureAction:error];
+        //[LoginNetworkUtils failureAction:error];
         callback(nil);
     }];
 }
@@ -60,12 +60,14 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"注册失败: %@", [error localizedDescription]);
-        [LoginNetworkUtils failureAction:error];
+        //[LoginNetworkUtils failureAction:error];
+        callback(nil);
     }];
 }
 
 
 // 用户提交修改基本信息的类方法
+/*
 + (void)subbmitEditedUserInfo:(UserInfo *)userInfo andCallback:(Callback)callback {
     NSString *path = @"http://localhost:8080/startup/student/register";
     
@@ -86,11 +88,12 @@ static NSString *serverIP = SERVER_IP;
         callback(nil);
     }];
 }
-
+*/
+ 
 + (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback {
     NSString *path = @"/startup/student/findPassword";
     path = [serverIP stringByAppendingString:path];
-    NSDictionary *params = @{@"studentEmail": email};
+    NSDictionary *params = @{@"stuEmail": email};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -99,13 +102,14 @@ static NSString *serverIP = SERVER_IP;
         callback(dic);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"找回密码失败: %@", [error localizedDescription]);
-        [LoginNetworkUtils failureAction:error];
+        //[LoginNetworkUtils failureAction:error];
         callback(nil);
     }];
 }
 
 // 辅助方法，处理失败请求
 + (void)failureAction:(NSError *) error {
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请求失败了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
     [alert show];
     NSLog(@"请求失败: %@", [error localizedDescription]);

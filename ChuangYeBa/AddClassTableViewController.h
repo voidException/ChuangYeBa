@@ -13,13 +13,14 @@
 #import "UserInfo.h"
 #import "ClassInfo.h"
 
-@interface AddClassTableViewController : UITableViewController
+@interface AddClassTableViewController : UITableViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 //@property (strong, nonatomic) UserInfo *userInfo;
 @property (weak, nonatomic) IBOutlet UITextField *classNoTextField;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (strong, nonatomic) ClassInfo *classInfo;
+@property (weak, nonatomic) IBOutlet UIButton *findClassButton;
 
 - (IBAction)clickOnAddClassButton:(id)sender;
 

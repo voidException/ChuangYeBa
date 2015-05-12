@@ -14,6 +14,7 @@
 
 @implementation LoginViewController
 
+@synthesize HUD;
 
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
@@ -53,33 +54,35 @@
     }
 }
 
-- (void)sendingDataToServer {
-    
+- (void)requestLogin {
     if (!self.userInfo) {
-        self.userInfo = [[UserInfo alloc]init];
+        self.userInfo = [[UserInfo alloc] init];
     }
-    
     [LoginNetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
-        // 隐藏HUD
-        [self.hud hide:YES];
+        
         if (obj) {
-        NSDictionary *dic = obj;
-        NSNumber *error = [dic objectForKey:@"error"];
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-        if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
-            self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
-            [self saveUserInfoToLocal:self.userInfo];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLogin" object:nil];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
+            // 隐藏HUD
+            [HUD hide:YES];
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+            if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
+                self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
+                [self saveUserInfoToLocal:self.userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-        } else {
-            NSLog(@"hidden");
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错了" delegate:self cancelButtonTitle:@"真难过" otherButtonTitles:nil, nil];
-            [alert show];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.animationType = MBProgressHUDAnimationZoomIn;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
+            HUD.labelText = @"网络出错了>_<";
+            [HUD show:YES];
+            [HUD hide:YES afterDelay:1.0];
         }
     }];
 }
@@ -122,16 +125,14 @@
 
 #pragma mark - Action
 - (IBAction)clickOnLoginButton:(id)sender {
-    
     if ([self isLoginInfoLegal]) {
-        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.hud.removeFromSuperViewOnHide = YES;
-        [self sendingDataToServer];
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.removeFromSuperViewOnHide = YES;
+        [self requestLogin];
     }
     else {
         NSLog(@"返回错误警告");
     }
-
 }
 
 - (IBAction)clickOnRegisterButton:(id)sender {

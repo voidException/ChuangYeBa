@@ -9,6 +9,7 @@
 #import "CommentCell.h"
 #import "CommentInfo.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation CommentCell
 
@@ -24,7 +25,13 @@
 - (void)layoutSubviews {
     self.userInfoLabel.text = self.commentInfo.userName;
     self.commentTextView.text = self.commentInfo.content;
-    [self.photoImage setImageWithURL:nil placeholderImage:[UIImage imageNamed: @"USA.png"]];
+    //[self.photoImage setImageWithURL:nil placeholderImage:[UIImage imageNamed: @"USA.png"]];
+    if ([self.commentInfo.userPhotoPath class] == [NSNull class]) {
+        [self.photoImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"photoPlaceholderBig"]];
+    } else {
+        [self.photoImage sd_setImageWithURL:[NSURL URLWithString:self.commentInfo.userPhotoPath] placeholderImage:[UIImage imageNamed:@"photoPlaceholderBig"]];
+    }
+    
     [super layoutSubviews];
 }
 
