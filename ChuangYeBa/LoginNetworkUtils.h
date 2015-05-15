@@ -17,8 +17,6 @@ typedef void (^Callback)(id obj);
 
 + (void)registerUserInfo:(UserInfo *)userInfo andCallBack:(Callback)callback;
 
-+ (void)subbmitEditedUserInfo:(UserInfo *)userInfo andCallback:(Callback)callback;
-
 + (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback;
 
 + (void)failureAction:(NSError *) error;

@@ -9,7 +9,7 @@
 #import "RegisterTableViewController.h"
 #import <MBProgressHUD.h>
 
-@interface RegisterTableViewController ()
+@interface RegisterTableViewController () <MBProgressHUDDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) MBProgressHUD *HUD;
 
@@ -27,6 +27,7 @@
     // 初始化buttonView的高度
     self.buttonView.frame = CGRectMake(0, 0, self.view.frame.size.width, 80);
     self.tableView.tableFooterView = _buttonView;
+    
     // 初始化取消按钮
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnCancelButton)];
     self.navigationItem.leftBarButtonItem = leftButton;
@@ -37,6 +38,8 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTap:)];
     [self.tableView addGestureRecognizer:tapGesture];
     
+    // 初始化委托对象
+    self.email.delegate = self;
     
     // TEST USE
     self.email.text = @"zachary@126.com";
@@ -61,26 +64,24 @@
 }
 
 
-#pragma mark - 调整再键盘弹出时的Frame
-- (CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
+#pragma mark - Private Method
+// 计算键盘的高度
+- (CGFloat)keyboardEndingFrameHeight:(NSDictionary *)userInfo
 {
-    //CGRect keyboardEndingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
-#warning 重要！真机测试中切换不同的键盘时会出现高度BUG。
-    CGRect keyboardBeginingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey]CGRectValue];
-    CGRect keyboardEndingFrame = [self.view convertRect:keyboardBeginingUncorrectedFrame fromView:nil];
-    NSLog(@"keyB height = %f", keyboardEndingFrame.size.height);
-    NSLog(@"keyB orgin X = %f", keyboardEndingFrame.origin.y);
+    CGRect keyboardEndUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    CGRect keyboardEndingFrame = [self.view convertRect:keyboardEndUncorrectedFrame fromView:nil];
     return keyboardEndingFrame.size.height;
 }
 
 // 键盘出现后调整视图
 -(void)keyboardWillAppear:(NSNotification *)notification
 {
-    CGRect currentFrame = self.tableView.frame;
+    CGRect originFrame = [UIScreen mainScreen].bounds;
+    CGRect currentFrame = originFrame;
     CGFloat change = [self keyboardEndingFrameHeight:[notification userInfo]];
     if (change) {
         currentFrame.size.height = currentFrame.size.height - change;
-        //self.tableView.frame = currentFrame;
+        self.tableView.frame = currentFrame;
     }
 }
 
@@ -90,18 +91,27 @@
     CGRect currentFrame = self.tableView.frame;
     CGFloat change = [self keyboardEndingFrameHeight:[notification userInfo]];
     currentFrame.size.height = currentFrame.size.height + change;
-    //self.tableView.frame = currentFrame;
+    self.tableView.frame = currentFrame;
 }
 
-#pragma mark - 判断用户信息和邮箱有效性
 // 在本地判断是否登陆信息有效
 - (BOOL)isRegisterInfoLegal {
-    if (self.email.text.length > 30
-        || self.password.text.length < 4
-        || self.password.text.length > 10
-        || ![self.password.text isEqualToString: self.passwordConfirm.text]) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"警告" message:@"登陆信息出错了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+    if (![self isValidateEmail:self.email.text]) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入有效的邮箱" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alertView show];
+        self.email.textColor = [UIColor redColor];
+        return NO;
+    }
+    if (self.email.text.length > 30) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"邮箱的长度不能超过30个字符" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alertView show];
+        return NO;
+    } else if (self.password.text.length < 4 || self.password.text.length > 10) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"密码的长度在4到10位之间" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alertView show];
+        return NO;
+    } else if ( ![self.password.text isEqualToString: self.passwordConfirm.text]) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"两次输入的密码不一致，请重新输入。" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
@@ -125,9 +135,6 @@
 }
 
 - (IBAction)clickOnRegisterButton:(id)sender {
-    
-    
-    
     if ([self isRegisterInfoLegal]) {
         UserInfo *userInfo = [[UserInfo alloc] init];
         userInfo.email = self.email.text;
@@ -141,16 +148,23 @@
         
         [LoginNetworkUtils registerUserInfo:userInfo andCallBack:^(id obj) {
             if (obj) {
-                [HUD hide:YES];
                 NSDictionary *dic = obj;
                 NSNumber *error = [dic objectForKey:@"error"];
                 if ([error isEqual:@9]) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    HUD.mode = MBProgressHUDModeCustomView;
+                    HUD.animationType = MBProgressHUDAnimationZoomOut;
+                    HUD.tag = 0;
+                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+                    HUD.labelText = @"注册成功";
+                    //[HUD show:YES];
+                    HUD.delegate = self;
+                    [HUD hide:YES afterDelay:1.5];
                     // 保存用户登陆邮箱
                     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
                     [ud setObject:self.email.text forKey:@"loginEmail"];
                     [ud synchronize];
                 } else {
+                    [HUD hide:YES];
                     NSString *errorMessage = [dic objectForKey:@"errorMessage"];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
                     [alert show];
@@ -158,33 +172,15 @@
             } else {
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.animationType = MBProgressHUDAnimationZoomIn;
+                HUD.tag = 1;
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
                 HUD.labelText = @"网络出错了>_<";
                 [HUD show:YES];
                 [HUD hide:YES afterDelay:1.0];
             }
         }];
-    } else {
-        NSLog(@"返回本地警告信息");
     }
 }
-
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 3;
-    } else {
-        return 2;
-    }
-}
-
-
 
 - (IBAction)didEndOnExit:(id)sender {
     if (self.email.isFirstResponder) {
@@ -206,15 +202,33 @@
     [self.passwordConfirm resignFirstResponder];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Textfield delegate 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.textColor = [UIColor blackColor];
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 3;
+    } else {
+        return 2;
+    }
+}
+
+#pragma mark - MBProgressHUD delegate
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    if (hud.tag == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 
 @end

@@ -7,11 +7,13 @@
 //
 
 #import "ConditionViewController.h"
+#import "UserInfo.h"
 
 @interface ConditionViewController ()
 
 @property (nonatomic) BOOL isUserAddedClass;
 @property (nonatomic, strong) UIViewController *lastViewController;
+@property (nonatomic, strong) UserInfo *userInfo;
 
 @end
 
@@ -19,27 +21,17 @@
 @synthesize isUserAddedClass;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavigationBarAttributes];
+    [self initUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSNumber *number = [ud objectForKey:@"isUserAddedClass"];
-    if (number == nil) {
-        isUserAddedClass = NO;
-        self.navigationItem.title = @"加入班级";
-    } else {
-        isUserAddedClass = [number isEqualToNumber:[NSNumber numberWithBool:YES]];
-    }
-    if (!isUserAddedClass) {
+    self.userInfo = [[UserInfo alloc] initWithUserDefault];
+    if ([_userInfo.hasAddedClass isEqualToString:@"0"]) {
         self.navigationItem.title = @"加入班级";
         [self performSegueWithIdentifier:@"ShowAddClass" sender:self];
-        
     } else {
         self.navigationItem.title = nil;
         [self performSegueWithIdentifier:@"ShowClassMain" sender:self];
-        
-
     }
 }
 
@@ -49,16 +41,13 @@
 }
 
 #pragma mark - Private Method
-- (void)setNavigationBarAttributes {
+- (void)initUI {
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
 }
 
-
 #pragma mark - Navigation
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (segue.destinationViewController != self.lastViewController) {
         [self.lastViewController willMoveToParentViewController:nil];

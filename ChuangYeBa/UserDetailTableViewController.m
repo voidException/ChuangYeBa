@@ -111,7 +111,7 @@ static NSString *bucket = @"startupimg";
     float screenWidth = self.view.frame.size.width;
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 93)];
     float buttonMargin = 13.0;
-    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 44)];
+    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
     exitButton.center = footerView.center;
     [exitButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
     [exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -302,7 +302,6 @@ static NSString *bucket = @"startupimg";
 
 #pragma mark - Image Picker Controller delegate methods
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-#warning 没有增加判断是否是视频的功能！
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.userChoosePhoto = [self shrinkImage:chosenImage
                                       toSize:_headerView.photoImage.bounds.size];

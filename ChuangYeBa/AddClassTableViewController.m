@@ -7,6 +7,7 @@
 //
 
 #import "AddClassTableViewController.h"
+#import "LoginJsonParser.h"
 
 @interface AddClassTableViewController ()
 
@@ -19,13 +20,20 @@
     [super viewDidLoad];
     self.buttonView.frame = CGRectMake(0, 0, self.view.frame.size.width, 250);
     
-    self.classNoTextField.delegate = self;
-    
+    [self.findClassButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateDisabled];
+    [self.findClassButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateDisabled];
     if (self.classNoTextField.text.length) {
         self.findClassButton.enabled = YES;
     } else {
         self.findClassButton.enabled = NO;
     }
+    
+    // 注册textfield值变化的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChanged:) name:UITextFieldTextDidChangeNotification object:_classNoTextField];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBackground)];
+    self.tableView.userInteractionEnabled = YES;
+    [self.tableView addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,7 +61,8 @@
                     self.classInfo = [[ClassInfo alloc] init];
                 }
                 self.classInfo = [ClassJsonParser parseClassInfo:[dic objectForKey:@"oneClass"]];
-                self.classInfo.teacherName = [dic objectForKey:@"teacherName"];
+                self.classInfo.teacher = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"teacher"] isTeacher:YES];
+                
                 
                 
                 [self performSegueWithIdentifier:@"ShowAddClassConfirm" sender:self];
@@ -74,6 +83,27 @@
     [self sendingDataToServer];
 }
 
+
+- (void)textFieldChanged:(id)sender
+{
+    if (_classNoTextField.text.length == 0) {
+        self.findClassButton.enabled = NO;
+    } else {
+        self.findClassButton.enabled = YES;
+    }
+}
+
+- (void)clickOnBackground {
+    if ([self.classNoTextField isFirstResponder]) {
+        [self.classNoTextField resignFirstResponder];
+    }
+}
+
+#pragma mark - Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -84,27 +114,21 @@
     return 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"请输入您要添加的班级号:";
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"  请输入您要添加的班级号：";
+    //label.backgroundColor = [UIColor greenColor];
+    label.textColor = [UIColor grayColor];
+    label.font = [UIFont systemFontOfSize:15];
+    [label sizeToFit];
+    return label;
 }
-
-#pragma mark - Text Field Delegate
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField.text.length > 0) {
-        self.findClassButton.enabled = YES;
-    } else {
-        self.findClassButton.enabled = NO;
-    }
-    return YES;
-}
-
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id destinationVC = [segue destinationViewController];
     [destinationVC setValue:self.classInfo forKey:@"classInfo"];
 }
-
 
 
 @end

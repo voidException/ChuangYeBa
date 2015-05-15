@@ -9,10 +9,11 @@
 #import "StudyContentViewController.h"
 #import "GlobalDefine.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImageManager.h>
 #import "ArticleInfoDAO.h"
 #import <MBProgressHUD.h>
 
-static NSInteger const kPageSize = 5;
+static NSInteger const kPageSize = 8;
 
 @interface StudyContentViewController ()
 
@@ -100,7 +101,10 @@ static NSInteger const kPageSize = 5;
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
     self.articleList = [dao findAll:tag];
     if (!self.articleList.count) {
-        [self.tableView.header beginRefreshing];
+        // 防止
+        if (self.userInfo) {
+            [self.tableView.header beginRefreshing];
+        }
     } else {
         [self.tableView reloadData];
         self.tableView.footer.hidden = NO;
@@ -143,6 +147,9 @@ static NSInteger const kPageSize = 5;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [ud objectForKey:@"userInfo"];
     userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    if (userInfo) {
+        [self.tableView.footer beginRefreshing];
+    }
 }
 
 - (void)requestArticleListFromServer:(BOOL)isPullDownReload{
@@ -204,6 +211,11 @@ static NSInteger const kPageSize = 5;
     }];
 }
 
+#pragma mark - Table View delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 90;
+}
+
 #pragma mark -  Table View DataSource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 发送通知
@@ -225,8 +237,10 @@ static NSInteger const kPageSize = 5;
     studyContentCell.titleLabel.text = article.title;
     
     NSString *path = article.miniPhotoURL;
-    //[studyContentCell.mainImage setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
-    [studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"USA.png"]];
+    [studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholder"]];
+    
+    studyContentCell.likeLabel.text = [NSString stringWithFormat:@"%@", article.likes];
+    studyContentCell.commentLabel.text = [NSString stringWithFormat:@"%@", article.comments];
     
     studyContentCell.introductionLabel.text = article.viceTitle;
     return studyContentCell;

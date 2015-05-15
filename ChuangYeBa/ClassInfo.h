@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserInfo.h"
 
 @interface ClassInfo : NSObject
-// 非表中的
-@property (nonatomic, copy) NSString *teacherName;
+
+@property (nonatomic, strong) UserInfo *teacher;
 // 表中的
 @property (nonatomic, copy) NSString *classroomName;
 @property (nonatomic, copy) NSString *studentNum;
@@ -18,6 +19,7 @@
 @property (nonatomic, copy) NSString *universityNo;
 @property (nonatomic, copy) NSString *universityName;
 @property (nonatomic, copy) NSString *photo;
+
 // 重要，唯一自动生成的班级号
 @property (nonatomic, strong) NSNumber *classNo;
 

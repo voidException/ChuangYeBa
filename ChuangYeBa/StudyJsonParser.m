@@ -41,7 +41,7 @@
     return articleInfo;
 }
 
-// 加息一条评论
+// 解析一条评论
 + (CommentInfo *)parseCommentInfo:(NSDictionary *)dic {
     CommentInfo *commentInfo = [[CommentInfo alloc] init];
     commentInfo.commentId = [dic objectForKey:@"commentid"];
@@ -49,9 +49,9 @@
     commentInfo.userName = [dic objectForKey:@"username"];
     commentInfo.userId = [dic objectForKey:@"userid"];
     NSString *stringTime = [dic objectForKey:@"stringtime"];
-    //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //[dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-    //commentInfo.commentTime = [dateFormatter dateFromString:stringTime];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    commentInfo.commentTime = [dateFormatter dateFromString:stringTime];
     commentInfo.userPhotoPath = [dic objectForKey:@"photoUrl"];
     return commentInfo;
 }

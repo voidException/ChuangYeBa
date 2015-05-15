@@ -19,19 +19,22 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     self.photoImage.layer.masksToBounds = YES;
-    self.photoImage.layer.cornerRadius = 15;
+    self.photoImage.layer.cornerRadius = 4;
 }
 
 - (void)layoutSubviews {
     self.userInfoLabel.text = self.commentInfo.userName;
     self.commentTextView.text = self.commentInfo.content;
-    //[self.photoImage setImageWithURL:nil placeholderImage:[UIImage imageNamed: @"USA.png"]];
     if ([self.commentInfo.userPhotoPath class] == [NSNull class]) {
         [self.photoImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"photoPlaceholderBig"]];
     } else {
         [self.photoImage sd_setImageWithURL:[NSURL URLWithString:self.commentInfo.userPhotoPath] placeholderImage:[UIImage imageNamed:@"photoPlaceholderBig"]];
     }
-    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 由于后台原因，这里只能显示到年月日
+    [dateFormatter setDateFormat: @"yy-MM-dd"];
+    NSString *date = [dateFormatter stringFromDate:self.commentInfo.commentTime];
+    self.dateLabel.text = date;
     [super layoutSubviews];
 }
 
@@ -43,7 +46,7 @@
 
 - (void)drawRect:(CGRect)rect {
     
-    [[UIColor colorWithRed:245.0/255 green:245.0/255 blue:245.0/255 alpha:1] setStroke];
+    [[UIColor colorWithRed:225.0/255 green:225.0/255 blue:225.0/255 alpha:1] setStroke];
     CGRect frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 2);
     UIRectFrame(frame);
     

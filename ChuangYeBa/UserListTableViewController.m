@@ -7,7 +7,7 @@
 //
 
 #import "UserListTableViewController.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "UserInfo.h"
 
 // temp
@@ -44,7 +44,6 @@ static NSString *cellIdentifier = @"Cell";
     self.title = [NSString stringWithFormat:@"成员信息（%lu人）",self.studentArray.count];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.backBarButtonItem = btn;
-    //self.navigationItem.hidesBackButton = NO;
 }
 
 #pragma mark - Action
@@ -79,14 +78,30 @@ static NSString *cellIdentifier = @"Cell";
     NSString *path = userInfo.photoPath;
     
     cell.imageView.layer.masksToBounds = YES;
-    cell.imageView.layer.cornerRadius = 20;
-    CGPoint center = cell.imageView.center;
-    cell.imageView.frame = CGRectMake(0, 0, 28, 28);
-    cell.imageView.center = center;
-    [cell.imageView setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"]];
+    cell.imageView.layer.cornerRadius = 16;
+    
+    cell.imageView.image = [self OriginImage:[UIImage imageNamed:@"photoPlaceholderSmall"] scaleToSize:CGSizeMake(34, 34)];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:[NSURL URLWithString:path] options:SDWebImageHighPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        if (image) {
+            cell.imageView.image = [self OriginImage:image scaleToSize:CGSizeMake(34, 34)];
+        }
+    }];
+    //[cell.imageView sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
+// 调整图像大小
+- (UIImage*) OriginImage:(UIImage *)image scaleToSize:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);  //size 为CGSize类型，即你所需要的图片尺寸
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;   //返回的就是已经改变的图片
+}
+
 
 
 /*

@@ -12,6 +12,8 @@
 #import <MBProgressHUD.h>
 #import <MJRefresh.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
+#import "LineNavigationBar.h"
 
 typedef enum {
     StudyDetailStateNormal = 1,
@@ -24,7 +26,7 @@ static NSString *mediaCellIdentifier = @"MediaCell";
 static NSString *countCellIdentifier = @"CountingCell";
 static NSString *commentCellIdentifier = @"CommentCell";
 
-static NSInteger const kCommentInputViewHeight = 150;
+static NSInteger const kCommentInputViewHeight = 164;
 
 static NSInteger const kPageSize = 2;
 
@@ -104,8 +106,9 @@ static NSInteger const kPageSize = 2;
     [self.toolbarView setFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, 44)];
     
     // 初始化自定义导航条
-    self.customBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:@"学习" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnLeftButton)];
+    self.customBar = [[LineNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    //self.leftButton = [[UIBarButtonItem alloc] initWithTitle:@"学习" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnLeftButton)];
+    self.leftButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"lastButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(clickOnLeftButton)];
     self.customItem = [[UINavigationItem alloc] initWithTitle:@"学习详情"];
     self.customBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
     self.customBar.tintColor = [UIColor grayColor];
@@ -113,8 +116,10 @@ static NSInteger const kPageSize = 2;
     self.customItem.leftBarButtonItem = self.leftButton;
     [self.view addSubview:self.customBar];
     // 初始化工具条按钮图片
-    [self.likeButton setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
-    [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
+    
+    [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
+    
+    [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIcon"] forState:UIControlStateNormal];
     [self.commentButton setBackgroundImage:[UIImage imageNamed:@"commentBG"] forState:UIControlStateNormal];
     
     // 增加上拉刷新
@@ -123,6 +128,15 @@ static NSInteger const kPageSize = 2;
     }];
     self.tableView.footer.automaticallyRefresh = NO;
     self.tableView.footer.hidden = YES;
+    
+    // 添加返回手势
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnLeftButton)];
+    swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipeGesture];
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)loadMoreData {
@@ -200,13 +214,11 @@ static NSInteger const kPageSize = 2;
         self.refreshButton = nil;
     }
     
-    
-    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.removeFromSuperViewOnHide = YES;
+    
     [StudyNetworkUtils requestArticleDetailWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
         [hud hide:YES];
-        
         if (obj) {
             // 有文章就显示评论的上拉刷新
             self.tableView.footer.hidden = NO;
@@ -218,7 +230,7 @@ static NSInteger const kPageSize = 2;
             if ([error isEqual: @1]) {
                 self.articleInfo = [StudyJsonParser parseArticleInfo:[dic objectForKey:@"article"]];
                 
-                if ([self.articleInfo.articleType isEqual:@1]) {
+                if ([self.articleInfo.articleType isEqual:@71]) {
                     [self setState:StudyDetailStateNoneMedia];
                 } else {
                     [self setState:StudyDetailStateNormal];
@@ -236,16 +248,25 @@ static NSInteger const kPageSize = 2;
             }
         } else {
             
-            
-            //UIButton *refreshButton = [[UIButton alloc] init];
             if (!self.refreshButton) {
-                self.refreshButton = [[UIButton alloc] init];
+                self.refreshButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64)];
             }
-            _refreshButton.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
-            [_refreshButton setTitle:@"点击重新加载页面" forState:UIControlStateNormal];
-            [_refreshButton setBackgroundColor:[UIColor grayColor]];
+            [self.refreshButton setImage:[UIImage imageNamed:@"errormarkBig"] forState:UIControlStateNormal];
+            _refreshButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 200, 0);
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+            label.center = CGPointMake(self.view.center.x, 300);
+            label.text = @"点击重新加载页面";
+            label.font = [UIFont boldSystemFontOfSize:17];
+            label.textColor = [UIColor whiteColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            [_refreshButton addSubview:label];
+            
+            [_refreshButton setBackgroundColor:[UIColor blackColor]];
+            _refreshButton.alpha = 0.5;
             [_refreshButton addTarget:self action:@selector(requestArticleInfoFromServer) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:_refreshButton];
+            
+            
             
             MBProgressHUD *errorHud = [[MBProgressHUD alloc] initWithView:self.view];
             [self.view addSubview:errorHud];
@@ -266,9 +287,11 @@ static NSInteger const kPageSize = 2;
     NSLog(@"%@", self.commentInputView.textView.text);
     [StudyNetworkUtils submitCommentWithArticleId:self.articleInfo userInfo:self.userInfo commitDate:nowDate content:self.commentInputView.textView.text andCallback:^(id obj){
         NSDictionary *dic = obj;
+        
+        // 注意：在这里error返回的居然是当前的评论数，WTF，真TM逗！
         NSNumber *error = [dic objectForKey:@"error"];
         NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-        if ([error integerValue] == 1) {
+        if ([error integerValue] > 0) {
             // 重新请求一次评论的列表并且刷新
             [self requestCommentsFromServer:NO];
             // 隐藏评论席位,并清空TextView
@@ -288,10 +311,10 @@ static NSInteger const kPageSize = 2;
 
 
 #pragma mark 调整再键盘弹出时的Frame
-- (CGFloat)keyboardBeginingFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
+- (CGFloat)keyboardEndFrameHeight:(NSDictionary *)userInfo//计算键盘的高度
 {
-    CGRect keyboardBeginingUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey]CGRectValue];
-    CGRect keyboardBeginingFrame = [self.view convertRect:keyboardBeginingUncorrectedFrame fromView:nil];
+    CGRect keyboardEndUncorrectedFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    CGRect keyboardBeginingFrame = [self.view convertRect:keyboardEndUncorrectedFrame fromView:nil];
     NSLog(@"keyB height = %f", keyboardBeginingFrame.size.height);
     return keyboardBeginingFrame.size.height;
 }
@@ -299,33 +322,36 @@ static NSInteger const kPageSize = 2;
 // 键盘出现后调整视图
 - (void)keyboardWillAppear:(NSNotification *)notification
 {
-    CGFloat keyboardHeight = [self keyboardBeginingFrameHeight:[notification userInfo]];
-
+    [self addActivityBackgroundView];
+    CGFloat keyboardHeight = [self keyboardEndFrameHeight:[notification userInfo]];
     if (keyboardHeight) {
         self.commentInputView.frame = CGRectMake(0, self.view.frame.size.height - keyboardHeight - kCommentInputViewHeight, self.view.frame.size.width, kCommentInputViewHeight);
         self.commentInputView.hidden = NO;
         [self.view bringSubviewToFront:self.commentInputView];
-        
     }
 }
 
 // 键盘消失后调整视图
 - (void)keyboardWillDisappear:(NSNotification *)notification
 {
-    [self removeActivityBackgroundView];
-    CGFloat keyboardHeight = [self keyboardBeginingFrameHeight:[notification userInfo]];
+    CGFloat keyboardHeight = [self keyboardEndFrameHeight:[notification userInfo]];
     [UIView animateWithDuration:1.0 animations:^{
         self.commentInputView.frame = CGRectOffset(self.commentInputView.frame, 0, keyboardHeight + kCommentInputViewHeight);
-        self.activityBackgroundView.blurRadius = 0;
+        //self.activityBackgroundView.blurRadius = 0;
+    } completion:^(BOOL finished) {
+        [self removeActivityBackgroundView];
     }];
 }
 
 
 #pragma mark - Action
+
 - (IBAction)clickOnCommentButton:(id)sender {
-    [self addActivityBackgroundView];
-    //[self.view addSubview:self.commentInputView];
     [self.commentInputView.textView becomeFirstResponder];
+}
+
+- (void)clickOnBlurView {
+    [self.commentInputView.textView resignFirstResponder];
 }
 
 - (IBAction)clickOnLikeButton:(id)sender {
@@ -333,7 +359,7 @@ static NSInteger const kPageSize = 2;
         isLiked = NO;
         
         
-        [self.likeButton setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
+        [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
         
     } else {
         isLiked = YES;
@@ -343,7 +369,7 @@ static NSInteger const kPageSize = 2;
             self.articleInfo.likes = obj;
             
             // 改变likeButton的样子
-            [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeClicked"] forState:UIControlStateNormal];
+            [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconSelected"] forState:UIControlStateNormal];
             
             // 给计算赞和评论的小区的赞label位置加1
             CountingCell *cell = [[CountingCell alloc] init];
@@ -379,6 +405,10 @@ static NSInteger const kPageSize = 2;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            NSLog(@"%f", [self.articleInfo getHeightOfArticleString:self.articleInfo.title
+                                                         lineSpacing:4.0
+                                                          fontOfSize:23.0
+                                                         widthOffset:16]);
             return [self.articleInfo getHeightOfArticleString:self.articleInfo.title
                                                   lineSpacing:4.0
                                                    fontOfSize:23.0
@@ -391,7 +421,7 @@ static NSInteger const kPageSize = 2;
         } else if (indexPath.row == 2) {
             switch (_state) {
                 case StudyDetailStateNormal:
-                    return 150;
+                    return 185;
                     break;
                 case StudyDetailStateNoneMedia:
                     return 44;
@@ -404,8 +434,18 @@ static NSInteger const kPageSize = 2;
         }
         return 44;
     } else {
-        // 最小值为89 字数多的时候行数会增加。
-        return 89;
+        NSInteger row = [indexPath row];
+        CommentInfo *ci = self.comments[row];
+        NSInteger height = [self.articleInfo getHeightOfArticleString:ci.content
+                                              lineSpacing:2.0
+                                               fontOfSize:15.0
+                                              widthOffset:80] + 48;
+        
+        if (height <= 84) {
+            return 84;
+        } else {
+            return height;
+        }
     }
 }
 
@@ -496,14 +536,15 @@ static NSInteger const kPageSize = 2;
 - (MediaCell *)tableView:(UITableView *)tableView mediaCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaCell *mediaCell = [tableView dequeueReusableCellWithIdentifier:mediaCellIdentifier];
     mediaCell.delegate = self;
+    [mediaCell.mediaButton sd_setBackgroundImageWithURL:[NSURL URLWithString:_articleInfo.miniPhotoURL] forState:UIControlStateNormal];
     switch ([self.articleInfo.articleType integerValue]) {
-        case 1:
+        case 71:
             [mediaCell setState:MediaCellStateNormal];
             break;
-        case 2:
+        case 72:
             [mediaCell setState:MediaCellStateLongImage];
             break;
-        case 3:
+        case 73:
             [mediaCell setState:MediaCellStateVideo];
             break;
         default:
@@ -526,6 +567,7 @@ static NSInteger const kPageSize = 2;
     NSInteger row = [indexPath row];
     commentCell.commentInfo = self.comments[row];
     commentCell.indexPath = indexPath;
+    
     // 如果不是自己发送的，那么不要现实删除按键
     if (![self.userInfo.userId isEqual:commentCell.commentInfo.userId]) {
         [commentCell.deleteButton setHidden:YES];
@@ -555,9 +597,21 @@ static NSInteger const kPageSize = 2;
 // 添加透明指示栏
 - (void)addActivityBackgroundView {
     if (self.activityBackgroundView == nil) {
+        
         self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
         self.activityBackgroundView.tintColor = [UIColor blackColor];
+        
         self.activityBackgroundView.blurRadius = 10;
+        
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBlurView)];
+        self.activityBackgroundView.userInteractionEnabled = YES;
+        [self.activityBackgroundView addGestureRecognizer:tapGesture];
+        
+        [self.view addSubview:self.activityBackgroundView];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.activityBackgroundView.blurRadius = 40;
+        }];
+        
     }
     if (![self.activityBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.activityBackgroundView];
@@ -570,6 +624,7 @@ static NSInteger const kPageSize = 2;
     if (self.activityBackgroundView) {
         if ([self.activityBackgroundView isDescendantOfView:self.view]) {
             [self.activityBackgroundView removeFromSuperview];
+            
         }
         self.activityBackgroundView = nil;
     }

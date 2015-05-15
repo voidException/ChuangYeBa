@@ -11,6 +11,7 @@
 #import <MJRefresh.h>
 #import "TestGroupCell.h"
 #import "TestGroup.h"
+#import "CircleButton.h"
 // 请求
 #import "ClassNetworkUtils.h"
 // 模型
@@ -22,7 +23,7 @@
 
 @property (strong, nonatomic) UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) UIButton *rightButton;
-@property (strong, nonatomic) UIButton *leftButton;
+@property (strong, nonatomic) CircleButton *leftButton;
 
 // 用于显示和保存列表的数组
 @property (strong, nonatomic) NSMutableArray *allTestGroups;

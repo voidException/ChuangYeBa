@@ -15,43 +15,48 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-04-10 05:21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuK-n6-Avb">
-                        <rect key="frame" x="106" y="59" width="206" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="3Ue-nF-MAF"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自我管理" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW6-W4-ean">
-                        <rect key="frame" x="8" y="59" width="90" height="20"/>
+                        <rect key="frame" x="12" y="59" width="90" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="BuS-sk-Iai"/>
                             <constraint firstAttribute="height" constant="20" id="hqV-hU-TVl"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="15"/>
                         <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你就是总经理啊啊啊啊啊共14字啊啊啊啊啊a" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khL-kW-hFJ">
-                        <rect key="frame" x="8" y="8" width="304" height="43"/>
-                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
+                        <rect key="frame" x="12" y="12" width="296" height="39"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="23"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-04-10 05:21" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuK-n6-Avb">
+                        <rect key="frame" x="100" y="59" width="123" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="3Ue-nF-MAF"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="khL-kW-hFJ" secondAttribute="trailing" constant="8" id="BbJ-rX-Obw"/>
-                    <constraint firstItem="khL-kW-hFJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="E3Q-kI-Up3"/>
+                    <constraint firstAttribute="trailing" secondItem="khL-kW-hFJ" secondAttribute="trailing" constant="12" id="BbJ-rX-Obw"/>
+                    <constraint firstItem="khL-kW-hFJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="E3Q-kI-Up3"/>
                     <constraint firstAttribute="bottomMargin" secondItem="khL-kW-hFJ" secondAttribute="bottom" constant="28" id="G7e-bC-aoG"/>
-                    <constraint firstItem="eW6-W4-ean" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="J8d-fu-y8j"/>
+                    <constraint firstItem="eW6-W4-ean" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="J8d-fu-y8j"/>
                     <constraint firstAttribute="bottom" secondItem="DuK-n6-Avb" secondAttribute="bottom" constant="8" id="Kqo-Fl-wsO"/>
                     <constraint firstItem="DuK-n6-Avb" firstAttribute="leading" secondItem="eW6-W4-ean" secondAttribute="trailing" constant="8" id="d2p-fH-FuQ"/>
-                    <constraint firstItem="khL-kW-hFJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="epC-Jf-pGO"/>
-                    <constraint firstAttribute="trailing" secondItem="DuK-n6-Avb" secondAttribute="trailing" constant="8" id="ghO-BD-dXx"/>
+                    <constraint firstItem="khL-kW-hFJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="epC-Jf-pGO"/>
+                    <constraint firstItem="DuK-n6-Avb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="100" id="uid-Zt-tNz"/>
                     <constraint firstAttribute="bottom" secondItem="eW6-W4-ean" secondAttribute="bottom" constant="8" id="vTL-0c-CPT"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="d2p-fH-FuQ"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="category" destination="eW6-W4-ean" id="fag-CH-ApR"/>

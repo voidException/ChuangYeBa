@@ -48,14 +48,10 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     NSString *plistPath = [bundle pathForResource:@"userDetailList" ofType:@"plist"];
     self.detailList = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
-    
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
     float screenWidth = self.view.frame.size.width;
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 86)];
     float buttonMargin = 13.0;
-    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 44)];
+    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
     exitButton.center = footerView.center;
     [exitButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
     [exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -87,6 +83,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     [ud setObject:udObject forKey:@"userInfo"];
     [ud synchronize];
 }
+
 
 - (void)submitUserInfoToServer {
     NSMutableArray *arr = [[NSMutableArray alloc] init];
@@ -150,12 +147,20 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 }
 
 #pragma mark - Action
+- (void)clickOnBackground {
+    for (int i = 0; i < self.textFields.count; i++) {
+        UITextField *tf = self.textFields[i];
+        [tf resignFirstResponder];
+    }
+}
+
 - (void)clickOnSaveButton:(id)sender {
     [self submitUserInfoToServer];
     
 }
 
 - (void)clickOnLeftButton {
+    [self clickOnBackground];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否放弃当前的修改信息" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     alert.tag = 0;
     [alert show];
@@ -197,9 +202,13 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     NSLog(@"s = %@", indexPath);
     // 在这里只能直接写死了性别的小区是哪一个。之后可能需要加一个判断，从设置的list中识别出来。
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:1 inSection:1]]) {
+        [self clickOnBackground];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"女", @"男", nil];
         actionSheet.tag = 0;
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        //[actionSheet showFromTabBar:self.tabBarController.tabBar];
+        [actionSheet showInView:self.view];
+    } else {
+        [self clickOnBackground];
     }
 
 }
@@ -225,9 +234,10 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     NSString *title = [dic objectForKey:@"title"];
     cell.label.text = title;
     
-    if ([title isEqualToString:@"性别"]) {
+    if ([title isEqualToString:@"性别"]||[title isEqualToString:@"邮箱"]) {
         [cell.textField setEnabled:NO];
     }
+    
     
     // 在这里用stringWithFormat是为了防止NSNumber不方便显示的问题
     NSString *str = [NSString stringWithFormat:@"%@", arrUser[indexPath.row]];

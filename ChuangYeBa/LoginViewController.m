@@ -90,6 +90,12 @@
 #pragma mark  判断用户信息和邮箱有效性
 // 在本地判断是否登陆信息有效
 - (BOOL)isLoginInfoLegal {
+    if (![self isValidateEmail:self.email.text]) {
+        UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入有效的邮箱" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alerView show];
+        self.email.textColor = [UIColor redColor];
+        return NO;
+    }
     if (self.email.text.length > 30 || self.password.text.length < 4 || self.password.text.length > 10) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"警告" message:@"登陆信息出错了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
         [alertView show];
@@ -172,14 +178,8 @@
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == self.email) {
-        if (textField.text.length > 30 || ![self isValidateEmail:textField.text]) {
-            UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"邮箱的长度请小于30个字符,或请输入有效的邮箱" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alerView show];
-            //textField.textColor = [UIColor redColor];
-        }
-    }
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.textColor = [UIColor blackColor];
 }
 
 #pragma mark - Action Sheet Delegate

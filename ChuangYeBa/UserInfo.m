@@ -9,7 +9,7 @@
 #import "UserInfo.h"
 #import "GlobalDefine.h"
 
-#define NO_VALUE @"NO_VALUE"
+#define NO_VALUE @""
 
 @implementation UserInfo
 
@@ -30,7 +30,7 @@
 @synthesize photoPath;
 @synthesize isPhotoUpload;
 @synthesize tel;
-
+@synthesize hasAddedClass;
 - (id)init {
     self = [super init];
     if (self) {
@@ -50,6 +50,7 @@
         photoPath = NO_VALUE;
         isPhotoUpload = @NO;
         tel = NO_VALUE;
+        hasAddedClass = @"0";
     }
     return self;
 }
@@ -81,12 +82,48 @@
     }
 }
 
+
+#pragma Setter
 - (void)setPhotoPathWithStorageURL:(NSString *)key {
     NSString *url = STORAGE_URL;
     NSString *str = [NSString stringWithFormat:@"%@%@", url, key];
-    self.photoPath = str;
+    photoPath = str;
 }
 
+- (void)setPhotoPath:(NSString *)aPhotoPath {
+    if ([aPhotoPath class] == [NSNull class]) {
+        photoPath = @"";
+    } else {
+        photoPath = aPhotoPath;
+    }
+}
+
+- (void)setSex:(NSString *)aSex {
+    if ([aSex class] == [NSNull class]) {
+        sex = @"女";
+    } else {
+        sex = aSex;
+    }
+}
+
+- (void)setSchool:(NSString *)aSchool {
+    if ([aSchool class] == [NSNull class]) {
+        school = @"";
+    } else {
+        school = aSchool;
+    }
+}
+
+- (void)setDepartment:(NSString *)aAepartment {
+    if ([aAepartment class] == [NSNull class]) {
+        department = @"";
+    } else {
+        department = aAepartment;
+    }
+}
+
+
+#pragma Coding delegate
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self =[super init]) {
         userId = [aDecoder decodeObjectForKey:@"userId"];
@@ -106,6 +143,7 @@
         photoPath = [aDecoder decodeObjectForKey:@"photoPath"];
         isPhotoUpload = [aDecoder decodeObjectForKey:@"isPhotoUpload"];
         tel = [aDecoder decodeObjectForKey:@"tel"];
+        hasAddedClass = [aDecoder decodeObjectForKey:@"isAddedClass"];
     }
     return self;
 }
@@ -128,29 +166,31 @@
     [aCoder encodeObject:photoPath forKey:@"photoPath"];
     [aCoder encodeObject:isPhotoUpload forKey:@"isPhotoUpload"];
     [aCoder encodeObject:tel forKey:@"tel"];
+    [aCoder encodeObject:hasAddedClass forKey:@"isAddedClass"];
+
 }
 
 #pragma mark - Copying delegate
-
 - (id)copyWithZone:(NSZone *)zone {
     UserInfo *copy = [[[self class] allocWithZone:zone] init];
-    copy.name = self.name;
-    copy.userId = self.userId;
-    copy.userNo = self.userNo;
-    copy.school = self.school;
-    copy.major = self.major;
-    copy.classNo = self.classNo;
-    copy.department = self.department;
-    copy.college = self.college;
-    copy.universityNo = self.universityNo;
-    copy.universityName = self.universityName;
-    copy.sex = self.sex;
-    copy.inCollegeDate = self.inCollegeDate;
-    copy.email = self.email;
-    copy.password = self.password;
-    copy.photoPath = self.photoPath;
-    copy.isPhotoUpload = self.isPhotoUpload;
-    copy.tel = self.tel;
+    copy.name = name;
+    copy.userId = userId;
+    copy.userNo = userNo;
+    copy.school = school;
+    copy.major = major;
+    copy.classNo = classNo;
+    copy.department = department;
+    copy.college = college;
+    copy.universityNo = universityNo;
+    copy.universityName = universityName;
+    copy.sex = sex;
+    copy.inCollegeDate = inCollegeDate;
+    copy.email = email;
+    copy.password = password;
+    copy.photoPath = photoPath;
+    copy.isPhotoUpload = isPhotoUpload;
+    copy.tel = tel;
+    copy.hasAddedClass = hasAddedClass;
     return copy;
 }
 

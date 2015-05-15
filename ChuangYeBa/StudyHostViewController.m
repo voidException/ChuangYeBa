@@ -44,7 +44,8 @@
 
 - (void)setNavigationBarAttributes {
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
@@ -55,11 +56,17 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSNumber *isUserDidLogin = [ud objectForKey:@"isUserDidLogin"];
+    if (isUserDidLogin == nil) {
+        isUserDidLogin = @NO;
+    }
     if ([isUserDidLogin isEqualToNumber:[NSNumber numberWithBool:NO]]) {
         [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
+        
     }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -103,11 +110,12 @@
     
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:14.0 weight:0.1];
+    
+    label.font = [UIFont systemFontOfSize:15.0];
     NSDictionary *dic = self.categoryArray[index];
     label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor blackColor];
+    label.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
     [label sizeToFit];
     return label;
 }
@@ -115,7 +123,7 @@
 - (UIView *)viewPager:(ViewPagerController *)viewPager activeViewForTabAtIndex:(NSUInteger)index {
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:19.0 weight:0.1];
+    label.font = [UIFont systemFontOfSize:20.0];
     NSDictionary *dic = self.categoryArray[index];
     label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
@@ -143,7 +151,7 @@
             return 1.0;
             break;
         case ViewPagerOptionTabHeight:
-            return 36.0;
+            return 43.0;
             break;
         case ViewPagerOptionTabWidth:
             return 75.0;

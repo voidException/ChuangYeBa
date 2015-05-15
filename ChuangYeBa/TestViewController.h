@@ -28,10 +28,6 @@
 
 // 左上角的返回按钮
 @property (strong, nonatomic) UIBarButtonItem *backButton;
-// 点击导航条左上角的返回键的警告框
-@property (strong, nonatomic) UIAlertView *backAlertView;
-// 点击提交键的警告框
-@property (strong, nonatomic) UIAlertView *submitAlertView;
 // 用户在当前题目所选择的小区IndexPath
 @property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
 // 用户选择的答案保存

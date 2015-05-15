@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
@@ -16,7 +17,7 @@
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="霉女还特指美国著名歌手——泰勒·斯威夫特（Taylor Swift）。霉女的称法最早从Taylor的相关贴吧传出。泰勒刚开始是被称为小美女，美和“霉”读音相同，" translatesAutoresizingMaskIntoConstraints="NO" id="E9d-dA-aiZ">
                         <rect key="frame" x="59" y="8" width="253" height="83"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="textColor" red="0.31764705882352939" green="0.32156862745098042" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
@@ -28,8 +29,8 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWI-fp-mGR">
-                        <rect key="frame" x="28" y="14" width="13" height="24"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <rect key="frame" x="28" y="15" width="13" height="23"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -39,7 +40,7 @@
                     <constraint firstItem="mWI-fp-mGR" firstAttribute="centerY" secondItem="bId-tc-WEu" secondAttribute="centerY" id="2Ie-KV-5Df"/>
                     <constraint firstAttribute="bottom" secondItem="E9d-dA-aiZ" secondAttribute="bottom" constant="8" id="9mO-Zg-EbG"/>
                     <constraint firstItem="bId-tc-WEu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="BWu-Oc-RdL"/>
-                    <constraint firstItem="mWI-fp-mGR" firstAttribute="centerY" secondItem="bId-tc-WEu" secondAttribute="centerY" constant="-0.5" id="FqQ-cr-HGW"/>
+                    <constraint firstItem="mWI-fp-mGR" firstAttribute="centerY" secondItem="bId-tc-WEu" secondAttribute="centerY" id="FqQ-cr-HGW"/>
                     <constraint firstItem="E9d-dA-aiZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="ONf-wv-HTq"/>
                     <constraint firstItem="mWI-fp-mGR" firstAttribute="centerX" secondItem="bId-tc-WEu" secondAttribute="centerX" constant="2.5" id="Q2J-tm-qoh"/>
                     <constraint firstAttribute="trailing" secondItem="E9d-dA-aiZ" secondAttribute="trailing" constant="8" id="gk7-qe-Gor"/>

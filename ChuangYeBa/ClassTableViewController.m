@@ -44,8 +44,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         [weakSelf requestTestGroupsFromServer];
     }];
     [self.tableView.header beginRefreshing];
-
-    [self setNavigationBarAttributes];
     
 }
 
@@ -84,31 +82,29 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 #pragma mark - Private Method
 
 - (void)initUI {
+    
     // 初始化右导航条按钮
-    float buttonWidth = 44.0;
-    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, 44)];
+    float buttonWidth = 30;
+    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
     [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateSelected];
     [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
-    
     // 初始化左导航条按钮
-    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 4, 36, 36)];
+    self.leftButton = [[CircleButton alloc] initWithFrame:CGRectMake(7, 7, 30, 30)];
     self.leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-
     [self.leftButton sd_setImageWithURL:[NSURL URLWithString:_userInfo.photoPath] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [self.leftButton setImage:[self circleImage:image withParam:8.0] forState:UIControlStateNormal];
+        [self.leftButton setCircleImage:image placeholder:[UIImage imageNamed:@"photoPlaceholderSmall"] forState:UIControlStateNormal];
     }];
     [self.leftButton addTarget:self action:@selector(clickOnLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    
     // 初始化导航条中部的分段控件
     NSArray *segmentedTitle = @[@"最新发布", @"我的考试"];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentedTitle];
-    [self.segmentedControl setWidth:100 forSegmentAtIndex:0];
-    [self.segmentedControl setWidth:100 forSegmentAtIndex:1];
-    self.segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 20);
+    self.segmentedControl.frame = CGRectMake(0, 0, 230, 30);
+    [self.segmentedControl setWidth:115 forSegmentAtIndex:0];
+    [self.segmentedControl setWidth:115 forSegmentAtIndex:1];
+    self.segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 22);
     self.segmentedControl.selectedSegmentIndex = 0;
     [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
-
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
@@ -116,60 +112,65 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     //self.navigationItem.leftBarButtonItem = nil;
 }
 
-- (void)setNavigationBarAttributes {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-}
-
-// 裁剪头像图片为圆形
-- (UIImage*)circleImage:(UIImage*)image withParam:(CGFloat)inset {
-    UIGraphicsBeginImageContext(image.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2);
-    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-    CGRect rect = CGRectMake(inset, inset, image.size.width - inset * 2.0f, image.size.height - inset * 2.0f);
-    CGContextAddEllipseInRect(context, rect);
-    CGContextClip(context);
-    
-    [image drawInRect:rect];
-    //CGContextAddEllipseInRect(context, rect);
-    //CGContextStrokePath(context);
-    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newimg;
-}
-
 - (void)requestTestGroupsFromServer {
     __weak typeof(self) weakSelf = self;
     [ClassNetworkUtils requestTestGroupByStudentId:self.userInfo.userId andCallback:^(id obj) {
         if (obj) {
-            self.allTestGroups = obj;
-            // 请求成功后清空已经保存的题组
-            [self.testedGroup removeAllObjects];
-            [self.unTestedGroup removeAllObjects];
-            // 区分做过的题组合没做过的题组
-            for (TestGroup *tg in self.allTestGroups) {
-                if ([tg.activity integerValue] == 3) {
-                    [self.unTestedGroup addObject:tg];
-                } else if ([tg.activity integerValue] == 4) {
-                    [self.testedGroup addObject:tg];
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            NSMutableArray *testGroups = [[NSMutableArray alloc] init];
+            if ([error isEqualToNumber:@2]) {
+                NSArray *testGroupsDic = [dic objectForKey:@"itemTest"];
+                
+                if (testGroupsDic.count) {
+                    for (NSDictionary *testGroup in testGroupsDic) {
+                        TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
+                        [testGroups addObject:tg];
+                    }
                 }
-            }
-            // 显示在界面上
-            switch (self.segmentedControl.selectedSegmentIndex) {
-                case 0:
-                    self.displayTestGroup = self.unTestedGroup;
-                    // 重新加载tableView
-                    [weakSelf.tableView reloadData];
-                    break;
-                case 1:
-                    self.displayTestGroup = self.testedGroup;
-                    // 重新加载tableView
-                    [weakSelf.tableView reloadData];
-                    break;
-                default:
-                    break;
+                self.allTestGroups = testGroups;
+                // 请求成功后清空已经保存的题组
+                [self.testedGroup removeAllObjects];
+                [self.unTestedGroup removeAllObjects];
+                // 区分做过的题组合没做过的题组
+                for (TestGroup *tg in self.allTestGroups) {
+                    if ([tg.activity integerValue] == 3) {
+                        [self.unTestedGroup addObject:tg];
+                    } else if ([tg.activity integerValue] == 4) {
+                        [self.testedGroup addObject:tg];
+                    }
+                }
+                // 显示在界面上
+                switch (self.segmentedControl.selectedSegmentIndex) {
+                    case 0:
+                        self.displayTestGroup = self.unTestedGroup;
+                        // 重新加载tableView
+                        [weakSelf.tableView reloadData];
+                        break;
+                    case 1:
+                        self.displayTestGroup = self.testedGroup;
+                        // 重新加载tableView
+                        [weakSelf.tableView reloadData];
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                NSLog(@"应该退出班级");
+                NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+                NSNumber *number = [[NSNumber alloc]initWithBool:NO];
+                [ud setObject:number forKey:@"isUserAddedClass"];
+                [ud removeObjectForKey:@"classInfo"];
+                [ud synchronize];
+                // 返回上级菜单
+                // 普通情况下直接调用popToRootViewControllerAnimated即可
+                // 然后ConditionContainerViewController会通过viewWillAppear来判断
+                NSArray *poppedViewcontrollers = [self.navigationController popToRootViewControllerAnimated:YES];
+                // 但是如果是从上面那个图的Need Login这个界面返回，这个时候已经在RootViewController了
+                // 因此需要手动调用viewWillAppear
+                if (poppedViewcontrollers == nil) {
+                     [[self.navigationController.viewControllers firstObject] viewWillAppear:YES];
+                }
             }
         }
         // 停止下拉刷新动画
@@ -210,7 +211,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
+    return 74;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -231,7 +232,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestGroupCell *testGroupCell = [tableView dequeueReusableCellWithIdentifier:testGroupCellIdentifier];
-    //testGroupCell.testImage.image = [UIImage imageNamed:@"USA.png"];
     NSInteger row = [indexPath row];
     TestGroup *tg = [[TestGroup alloc] init];
     tg = self.displayTestGroup[row];

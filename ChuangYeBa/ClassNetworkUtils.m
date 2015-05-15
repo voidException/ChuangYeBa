@@ -32,17 +32,24 @@ static NSString *serverIP = SERVER_IP;
         NSLog(@"请求的结果为 = %@", responseObject);
         
         NSDictionary *dic = responseObject;
-        NSArray *testGroupsDic = [dic objectForKey:@"itemTest"];
+        /*
+        NSNumber *error = [dic objectForKey:@"error"];
+        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+        
+        
         NSMutableArray *testGroups = [[NSMutableArray alloc] init];
-        if (testGroupsDic.count) {
-            for (NSDictionary *testGroup in testGroupsDic) {
-                TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
-                [testGroups addObject:tg];
+        if ([error isEqualToNumber:@2]) {
+            NSArray *testGroupsDic = [dic objectForKey:@"itemTest"];
+            
+            if (testGroupsDic.count) {
+                for (NSDictionary *testGroup in testGroupsDic) {
+                    TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
+                    [testGroups addObject:tg];
+                }
             }
         }
-        
-        
-        callback(testGroups);
+         */
+        callback(dic);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ClassNetworkUtils failureAction:error];

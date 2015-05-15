@@ -21,11 +21,11 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"确认加入班级";
+    self.title = @"加入班级";
     self.buttonView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 150);
     // 注册xib，班级信息的小区
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
-    [self loadUserInfoFromLocal];
+    self.userInfo = [[UserInfo alloc] initWithUserDefault];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -39,16 +39,11 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 #pragma mark - Private Method
-- (void)loadUserInfoFromLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-}
 
 - (void)saveClassInfoToLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSNumber *number = [NSNumber numberWithBool:YES];
-    [ud setObject:number forKey:@"isUserAddedClass"];
+    self.userInfo.hasAddedClass = @"1";
+    [self.userInfo saveUserInfoToLocal];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
     [ud setObject:udObject forKey:@"classInfo"];
     [ud synchronize];
@@ -77,11 +72,10 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 146;
+    return 176;
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -96,7 +90,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
     classInfoCell.classNoLabel.text = classNoString;
     classInfoCell.classNameLabel.text = classInfo.classroomName;
-    classInfoCell.teacherNameLabel.text = classInfo.teacherName;
+    classInfoCell.teacherNameLabel.text = classInfo.teacher.name;
     classInfoCell.universityNameLabel.text = classInfo.universityName;
     return classInfoCell;
 }

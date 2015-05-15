@@ -13,7 +13,7 @@
 #import "UserInfo.h"
 #import "ClassInfo.h"
 
-@interface AddClassTableViewController : UITableViewController <UITextFieldDelegate>
+@interface AddClassTableViewController : UITableViewController
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 //@property (strong, nonatomic) UserInfo *userInfo;

@@ -11,6 +11,7 @@
 #import "ClassInfo.h"
 #import "TestGroup.h"
 #import "UserInfo.h"
+#import "LoginJsonParser.h"
 
 @interface ClassJsonParser : NSObject
 

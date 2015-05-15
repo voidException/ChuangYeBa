@@ -54,7 +54,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     
     // 设置导航条
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20 weight:0.5], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     //float screenWidth = self.view.frame.size.width;
@@ -114,6 +114,8 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"清除缓存" otherButtonTitles:nil, nil];
             actionSheet.tag = 1;
             [actionSheet showInView:self.view];
+        } else if (indexPath.row == 1) {
+            [self performSegueWithIdentifier:@"ShowAboutUs" sender:self];
         }
     }
 }
@@ -151,12 +153,15 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
         }
         NSInteger row = [indexPath row];
         NSDictionary *dic = [self.settingArray objectAtIndex:row];
         cell.textLabel.text = [dic objectForKey:@"title"];
-        cell.textLabel.font = [UIFont systemFontOfSize:20 weight:-0.2];
+        cell.textLabel.font = [UIFont systemFontOfSize:20];
+        if (row == 0) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu KB", ([[SDImageCache sharedImageCache] getSize] / 1000)];
+        }
         cell.imageView.image = [UIImage imageNamed:[dic objectForKey:@"imageName"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -176,7 +181,10 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     } else if (actionSheet.tag == 1) {
         if (buttonIndex == 0) {
             ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+             [[SDImageCache sharedImageCache] clearDisk];
             [dao clean];
+            NSArray *arr = @[[NSIndexPath indexPathForRow:0 inSection:1]];
+            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
         }
     }
 }

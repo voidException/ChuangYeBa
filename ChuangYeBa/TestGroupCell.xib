@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="KGk-i7-Jjw" customClass="TestGroupCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="74" id="KGk-i7-Jjw" customClass="TestGroupCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testGroupIcon" highlightedImage="testGroupIconHighLight" translatesAutoresizingMaskIntoConstraints="NO" id="D7B-A0-l27">
-                        <rect key="frame" x="14" y="8" width="47" height="47"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="47" id="fFd-sy-fmA"/>
-                            <constraint firstAttribute="height" constant="47" id="xt2-4T-wjP"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学生创业就业相关国家政策及法规标准考试试题" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-SM-txh">
-                        <rect key="frame" x="81" y="8" width="231" height="47"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="87" y="8" width="218" height="57"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="状态条" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdQ-Cg-77O">
-                        <rect key="frame" x="278" y="46" width="42" height="17"/>
+                        <rect key="frame" x="278" y="56" width="42" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testGroupIcon" highlightedImage="testGroupIconHighLight" translatesAutoresizingMaskIntoConstraints="NO" id="D7B-A0-l27">
+                        <rect key="frame" x="23" y="14" width="46" height="46"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="fFd-sy-fmA"/>
+                            <constraint firstAttribute="height" constant="46" id="xt2-4T-wjP"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="bn1-SM-txh" secondAttribute="trailing" constant="8" id="2jt-nW-2ht"/>
-                    <constraint firstItem="D7B-A0-l27" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="8j5-9E-hOL"/>
+                    <constraint firstAttribute="trailing" secondItem="bn1-SM-txh" secondAttribute="trailing" constant="15" id="2jt-nW-2ht"/>
+                    <constraint firstItem="D7B-A0-l27" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="8j5-9E-hOL"/>
                     <constraint firstItem="bn1-SM-txh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Al1-0c-K1q"/>
                     <constraint firstItem="D7B-A0-l27" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Hre-H2-EQG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mdQ-Cg-77O" secondAttribute="bottom" constant="-8" id="Jfg-Oe-TwZ"/>
                     <constraint firstAttribute="bottom" secondItem="bn1-SM-txh" secondAttribute="bottom" constant="8" id="MBW-02-Y8T"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mdQ-Cg-77O" secondAttribute="trailing" constant="-8" id="g56-mc-awi"/>
-                    <constraint firstItem="bn1-SM-txh" firstAttribute="leading" secondItem="D7B-A0-l27" secondAttribute="trailing" constant="20" id="rEd-og-L8W"/>
+                    <constraint firstItem="bn1-SM-txh" firstAttribute="leading" secondItem="D7B-A0-l27" secondAttribute="trailing" constant="18" id="rEd-og-L8W"/>
+                    <constraint firstAttribute="centerY" secondItem="D7B-A0-l27" secondAttribute="centerY" id="tdL-0h-iSU"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="Hre-H2-EQG"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="stateLabel" destination="mdQ-Cg-77O" id="uQF-Wc-UEF"/>
                 <outlet property="testImage" destination="D7B-A0-l27" id="Pkg-Uy-0mN"/>
                 <outlet property="titleLabel" destination="bn1-SM-txh" id="DSA-L0-lRK"/>
             </connections>
-            <point key="canvasLocation" x="533" y="404"/>
+            <point key="canvasLocation" x="533" y="409"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="testGroupIcon" width="47" height="47"/>
-        <image name="testGroupIconHighLight" width="47" height="47"/>
+        <image name="testGroupIcon" width="46" height="46"/>
+        <image name="testGroupIconHighLight" width="46" height="46"/>
     </resources>
 </document>

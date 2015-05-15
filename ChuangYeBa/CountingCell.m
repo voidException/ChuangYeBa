@@ -21,4 +21,10 @@
     // Configure the view for the selected state
 }
 
+- (void)drawRect:(CGRect)rect {
+    [[UIColor colorWithRed:209.0/255 green:209.0/255 blue:209.0/255 alpha:1] setStroke];
+    CGRect frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 2);
+    UIRectFrame(frame);
+}
+
 @end

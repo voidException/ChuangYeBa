@@ -71,7 +71,7 @@ static NSString *articleCellIdentifier = @"ArticleCell";
 #pragma mark - Action
 - (void)clickOnQuitButton {
     //[self performSegueWithIdentifier:@"ShowClassScreen" sender:self];
-    id vc = [self.navigationController.viewControllers objectAtIndex:1];
+    id vc = [self.navigationController.viewControllers objectAtIndex:0];
     [self.navigationController popToViewController:vc animated:YES];
 }
 
@@ -80,7 +80,7 @@ static NSString *articleCellIdentifier = @"ArticleCell";
     switch (indexPath.row) {
             // TODO 在这里每一个小区的高度需要根据实际情况调整的
         case 0:
-            return 220;
+            return 225;
             break;
         case 1:
         {
@@ -129,6 +129,8 @@ static NSString *articleCellIdentifier = @"ArticleCell";
     } else {
         ArticleCell *articleCell = [tableView dequeueReusableCellWithIdentifier:articleCellIdentifier];
         articleCell.content.text = @"蓝色回答正确，红色回答错误，点击题号查看题目的详细解析";
+        articleCell.content.textColor = [UIColor colorWithRed:126.0/255 green:126.0/255 blue:126.0/255 alpha:1];
+        articleCell.content.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
         return articleCell;
     }
 }

@@ -70,6 +70,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         if (obj) {
             NSDictionary *dic = obj;
             self.classInfo = [ClassJsonParser parseClassInfo:[dic objectForKey:@"oneClass"]];
+            self.classInfo.teacher = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"teacher"] isTeacher:YES];
             [self saveClassInfoToLocal];
             NSArray *userListArr = [dic objectForKey:@"studentTwoVo"];
             for (NSDictionary *userInfoDic in userListArr) {
@@ -86,8 +87,8 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         NSLog(@"%@", obj);
         // 修改UserDeaults中的isUserAddedClass的值，修改为NO
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        NSNumber *number = [[NSNumber alloc]initWithBool:NO];
-        [ud setObject:number forKey:@"isUserAddedClass"];
+        self.userInfo.hasAddedClass = @"0";
+        [self.userInfo saveUserInfoToLocal];
         [ud removeObjectForKey:@"classInfo"];
         [ud synchronize];
         // 返回上级菜单
@@ -108,7 +109,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 #pragma mark - Tbale view delegaet
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 146;
+        return 176;
     } else {
         return 50;
     }
@@ -180,7 +181,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
         classInfoCell.classNoLabel.text = classNoString;
         classInfoCell.classNameLabel.text = classInfo.classroomName;
-        classInfoCell.teacherNameLabel.text = classInfo.teacherName;
+        classInfoCell.teacherNameLabel.text = classInfo.teacher.name;
         classInfoCell.universityNameLabel.text = classInfo.universityName;
         return classInfoCell;
     } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {

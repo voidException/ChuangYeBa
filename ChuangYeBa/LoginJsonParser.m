@@ -14,7 +14,14 @@
 + (UserInfo *)parseUserInfoInLogin:(NSDictionary *)dic isTeacher:(BOOL) isTeacher {
     UserInfo *userInfo = [[UserInfo alloc] init];
     if (isTeacher) {
-        NSLog(@"返回teacher");
+        userInfo.email = [dic objectForKey:@"email"];
+        userInfo.name = [dic objectForKey:@"teachername"];
+        userInfo.universityNo = [dic objectForKey:@"universityno"];
+        userInfo.universityName = [dic objectForKey:@"universityname"];
+        userInfo.password = [dic objectForKey:@"passwords"];
+        userInfo.photoPath = [dic objectForKey:@"photo"];
+        userInfo.tel = [dic objectForKey:@"tel"];
+        userInfo.userId = [dic objectForKey:@"teacherid"];
         return userInfo;
     } else {
         userInfo.userId = [dic objectForKey:@"stuid"];
@@ -32,12 +39,13 @@
         } else {
             userInfo.sex = @"女";
         }
-#warning 待做！inColleageDate 没有配置
+#warning inColleageDate 没有配置
         //userInfo.inCollegeDate =
         userInfo.email = [dic objectForKey:@"email"];
         userInfo.password = [dic objectForKey:@"passwords"];
         userInfo.photoPath = [dic objectForKey:@"photo"];
         userInfo.isPhotoUpload = [dic objectForKey:@"photoupload"];
+        userInfo.hasAddedClass = [dic objectForKey:@"roomno"];
         return userInfo;
     }
 }
@@ -53,9 +61,7 @@
         sex = @YES;
     }
     
-#warning 未完善的数据
-    // TEMP ***********
-    NSString *dateString = @"2010-09-01";
+    NSString *dateString = @"";
     if (userInfo.inCollegeDate == nil) {
         NSDate *nowDate = [NSDate date];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -63,9 +69,11 @@
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         dateString = [dateFormatter stringFromDate:nowDate];
     }
-    //
-    userInfo.isPhotoUpload = @NO;
-    // TEMP END************
+    if (userInfo.photoPath.length > 1) {
+        userInfo.isPhotoUpload = @YES;
+    } else {
+        userInfo.isPhotoUpload = @NO;
+    }
     
     dic = @{@"stuid":userInfo.userId,
             @"stuname":userInfo.name,

@@ -9,12 +9,7 @@
 #import "LoginNetworkUtils.h"
 #import "GlobalDefine.h"
 
-// 公司
-//static NSString *serverIP = @"http://10.174.90.146:8080/";
-// 家
 static NSString *serverIP = SERVER_IP;
-
-
 
 @implementation LoginNetworkUtils
 
@@ -64,31 +59,6 @@ static NSString *serverIP = SERVER_IP;
         callback(nil);
     }];
 }
-
-
-// 用户提交修改基本信息的类方法
-/*
-+ (void)subbmitEditedUserInfo:(UserInfo *)userInfo andCallback:(Callback)callback {
-    NSString *path = @"http://localhost:8080/startup/student/register";
-    
-    //提交的参数写在这里⬇️
-    NSDictionary *params = nil;
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        NSLog(@"提交成功：%@",dic);
-        callback(dic);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"提交失败");
-        [LoginNetworkUtils failureAction:error];
-        callback(nil);
-    }];
-}
-*/
  
 + (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback {
     NSString *path = @"/startup/student/findPassword";

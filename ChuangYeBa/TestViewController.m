@@ -7,8 +7,7 @@
 //
 
 #import "TestViewController.h"
-// test
-#import <MJRefresh.h>
+#import <MBProgressHUD.h>
 
 #define THEME_BLUE colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1
 
@@ -18,7 +17,7 @@ static NSString *explainCellIdentifer = @"ExplainCell";
 static NSString *testStateCellIdentifier = @"TestStateCell";
 
 
-@interface TestViewController ()
+@interface TestViewController () <MBProgressHUDDelegate>
 @property (strong, nonatomic) NSNumber *numQuizNo;
 @end
 
@@ -100,7 +99,6 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-#pragma mark - 绘图
 
 #pragma mark - Private Method
 - (void)initUI {
@@ -127,6 +125,12 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     [self.submitButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [self.submitButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateNormal];
     [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    
+#warning 一般 很奇怪这里为什么没法修改？
+    [self.lastButton setImage:[UIImage imageNamed:@"lastButtonIconSelected"] forState:UIControlStateSelected];
+    [self.nextButton setImage:[UIImage imageNamed:@"nextButtonIconSelected"] forState:UIControlStateSelected];
+    [self.lastButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateSelected];
+    [self.nextButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateSelected];
     
 }
 
@@ -182,7 +186,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 #pragma mark - Table View Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 44;
+        return 49;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             return [self.quiz getHeightOfQuizString:self.quiz.question
@@ -210,13 +214,6 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OptionCell *cell = (OptionCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -487,25 +484,22 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     }
 }
 
-
-
 - (IBAction)clickOnSubmitButton:(id)sender {
     if (!isShowExplain) {
         BOOL isFinishedAllTest = YES;
         for (int i = 0; i < self.quizs.count; i++) {
             if ([self.userSelection[i] isEqual:[NSNumber numberWithBool:NO]]) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"You didn't finish all tests!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有做完全部的测试，请您仔细检查" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
                 [alert show];
                 isFinishedAllTest = NO;
                 break;
             }
         }
         if (isFinishedAllTest) {
-            [self packageAction];
-            [ClassNetworkUtils submitTestResult:self.testResultArray andCallback:^(id obj) {
-                NSLog(@"提交成功");
-                [self performSegueWithIdentifier:@"ShowTestResult" sender:self];
-            }];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您已经完成全部测试，确定要提交吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alert.tag = 1;
+            [alert show];
+            
         }
     }
 }
@@ -514,17 +508,41 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     if ([isShowExplain isEqual:@YES]) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        self.backAlertView = [[UIAlertView alloc] initWithTitle:@"attention" message:@"Are you sure? Your selection would not be save unless you submit them!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sure", nil];
-        [self.backAlertView show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要离开测试吗？您刚刚的测试结果将不会被保存。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag = 0;
+        [alert show];
     }
 }
 
 #pragma mark - Alert View Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView == self.backAlertView) {
+    if (alertView.tag == 0) {
         if (buttonIndex == 1) {
             [self.navigationController popViewControllerAnimated:YES];
         }
+    } else if (alertView.tag == 1) {
+        if (buttonIndex == 1) {
+            MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+            HUD.tag = 0;
+            HUD.labelText = @"正在提交";
+            [HUD show:YES];
+            [self packageAction];
+            [ClassNetworkUtils submitTestResult:self.testResultArray andCallback:^(id obj) {
+                [self.navigationController.view addSubview:HUD];
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.animationType = MBProgressHUDAnimationZoomIn;
+                HUD.delegate = self;
+                HUD.labelText = @"提交成功";
+                [HUD hide:YES afterDelay:1.0];
+            }];
+        }
+    }
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    if (hud.tag == 0) {
+        [self performSegueWithIdentifier:@"ShowTestResult" sender:self];
     }
 }
 

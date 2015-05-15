@@ -15,13 +15,13 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // 绘制灰色分割线
-    CGPoint startPoint =  CGPointMake(22, 220);
-    CGPoint endPoint = CGPointMake(self.frame.size.width - 22, 220);
+    CGPoint startPoint =  CGPointMake(17, 202);
+    CGPoint endPoint = CGPointMake(self.frame.size.width - 17, 202);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(context, startPoint.x, startPoint.y);
     CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
     CGContextClosePath(context);
-    [[UIColor grayColor] setStroke];
+    [[UIColor colorWithRed:201.0/255 green:201.0/255 blue:201.0/255 alpha:1] setStroke];
     CGContextDrawPath(context, kCGPathStroke);
 }
 

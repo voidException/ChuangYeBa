@@ -19,6 +19,9 @@
 #import "CommentInfo.h"
 #import "FXBlurView.h"
 
+
+@class LineNavigationBar;
+
 @interface StudyDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CommentInputViewDelegate, CommentCellDelegate, MediaCellDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) ArticleInfo *articleInfo;
@@ -31,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *downLoadButton;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (strong, nonatomic) UINavigationItem *customItem;
-@property (strong, nonatomic) UINavigationBar *customBar;
+@property (strong, nonatomic) LineNavigationBar *customBar;
 @property (strong, nonatomic) UIBarButtonItem *leftButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbarView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;

@@ -30,7 +30,14 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickOnBackground)];
     [self.tableView addGestureRecognizer:tapGesture];
     
+    // 初始化label的段落设置
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.introductionLabel.text];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:4.0];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.introductionLabel.text.length)];
+    self.introductionLabel.attributedText = attributedString;
     
+    // 初始化HUD
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     //HUD.labelText = @"Loading";
