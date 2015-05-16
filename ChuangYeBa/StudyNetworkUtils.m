@@ -10,16 +10,14 @@
 #import "StudyJsonParser.h"
 #import "GlobalDefine.h"
 
-// 公司
-//static NSString *serverIP = @"http://10.174.90.146:8080/";
-// 家
 static NSString *serverIP = SERVER_IP;
-
 
 @implementation StudyNetworkUtils
 
 // 请求文章列表
 + (void)requestArticlesWichToken:(NSString *)token userId:(NSNumber *)userId tag:(NSInteger)tag page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     NSString *path = @"/startup/learn/articleList";
     path = [serverIP stringByAppendingString:path];
     
@@ -37,11 +35,12 @@ static NSString *serverIP = SERVER_IP;
         NSLog(@"请求的结果为 = %@", responseObject);
         
         callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
         callback(nil);
-
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
 }
@@ -73,6 +72,7 @@ static NSString *serverIP = SERVER_IP;
 
 // 请求一篇具体的文章
 + (void)requestArticleDetailWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *path = @"/startup/learn/article";
     path = [serverIP stringByAppendingString:path];
     
@@ -85,14 +85,16 @@ static NSString *serverIP = SERVER_IP;
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"获取一篇具体的文章成功%@", responseObject);
         callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
         callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 // 获取评论列表
 + (void)requestCommentsWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId page:(NSInteger)page pageSize:(NSInteger)pageSize andCallback:(Callback)callback {
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *path = @"/startup/learn/article/commentsList";
     path = [serverIP stringByAppendingString:path];
     
@@ -114,14 +116,17 @@ static NSString *serverIP = SERVER_IP;
             [comments addObject:commentInfo];
         }
         callback(comments);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取评论列表失败, %@", [error localizedDescription]);
         callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
 // 删除一条评论
 + (void)submitDeleteCommentWithToken:(NSString *)token userId:(NSNumber *)userId commentId:(NSNumber *)commentId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *path = @"/startup/learn/article/delComment";
     path = [serverIP stringByAppendingString:path];
     
@@ -133,13 +138,16 @@ static NSString *serverIP = SERVER_IP;
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"成功删除一条评论%@", responseObject);
         callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"删除评论失败, %@", [error localizedDescription]);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
 // 添加一个赞
 + (void)submitAddLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *path = @"/startup/learn/article/addLove";
     path = [serverIP stringByAppendingString:path];
     
@@ -153,8 +161,10 @@ static NSString *serverIP = SERVER_IP;
         NSDictionary *dic = responseObject;
         NSNumber *loves = [dic objectForKey:@"love"];
         callback(loves);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"删除评论失败, %@", [error localizedDescription]);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
 }

@@ -4,14 +4,28 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>ChuangYeBa.xcscheme</key>
+		<key>ChuangYeBaStudent.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>ChuangYeBaTeacher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>8BBB61551B06464300381DAC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8BCF39921ACCE09C0071C016</key>
 		<dict>
 			<key>primary</key>

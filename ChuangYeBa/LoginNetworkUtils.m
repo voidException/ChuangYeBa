@@ -17,9 +17,18 @@ static NSString *serverIP = SERVER_IP;
 // 用户登陆类方法
 + (void)loginUserName:(NSString *)userName loginUserPassword:(NSString *)userPassword andCallback:(Callback)callback {
     // 请求地址
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+#ifdef STUDENT_VERSION
     NSString *path = @"/startup/student/login";
-    path = [serverIP stringByAppendingString:path];
     NSDictionary *params = @{@"studentEmail": userName, @"studentPassword":userPassword};
+#elif TEACHER_VERSION
+    NSString *path = @"/startup/teacher/login";
+    NSDictionary *params = @{@"teacherEmail": userName, @"teacherPassword":userPassword};
+#endif
+    
+    path = [serverIP stringByAppendingString:path];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //申明请求和接收的数据都是json类型
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -29,10 +38,11 @@ static NSString *serverIP = SERVER_IP;
         NSDictionary *dic = responseObject;
         NSLog(@"登陆成功：%@",dic);
         callback(dic);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"登陆失败, %@", [error localizedDescription]);
-        //[LoginNetworkUtils failureAction:error];
         callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
@@ -40,12 +50,17 @@ static NSString *serverIP = SERVER_IP;
 
 // 用户注册类方法
 + (void)registerUserInfo:(UserInfo *)userInfo andCallBack:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+#ifdef STUDENT_VERSION
     NSString *path = @"/startup/student/register";
-    path = [serverIP stringByAppendingString:path];
-     NSLog(@"Request Path = %@",path);
-    
     NSDictionary *params = @{@"stuName": userInfo.name, @"stuNo": userInfo.userNo, @"stuPassword": userInfo.password, @"stuPasswordRepeat": userInfo.passwordConfirm, @"stuEmail": userInfo.email};
+#elif TEACHER_VERSION
+    NSString *path = @"/startup/teacher/register";
+    NSDictionary *params = @{@"teacherName": userInfo.name, @"password": userInfo.password, @"passwordRepeat": userInfo.passwordConfirm, @"teacherEmail": userInfo.email};
+#endif
     
+    path = [serverIP stringByAppendingString:path];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
@@ -53,14 +68,16 @@ static NSString *serverIP = SERVER_IP;
         NSDictionary *dic = responseObject;
         NSLog(@"注册成功: %@", dic);
         callback(dic);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"注册失败: %@", [error localizedDescription]);
-        //[LoginNetworkUtils failureAction:error];
         callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
  
 + (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *path = @"/startup/student/findPassword";
     path = [serverIP stringByAppendingString:path];
     NSDictionary *params = @{@"stuEmail": email};
@@ -70,21 +87,14 @@ static NSString *serverIP = SERVER_IP;
         NSDictionary *dic = responseObject;
         NSLog(@"找回密码成功: %@", dic);
         callback(dic);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"找回密码失败: %@", [error localizedDescription]);
-        //[LoginNetworkUtils failureAction:error];
         callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
-// 辅助方法，处理失败请求
-+ (void)failureAction:(NSError *) error {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请求失败了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-    [alert show];
-    NSLog(@"请求失败: %@", [error localizedDescription]);
-    
-}
 
 
 

@@ -45,7 +45,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.leftBarButtonItem = btn;
-    
 }
 
 - (void)loadClassInfoFormLocal {
@@ -64,7 +63,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     [ud synchronize];
 }
 
-
+#ifdef STUDENT_VERSION
 - (void)requestClassInfoFormServer {
     [ClassNetworkUtils requestClassInfoByClassNo:self.classInfo.classNo andCallback:^(id obj) {
         if (obj) {
@@ -88,13 +87,24 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         // 修改UserDeaults中的isUserAddedClass的值，修改为NO
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         self.userInfo.hasAddedClass = @"0";
-        [self.userInfo saveUserInfoToLocal];
+        [UserInfo saveUserInfoToLocal:self.userInfo];
         [ud removeObjectForKey:@"classInfo"];
         [ud synchronize];
         // 返回上级菜单
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
 }
+
+#elif TEACHER_VERSION
+- (void)requestClassInfoFormServer {
+    
+}
+
+- (void)submitQuitClassToServer {
+    
+}
+#endif
+
 
 #pragma mark - Action
 - (void)clickOnBackButton {

@@ -90,9 +90,6 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     [actionSheet showInView:self.view];
 }
 
-
-
-
 #pragma mark - TableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;

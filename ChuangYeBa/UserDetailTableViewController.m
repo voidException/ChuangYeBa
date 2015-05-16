@@ -251,7 +251,7 @@ static NSString *bucket = @"startupimg";
                 // 提交更改用户信息到服务器，告知服务器保存新的图片地址
                 [MeNetworkUtils submitModifiedUserInfo:self.userInfo andCallback:^(id obj) {
                     if (obj) {
-                        [self.userInfo saveUserInfoToLocal];
+                        [UserInfo saveUserInfoToLocal:self.userInfo];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
                         
                         MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];

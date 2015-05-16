@@ -65,23 +65,31 @@
     return self;
 }
 
-- (void)saveUserInfoToLocal {
-    if (self) {
+// 从本地读取用户信息。
++ (UserInfo *)loadUserInfoFromLocal {
+    UserInfo *userInfo;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSData *udObject = [ud objectForKey:@"userInfo"];
+    userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    return userInfo;
+}
+
+// 保存用户信息到本地
++ (void)saveUserInfoToLocal:(UserInfo *)userInfo {
+    if (userInfo) {
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self];
+        NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:userInfo];
         [ud setObject:udObject forKey:@"userInfo"];
         [ud synchronize];
     }
 }
 
-- (void)deleteUserInfoFromLocal {
-    if (self) {
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        [ud removeObjectForKey:@"userInfo"];
-        [ud synchronize];
-    }
+// 删除本地的用户信息
++ (void)deleteUserInfoFromLocal {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud removeObjectForKey:@"userInfo"];
+    [ud synchronize];
 }
-
 
 #pragma Setter
 - (void)setPhotoPathWithStorageURL:(NSString *)key {
@@ -119,6 +127,22 @@
         department = @"";
     } else {
         department = aAepartment;
+    }
+}
+
+- (void)setUniversityName:(NSString *)aUniversityName {
+    if ([aUniversityName class] == [NSNull class]) {
+        universityName = @"";
+    } else {
+        universityName = aUniversityName;
+    }
+}
+
+- (void)setUniversityNo:(NSString *)aUniversityNo {
+    if ([aUniversityNo class] == [NSNull class]) {
+        universityNo = @"";
+    } else {
+        universityNo = aUniversityNo;
     }
 }
 

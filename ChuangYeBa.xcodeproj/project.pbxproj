@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B7D9D9FEB0DB129CBEFA191 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555CC979E55C5A0146FBD127 /* libPods.a */; };
+		8B00E0741B077B1E0062222D /* ClassSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */; };
 		8B05B6021AEB5C330058B012 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B05E5F51AD9688300E87347 /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
 		8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
@@ -52,7 +53,6 @@
 		8BB23BA61AE531D300621F91 /* TestGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BA41AE531D300621F91 /* TestGroupCell.m */; };
 		8BB23BA71AE531D300621F91 /* TestGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB23BA51AE531D300621F91 /* TestGroupCell.xib */; };
 		8BB23BAB1AE5E50700621F91 /* AddClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BAA1AE5E50700621F91 /* AddClassTableViewController.m */; };
-		8BB23BAE1AE6100F00621F91 /* AddClassConfirmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BAD1AE6100F00621F91 /* AddClassConfirmTableViewController.m */; };
 		8BB23BB11AE6359F00621F91 /* ConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB01AE6359F00621F91 /* ConditionViewController.m */; };
 		8BB23BB51AE641AA00621F91 /* ClassInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */; };
 		8BB23BB61AE641AA00621F91 /* ClassInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */; };
@@ -60,10 +60,118 @@
 		8BB6ED301B0593E100FB1932 /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2C1B0593E100FB1932 /* setting.plist */; };
 		8BB6ED311B0593E100FB1932 /* studyCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */; };
 		8BB6ED321B0593E100FB1932 /* userDetailList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2E1B0593E100FB1932 /* userDetailList.plist */; };
+		8BBB61581B06464300381DAC /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */; };
+		8BBB61591B06464300381DAC /* StudyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */; };
+		8BBB615A1B06464300381DAC /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C0801ACEF6D2004D96AF /* MeViewController.m */; };
+		8BBB615B1B06464300381DAC /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE327901AD18FED007F79C3 /* CommentCell.m */; };
+		8BBB615C1B06464300381DAC /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEC85621B0433180017448C /* FXBlurView.m */; };
+		8BBB615D1B06464300381DAC /* MediaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC80841AD2D62D006CE482 /* MediaCell.m */; };
+		8BBB615E1B06464300381DAC /* CustomSegueUnwind.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF03BE91AF70DBE00D8C932 /* CustomSegueUnwind.m */; };
+		8BBB615F1B06464300381DAC /* TestStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34B1761AE8C0E500A39F8F /* TestStateCell.m */; };
+		8BBB61601B06464300381DAC /* DetailImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDFE6691AD361D00081310A /* DetailImageViewController.m */; };
+		8BBB61611B06464300381DAC /* ClassJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451ADF1ADCCDAD002C4CA9 /* ClassJsonParser.m */; };
+		8BBB61621B06464300381DAC /* StudyHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E621ACD2EBD00A4EF54 /* StudyHostViewController.m */; };
+		8BBB61631B06464300381DAC /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C07A1ACEB79C004D96AF /* MoreViewController.m */; };
+		8BBB61641B06464300381DAC /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */; };
+		8BBB61651B06464300381DAC /* StudyNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AE51ADF5A9D002C4CA9 /* StudyNetworkUtils.m */; };
+		8BBB61661B06464300381DAC /* FindPasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */; };
+		8BBB61671B06464300381DAC /* StudyContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E681ACD3AF500A4EF54 /* StudyContentCell.m */; };
+		8BBB61681B06464300381DAC /* MoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C07D1ACEB7AB004D96AF /* MoreDetailViewController.m */; };
+		8BBB61691B06464300381DAC /* TestGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0A5561AD4EF5A006B348E /* TestGroup.m */; };
+		8BBB616A1B06464300381DAC /* ArticleTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AF71ADF8886002C4CA9 /* ArticleTitleCell.m */; };
+		8BBB616B1B06464300381DAC /* StudyJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */; };
+		8BBB616C1B06464300381DAC /* CommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF68F8B1AEF7ABF007D5F5D /* CommentInfo.m */; };
+		8BBB616D1B06464300381DAC /* TestGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BA41AE531D300621F91 /* TestGroupCell.m */; };
+		8BBB616E1B06464300381DAC /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4C0831ACEF703004D96AF /* UserInfoCell.m */; };
+		8BBB616F1B06464300381DAC /* TestResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */; };
+		8BBB61701B06464300381DAC /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF68F941AF08264007D5F5D /* TabBarController.m */; };
+		8BBB61731B06464300381DAC /* ClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E591ACD193E00A4EF54 /* ClassInfo.m */; };
+		8BBB61741B06464300381DAC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
+		8BBB61751B06464300381DAC /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0A55F1AD62AC1006B348E /* Quiz.m */; };
+		8BBB61761B06464300381DAC /* AnswerSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C5E1AE8D7B9004CC161 /* AnswerSheetCell.m */; };
+		8BBB61771B06464300381DAC /* PullUpRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF03BEF1AF7488B00D8C932 /* PullUpRefreshView.m */; };
+		8BBB61781B06464300381DAC /* LoginNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5F1ACD196400A4EF54 /* LoginNetworkUtils.m */; };
+		8BBB61791B06464300381DAC /* ExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */; };
+		8BBB617A1B06464300381DAC /* EditedInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A951ACF71F500E339D6 /* EditedInfoCell.m */; };
+		8BBB617B1B06464300381DAC /* UserDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED43B31AFC8889002CC15C /* UserDetailTableViewController.m */; };
+		8BBB617C1B06464300381DAC /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF29D131AFDAE3800543B37 /* CircleImageView.m */; };
+		8BBB617D1B06464300381DAC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
+		8BBB617F1B06464300381DAC /* LoginJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AE21ADEB507002C4CA9 /* LoginJsonParser.m */; };
+		8BBB61801B06464300381DAC /* EditedPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */; };
+		8BBB61821B06464300381DAC /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */; };
+		8BBB61831B06464300381DAC /* StudyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E651ACD2FF100A4EF54 /* StudyContentViewController.m */; };
+		8BBB61841B06464300381DAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF399B1ACCE09C0071C016 /* AppDelegate.m */; };
+		8BBB61851B06464300381DAC /* EditedPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A921ACF71E100E339D6 /* EditedPhotoCell.m */; };
+		8BBB61861B06464300381DAC /* UserEditedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED43B61AFC8D24002CC15C /* UserEditedTableViewController.m */; };
+		8BBB61871B06464300381DAC /* CountingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451B001ADFAC7F002C4CA9 /* CountingCell.m */; };
+		8BBB61881B06464300381DAC /* ClassNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451ADC1ADCBC31002C4CA9 /* ClassNetworkUtils.m */; };
+		8BBB61891B06464300381DAC /* LineNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26F1B02E3FC0004EC08 /* LineNavigationBar.m */; };
+		8BBB618A1B06464300381DAC /* ClassInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */; };
+		8BBB618B1B06464300381DAC /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
+		8BBB618C1B06464300381DAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
+		8BBB618D1B06464300381DAC /* QuizCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C631AE8E631004CC161 /* QuizCollectionCell.m */; };
+		8BBB618E1B06464300381DAC /* ConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB01AE6359F00621F91 /* ConditionViewController.m */; };
+		8BBB618F1B06464300381DAC /* TestScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C591AE8D5D2004CC161 /* TestScoreCell.m */; };
+		8BBB61901B06464300381DAC /* ArticleInfoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF11C201AF9E9AD00F30649 /* ArticleInfoDAO.m */; };
+		8BBB61911B06464300381DAC /* MeNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED43B91AFCA39A002CC15C /* MeNetworkUtils.m */; };
+		8BBB61921B06464300381DAC /* ArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3278B1AD116D9007F79C3 /* ArticleCell.m */; };
+		8BBB61931B06464300381DAC /* RegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD91ADB9559002C4CA9 /* RegisterTableViewController.m */; };
+		8BBB61941B06464300381DAC /* CustomSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF03BE61AF70DA700D8C932 /* CustomSegue.m */; };
+		8BBB61951B06464300381DAC /* ArticleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AEB1ADF81B4002C4CA9 /* ArticleInfo.m */; };
+		8BBB61961B06464300381DAC /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA58B51AD94DF100E59EE8 /* QuestionCell.m */; };
+		8BBB61971B06464300381DAC /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE5BD1B1B036C7C006B47DA /* CircleButton.m */; };
+		8BBB61981B06464300381DAC /* ConditionShowSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF03BF21AF769F200D8C932 /* ConditionShowSegue.m */; };
+		8BBB61991B06464300381DAC /* CommentInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451B071ADFED74002C4CA9 /* CommentInputView.m */; };
+		8BBB619C1B06464300381DAC /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5B1ACD193E00A4EF54 /* UserInfo.m */; };
+		8BBB619E1B06464300381DAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555CC979E55C5A0146FBD127 /* libPods.a */; };
+		8BBB61A01B06464300381DAC /* ArticleTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AF81ADF8886002C4CA9 /* ArticleTitleCell.xib */; };
+		8BBB61A11B06464300381DAC /* EditedPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */; };
+		8BBB61A21B06464300381DAC /* CommentInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451B041ADFE836002C4CA9 /* CommentInputView.xib */; };
+		8BBB61A41B06464300381DAC /* StudyContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF8F2691B01DF6E0004EC08 /* StudyContentCell.xib */; };
+		8BBB61A51B06464300381DAC /* ClassInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */; };
+		8BBB61A61B06464300381DAC /* EditedInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BED43B01AFC5C63002CC15C /* EditedInfoCell.xib */; };
+		8BBB61A71B06464300381DAC /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
+		8BBB61A81B06464300381DAC /* QuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BDA58B61AD94DF100E59EE8 /* QuestionCell.xib */; };
+		8BBB61A91B06464300381DAC /* studyCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */; };
+		8BBB61AA1B06464300381DAC /* TestScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5A1AE8D5D2004CC161 /* TestScoreCell.xib */; };
+		8BBB61AB1B06464300381DAC /* appSetting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2B1B0593E100FB1932 /* appSetting.plist */; };
+		8BBB61AC1B06464300381DAC /* userDetailList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2E1B0593E100FB1932 /* userDetailList.plist */; };
+		8BBB61AD1B06464300381DAC /* UserInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF780C91AFB934B0048F5A4 /* UserInfoCell.xib */; };
+		8BBB61AE1B06464300381DAC /* CountingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451B011ADFAC7F002C4CA9 /* CountingCell.xib */; };
+		8BBB61AF1B06464300381DAC /* TestGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB23BA51AE531D300621F91 /* TestGroupCell.xib */; };
+		8BBB61B01B06464300381DAC /* MediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFD1ADFA8E3002C4CA9 /* MediaCell.xib */; };
+		8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */; };
+		8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */; };
+		8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
+		8BBB61B41B06464300381DAC /* QuizCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */; };
+		8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFB1ADF8A44002C4CA9 /* CommentCell.xib */; };
+		8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */; };
+		8BBB61B71B06464300381DAC /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2C1B0593E100FB1932 /* setting.plist */; };
+		8BBB61B81B06464300381DAC /* AnswerSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5F1AE8D7B9004CC161 /* AnswerSheetCell.xib */; };
+		8BBB61B91B06464300381DAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
+		8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */; };
+		8BBB61CC1B06D2FD00381DAC /* ClassListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */; };
+		8BBB61E31B06D4AA00381DAC /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61D11B06D4AA00381DAC /* arrow_down.png */; };
+		8BBB61E41B06D4AA00381DAC /* arrow_down1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61D21B06D4AA00381DAC /* arrow_down1.png */; };
+		8BBB61E51B06D4AA00381DAC /* arrow_down1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61D31B06D4AA00381DAC /* arrow_down1@2x.png */; };
+		8BBB61E61B06D4AA00381DAC /* arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61D41B06D4AA00381DAC /* arrow_down@2x.png */; };
+		8BBB61E71B06D4AA00381DAC /* SICellSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61D61B06D4AA00381DAC /* SICellSelection.m */; };
+		8BBB61E81B06D4AA00381DAC /* SIMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61D81B06D4AA00381DAC /* SIMenuButton.m */; };
+		8BBB61E91B06D4AA00381DAC /* SIMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61DA1B06D4AA00381DAC /* SIMenuCell.m */; };
+		8BBB61EA1B06D4AA00381DAC /* SIMenuConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61DC1B06D4AA00381DAC /* SIMenuConfiguration.m */; };
+		8BBB61EB1B06D4AA00381DAC /* SIMenuTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61DE1B06D4AA00381DAC /* SIMenuTable.m */; };
+		8BBB61EC1B06D4AA00381DAC /* SINavigationMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61E01B06D4AA00381DAC /* SINavigationMenuView.m */; };
+		8BBB61ED1B06D4AA00381DAC /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61E21B06D4AA00381DAC /* UIColor+Extension.m */; };
+		8BBB61F11B06F03B00381DAC /* ClassListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61EF1B06F03B00381DAC /* ClassListCell.m */; };
+		8BBB61F21B06F03B00381DAC /* ClassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61F01B06F03B00381DAC /* ClassListCell.xib */; };
+		8BBB61F51B07147B00381DAC /* CreateClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61F41B07147B00381DAC /* CreateClassTableViewController.m */; };
+		8BBB61F61B07384400381DAC /* AddClassConfirmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BAD1AE6100F00621F91 /* AddClassConfirmTableViewController.m */; };
+		8BBB61F91B07452800381DAC /* LoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61F81B07452800381DAC /* LoginNavigationController.m */; };
+		8BBB61FA1B07452800381DAC /* LoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61F81B07452800381DAC /* LoginNavigationController.m */; };
 		8BBF360C1AE161EA0029072C /* StudyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */; };
 		8BCF39991ACCE09C0071C016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
 		8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF399B1ACCE09C0071C016 /* AppDelegate.m */; };
-		8BCF39A21ACCE09C0071C016 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A01ACCE09C0071C016 /* Main.storyboard */; };
+		8BCF39A21ACCE09C0071C016 /* MainStudent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */; };
 		8BCF39A41ACCE09C0071C016 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
 		8BCF39A71ACCE09C0071C016 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
 		8BCF39B31ACCE09C0071C016 /* ChuangYeBaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39B21ACCE09C0071C016 /* ChuangYeBaTests.m */; };
@@ -205,15 +313,46 @@
 		8BB6ED2C1B0593E100FB1932 /* setting.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = setting.plist; path = Plist/setting.plist; sourceTree = "<group>"; };
 		8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = studyCategory.plist; path = Plist/studyCategory.plist; sourceTree = "<group>"; };
 		8BB6ED2E1B0593E100FB1932 /* userDetailList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = userDetailList.plist; path = Plist/userDetailList.plist; sourceTree = "<group>"; };
+		8BBB61BE1B06464300381DAC /* CYBTeacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYBTeacher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BBB61BF1B06464300381DAC /* ChuangYeBaTeacher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ChuangYeBaTeacher-Info.plist"; path = "/Users/developer/Projects/iOS/ChuangYeBa/ChuangYeBaTeacher-Info.plist"; sourceTree = "<absolute>"; };
+		8BBB61C71B064B6F00381DAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainTeacher.storyboard; sourceTree = "<group>"; };
+		8BBB61C91B064B7C00381DAC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainTeacher.strings"; sourceTree = "<group>"; };
+		8BBB61CA1B06D2FD00381DAC /* ClassListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassListTableViewController.h; path = ChuangYeBa/ClassListTableViewController.h; sourceTree = "<group>"; };
+		8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassListTableViewController.m; path = ChuangYeBa/ClassListTableViewController.m; sourceTree = "<group>"; };
+		8BBB61D11B06D4AA00381DAC /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
+		8BBB61D21B06D4AA00381DAC /* arrow_down1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down1.png; sourceTree = "<group>"; };
+		8BBB61D31B06D4AA00381DAC /* arrow_down1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_down1@2x.png"; sourceTree = "<group>"; };
+		8BBB61D41B06D4AA00381DAC /* arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_down@2x.png"; sourceTree = "<group>"; };
+		8BBB61D51B06D4AA00381DAC /* SICellSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SICellSelection.h; sourceTree = "<group>"; };
+		8BBB61D61B06D4AA00381DAC /* SICellSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SICellSelection.m; sourceTree = "<group>"; };
+		8BBB61D71B06D4AA00381DAC /* SIMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMenuButton.h; sourceTree = "<group>"; };
+		8BBB61D81B06D4AA00381DAC /* SIMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMenuButton.m; sourceTree = "<group>"; };
+		8BBB61D91B06D4AA00381DAC /* SIMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMenuCell.h; sourceTree = "<group>"; };
+		8BBB61DA1B06D4AA00381DAC /* SIMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMenuCell.m; sourceTree = "<group>"; };
+		8BBB61DB1B06D4AA00381DAC /* SIMenuConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMenuConfiguration.h; sourceTree = "<group>"; };
+		8BBB61DC1B06D4AA00381DAC /* SIMenuConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMenuConfiguration.m; sourceTree = "<group>"; };
+		8BBB61DD1B06D4AA00381DAC /* SIMenuTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMenuTable.h; sourceTree = "<group>"; };
+		8BBB61DE1B06D4AA00381DAC /* SIMenuTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMenuTable.m; sourceTree = "<group>"; };
+		8BBB61DF1B06D4AA00381DAC /* SINavigationMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SINavigationMenuView.h; sourceTree = "<group>"; };
+		8BBB61E01B06D4AA00381DAC /* SINavigationMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SINavigationMenuView.m; sourceTree = "<group>"; };
+		8BBB61E11B06D4AA00381DAC /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		8BBB61E21B06D4AA00381DAC /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		8BBB61EE1B06F03B00381DAC /* ClassListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassListCell.h; path = ChuangYeBa/ClassListCell.h; sourceTree = SOURCE_ROOT; };
+		8BBB61EF1B06F03B00381DAC /* ClassListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassListCell.m; path = ChuangYeBa/ClassListCell.m; sourceTree = SOURCE_ROOT; };
+		8BBB61F01B06F03B00381DAC /* ClassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClassListCell.xib; path = ChuangYeBa/ClassListCell.xib; sourceTree = SOURCE_ROOT; };
+		8BBB61F31B07147B00381DAC /* CreateClassTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateClassTableViewController.h; path = ChuangYeBa/CreateClassTableViewController.h; sourceTree = "<group>"; };
+		8BBB61F41B07147B00381DAC /* CreateClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateClassTableViewController.m; path = ChuangYeBa/CreateClassTableViewController.m; sourceTree = "<group>"; };
+		8BBB61F71B07452800381DAC /* LoginNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginNavigationController.h; path = ChuangYeBa/LoginNavigationController.h; sourceTree = "<group>"; };
+		8BBB61F81B07452800381DAC /* LoginNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginNavigationController.m; path = ChuangYeBa/LoginNavigationController.m; sourceTree = "<group>"; };
 		8BBF36091AE137410029072C /* GlobalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
 		8BBF360A1AE161EA0029072C /* StudyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyDetailViewController.h; path = ChuangYeBa/StudyDetailViewController.h; sourceTree = "<group>"; };
 		8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyDetailViewController.m; path = ChuangYeBa/StudyDetailViewController.m; sourceTree = "<group>"; };
-		8BCF39931ACCE09C0071C016 /* ChuangYeBa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChuangYeBa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BCF39931ACCE09C0071C016 /* CYBStudent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYBStudent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCF39971ACCE09C0071C016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BCF39981ACCE09C0071C016 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BCF399A1ACCE09C0071C016 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8BCF399B1ACCE09C0071C016 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8BCF39A11ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8BCF39A11ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStudent.storyboard; sourceTree = "<group>"; };
 		8BCF39A31ACCE09C0071C016 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8BCF39A61ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8BCF39AC1ACCE09C0071C016 /* ChuangYeBaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChuangYeBaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,7 +415,7 @@
 		8BF03BF21AF769F200D8C932 /* ConditionShowSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionShowSegue.m; sourceTree = "<group>"; };
 		8BF11C1F1AF9E9AD00F30649 /* ArticleInfoDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleInfoDAO.h; path = ChuangYeBa/ArticleInfoDAO.h; sourceTree = "<group>"; };
 		8BF11C201AF9E9AD00F30649 /* ArticleInfoDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleInfoDAO.m; path = ChuangYeBa/ArticleInfoDAO.m; sourceTree = "<group>"; };
-		8BF11C221AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		8BF11C221AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainStudent.strings"; sourceTree = "<group>"; };
 		8BF11C231AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		8BF29D121AFDAE3800543B37 /* CircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleImageView.h; path = ChuangYeBa/CircleImageView.h; sourceTree = "<group>"; };
 		8BF29D131AFDAE3800543B37 /* CircleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleImageView.m; path = ChuangYeBa/CircleImageView.m; sourceTree = "<group>"; };
@@ -294,6 +433,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8BBB619D1B06464300381DAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBB619E1B06464300381DAC /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BCF39901ACCE09C0071C016 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -445,6 +592,8 @@
 				8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */,
 				8B451AD81ADB9559002C4CA9 /* RegisterTableViewController.h */,
 				8B451AD91ADB9559002C4CA9 /* RegisterTableViewController.m */,
+				8BBB61F71B07452800381DAC /* LoginNavigationController.h */,
+				8BBB61F81B07452800381DAC /* LoginNavigationController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -476,6 +625,8 @@
 				8BB23BA11AE5311B00621F91 /* ClassTableViewController.m */,
 				8BB23BAF1AE6359F00621F91 /* ConditionViewController.h */,
 				8BB23BB01AE6359F00621F91 /* ConditionViewController.m */,
+				8BBB61CA1B06D2FD00381DAC /* ClassListTableViewController.h */,
+				8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -520,11 +671,15 @@
 		8B5826B21ACD0D8E005E39E0 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				8BBB61CF1B06D4AA00381DAC /* NavigationMenuView */,
 				8B356C571AE8D520004CC161 /* TestResultView */,
 				8B356C561AE8D4FC004CC161 /* TestView */,
 				8BB23BA31AE531D300621F91 /* TestGroupCell.h */,
 				8BB23BA41AE531D300621F91 /* TestGroupCell.m */,
 				8BB23BA51AE531D300621F91 /* TestGroupCell.xib */,
+				8BBB61EE1B06F03B00381DAC /* ClassListCell.h */,
+				8BBB61EF1B06F03B00381DAC /* ClassListCell.m */,
+				8BBB61F01B06F03B00381DAC /* ClassListCell.xib */,
 				8BB23BB21AE641AA00621F91 /* ClassInfoCell.h */,
 				8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */,
 				8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */,
@@ -585,6 +740,8 @@
 				8BB23BAA1AE5E50700621F91 /* AddClassTableViewController.m */,
 				8BB23BAC1AE6100F00621F91 /* AddClassConfirmTableViewController.h */,
 				8BB23BAD1AE6100F00621F91 /* AddClassConfirmTableViewController.m */,
+				8BBB61F31B07147B00381DAC /* CreateClassTableViewController.h */,
+				8BBB61F41B07147B00381DAC /* CreateClassTableViewController.m */,
 			);
 			name = AddClass;
 			sourceTree = "<group>";
@@ -600,6 +757,40 @@
 			name = Plist;
 			sourceTree = "<group>";
 		};
+		8BBB61CF1B06D4AA00381DAC /* NavigationMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				8BBB61D01B06D4AA00381DAC /* images */,
+				8BBB61D51B06D4AA00381DAC /* SICellSelection.h */,
+				8BBB61D61B06D4AA00381DAC /* SICellSelection.m */,
+				8BBB61D71B06D4AA00381DAC /* SIMenuButton.h */,
+				8BBB61D81B06D4AA00381DAC /* SIMenuButton.m */,
+				8BBB61D91B06D4AA00381DAC /* SIMenuCell.h */,
+				8BBB61DA1B06D4AA00381DAC /* SIMenuCell.m */,
+				8BBB61DB1B06D4AA00381DAC /* SIMenuConfiguration.h */,
+				8BBB61DC1B06D4AA00381DAC /* SIMenuConfiguration.m */,
+				8BBB61DD1B06D4AA00381DAC /* SIMenuTable.h */,
+				8BBB61DE1B06D4AA00381DAC /* SIMenuTable.m */,
+				8BBB61DF1B06D4AA00381DAC /* SINavigationMenuView.h */,
+				8BBB61E01B06D4AA00381DAC /* SINavigationMenuView.m */,
+				8BBB61E11B06D4AA00381DAC /* UIColor+Extension.h */,
+				8BBB61E21B06D4AA00381DAC /* UIColor+Extension.m */,
+			);
+			name = NavigationMenuView;
+			path = ChuangYeBa/NavigationMenuView;
+			sourceTree = "<group>";
+		};
+		8BBB61D01B06D4AA00381DAC /* images */ = {
+			isa = PBXGroup;
+			children = (
+				8BBB61D11B06D4AA00381DAC /* arrow_down.png */,
+				8BBB61D21B06D4AA00381DAC /* arrow_down1.png */,
+				8BBB61D31B06D4AA00381DAC /* arrow_down1@2x.png */,
+				8BBB61D41B06D4AA00381DAC /* arrow_down@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		8BCF398A1ACCE09C0071C016 = {
 			isa = PBXGroup;
 			children = (
@@ -613,14 +804,16 @@
 				8BCF39941ACCE09C0071C016 /* Products */,
 				D3E02882DC6A9EDA35380982 /* Pods */,
 				9FB07484698B67F4D94AC67A /* Frameworks */,
+				8BBB61BF1B06464300381DAC /* ChuangYeBaTeacher-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		8BCF39941ACCE09C0071C016 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8BCF39931ACCE09C0071C016 /* ChuangYeBa.app */,
+				8BCF39931ACCE09C0071C016 /* CYBStudent.app */,
 				8BCF39AC1ACCE09C0071C016 /* ChuangYeBaTests.xctest */,
+				8BBB61BE1B06464300381DAC /* CYBTeacher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -630,7 +823,8 @@
 			children = (
 				8BCF399A1ACCE09C0071C016 /* AppDelegate.h */,
 				8BCF399B1ACCE09C0071C016 /* AppDelegate.m */,
-				8BCF39A01ACCE09C0071C016 /* Main.storyboard */,
+				8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */,
+				8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */,
 				8BCF39A31ACCE09C0071C016 /* Images.xcassets */,
 				8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */,
 				8BCF39961ACCE09C0071C016 /* Supporting Files */,
@@ -717,9 +911,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8BCF39921ACCE09C0071C016 /* ChuangYeBa */ = {
+		8BBB61551B06464300381DAC /* ChuangYeBaTeacher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BCF39B61ACCE09C0071C016 /* Build configuration list for PBXNativeTarget "ChuangYeBa" */;
+			buildConfigurationList = 8BBB61BB1B06464300381DAC /* Build configuration list for PBXNativeTarget "ChuangYeBaTeacher" */;
+			buildPhases = (
+				8BBB61561B06464300381DAC /* Check Pods Manifest.lock */,
+				8BBB61571B06464300381DAC /* Sources */,
+				8BBB619D1B06464300381DAC /* Frameworks */,
+				8BBB619F1B06464300381DAC /* Resources */,
+				8BBB61BA1B06464300381DAC /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChuangYeBaTeacher;
+			productName = ChuangYeBa;
+			productReference = 8BBB61BE1B06464300381DAC /* CYBTeacher.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8BCF39921ACCE09C0071C016 /* ChuangYeBaStudent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BCF39B61ACCE09C0071C016 /* Build configuration list for PBXNativeTarget "ChuangYeBaStudent" */;
 			buildPhases = (
 				EBF6CC7AD42A5EFA841EB3D7 /* Check Pods Manifest.lock */,
 				8BCF398F1ACCE09C0071C016 /* Sources */,
@@ -731,9 +944,9 @@
 			);
 			dependencies = (
 			);
-			name = ChuangYeBa;
+			name = ChuangYeBaStudent;
 			productName = ChuangYeBa;
-			productReference = 8BCF39931ACCE09C0071C016 /* ChuangYeBa.app */;
+			productReference = 8BCF39931ACCE09C0071C016 /* CYBStudent.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8BCF39AB1ACCE09C0071C016 /* ChuangYeBaTests */ = {
@@ -779,19 +992,59 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 8BCF398A1ACCE09C0071C016;
 			productRefGroup = 8BCF39941ACCE09C0071C016 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8BCF39921ACCE09C0071C016 /* ChuangYeBa */,
+				8BCF39921ACCE09C0071C016 /* ChuangYeBaStudent */,
 				8BCF39AB1ACCE09C0071C016 /* ChuangYeBaTests */,
+				8BBB61551B06464300381DAC /* ChuangYeBaTeacher */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8BBB619F1B06464300381DAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBB61A01B06464300381DAC /* ArticleTitleCell.xib in Resources */,
+				8BBB61A11B06464300381DAC /* EditedPhotoView.xib in Resources */,
+				8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */,
+				8BBB61A21B06464300381DAC /* CommentInputView.xib in Resources */,
+				8BBB61A41B06464300381DAC /* StudyContentCell.xib in Resources */,
+				8BBB61E41B06D4AA00381DAC /* arrow_down1.png in Resources */,
+				8BBB61A51B06464300381DAC /* ClassInfoCell.xib in Resources */,
+				8BBB61A61B06464300381DAC /* EditedInfoCell.xib in Resources */,
+				8BBB61A71B06464300381DAC /* OptionCell.xib in Resources */,
+				8BBB61F21B06F03B00381DAC /* ClassListCell.xib in Resources */,
+				8BBB61A81B06464300381DAC /* QuestionCell.xib in Resources */,
+				8BBB61A91B06464300381DAC /* studyCategory.plist in Resources */,
+				8BBB61AA1B06464300381DAC /* TestScoreCell.xib in Resources */,
+				8BBB61AB1B06464300381DAC /* appSetting.plist in Resources */,
+				8BBB61AC1B06464300381DAC /* userDetailList.plist in Resources */,
+				8BBB61AD1B06464300381DAC /* UserInfoCell.xib in Resources */,
+				8BBB61AE1B06464300381DAC /* CountingCell.xib in Resources */,
+				8BBB61AF1B06464300381DAC /* TestGroupCell.xib in Resources */,
+				8BBB61B01B06464300381DAC /* MediaCell.xib in Resources */,
+				8BBB61E51B06D4AA00381DAC /* arrow_down1@2x.png in Resources */,
+				8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */,
+				8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */,
+				8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */,
+				8BBB61B41B06464300381DAC /* QuizCollectionCell.xib in Resources */,
+				8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */,
+				8BBB61E31B06D4AA00381DAC /* arrow_down.png in Resources */,
+				8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */,
+				8BBB61B71B06464300381DAC /* setting.plist in Resources */,
+				8BBB61B81B06464300381DAC /* AnswerSheetCell.xib in Resources */,
+				8BBB61E61B06D4AA00381DAC /* arrow_down@2x.png in Resources */,
+				8BBB61B91B06464300381DAC /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BCF39911ACCE09C0071C016 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -799,7 +1052,7 @@
 				8B451AFA1ADF8886002C4CA9 /* ArticleTitleCell.xib in Resources */,
 				8B276A7B1AFBB49E005C9FF7 /* EditedPhotoView.xib in Resources */,
 				8B451B051ADFE836002C4CA9 /* CommentInputView.xib in Resources */,
-				8BCF39A21ACCE09C0071C016 /* Main.storyboard in Resources */,
+				8BCF39A21ACCE09C0071C016 /* MainStudent.storyboard in Resources */,
 				8BF8F26A1B01DF6E0004EC08 /* StudyContentCell.xib in Resources */,
 				8BB23BB61AE641AA00621F91 /* ClassInfoCell.xib in Resources */,
 				8BED43B11AFC5C63002CC15C /* EditedInfoCell.xib in Resources */,
@@ -835,6 +1088,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8BBB61561B06464300381DAC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8BBB61BA1B06464300381DAC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DFA7ABE79CA472C29B0F462F /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -868,6 +1151,88 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8BBB61571B06464300381DAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBB61E71B06D4AA00381DAC /* SICellSelection.m in Sources */,
+				8B00E0741B077B1E0062222D /* ClassSettingTableViewController.m in Sources */,
+				8BBB61581B06464300381DAC /* UserListTableViewController.m in Sources */,
+				8BBB61591B06464300381DAC /* StudyDetailViewController.m in Sources */,
+				8BBB615A1B06464300381DAC /* MeViewController.m in Sources */,
+				8BBB615B1B06464300381DAC /* CommentCell.m in Sources */,
+				8BBB615C1B06464300381DAC /* FXBlurView.m in Sources */,
+				8BBB61E81B06D4AA00381DAC /* SIMenuButton.m in Sources */,
+				8BBB615D1B06464300381DAC /* MediaCell.m in Sources */,
+				8BBB61CC1B06D2FD00381DAC /* ClassListTableViewController.m in Sources */,
+				8BBB615E1B06464300381DAC /* CustomSegueUnwind.m in Sources */,
+				8BBB615F1B06464300381DAC /* TestStateCell.m in Sources */,
+				8BBB61601B06464300381DAC /* DetailImageViewController.m in Sources */,
+				8BBB61611B06464300381DAC /* ClassJsonParser.m in Sources */,
+				8BBB61EC1B06D4AA00381DAC /* SINavigationMenuView.m in Sources */,
+				8BBB61621B06464300381DAC /* StudyHostViewController.m in Sources */,
+				8BBB61631B06464300381DAC /* MoreViewController.m in Sources */,
+				8BBB61641B06464300381DAC /* AboutUsViewController.m in Sources */,
+				8BBB61651B06464300381DAC /* StudyNetworkUtils.m in Sources */,
+				8BBB61661B06464300381DAC /* FindPasswordTableViewController.m in Sources */,
+				8BBB61EB1B06D4AA00381DAC /* SIMenuTable.m in Sources */,
+				8BBB61671B06464300381DAC /* StudyContentCell.m in Sources */,
+				8BBB61681B06464300381DAC /* MoreDetailViewController.m in Sources */,
+				8BBB61691B06464300381DAC /* TestGroup.m in Sources */,
+				8BBB616A1B06464300381DAC /* ArticleTitleCell.m in Sources */,
+				8BBB616B1B06464300381DAC /* StudyJsonParser.m in Sources */,
+				8BBB616C1B06464300381DAC /* CommentInfo.m in Sources */,
+				8BBB616D1B06464300381DAC /* TestGroupCell.m in Sources */,
+				8BBB616E1B06464300381DAC /* UserInfoCell.m in Sources */,
+				8BBB616F1B06464300381DAC /* TestResultTableViewController.m in Sources */,
+				8BBB61E91B06D4AA00381DAC /* SIMenuCell.m in Sources */,
+				8BBB61701B06464300381DAC /* TabBarController.m in Sources */,
+				8BBB61731B06464300381DAC /* ClassInfo.m in Sources */,
+				8BBB61F51B07147B00381DAC /* CreateClassTableViewController.m in Sources */,
+				8BBB61741B06464300381DAC /* LoginViewController.m in Sources */,
+				8BBB61751B06464300381DAC /* Quiz.m in Sources */,
+				8BBB61761B06464300381DAC /* AnswerSheetCell.m in Sources */,
+				8BBB61771B06464300381DAC /* PullUpRefreshView.m in Sources */,
+				8BBB61781B06464300381DAC /* LoginNetworkUtils.m in Sources */,
+				8BBB61791B06464300381DAC /* ExplainCell.m in Sources */,
+				8BBB617A1B06464300381DAC /* EditedInfoCell.m in Sources */,
+				8BBB617B1B06464300381DAC /* UserDetailTableViewController.m in Sources */,
+				8BBB617C1B06464300381DAC /* CircleImageView.m in Sources */,
+				8BBB617D1B06464300381DAC /* TestDetailView.m in Sources */,
+				8BBB617F1B06464300381DAC /* LoginJsonParser.m in Sources */,
+				8BBB61801B06464300381DAC /* EditedPhotoView.m in Sources */,
+				8BBB61821B06464300381DAC /* MediaViewController.m in Sources */,
+				8BBB61831B06464300381DAC /* StudyContentViewController.m in Sources */,
+				8BBB61F11B06F03B00381DAC /* ClassListCell.m in Sources */,
+				8BBB61841B06464300381DAC /* AppDelegate.m in Sources */,
+				8BBB61FA1B07452800381DAC /* LoginNavigationController.m in Sources */,
+				8BBB61851B06464300381DAC /* EditedPhotoCell.m in Sources */,
+				8BBB61861B06464300381DAC /* UserEditedTableViewController.m in Sources */,
+				8BBB61871B06464300381DAC /* CountingCell.m in Sources */,
+				8BBB61881B06464300381DAC /* ClassNetworkUtils.m in Sources */,
+				8BBB61891B06464300381DAC /* LineNavigationBar.m in Sources */,
+				8BBB618A1B06464300381DAC /* ClassInfoCell.m in Sources */,
+				8BBB618B1B06464300381DAC /* OptionCell.m in Sources */,
+				8BBB618C1B06464300381DAC /* main.m in Sources */,
+				8BBB61ED1B06D4AA00381DAC /* UIColor+Extension.m in Sources */,
+				8BBB618D1B06464300381DAC /* QuizCollectionCell.m in Sources */,
+				8BBB618E1B06464300381DAC /* ConditionViewController.m in Sources */,
+				8BBB618F1B06464300381DAC /* TestScoreCell.m in Sources */,
+				8BBB61901B06464300381DAC /* ArticleInfoDAO.m in Sources */,
+				8BBB61911B06464300381DAC /* MeNetworkUtils.m in Sources */,
+				8BBB61921B06464300381DAC /* ArticleCell.m in Sources */,
+				8BBB61931B06464300381DAC /* RegisterTableViewController.m in Sources */,
+				8BBB61941B06464300381DAC /* CustomSegue.m in Sources */,
+				8BBB61951B06464300381DAC /* ArticleInfo.m in Sources */,
+				8BBB61961B06464300381DAC /* QuestionCell.m in Sources */,
+				8BBB61971B06464300381DAC /* CircleButton.m in Sources */,
+				8BBB61981B06464300381DAC /* ConditionShowSegue.m in Sources */,
+				8BBB61EA1B06D4AA00381DAC /* SIMenuConfiguration.m in Sources */,
+				8BBB61991B06464300381DAC /* CommentInputView.m in Sources */,
+				8BBB619C1B06464300381DAC /* UserInfo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BCF398F1ACCE09C0071C016 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -889,6 +1254,7 @@
 				8B451AD71ADB8170002C4CA9 /* FindPasswordTableViewController.m in Sources */,
 				8B9C6E691ACD3AF500A4EF54 /* StudyContentCell.m in Sources */,
 				8BD4C07E1ACEB7AB004D96AF /* MoreDetailViewController.m in Sources */,
+				8BBB61F91B07452800381DAC /* LoginNavigationController.m in Sources */,
 				8BE0A5571AD4EF5A006B348E /* TestGroup.m in Sources */,
 				8B451AF91ADF8886002C4CA9 /* ArticleTitleCell.m in Sources */,
 				8BE66F131AEE7A4A0075D9E9 /* StudyJsonParser.m in Sources */,
@@ -907,10 +1273,10 @@
 				8B9C6E601ACD196400A4EF54 /* LoginNetworkUtils.m in Sources */,
 				8BEDFEEF1ADA19B7004C5845 /* ExplainCell.m in Sources */,
 				8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */,
+				8BBB61F61B07384400381DAC /* AddClassConfirmTableViewController.m in Sources */,
 				8BED43B41AFC8889002CC15C /* UserDetailTableViewController.m in Sources */,
 				8BF29D141AFDAE3800543B37 /* CircleImageView.m in Sources */,
 				8B6918811AED116C00D616DC /* TestDetailView.m in Sources */,
-				8BB23BAE1AE6100F00621F91 /* AddClassConfirmTableViewController.m in Sources */,
 				8B451AE31ADEB507002C4CA9 /* LoginJsonParser.m in Sources */,
 				8B276A791AFBB47E005C9FF7 /* EditedPhotoView.m in Sources */,
 				8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */,
@@ -957,19 +1323,28 @@
 /* Begin PBXTargetDependency section */
 		8BCF39AE1ACCE09C0071C016 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BCF39921ACCE09C0071C016 /* ChuangYeBa */;
+			target = 8BCF39921ACCE09C0071C016 /* ChuangYeBaStudent */;
 			targetProxy = 8BCF39AD1ACCE09C0071C016 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		8BCF39A01ACCE09C0071C016 /* Main.storyboard */ = {
+		8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8BBB61C71B064B6F00381DAC /* Base */,
+				8BBB61C91B064B7C00381DAC /* zh-Hans */,
+			);
+			name = MainTeacher.storyboard;
+			sourceTree = "<group>";
+		};
+		8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8BCF39A11ACCE09C0071C016 /* Base */,
 				8BF11C221AFA50AB00F30649 /* zh-Hans */,
 			);
-			name = Main.storyboard;
+			name = MainStudent.storyboard;
 			sourceTree = "<group>";
 		};
 		8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */ = {
@@ -984,6 +1359,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8BBB61BC1B06464300381DAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TEACHER_VERSION=1",
+				);
+				INFOPLIST_FILE = "ChuangYeBaTeacher-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = CYBTeacher;
+			};
+			name = Debug;
+		};
+		8BBB61BD1B06464300381DAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89E62808823615B5B2634BAD /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TEACHER_VERSION=1",
+				);
+				INFOPLIST_FILE = "ChuangYeBaTeacher-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = CYBTeacher;
+			};
+			name = Release;
+		};
 		8BCF39B41ACCE09C0071C016 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1067,10 +1476,15 @@
 			baseConfigurationReference = FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"STUDENT_VERSION=1",
+				);
 				INFOPLIST_FILE = ChuangYeBa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CYBStudent;
 			};
 			name = Debug;
 		};
@@ -1079,10 +1493,15 @@
 			baseConfigurationReference = 89E62808823615B5B2634BAD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"STUDENT_VERSION=1",
+				);
 				INFOPLIST_FILE = ChuangYeBa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CYBStudent;
 			};
 			name = Release;
 		};
@@ -1123,6 +1542,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8BBB61BB1B06464300381DAC /* Build configuration list for PBXNativeTarget "ChuangYeBaTeacher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BBB61BC1B06464300381DAC /* Debug */,
+				8BBB61BD1B06464300381DAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8BCF398E1ACCE09C0071C016 /* Build configuration list for PBXProject "ChuangYeBa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1132,7 +1560,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BCF39B61ACCE09C0071C016 /* Build configuration list for PBXNativeTarget "ChuangYeBa" */ = {
+		8BCF39B61ACCE09C0071C016 /* Build configuration list for PBXNativeTarget "ChuangYeBaStudent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BCF39B71ACCE09C0071C016 /* Debug */,

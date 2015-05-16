@@ -64,7 +64,7 @@ static NSInteger const kPageSize = 2;
     isLiked = NO;
     
     // 读取用户信息
-    [self loadUserInfoFromLocal];
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
     // 读取文章信息 读取文章信息后再请求评论列表
     [self requestArticleInfoFromServer];
     
@@ -180,7 +180,6 @@ static NSInteger const kPageSize = 2;
             }
             // 把解析好的评论列表赋给内存中的评论列表数组
             NSMutableArray *mArr = obj;
-            
             if (!isPullupRefresh) {
                 [self.comments removeAllObjects];
             } else {
@@ -189,22 +188,13 @@ static NSInteger const kPageSize = 2;
                     [self.tableView.footer noticeNoMoreData];
                 }
             }
-            
             for (int i = 0; i < mArr.count; i++) {
                 CommentInfo *ci = mArr[i];
                 [self.comments addObject:ci];
             }
-            
             [self.tableView reloadData];
         }
     }];
-}
-
-- (void)loadUserInfoFromLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    self.userInfo = [[UserInfo alloc]init];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
 }
 
 - (void)requestArticleInfoFromServer {

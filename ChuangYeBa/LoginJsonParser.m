@@ -50,17 +50,16 @@
     }
 }
 
-// 目前仅仅限于修改学生信息
 + (NSDictionary *)packageUserInfo:(UserInfo *)userInfo {
     NSDictionary *dic = [[NSDictionary alloc] init];
     
+#ifdef STUDENT_VERSION
     NSNumber *sex = [[NSNumber alloc] init];
     if ([userInfo.sex isEqualToString:@"男"]) {
         sex = @NO;
     } else {
         sex = @YES;
     }
-    
     NSString *dateString = @"";
     if (userInfo.inCollegeDate == nil) {
         NSDate *nowDate = [NSDate date];
@@ -92,6 +91,17 @@
             @"photo":userInfo.photoPath,
             @"photoupload":userInfo.isPhotoUpload
             };
+#elif TEACHER_VERSION
+    dic = @{@"teacherid":userInfo.userId,
+            @"teachername":userInfo.name,
+            @"universityno":userInfo.universityNo,
+            @"universityname":userInfo.universityName,
+            @"email":userInfo.email,
+            @"passwords":userInfo.password,
+            @"photo":userInfo.photoPath,
+            @"tel":userInfo.tel
+            };
+#endif
     return dic;
 }
 

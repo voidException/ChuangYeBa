@@ -40,7 +40,7 @@
     classInfo.classId = [dic objectForKey:@"classid"];
     classInfo.classNo = [dic objectForKey:@"classno"];
     classInfo.classroomName = [dic objectForKey:@"classroomname"];
-    classInfo.photo = [dic objectForKey:@"photo"];
+    classInfo.photoPath = [dic objectForKey:@"photo"];
     classInfo.realStudentNum =  [dic objectForKey:@"realstudentnum"];
     classInfo.studentNum = [dic objectForKey:@"studentnum"];
     classInfo.universityName = [dic objectForKey:@"universityname"];

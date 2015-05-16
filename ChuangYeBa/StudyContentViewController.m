@@ -143,11 +143,14 @@ static NSInteger const kPageSize = 8;
 }
 
 - (void)loadUserInfoFromLocal {
+    /*
     userInfo = [[UserInfo alloc] init];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [ud objectForKey:@"userInfo"];
     userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-    if (userInfo) {
+     */
+    self.userInfo = [[UserInfo alloc] initWithUserDefault];
+    if (self.userInfo) {
         [self.tableView.footer beginRefreshing];
     }
 }

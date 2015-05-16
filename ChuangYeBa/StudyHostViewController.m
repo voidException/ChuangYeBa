@@ -36,17 +36,8 @@
     // 添加ShowStudyDetail的通知接受
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStudyDetail:) name:@"ShowStudyDetail" object:nil];
     // 配置导航条颜色字体等属性
-    [self setNavigationBarAttributes];
-    
-    
+    [self initUI];
     [self initContentViewController];
-}
-
-- (void)setNavigationBarAttributes {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,7 +47,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSNumber *isUserDidLogin = [ud objectForKey:@"isUserDidLogin"];
     if (isUserDidLogin == nil) {
@@ -64,15 +54,18 @@
     }
     if ([isUserDidLogin isEqualToNumber:[NSNumber numberWithBool:NO]]) {
         [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
-        
     }
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
 }
 
 #pragma mark - Private Method
+- (void)initUI {
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+}
+
+
 - (void)initContentViewController{
     self.contentViewControllers = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.categoryArray.count; i++) {
@@ -123,7 +116,7 @@
 - (UIView *)viewPager:(ViewPagerController *)viewPager activeViewForTabAtIndex:(NSUInteger)index {
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:20.0];
+    label.font = [UIFont systemFontOfSize:18.0];
     NSDictionary *dic = self.categoryArray[index];
     label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;

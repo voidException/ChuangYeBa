@@ -19,6 +19,4 @@ typedef void (^Callback)(id obj);
 
 + (void)requestFindPasswordByEmail:(NSString *)email andCallback:(Callback)callback;
 
-+ (void)failureAction:(NSError *) error;
-
 @end

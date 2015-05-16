@@ -20,9 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 隐藏导航条
-    [self.navigationController setNavigationBarHidden:YES];
-    
     // 添加临时登陆信息
     self.email.text = @"zachary0513@126.com";
     self.password.text = @"1111111";
@@ -31,7 +28,7 @@
     self.email.delegate = self;
     self.password.delegate = self;
     
-    [self modifiedFont];
+    [self initUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -44,7 +41,10 @@
 }
 
 #pragma mark - Private Method
-- (void)modifiedFont {
+- (void)initUI {
+    // 隐藏导航条
+    [self.navigationController setNavigationBarHidden:YES];
+    // 根据不同设备设置按键字体大小
     if (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(320, 568))) {
         self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
         self.registerButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -59,7 +59,6 @@
         self.userInfo = [[UserInfo alloc] init];
     }
     [LoginNetworkUtils loginUserName:self.email.text loginUserPassword:self.password.text andCallback:^(id obj) {
-        
         if (obj) {
             // 隐藏HUD
             [HUD hide:YES];
@@ -67,8 +66,21 @@
             NSNumber *error = [dic objectForKey:@"error"];
             NSString *errorMessage = [dic objectForKey:@"errorMessage"];
             if ([error isEqualToNumber:[NSNumber numberWithInteger:1]]) {
+                
+#ifdef STUDENT_VERSION
                 self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
-                [self saveUserInfoToLocal:self.userInfo];
+#elif TEACHER_VERSION
+                self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"teacher"] isTeacher:YES];
+#endif
+                // 保存用户信息到本地
+                [UserInfo saveUserInfoToLocal:self.userInfo];
+                // 记录登陆状态，同时记录登陆所用的邮箱
+                NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+                NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:YES];
+                [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
+                [ud setObject:self.userInfo.email forKey:@"loginEmail"];
+                [ud synchronize];
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
@@ -112,21 +124,9 @@
     return [emailTest evaluateWithObject:email];
 }
 
-
 - (void)loadLoginEmailFromLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     self.email.text = [ud objectForKey:@"loginEmail"];
-}
-
-// 保存用户信息至NSUserDefault，同时记录登陆状态
-- (void)saveUserInfoToLocal:(UserInfo *)ui{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:ui];
-    [ud setObject:udObject forKey:@"userInfo"];
-    NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:YES];
-    [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
-    [ud setObject:ui.email forKey:@"loginEmail"];
-    [ud synchronize];
 }
 
 #pragma mark - Action

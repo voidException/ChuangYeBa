@@ -14,11 +14,11 @@
 @property (nonatomic, strong) UserInfo *teacher;
 // 表中的
 @property (nonatomic, copy) NSString *classroomName;
-@property (nonatomic, copy) NSString *studentNum;
-@property (nonatomic, copy) NSString *realStudentNum;
+@property (nonatomic, copy) NSNumber *studentNum;
+@property (nonatomic, copy) NSNumber *realStudentNum;
 @property (nonatomic, copy) NSString *universityNo;
 @property (nonatomic, copy) NSString *universityName;
-@property (nonatomic, copy) NSString *photo;
+@property (nonatomic, copy) NSString *photoPath;
 
 // 重要，唯一自动生成的班级号
 @property (nonatomic, strong) NSNumber *classNo;

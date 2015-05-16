@@ -216,7 +216,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
+#ifdef STUDENT_VERSION
         return 3;
+#elif TEACHER_VERSION
+        return 2;
+#endif
     } else {
         return 2;
     }

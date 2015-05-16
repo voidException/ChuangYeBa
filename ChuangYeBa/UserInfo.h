@@ -37,9 +37,13 @@
 
 - (instancetype)initWithUserDefault;
 
-- (void)saveUserInfoToLocal;
 
-- (void)deleteUserInfoFromLocal;
++ (UserInfo *)loadUserInfoFromLocal;
+
++ (void)saveUserInfoToLocal:(UserInfo *)userInfo;
+
++ (void)deleteUserInfoFromLocal;
+
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 

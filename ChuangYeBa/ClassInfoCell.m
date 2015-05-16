@@ -33,7 +33,7 @@
     CGContextMoveToPoint(context, 94.0, 136.0);
     CGContextAddLineToPoint(context, self.frame.size.width, 134.0);
     CGContextStrokePath(context);
-    CGContextClosePath(context);
+    //CGContextClosePath(context);
 }
 
 @end

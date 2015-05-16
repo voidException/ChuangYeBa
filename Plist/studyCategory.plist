@@ -6,35 +6,47 @@
 		<key>title</key>
 		<string>热门</string>
 		<key>tag</key>
+		<integer>74</integer>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>最新发布</string>
+		<key>tag</key>
+		<integer>76</integer>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>规划启蒙</string>
+		<key>tag</key>
 		<integer>11</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>校园</string>
+		<string>自我认知</string>
 		<key>tag</key>
 		<integer>21</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>创业生涯</string>
+		<string>环境认知</string>
 		<key>tag</key>
 		<integer>31</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>最新更新</string>
+		<string>制定目标</string>
 		<key>tag</key>
 		<integer>41</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>政策</string>
+		<string>决策行动</string>
 		<key>tag</key>
 		<integer>51</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>刀塔</string>
+		<string>方法技巧</string>
 		<key>tag</key>
 		<integer>61</integer>
 	</dict>

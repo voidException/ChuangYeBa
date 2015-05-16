@@ -77,6 +77,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     self.userInfoList = @[arrSection0, arrSection1];
 }
 
+// 准备弃用
 - (void)saveUserInfoToLocal:(UserInfo *)ui {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:ui];
@@ -118,7 +119,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
         //NSString *errorMessage = [dic objectForKey:@"errorMessage"];
         if ([error isEqualToNumber:@1]) {
             // 先保存用户信息到local
-            [self saveUserInfoToLocal:copyUserInfo];
+            [UserInfo saveUserInfoToLocal:copyUserInfo];
             // 再发送更新用户信息的通知
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:self];
             

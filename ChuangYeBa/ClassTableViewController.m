@@ -49,6 +49,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.rightButton setAlpha:0.0];
+    [self.leftButton setAlpha:0.0];
+    [self.segmentedControl setAlpha:0.0];
     [self.navigationController.navigationBar addSubview:self.rightButton];
     [self.navigationController.navigationBar addSubview:self.leftButton];
     [self.navigationController.navigationBar addSubview:self.segmentedControl];
@@ -56,7 +59,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         [self.rightButton setAlpha:1.0];
         [self.leftButton setAlpha:1.0];
         [self.segmentedControl setAlpha:1.0];
-        //self.rightButton.frame = CGRectOffset(self.rightButton.frame, 30, 0);
     }];
 }
 
@@ -176,12 +178,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         // 停止下拉刷新动画
         [weakSelf.tableView.header endRefreshing];
     }];
-}
-
-- (void)loadUserInfoFromLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
 }
 
 #pragma mark - Action
