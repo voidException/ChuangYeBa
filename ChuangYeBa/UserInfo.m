@@ -30,7 +30,7 @@
 @synthesize photoPath;
 @synthesize isPhotoUpload;
 @synthesize tel;
-@synthesize hasAddedClass;
+@synthesize roomno;
 - (id)init {
     self = [super init];
     if (self) {
@@ -50,7 +50,7 @@
         photoPath = NO_VALUE;
         isPhotoUpload = @NO;
         tel = NO_VALUE;
-        hasAddedClass = @"0";
+        roomno = @"0";
     }
     return self;
 }
@@ -81,6 +81,8 @@
         NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:userInfo];
         [ud setObject:udObject forKey:@"userInfo"];
         [ud synchronize];
+    } else {
+        
     }
 }
 
@@ -167,7 +169,7 @@
         photoPath = [aDecoder decodeObjectForKey:@"photoPath"];
         isPhotoUpload = [aDecoder decodeObjectForKey:@"isPhotoUpload"];
         tel = [aDecoder decodeObjectForKey:@"tel"];
-        hasAddedClass = [aDecoder decodeObjectForKey:@"isAddedClass"];
+        roomno = [aDecoder decodeObjectForKey:@"isAddedClass"];
     }
     return self;
 }
@@ -190,7 +192,7 @@
     [aCoder encodeObject:photoPath forKey:@"photoPath"];
     [aCoder encodeObject:isPhotoUpload forKey:@"isPhotoUpload"];
     [aCoder encodeObject:tel forKey:@"tel"];
-    [aCoder encodeObject:hasAddedClass forKey:@"isAddedClass"];
+    [aCoder encodeObject:roomno forKey:@"isAddedClass"];
 
 }
 
@@ -214,7 +216,7 @@
     copy.photoPath = photoPath;
     copy.isPhotoUpload = isPhotoUpload;
     copy.tel = tel;
-    copy.hasAddedClass = hasAddedClass;
+    copy.roomno = roomno;
     return copy;
 }
 

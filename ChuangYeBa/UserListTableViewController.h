@@ -10,6 +10,6 @@
 
 @interface UserListTableViewController : UITableViewController
 
-@property (strong, nonatomic) NSMutableArray *studentArray;
+
 
 @end

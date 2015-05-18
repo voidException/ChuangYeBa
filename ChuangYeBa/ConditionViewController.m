@@ -26,7 +26,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.userInfo = [[UserInfo alloc] initWithUserDefault];
-    if ([_userInfo.hasAddedClass isEqualToString:@"0"]) {
+    if ([_userInfo.roomno isEqual:@"0"]) {
         self.navigationItem.title = @"加入班级";
         [self performSegueWithIdentifier:@"ShowAddClass" sender:self];
     } else {

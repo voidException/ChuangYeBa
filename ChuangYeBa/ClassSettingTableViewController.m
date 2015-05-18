@@ -12,7 +12,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 @interface ClassSettingTableViewController ()
 
-
+@property (strong, nonatomic) NSMutableDictionary *studentDic;
 
 @end
 
@@ -22,11 +22,10 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [self initUI];
     
     // 初始化数组
-    self.studentArray = [[NSMutableArray alloc] init];
+    self.studentDic = [[NSMutableDictionary alloc] init];
     
     [self loadClassInfoFormLocal];
     [self requestClassInfoFormServer];
@@ -52,8 +51,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSData *udObject = [ud objectForKey:@"classInfo"];
     self.classInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-    udObject = [ud objectForKey:@"userInfo"];
-    userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    userInfo = [UserInfo loadUserInfoFromLocal];
 }
 
 - (void)saveClassInfoToLocal {
@@ -63,7 +61,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     [ud synchronize];
 }
 
-#ifdef STUDENT_VERSION
 - (void)requestClassInfoFormServer {
     [ClassNetworkUtils requestClassInfoByClassNo:self.classInfo.classNo andCallback:^(id obj) {
         if (obj) {
@@ -74,19 +71,20 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
             NSArray *userListArr = [dic objectForKey:@"studentTwoVo"];
             for (NSDictionary *userInfoDic in userListArr) {
                 UserInfo *aUser = [ClassJsonParser parseUserInfo:userInfoDic];
-                [self.studentArray addObject:aUser];
+                [self.studentDic setObject:aUser forKey:aUser.userId];
             }
             [self.tableView reloadData];
         }
     }];
 }
 
+#ifdef STUDENT_VERSION
 - (void)submitQuitClassToServer {
     [ClassNetworkUtils submitQuitClassWithUserId:userInfo.userId andClassId:classInfo.classId andCallback:^(id obj) {
         NSLog(@"%@", obj);
         // 修改UserDeaults中的isUserAddedClass的值，修改为NO
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        self.userInfo.hasAddedClass = @"0";
+        self.userInfo.roomno = @"0";
         [UserInfo saveUserInfoToLocal:self.userInfo];
         [ud removeObjectForKey:@"classInfo"];
         [ud synchronize];
@@ -96,10 +94,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 #elif TEACHER_VERSION
-- (void)requestClassInfoFormServer {
-    
-}
-
 - (void)submitQuitClassToServer {
     
 }
@@ -149,7 +143,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     }
     
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]]) {
-        if (self.studentArray.count) {
+        if ([[self.studentDic allKeys] count]) {
             [self performSegueWithIdentifier:@"ShowUserList" sender:self];
             
             // 设置返回按钮
@@ -191,8 +185,14 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
         classInfoCell.classNoLabel.text = classNoString;
         classInfoCell.classNameLabel.text = classInfo.classroomName;
+        
+#ifdef STUDENT_VERSION
         classInfoCell.teacherNameLabel.text = classInfo.teacher.name;
+#elif TEACHER_VERSION
+        classInfoCell.teacherNameLabel.text = userInfo.name;
+#endif
         classInfoCell.universityNameLabel.text = classInfo.universityName;
+
         return classInfoCell;
     } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
@@ -208,7 +208,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
         }
         cell.textLabel.text = @"班级成员";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu人",(unsigned long)self.studentArray.count];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu人",(unsigned long)[[self.studentDic allKeys] count]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         return cell;
     } else return nil;
@@ -225,7 +225,8 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowUserList"]) {
         id destinationVC= [segue destinationViewController];
-        [destinationVC setValue:self.studentArray forKey:@"studentArray"];
+        [destinationVC setValue:self.classInfo forKey:@"classInfo"];
+        [destinationVC setValue:self.studentDic forKey:@"studentDic"];
     }
 }
 

@@ -42,7 +42,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 - (void)saveClassInfoToLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    self.userInfo.hasAddedClass = @"1";
+    self.userInfo.roomno = @"1";
     [UserInfo saveUserInfoToLocal:self.userInfo];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
     [ud setObject:udObject forKey:@"classInfo"];

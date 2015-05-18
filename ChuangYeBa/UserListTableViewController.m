@@ -9,13 +9,20 @@
 #import "UserListTableViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UserInfo.h"
+#import "ClassNetworkUtils.h"
 
 // temp
 #import "GlobalDefine.h"
 
 static NSString *cellIdentifier = @"Cell";
 
-@interface UserListTableViewController ()
+@interface UserListTableViewController () <UIAlertViewDelegate>
+
+@property (strong, nonatomic) NSMutableArray *studentArray;
+@property (strong, nonatomic) NSMutableDictionary *studentDic;
+@property (strong, nonatomic) NSMutableDictionary *deleteDic;
+@property (strong, nonatomic) NSMutableDictionary *deleteIndexPath;
+@property (strong, nonatomic) ClassInfo *classInfo;
 
 @end
 
@@ -26,13 +33,11 @@ static NSString *cellIdentifier = @"Cell";
     [super viewDidLoad];
     
     [self initUI];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,9 +46,25 @@ static NSString *cellIdentifier = @"Cell";
 }
 #pragma mark - Private Method
 - (void)initUI {
-    self.title = [NSString stringWithFormat:@"成员信息（%lu人）",self.studentArray.count];
+    
+    self.title = [NSString stringWithFormat:@"成员信息（%lu人）",[[self.studentDic allKeys] count]];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.backBarButtonItem = btn;
+    
+    self.clearsSelectionOnViewWillAppear = NO;
+#ifdef TEACHER_VERSION
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIButton *toolbarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 86, 30)];
+    //toolbarButton.center = self.navigationController.toolbar.center;
+    toolbarButton.center = CGPointMake(self.view.frame.size.width/2, 44/2);
+    [toolbarButton addTarget:self action:@selector(clickOnDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
+    [toolbarButton setBackgroundImage:[UIImage imageNamed:@"exitButtonBG"] forState:UIControlStateNormal];
+    [toolbarButton setTitle:@"删除" forState:UIControlStateNormal];
+    [self.navigationController.toolbar addSubview:toolbarButton];
+    self.navigationController.toolbar.autoresizesSubviews = YES;
+
+#endif
+    
 }
 
 #pragma mark - Action
@@ -51,8 +72,30 @@ static NSString *cellIdentifier = @"Cell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)clickOnDeleteButton:(id)sender {
+    NSArray *delStuArr = [self.deleteDic allValues];
+    NSString *nameList = @"请确认您要删除以下的同学：";
+    NSString *symbol;
+    for (int i = 0; i < delStuArr.count; i++) {
+        UserInfo *ui = delStuArr[i];
+        if (i == delStuArr.count - 1) {
+            symbol = @"。";
+        } else {
+            symbol = @"、";
+        }
+        nameList = [nameList stringByAppendingString:[NSString stringWithFormat:@"%@%@", ui.name, symbol]];
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:nameList delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 0;
+    [alert show];
+}
+
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
 }
 
@@ -63,7 +106,8 @@ static NSString *cellIdentifier = @"Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.studentArray.count;
+    //return self.studentArray.count;
+    return [[self.studentDic allKeys] count];
 }
 
 
@@ -72,7 +116,8 @@ static NSString *cellIdentifier = @"Cell";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    UserInfo *userInfo = self.studentArray[indexPath.row];
+    NSArray *arr = [self.studentDic allValues];
+    UserInfo *userInfo = arr[indexPath.row];
     cell.textLabel.text = userInfo.name;
     cell.detailTextLabel.text = userInfo.userNo;
     NSString *path = userInfo.photoPath;
@@ -88,7 +133,11 @@ static NSString *cellIdentifier = @"Cell";
         }
     }];
     //[cell.imageView sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+#ifdef STUDENT_VERSION
+    cell.userInteractionEnabled = NO;
+#elif TEACHER_VERSION
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+#endif
     return cell;
 }
 
@@ -102,8 +151,6 @@ static NSString *cellIdentifier = @"Cell";
     return scaledImage;   //返回的就是已经改变的图片
 }
 
-
-
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,9 +158,71 @@ static NSString *cellIdentifier = @"Cell";
     return YES;
 }
 */
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    if (editing) {
+        // 进入编辑状态
+        self.deleteDic = [[NSMutableDictionary alloc] init];
+        self.deleteIndexPath = [[NSMutableDictionary alloc] init];
+        [self.navigationController setToolbarHidden:NO animated:animated];
+        
+    } else {
+        // 退出编辑状态
+        self.deleteDic = nil;
+        self.deleteIndexPath = nil;
+        [self.navigationController setToolbarHidden:YES animated:animated];
+    }
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing) {
+        NSArray *arr = [self.studentDic allValues];
+        UserInfo *student = arr[indexPath.row];
+        [self.deleteDic setObject:student forKey:student.userId];
+        [self.deleteIndexPath setObject:indexPath forKey:student.userId];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing) {
+        NSArray *arr = [self.studentDic allValues];
+        UserInfo *student = arr[indexPath.row];
+        [self.deleteDic removeObjectForKey:student.userId];
+        [self.deleteIndexPath removeObjectForKey:student.userId];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 0) {
+        if (buttonIndex == 1) {
+            NSArray *delStuArr = [self.deleteDic allValues];
+            NSArray *indexPathArr = [self.deleteIndexPath allValues];
+            //[self.tableView setEditing:NO animated:YES];
+            //[self.tableView beginUpdates];
+            //[self.studentArray removeObjectAtIndex:0];
+            __block NSInteger sum = 0;
+            for (int i = 0; i < delStuArr.count; i++) {
+                UserInfo *userInfo = delStuArr[i];
+                [ClassNetworkUtils submitQuitClassWithUserId:userInfo.userId andClassId:_classInfo.classId andCallback:^(id obj) {
+                    NSLog(@"删除学生 %@ 成功", userInfo.name);
+                    sum ++;
+#warning 普通！有非常低的概率存在意外的错误，万一真的有一个学生没有删除，这个sum就不能达到有效的值，然后无法达到想要的显示效果。
+                    if (sum == delStuArr.count) {
+                        [self.studentDic removeObjectsForKeys:[self.deleteDic allKeys]];
+                        [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                }];
+            }
+        }
+    }
+}
 
 /*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
@@ -123,7 +232,7 @@ static NSString *cellIdentifier = @"Cell";
     }   
 }
 */
-
+ 
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {

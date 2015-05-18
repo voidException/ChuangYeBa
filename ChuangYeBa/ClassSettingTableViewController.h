@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (strong, nonatomic) NSMutableArray *studentArray;
 
 - (IBAction)clickOnExitClassButton:(id)sender;
 

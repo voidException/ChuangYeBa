@@ -10,6 +10,34 @@
 
 @implementation ClassInfo
 
++ (ClassInfo *)loadClassInfoFromLocal {
+    ClassInfo *classInfo = [[ClassInfo alloc] init];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSData *udObject = [ud objectForKey:@"classInfo"];
+    classInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    return classInfo;
+}
+
+// 保存用户信息到本地
++ (void)saveClassInfoToLocal:(ClassInfo *)classInfo {
+    if (classInfo) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:classInfo];
+        [ud setObject:udObject forKey:@"classInfo"];
+        [ud synchronize];
+    } else {
+        
+    }
+}
+
+// 删除本地的用户信息
+/*
++ (void)deleteUserInfoFromLocal {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud removeObjectForKey:@"classInfo"];
+    [ud synchronize];
+}
+*/
 
 #pragma mark - Setter
 - (void)setPhotoPath:(NSString *)photoPath {

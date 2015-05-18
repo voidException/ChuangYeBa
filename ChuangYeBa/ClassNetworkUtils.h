@@ -15,6 +15,14 @@ typedef void (^Callback)(id obj);
 
 @interface ClassNetworkUtils : NSObject
 
+#pragma mark - 两端公用接口
+// 公共接口，返回班级信息以及老师名字，学生列表
++ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
+
+// 请求接口7，学生端学生退出班级，老师端强制学生退出班级
++ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback;
+
+#pragma mark - 学生端接口
 #ifdef STUDENT_VERSION
 // 学生版请求封装
 // 请求接口1，学生获取班级题组
@@ -32,15 +40,11 @@ typedef void (^Callback)(id obj);
 // 请求接口5，学生插入测试结果
 + (void)submitTestResult:(NSArray *)testResult andCallback:(Callback)callback;
 
-// 请求接口6，返回班级信息以及老师名字，学生列表
-+ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
-
-// 请求接口7，退出班级
-+ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback;
-
 // 请求接口8，清空学生题目结果
 + (void)submitToClearResultByStudentId:(NSString *)stuId andClassId:(NSNumber *)classId andItemId:(NSString *)itemId;
 
+
+#pragma mark - 老师端接口
 #elif TEACHER_VERSION
 // 老师版请求封装
 // 请求接口1，获取班级信息
@@ -72,10 +76,9 @@ typedef void (^Callback)(id obj);
 
 // 请求接口10，获取学生成绩
 + (void)requestTestGradesByClassId:(NSNumber *)classId andCallback:(Callback)callback;
-
 #endif
 
-
+#pragma mark - 辅助方法
 // 辅助方法
 + (void)failureAction:(NSError *) error;
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>真实姓名</string>
+			<key>placeholder</key>
+			<string>填写真实姓名找到身边的同学</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>邮箱</string>
+			<key>placeholder</key>
+			<string>邮箱一定要填写的喔</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>学校</string>
+			<key>placeholder</key>
+			<string>学校</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>电话</string>
+			<key>placeholder</key>
+			<string>电话</string>
+		</dict>
+	</array>
+</array>
+</plist>

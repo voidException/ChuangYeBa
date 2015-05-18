@@ -25,4 +25,8 @@
 
 @property (nonatomic, strong) NSNumber *classId;
 
++ (ClassInfo *)loadClassInfoFromLocal;
+
++ (void)saveClassInfoToLocal:(ClassInfo *)classInfo;
+
 @end

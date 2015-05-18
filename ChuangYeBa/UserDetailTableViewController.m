@@ -89,7 +89,11 @@ static NSString *bucket = @"startupimg";
     self.title = @"我";
     
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"userDetailList" ofType:@"plist"];
+#ifdef STUDENT_VERSION
+    NSString *plistPath = [bundle pathForResource:@"userDetailListStudent" ofType:@"plist"];
+#elif TEACHER_VERSION
+    NSString *plistPath = [bundle pathForResource:@"userDetailListTeacher" ofType:@"plist"];
+#endif
     self.detailList = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
     // 初始化tableView的头视图
@@ -234,7 +238,6 @@ static NSString *bucket = @"startupimg";
 }
 
 - (void)requestUploadTokenFromServer {
-    
     // 请求上传照片的Token
     [MeNetworkUtils requestTokenForUploadTokenWithBucket:bucket andCallback:^(id obj) {
         if (obj) {
@@ -243,7 +246,11 @@ static NSString *bucket = @"startupimg";
             NSString *token = [dic objectForKey:@"errorMessage"];
             
             // 把用户选择的照片上传
+#ifdef STUDENT_VERSION
             [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"student" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+#elif TEACHER_VERSION
+            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"teacher" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+#endif
                 NSDictionary *dic = obj;
                 NSString *key = [dic objectForKey:@"key"];
                 [self.userInfo setPhotoPathWithStorageURL:key];

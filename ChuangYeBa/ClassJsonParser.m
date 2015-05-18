@@ -50,6 +50,7 @@
 // 解析6.2
 + (UserInfo *)parseUserInfo:(NSDictionary *)dic {
     UserInfo *userInfo = [[UserInfo alloc] init];
+    userInfo.userId = [dic objectForKey:@"stuId"];
     userInfo.name = [dic objectForKey:@"stuName"];
     userInfo.userNo = [dic objectForKey:@"stuNo"];
     userInfo.photoPath = [dic objectForKey:@"stuPhoto"];

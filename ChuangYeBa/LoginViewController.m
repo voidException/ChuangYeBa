@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "ClassInfo.h"
 
 @interface LoginViewController ()
 
@@ -69,6 +70,9 @@
                 
 #ifdef STUDENT_VERSION
                 self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"student"] isTeacher:NO];
+                ClassInfo *classInfo = [[ClassInfo alloc] init];
+                classInfo.classNo = self.userInfo.roomno;
+                [ClassInfo saveClassInfoToLocal:classInfo];
 #elif TEACHER_VERSION
                 self.userInfo = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"teacher"] isTeacher:YES];
 #endif

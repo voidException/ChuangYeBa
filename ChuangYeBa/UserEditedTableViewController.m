@@ -45,7 +45,11 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     self.title = @"修改个人信息";
     
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"userDetailList" ofType:@"plist"];
+#ifdef STUDENT_VERSION
+    NSString *plistPath = [bundle pathForResource:@"userDetailListStudent" ofType:@"plist"];
+#elif TEACHER_VERSION
+    NSString *plistPath = [bundle pathForResource:@"userDetailListTeacher" ofType:@"plist"];
+#endif
     self.detailList = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
     float screenWidth = self.view.frame.size.width;
@@ -69,12 +73,16 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 
 
 - (void)loadUserInfoFormLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
+#ifdef STUDENT_VERSION
     NSArray *arrSection0 = @[_userInfo.name, _userInfo.email];
     NSArray *arrSection1 = @[_userInfo.userNo, _userInfo.sex, _userInfo.school, _userInfo.department];
     self.userInfoList = @[arrSection0, arrSection1];
+#elif TEACHER_VERSION
+    NSArray *arrSection0 = @[_userInfo.name, _userInfo.email];
+    NSArray *arrSection1 = @[_userInfo.universityName, _userInfo.tel];
+    self.userInfoList = @[arrSection0, arrSection1];
+#endif
 }
 
 // 准备弃用
@@ -93,6 +101,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
         [arr addObject:tf.text];
     }
     
+#ifdef STUDENT_VERSION
     UserInfo *copyUserInfo = [[UserInfo alloc] init];;
     copyUserInfo = [self.userInfo copy];
     copyUserInfo.name = arr[0];
@@ -101,6 +110,14 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     copyUserInfo.sex = arr[3];
     copyUserInfo.school = arr[4];
     copyUserInfo.department = arr[5];
+#elif TEACHER_VERSION
+    UserInfo *copyUserInfo = [[UserInfo alloc] init];;
+    copyUserInfo = [self.userInfo copy];
+    copyUserInfo.name = arr[0];
+    copyUserInfo.email = arr[1];
+    copyUserInfo.universityName = arr[2];
+    copyUserInfo.tel = arr[3];
+#endif
     
     // 显示HUD
     
@@ -179,8 +196,6 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 #pragma mark - ActionSheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (actionSheet.tag == 0) {
-        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-        //EditedInfoCell *cell = (EditedInfoCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         UITextField *tf = _textFields[3];
         if (buttonIndex == 1) {
             tf.text = @"男";
@@ -199,6 +214,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     return 1;
 }
 
+#ifdef STUDENT_VERSION
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"s = %@", indexPath);
     // 在这里只能直接写死了性别的小区是哪一个。之后可能需要加一个判断，从设置的list中识别出来。
@@ -211,8 +227,12 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     } else {
         [self clickOnBackground];
     }
-
 }
+#elif TEACHER_VERSION
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self clickOnBackground];
+}
+#endif
 
 #pragma mark - Table view data source
 
@@ -225,9 +245,8 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     return [arr count];
 }
 
-
+#ifdef STUDENT_VERSION
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     EditedInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:editedInfoCellIdentifier forIndexPath:indexPath];
     NSArray *arr = _detailList[indexPath.section];
     NSDictionary *dic = arr[indexPath.row];
@@ -260,6 +279,40 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     }
     return cell;
 }
+#elif TEACHER_VERSION
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    EditedInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:editedInfoCellIdentifier forIndexPath:indexPath];
+    NSArray *arr = _detailList[indexPath.section];
+    NSDictionary *dic = arr[indexPath.row];
+    NSArray *arrUser = _userInfoList[indexPath.section];
+    NSString *title = [dic objectForKey:@"title"];
+    cell.label.text = title;
+    if ([title isEqualToString:@"邮箱"]) {
+        [cell.textField setEnabled:NO];
+    }
+    // 在这里用stringWithFormat是为了防止NSNumber不方便显示的问题
+    NSString *str = [NSString stringWithFormat:@"%@", arrUser[indexPath.row]];
+    if (str.length) {
+        cell.textField.text = str;
+    } else {
+        cell.textField.placeholder = [dic objectForKey:@"placeholder"];
+    }
+    
+    NSInteger sum = 0;
+    for (int i = 0; i < _detailList.count; i++) {
+        NSInteger sumOfSection = [_detailList[i] count];
+        sum += sumOfSection;
+    }
+    if (_detailList.count < sum) {
+        UITextField *textField = cell.textField;
+        [self.textFields addObject:textField];
+    }
+    return cell;
+
+}
+
+
+#endif
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     if ([hud.labelText isEqualToString:@"修改成功"]) {

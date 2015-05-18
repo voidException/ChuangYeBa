@@ -138,7 +138,6 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     static NSString *cellIndentifier = @"CellIndentifier";
     if (indexPath.section == 0) {
         UserInfoCell *userInfoCell = [tableView dequeueReusableCellWithIdentifier:userInfoCellIdentifier];
-        //[userInfoCell.photoImage sd_setImageWithURL:[NSURL URLWithString:_userInfo.photoPath] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"]];
         [userInfoCell.photoImage sd_setImageWithURL:[NSURL URLWithString:_userInfo.photoPath] placeholderImage:[UIImage imageNamed:@"photoPlaceholderSmall"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             if (image) {
                 [userInfoCell.photoImage setImage:image];

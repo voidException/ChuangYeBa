@@ -13,6 +13,59 @@ static NSString *serverIP = SERVER_IP;
 
 @implementation ClassNetworkUtils
 
+#pragma mark - 老师学生两端公用接口
+// 接口6
++ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    NSString *path = @"/startup/student/class/getClassMessage";
+    path = [serverIP stringByAppendingString:path];
+    
+    // 修改这里的参数
+    NSDictionary *params = @{@"classNo":classNo};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // 测试，打印读取的结果
+        NSLog(@"请求的结果为 = %@", responseObject);
+        callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+        callback(nil);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+}
+
+// 接口7
++ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    NSString *path = @"/startup/student/class/quitClass";
+    path = [serverIP stringByAppendingString:path];
+    
+    // 修改这里的参数
+    NSDictionary *params = @{@"classId":classId, @"stuId":stuId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // 测试，打印读取的结果
+        NSLog(@"请求的结果为 = %@", responseObject);
+        callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+    
+}
+
 #pragma mark - 学生版请求
 #ifdef STUDENT_VERSION
 // 接口1
@@ -140,57 +193,8 @@ static NSString *serverIP = SERVER_IP;
     }];
 }
 
-// 接口6
-+ (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSString *path = @"/startup/student/class/getClassMessage";
-    path = [serverIP stringByAppendingString:path];
-    
-    // 修改这里的参数
-    NSDictionary *params = @{@"classNo":classNo};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        // 测试，打印读取的结果
-        NSLog(@"请求的结果为 = %@", responseObject);
-        callback(responseObject);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
-        callback(nil);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
-}
 
-// 接口7
-+ (void)submitQuitClassWithUserId:(NSNumber *)stuId andClassId:(NSNumber *)classId andCallback:(Callback)callback {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSString *path = @"/startup/student/class/quitClass";
-    path = [serverIP stringByAppendingString:path];
-    
-    // 修改这里的参数
-    NSDictionary *params = @{@"classId":classId, @"stuId":stuId};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        // 测试，打印读取的结果
-        NSLog(@"请求的结果为 = %@", responseObject);
-        callback(responseObject);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
 
-}
 
 + (void)submitToClearResultByStudentId:(NSString *)stuId andClassId:(NSString *)classId andItemId:(NSString *)itemId {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -218,7 +222,6 @@ static NSString *serverIP = SERVER_IP;
 
 #pragma mark - 老师版请求
 #elif TEACHER_VERSION
-
 // 老师版请求封装
 // 请求接口1，获取班级信息
 + (void)requestClassInfosWithTeacherId:(NSNumber *)teacherId andCallback:(Callback)callback {
@@ -236,7 +239,7 @@ static NSString *serverIP = SERVER_IP;
         callback(responseObject);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
+        callback(nil);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
@@ -452,6 +455,7 @@ static NSString *serverIP = SERVER_IP;
 
 #endif
 
+#pragma mark - 辅助方法
 // 辅助方法，处理失败请求
 + (void)failureAction:(NSError *) error {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请求失败了" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];

@@ -45,7 +45,7 @@
         userInfo.password = [dic objectForKey:@"passwords"];
         userInfo.photoPath = [dic objectForKey:@"photo"];
         userInfo.isPhotoUpload = [dic objectForKey:@"photoupload"];
-        userInfo.hasAddedClass = [dic objectForKey:@"roomno"];
+        userInfo.roomno = [dic objectForKey:@"roomno"];
         return userInfo;
     }
 }

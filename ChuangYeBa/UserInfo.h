@@ -27,7 +27,7 @@
 @property (copy, nonatomic) NSString *password;
 @property (copy, nonatomic) NSString *photoPath;
 @property (copy, nonatomic) NSNumber *isPhotoUpload;
-@property (copy, nonatomic) NSString *hasAddedClass;
+@property (copy, nonatomic) NSNumber *roomno;
 
 // 只要老师才有的数据
 @property (copy, nonatomic) NSString *tel;

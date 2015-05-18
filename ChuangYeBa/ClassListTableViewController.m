@@ -12,12 +12,14 @@
 #import <SDWebImage/UIButton+WebCache.h>
 #import "UserInfo.h"
 #import "ClassNetworkUtils.h"
+#import <MBProgressHUD.h>
 
 @interface ClassListTableViewController () <SINavigationMenuDelegate>
 
 // UI相关属性
 @property (strong, nonatomic) SINavigationMenuView *menu;
-@property (strong, nonatomic) UIButton *rightButton;
+@property (strong, nonatomic) UIButton *settingButton;
+@property (strong, nonatomic) UIButton *refreshButton;
 @property (strong, nonatomic) CircleButton *leftButton;
 
 // 数据相关
@@ -55,17 +57,19 @@
         self.navigationItem.titleView = self.menu;
     }
     [self requestClassInfosFromServer];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.rightButton setAlpha:0.0];
+    if (!_selectedClassInfo) {
+        self.settingButton.enabled = NO;
+    }
+    [self.settingButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
-    [self.navigationController.navigationBar addSubview:self.rightButton];
+    [self.navigationController.navigationBar addSubview:self.settingButton];
     [self.navigationController.navigationBar addSubview:self.leftButton];
     [UIView animateWithDuration:0.3 animations:^{
-        [self.rightButton setAlpha:1.0];
+        [self.settingButton setAlpha:1.0];
         [self.leftButton setAlpha:1.0];
     }];
 }
@@ -73,11 +77,13 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [UIView animateWithDuration:0.3 animations:^{
-        [self.rightButton setAlpha:0.0];
+        [self.settingButton setAlpha:0.0];
         [self.leftButton setAlpha:0.0];
+        [self.refreshButton setAlpha:0.0];
     } completion:^(BOOL finished) {
-        [self.rightButton removeFromSuperview];
+        [self.settingButton removeFromSuperview];
         [self.leftButton removeFromSuperview];
+        [self.refreshButton removeFromSuperview];
     }];
 }
 
@@ -96,24 +102,39 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    // 初始化右导航条按钮
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // 初始化右导航条设置按钮
     float buttonWidth = 30;
-    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
-    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-    [self.rightButton setImage:[[UIImage imageNamed:@"classSettingButtonSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateSelected];
-    [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
+    self.settingButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
+    [self.settingButton setImage:[[UIImage imageNamed:@"classSettingButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.settingButton setImage:[[UIImage imageNamed:@"classSettingButtonSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateSelected];
+    [self.settingButton addTarget:self action:@selector(clickOnSettingButton:) forControlEvents:UIControlEventTouchUpInside];
+    // 初始化右导航条刷新按钮
+    self.refreshButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
+    [self.refreshButton setImage:[[UIImage imageNamed:@"refreshButton"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.refreshButton addTarget:self action:@selector(clickOnRefreshButton:) forControlEvents:UIControlEventTouchUpInside];
+    
     // 初始化左导航条按钮
     self.leftButton = [[CircleButton alloc] initWithFrame:CGRectMake(7, 7, 30, 30)];
     self.leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [self.leftButton sd_setImageWithURL:[NSURL URLWithString:_userInfo.photoPath] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [self.leftButton setCircleImage:image placeholder:[UIImage imageNamed:@"photoPlaceholderSmall"] forState:UIControlStateNormal];
     }];
-    [self.leftButton addTarget:self action:@selector(clickOnLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.leftButton addTarget:self action:@selector(clickOnLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 - (void)requestClassInfosFromServer {
+    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
+    
     [ClassNetworkUtils requestClassInfosWithTeacherId:_userInfo.userId andCallback:^(id obj) {
         if (obj) {
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.animationType = MBProgressHUDAnimationZoomIn;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+            HUD.labelText = @"加载班级成功";
+            [HUD hide:YES afterDelay:1.0];
             NSDictionary *dic = obj;
             NSNumber *error = [dic objectForKey:@"error"];
             // error = 2 成功返回老师的班级
@@ -125,20 +146,32 @@
                     [self.classInfos addObject:ci];
                 }
                 self.menu.items = self.classInfos;
-                
-                
+                self.menu.table.items = self.classInfos;
+                [self.menu.table reloadData];
             }
+        } else {
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.animationType = MBProgressHUDAnimationZoomIn;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
+            HUD.labelText = @"网络出错了>_<";
+            [HUD hide:YES afterDelay:1.0];
         }
     }];
 }
 
 #pragma mark - Action
-- (void)clickOnRightButton {
+- (void)clickOnSettingButton:(id)sender {
+    //[self.menu onHandleMenuTap:sender];
     [self.menu onHideMenu];
     [self performSegueWithIdentifier:@"ShowClassSetting" sender:self];
 }
 
-- (void)clickOnLeftButton {
+- (void)clickOnRefreshButton:(id)sender {
+    [self requestClassInfosFromServer];
+}
+
+- (void)clickOnLeftButton:(id)sender {
+    //[self.menu onHandleMenuTap:sender];
     [self.menu onHideMenu];
     [self performSegueWithIdentifier:@"ShowUserDetail" sender:self];
 }
@@ -148,14 +181,35 @@
 
 #pragma mark - SINavigationView delegate
 - (void)didSelectItemAtIndex:(NSUInteger)index {
-#ifdef DEBUG
-    NSLog(@"选择了第%lu个", index);
-#endif
+    self.selectedClassInfo = _classInfos[index];
+    [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
+    self.settingButton.enabled = YES;
 }
 
 - (void)clickOnFooterButton {
     [self.menu onHideMenu];
     [self performSegueWithIdentifier:@"ShowCreateClass" sender:self];
+}
+
+- (void)clickOnMenuButtonAtActiveState:(BOOL)isActive {
+    if (isActive) {
+        [self.navigationController.navigationBar addSubview:self.refreshButton];
+        [self.refreshButton setAlpha:0.0];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.refreshButton setAlpha:1.0];
+            [self.settingButton setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            [self.settingButton setEnabled:NO];
+        }];
+    } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.settingButton setAlpha:1.0];
+            [self.refreshButton setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            [self.settingButton setEnabled:YES];
+            [self.refreshButton removeFromSuperview];
+        }];
+    }
 }
 
 #pragma mark - Table view data source
@@ -218,11 +272,12 @@
 
 
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    id destinationVC = [segue destinationViewController];
+    if ([segue.identifier isEqualToString:@"ShowClassSetting"]) {
+        [destinationVC setValue:_selectedClassInfo forKey:@"classInfo"];
+    }
+    
 }
 
 

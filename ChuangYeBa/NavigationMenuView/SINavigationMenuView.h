@@ -12,7 +12,7 @@
 @protocol SINavigationMenuDelegate <NSObject>
 
 - (void)didSelectItemAtIndex:(NSUInteger)index;
-
+- (void)clickOnMenuButtonAtActiveState:(BOOL)isActive;
 - (void)clickOnFooterButton;
 
 @end
@@ -21,9 +21,11 @@
 
 @property (nonatomic, weak) id <SINavigationMenuDelegate> delegate;
 @property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) SIMenuTable *table;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)displayMenuInView:(UIView *)view;
+
 
 - (void)onHandleMenuTap:(id)sender;
 - (void)onHideMenu;

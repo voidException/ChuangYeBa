@@ -24,7 +24,7 @@ static NSString *classListCellIdentifier = @"ClassListCell";
     NSIndexPath *currentIndexPath;
 }
 @property (nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) NSArray *items;
+
 @end
 
 @implementation SIMenuTable
@@ -62,6 +62,10 @@ static NSString *classListCellIdentifier = @"ClassListCell";
 
     }
     return self;
+}
+
+- (void)reloadData {
+    [self.table reloadData];
 }
 
 - (void)show
