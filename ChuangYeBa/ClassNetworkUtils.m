@@ -14,6 +14,29 @@ static NSString *serverIP = SERVER_IP;
 @implementation ClassNetworkUtils
 
 #pragma mark - 老师学生两端公用接口
+// 接口3
++ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    NSString *path = @"/startup/student/test/getTest";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *params = @{@"itemId":itemId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"请求成功，返回对象为 %@", responseObject);
+        callback(responseObject);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ClassNetworkUtils failureAction:error];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+}
+
+
 // 接口6
 + (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -122,27 +145,6 @@ static NSString *serverIP = SERVER_IP;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
-}
-// 接口3
-+ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSString *path = @"/startup/student/test/getTest";
-    path = [serverIP stringByAppendingString:path];
-    
-    NSDictionary *params = @{@"itemId":itemId};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [manager GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"请求成功，返回对象为 %@", responseObject);
-        callback(responseObject);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
 }
 
 // 接口4
@@ -380,6 +382,7 @@ static NSString *serverIP = SERVER_IP;
         NSLog(@"请求的结果为 = %@", responseObject);
 #endif
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        callback(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ClassNetworkUtils failureAction:error];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

@@ -302,11 +302,11 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 
 - (ExplainCell *)tableView:(UITableView *)tableView explainCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ExplainCell *explainCell = [tableView dequeueReusableCellWithIdentifier:explainCellIdentifer];
-    
     // 显示解析
     explainCell.explainTextView.text = self.quiz.answerExplain;
+    
+#ifdef STUDENT_VERSION
     NSIndexPath *userSelected = self.userSelection[quizNo - 1];
-
     if (userSelected.row == [self.quiz.answerOption integerValue]) {
         [explainCell setState:ExplainCellStateCorrect];
     } else {
@@ -348,6 +348,28 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
                 break;
         }
     }
+#elif TEACHER_VERSION
+    // 显示正确答案
+    [explainCell setState:ExplainCellStateDisplay];
+    switch ([self.quiz.answerOption integerValue]) {
+        case 1:
+            explainCell.anwserLabel.text = @"A";
+            break;
+        case 2:
+            explainCell.anwserLabel.text = @"B";
+            break;
+        case 3:
+            explainCell.anwserLabel.text = @"C";
+            break;
+        case 4:
+            explainCell.anwserLabel.text = @"D";
+            break;
+        default:
+            explainCell.anwserLabel.text = nil;
+            break;
+    }
+
+#endif
         return explainCell;
 }
 
@@ -520,7 +542,9 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
         if (buttonIndex == 1) {
             [self.navigationController popViewControllerAnimated:YES];
         }
-    } else if (alertView.tag == 1) {
+    }
+#ifdef STUDENT_VERSION
+    else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
             MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
             HUD.tag = 0;
@@ -538,6 +562,7 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
             }];
         }
     }
+#endif
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {

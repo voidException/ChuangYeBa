@@ -31,4 +31,6 @@
 
 + (Quiz *)parseQuiz:(NSDictionary *) dic;
 
+//+ (NSDictionary *)parse
+
 @end

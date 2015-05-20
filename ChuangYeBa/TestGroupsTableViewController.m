@@ -12,6 +12,8 @@
 #import "ClassInfo.h"
 #import "ClassNetworkUtils.h"
 #import "ClassJsonParser.h"
+#import "Quiz.h"
+#import <MBProgressHUD.h>
 
 @interface TestGroupsTableViewController ()
 
@@ -20,7 +22,9 @@
 @property (strong, nonatomic) NSMutableDictionary *addDic;
 @property (strong, nonatomic) NSMutableDictionary *addIndexPath;
 @property (strong, nonatomic) NSArray *addedTestGroupId;
+@property (strong, nonatomic) TestGroup *selectedTestGroup;
 @property (strong, nonatomic) ClassInfo *classInfo;
+@property (strong, nonatomic) NSMutableArray *quizs;
 
 @end
 
@@ -38,7 +42,6 @@
     [self initUI];
     
     [self requestAllTestGroupsFromServer];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -89,6 +92,9 @@
         }
     }];
 }
+
+- (void)requestQuizsFromServer {
+    }
 
 #pragma mark - Action
 - (void)clickOnAddButton:(id)sender {
@@ -145,6 +151,42 @@
         TestGroup *tg = arr[indexPath.row];
         [self.addDic setObject:tg forKey:tg.itemId];
         [self.addIndexPath setObject:indexPath forKey:tg.itemId];
+    } else {
+        // 打开Hud
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSArray *arr = [self.testGroups allValues];
+        TestGroup *tg = arr[indexPath.row];
+        self.selectedTestGroup = tg;
+        [ClassNetworkUtils requestQuizsByitemId:tg.itemId andCallback:^(id obj){
+            // 隐藏HUD
+            [hud hide:YES];
+            // 接回调对象
+            NSDictionary *dic = obj;
+            // 接受错误信息
+            NSNumber *error = [dic objectForKey:@"error"];
+            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+            
+            if ([error integerValue] == 1) {
+                // 给题组赋值
+                NSArray *quizsArr = [dic objectForKey:@"test"];
+                
+                if (!self.quizs) {
+                    self.quizs = [[NSMutableArray alloc] init];
+                }
+                // 从接收到的JSON对象解析出每个题目的信息，保存到quizs数组当中
+                [self.quizs removeAllObjects];
+                for (NSDictionary *quizsDic in quizsArr) {
+                    Quiz *qz = [ClassJsonParser parseQuiz:quizsDic];
+                    [self.quizs addObject:qz];
+                }
+                [self performSegueWithIdentifier:@"ShowTestGroup" sender:self];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+
     }
 }
 
@@ -215,14 +257,18 @@
 }
 */
 
-/*
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    id destinationVC = [segue destinationViewController];
+    if ([segue.identifier isEqualToString:@"ShowTestGroup"]) {
+        // 把下载的题组信息传递给TestTVC
+        [destinationVC setValue:self.quizs forKey:@"quizs"];
+        // 把测试题组号传递给TestTVC，为了封装提交的测试结果
+        [destinationVC setValue:self.selectedTestGroup.itemId forKey:@"itemId"];
+        [destinationVC setValue:[NSNumber numberWithBool:YES] forKey:@"isShowExplain"];
+        [destinationVC setValue:[NSNumber numberWithInteger:1] forKey:@"numQuizNo"];
+    }
 }
-*/
+
 
 @end

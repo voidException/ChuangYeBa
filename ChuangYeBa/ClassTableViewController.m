@@ -23,6 +23,11 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     
     // 读取本地的用户信息
     self.userInfo = [[UserInfo alloc] initWithUserDefault];
+    self.classInfo = [ClassInfo loadClassInfoFromLocal];
+    // 避免由于没有加入班级的过程用户在本地没有classinfo信息
+    if (!self.classInfo.classId) {
+        [self requestClassInfoFromServer];
+    }
     
     [self initUI];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -48,6 +53,8 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+    
     [super viewWillDisappear:animated];
     [self.rightButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
@@ -113,6 +120,23 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     self.navigationItem.leftBarButtonItem = item;
     //self.navigationItem.leftBarButtonItem = nil;
 }
+
+- (void)requestClassInfoFromServer {
+    [ClassNetworkUtils requestClassInfoByClassNo:self.userInfo.roomno andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            if ([error integerValue] == 1) {
+                if (!self.classInfo) {
+                    self.classInfo = [[ClassInfo alloc] init];
+                }
+                self.classInfo = [ClassJsonParser parseClassInfo:[dic objectForKey:@"oneClass"]];
+                [ClassInfo saveClassInfoToLocal:self.classInfo];
+            }
+        }
+    }];
+}
+
 
 - (void)requestTestGroupsFromServer {
     __weak typeof(self) weakSelf = self;

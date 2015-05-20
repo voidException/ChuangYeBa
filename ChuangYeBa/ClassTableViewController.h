@@ -33,6 +33,7 @@
 
 // 用户模型
 @property (strong, nonatomic) UserInfo *userInfo;
+@property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) TestGroup *selectedTestGroup;
 
 

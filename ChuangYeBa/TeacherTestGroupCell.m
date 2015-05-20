@@ -30,11 +30,13 @@
     _state = state;
     switch (state) {
         case TestGroupStatepublish:
-            _publishButton.enabled = NO;
+            _publishButton.enabled = YES;
+            [_publishButton setTitle:@"取消发布" forState:UIControlStateNormal];
             _resultButton.enabled = YES;
             break;
         case TestGroupStateUnpublish:
             _publishButton.enabled = YES;
+            [_publishButton setTitle:@"发布题组" forState:UIControlStateNormal];
             _resultButton.enabled = NO;
     }
 }
@@ -42,7 +44,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     if ([_testGroup.activity isEqual:@0]) {
-        [self setState:TestGroupStatepublish];
+        [self setState:TestGroupStateUnpublish];
     } else if ([_testGroup.activity isEqual:@1]) {
         [self setState:TestGroupStatepublish];
     }
@@ -52,14 +54,10 @@
 
 #pragma mark - Action
 - (IBAction)clickOnPublishButton:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认发布该题组吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-    [alert show];
     [self.delegate teacherTestGroupCell:self clickOnButtonAtIndex:0];
 }
 
 - (IBAction)clickOnResultButton:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"啦啦啦" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil, nil];
-    [actionSheet showInView:self];
     [self.delegate teacherTestGroupCell:self clickOnButtonAtIndex:1];
 }
 

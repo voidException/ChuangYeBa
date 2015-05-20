@@ -16,6 +16,9 @@ typedef void (^Callback)(id obj);
 @interface ClassNetworkUtils : NSObject
 
 #pragma mark - 两端公用接口
+// 请求接口3，获取题组内所有题目信息
++ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback;
+
 // 公共接口，返回班级信息以及老师名字，学生列表
 + (void)requestClassInfoByClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
 
@@ -31,8 +34,6 @@ typedef void (^Callback)(id obj);
 // 请求接口2，学生加入班级返回题组
 + (void)requestAddClassByStudentId:(NSNumber *)stuId andClassNo:(NSNumber *)classNo andCallback:(Callback)callback;
 
-// 请求接口3，获取题组内所有题目信息
-+ (void)requestQuizsByitemId:(NSNumber *)itemId andCallback:(Callback)callback;
 
 // 请求接口4，获取学生题目结果
 + (void)requestTestResultByStuId:(NSNumber *)stuId andClassId:(NSNumber *)classId andItemId:(NSNumber *)itemId andCallback:(Callback)callback;

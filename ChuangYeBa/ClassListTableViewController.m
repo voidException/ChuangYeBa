@@ -36,6 +36,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 // 班级信息
 @property (strong, nonatomic) NSMutableArray *classInfos;
 @property (strong, nonatomic) ClassInfo *selectedClassInfo;
+@property (strong, nonatomic) NSArray *testStatistics;
 
 @end
 
@@ -51,12 +52,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // 初始化UI
     [self initUI];
     // 开始第一次请求
-    [self requestTestGroupsFromServer];
+    if (self.selectedClassInfo) {
+        [self requestTestGroupsFromServer];
+    }
     [self requestClassInfosFromServer];
-    
     // 注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserAddedTestGroups" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserCreateClass" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userCreateClass:) name:@"UserCreateClass" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,10 +91,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         [self.addButton removeFromSuperview];
         [self.refreshButton removeFromSuperview];
     }];
-    
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -153,6 +152,14 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         self.menu.delegate = self;
         self.navigationItem.titleView = self.menu;
     }
+}
+
+- (void)userCreateClass:(NSNotification *)notif {
+    self.selectedClassInfo = [notif.userInfo objectForKey:@"classInfo"];
+    [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
+    [self requestClassInfosFromServer];
+    [self requestTestGroupsFromServer];
+    [self.headerView setNeedsLayout];
 }
 
 - (void)requestClassInfosFromServer {
@@ -237,11 +244,33 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)teacherTestGroupCell:(TeacherTestGroupCell *)cell clickOnButtonAtIndex:(NSInteger)index {
     // 点击添加题组按键
     if (index == 0) {
-        NSLog(@"0");
+        NSNumber *state = [[NSNumber alloc] init];
+        if ([cell.testGroup.activity isEqual:@0]) {
+            state = @1;
+        } else {
+            state = @0;
+        }
+        [ClassNetworkUtils requestUpdateTestGroupStateByClassId:_selectedClassInfo.classId itemId:cell.testGroup.itemId state:state andCallback:^(id obj) {
+            if ([state isEqual:@1]) {
+                [cell setState:TestGroupStatepublish];
+                cell.testGroup.activity = @1;
+            } else {
+                [cell setState:TestGroupStateUnpublish];
+                cell.testGroup.activity = @0;
+            }
+            
+        }];
     }
-    //
+    // 点击查看结果
     else if (index == 1) {
-        NSLog(@"1");
+        [ClassNetworkUtils requestTestStatisticsByClassId:_selectedClassInfo.classId itemId:cell.testGroup.itemId andCallback:^(id obj) {
+            if (obj) {
+                NSDictionary *dic = obj;
+                _testStatistics = [dic objectForKey:@"itemAccurateNumVo"];
+                [self performSegueWithIdentifier:@"ShowTestStatistics" sender:self];
+            }
+            
+        }];
     }
     // 点击删除按钮
     else if (index == 2) {
@@ -258,7 +287,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 - (void)didSelectItemAtIndex:(NSUInteger)index {
     self.selectedClassInfo = _classInfos[index];
     [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
-    self.settingButton.enabled = YES;
     [self requestTestGroupsFromServer];
     [self.headerView setNeedsLayout];
 }
@@ -293,6 +321,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     return 16;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 1;
+}
 
 #pragma mark - Table view data source
 
@@ -313,42 +344,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id destinationVC = [segue destinationViewController];
@@ -357,6 +352,8 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     } else if ([segue.identifier isEqualToString:@"ShowAllTestGroups"]) {
         [destinationVC setValue:[_testGroups allKeys] forKey:@"addedTestGroupId"];
         [destinationVC setValue:_selectedClassInfo forKey:@"classInfo"];
+    } else if ([segue.identifier isEqualToString:@"ShowTestStatistics"]) {
+        [destinationVC setValue:_testStatistics forKey:@"testStatistics"];
     }
     
 }

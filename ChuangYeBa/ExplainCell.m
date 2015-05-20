@@ -50,6 +50,11 @@
             self.rightLabel.hidden = NO;
             self.optionLabel.hidden = NO;
             break;
+        case ExplainCellStateDisplay:
+            self.leftLabel.text = @"正确答案是";
+            self.anwserLabel.hidden = NO;
+            self.rightLabel.hidden = YES;
+            self.optionLabel.hidden = YES;
     }
 }
 

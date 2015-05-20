@@ -10,7 +10,8 @@
 
 typedef enum {
     ExplainCellStateCorrect = 1,
-    ExplainCellStateError
+    ExplainCellStateError,
+    ExplainCellStateDisplay
 }ExplainCellState;
 
 @interface ExplainCell : UITableViewCell

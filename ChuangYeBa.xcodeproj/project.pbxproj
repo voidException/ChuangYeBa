@@ -42,6 +42,7 @@
 		8B451B081ADFED74002C4CA9 /* CommentInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451B071ADFED74002C4CA9 /* CommentInputView.m */; };
 		8B5AA2381B0B4468004995B9 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */; };
 		8B5AA23A1B0B5D0F004995B9 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */; };
+		8B662D2C1B0C48C000F6D342 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B6918811AED116C00D616DC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
 		8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */; };
 		8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
@@ -90,7 +91,6 @@
 		8BBB61731B06464300381DAC /* ClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E591ACD193E00A4EF54 /* ClassInfo.m */; };
 		8BBB61741B06464300381DAC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
 		8BBB61751B06464300381DAC /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0A55F1AD62AC1006B348E /* Quiz.m */; };
-		8BBB61761B06464300381DAC /* AnswerSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C5E1AE8D7B9004CC161 /* AnswerSheetCell.m */; };
 		8BBB61771B06464300381DAC /* PullUpRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF03BEF1AF7488B00D8C932 /* PullUpRefreshView.m */; };
 		8BBB61781B06464300381DAC /* LoginNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5F1ACD196400A4EF54 /* LoginNetworkUtils.m */; };
 		8BBB61791B06464300381DAC /* ExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDFEED1ADA19B7004C5845 /* ExplainCell.m */; };
@@ -111,9 +111,7 @@
 		8BBB618A1B06464300381DAC /* ClassInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */; };
 		8BBB618B1B06464300381DAC /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
 		8BBB618C1B06464300381DAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
-		8BBB618D1B06464300381DAC /* QuizCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C631AE8E631004CC161 /* QuizCollectionCell.m */; };
 		8BBB618E1B06464300381DAC /* ConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BB01AE6359F00621F91 /* ConditionViewController.m */; };
-		8BBB618F1B06464300381DAC /* TestScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C591AE8D5D2004CC161 /* TestScoreCell.m */; };
 		8BBB61901B06464300381DAC /* ArticleInfoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF11C201AF9E9AD00F30649 /* ArticleInfoDAO.m */; };
 		8BBB61911B06464300381DAC /* MeNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED43B91AFCA39A002CC15C /* MeNetworkUtils.m */; };
 		8BBB61921B06464300381DAC /* ArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3278B1AD116D9007F79C3 /* ArticleCell.m */; };
@@ -135,7 +133,6 @@
 		8BBB61A71B06464300381DAC /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
 		8BBB61A81B06464300381DAC /* QuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BDA58B61AD94DF100E59EE8 /* QuestionCell.xib */; };
 		8BBB61A91B06464300381DAC /* studyCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */; };
-		8BBB61AA1B06464300381DAC /* TestScoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5A1AE8D5D2004CC161 /* TestScoreCell.xib */; };
 		8BBB61AB1B06464300381DAC /* appSetting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2B1B0593E100FB1932 /* appSetting.plist */; };
 		8BBB61AD1B06464300381DAC /* UserInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF780C91AFB934B0048F5A4 /* UserInfoCell.xib */; };
 		8BBB61AE1B06464300381DAC /* CountingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451B011ADFAC7F002C4CA9 /* CountingCell.xib */; };
@@ -144,11 +141,9 @@
 		8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */; };
 		8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */; };
 		8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
-		8BBB61B41B06464300381DAC /* QuizCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */; };
 		8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFB1ADF8A44002C4CA9 /* CommentCell.xib */; };
 		8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */; };
 		8BBB61B71B06464300381DAC /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2C1B0593E100FB1932 /* setting.plist */; };
-		8BBB61B81B06464300381DAC /* AnswerSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C5F1AE8D7B9004CC161 /* AnswerSheetCell.xib */; };
 		8BBB61B91B06464300381DAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
 		8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */; };
 		8BBB61CC1B06D2FD00381DAC /* ClassListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */; };
@@ -214,6 +209,10 @@
 		8BF8F26A1B01DF6E0004EC08 /* StudyContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF8F2691B01DF6E0004EC08 /* StudyContentCell.xib */; };
 		8BF8F26D1B0268D30004EC08 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */; };
 		8BF8F2701B02E3FC0004EC08 /* LineNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26F1B02E3FC0004EC08 /* LineNavigationBar.m */; };
+		8BFD75381B0CB460005CEC39 /* TestStatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD75371B0CB460005CEC39 /* TestStatisticsTableViewController.m */; };
+		8BFD753C1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD753A1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m */; };
+		8BFD753D1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFD753B1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib */; };
+		8BFD75401B0CB55B005CEC39 /* AccuracyBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD753F1B0CB55B005CEC39 /* AccuracyBarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +437,13 @@
 		8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = ChuangYeBa/AboutUsViewController.m; sourceTree = "<group>"; };
 		8BF8F26E1B02E3FC0004EC08 /* LineNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineNavigationBar.h; path = ChuangYeBa/LineNavigationBar.h; sourceTree = "<group>"; };
 		8BF8F26F1B02E3FC0004EC08 /* LineNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineNavigationBar.m; path = ChuangYeBa/LineNavigationBar.m; sourceTree = "<group>"; };
+		8BFD75361B0CB460005CEC39 /* TestStatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestStatisticsTableViewController.h; path = ChuangYeBa/TestStatisticsTableViewController.h; sourceTree = "<group>"; };
+		8BFD75371B0CB460005CEC39 /* TestStatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestStatisticsTableViewController.m; path = ChuangYeBa/TestStatisticsTableViewController.m; sourceTree = "<group>"; };
+		8BFD75391B0CB4D7005CEC39 /* AccuracyStatisticsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccuracyStatisticsCell.h; path = ChuangYeBa/AccuracyStatisticsCell.h; sourceTree = "<group>"; };
+		8BFD753A1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccuracyStatisticsCell.m; path = ChuangYeBa/AccuracyStatisticsCell.m; sourceTree = "<group>"; };
+		8BFD753B1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AccuracyStatisticsCell.xib; path = ChuangYeBa/AccuracyStatisticsCell.xib; sourceTree = "<group>"; };
+		8BFD753E1B0CB55B005CEC39 /* AccuracyBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccuracyBarView.h; path = ChuangYeBa/AccuracyBarView.h; sourceTree = "<group>"; };
+		8BFD753F1B0CB55B005CEC39 /* AccuracyBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccuracyBarView.m; path = ChuangYeBa/AccuracyBarView.m; sourceTree = "<group>"; };
 		FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -501,6 +507,11 @@
 				8B356C621AE8E631004CC161 /* QuizCollectionCell.h */,
 				8B356C631AE8E631004CC161 /* QuizCollectionCell.m */,
 				8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */,
+				8BFD75391B0CB4D7005CEC39 /* AccuracyStatisticsCell.h */,
+				8BFD753A1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m */,
+				8BFD753B1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib */,
+				8BFD753E1B0CB55B005CEC39 /* AccuracyBarView.h */,
+				8BFD753F1B0CB55B005CEC39 /* AccuracyBarView.m */,
 			);
 			name = TestResultView;
 			sourceTree = "<group>";
@@ -508,6 +519,8 @@
 		8B356C6A1AEA032B004CC161 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				8BFD75361B0CB460005CEC39 /* TestStatisticsTableViewController.h */,
+				8BFD75371B0CB460005CEC39 /* TestStatisticsTableViewController.m */,
 				8B356C531AE8D4D4004CC161 /* TestResultTableViewController.h */,
 				8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */,
 				8B356C671AE9E296004CC161 /* TestDetailViewController.h */,
@@ -675,19 +688,11 @@
 		8B5826B21ACD0D8E005E39E0 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				8BFD75321B0CB2D7005CEC39 /* StudentMain */,
 				8BF4DC201B0AD1B0001E246E /* TeacherMain */,
 				8BBB61CF1B06D4AA00381DAC /* NavigationMenuView */,
 				8B356C571AE8D520004CC161 /* TestResultView */,
 				8B356C561AE8D4FC004CC161 /* TestView */,
-				8BB23BA31AE531D300621F91 /* TestGroupCell.h */,
-				8BB23BA41AE531D300621F91 /* TestGroupCell.m */,
-				8BB23BA51AE531D300621F91 /* TestGroupCell.xib */,
-				8BBB61EE1B06F03B00381DAC /* ClassListCell.h */,
-				8BBB61EF1B06F03B00381DAC /* ClassListCell.m */,
-				8BBB61F01B06F03B00381DAC /* ClassListCell.xib */,
-				8BB23BB21AE641AA00621F91 /* ClassInfoCell.h */,
-				8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */,
-				8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -921,6 +926,9 @@
 		8BF4DC201B0AD1B0001E246E /* TeacherMain */ = {
 			isa = PBXGroup;
 			children = (
+				8BBB61EE1B06F03B00381DAC /* ClassListCell.h */,
+				8BBB61EF1B06F03B00381DAC /* ClassListCell.m */,
+				8BBB61F01B06F03B00381DAC /* ClassListCell.xib */,
 				8BF4DC211B0AD21A001E246E /* ClassBriefView.h */,
 				8BF4DC221B0AD21A001E246E /* ClassBriefView.m */,
 				8BF4DC241B0AD23A001E246E /* ClassBriefView.xib */,
@@ -929,6 +937,19 @@
 				8BF4DC281B0AE03D001E246E /* TeacherTestGroupCell.xib */,
 			);
 			name = TeacherMain;
+			sourceTree = "<group>";
+		};
+		8BFD75321B0CB2D7005CEC39 /* StudentMain */ = {
+			isa = PBXGroup;
+			children = (
+				8BB23BA31AE531D300621F91 /* TestGroupCell.h */,
+				8BB23BA41AE531D300621F91 /* TestGroupCell.m */,
+				8BB23BA51AE531D300621F91 /* TestGroupCell.xib */,
+				8BB23BB21AE641AA00621F91 /* ClassInfoCell.h */,
+				8BB23BB31AE641AA00621F91 /* ClassInfoCell.m */,
+				8BB23BB41AE641AA00621F91 /* ClassInfoCell.xib */,
+			);
+			name = StudentMain;
 			sourceTree = "<group>";
 		};
 		9FB07484698B67F4D94AC67A /* Frameworks */ = {
@@ -1063,7 +1084,6 @@
 				8BBB61F21B06F03B00381DAC /* ClassListCell.xib in Resources */,
 				8BBB61A81B06464300381DAC /* QuestionCell.xib in Resources */,
 				8BBB61A91B06464300381DAC /* studyCategory.plist in Resources */,
-				8BBB61AA1B06464300381DAC /* TestScoreCell.xib in Resources */,
 				8BBB61AB1B06464300381DAC /* appSetting.plist in Resources */,
 				8BBB61AD1B06464300381DAC /* UserInfoCell.xib in Resources */,
 				8BBB61AE1B06464300381DAC /* CountingCell.xib in Resources */,
@@ -1072,11 +1092,10 @@
 				8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */,
 				8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */,
 				8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */,
-				8BBB61B41B06464300381DAC /* QuizCollectionCell.xib in Resources */,
 				8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */,
 				8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */,
+				8BFD753D1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib in Resources */,
 				8BBB61B71B06464300381DAC /* setting.plist in Resources */,
-				8BBB61B81B06464300381DAC /* AnswerSheetCell.xib in Resources */,
 				8BF4DC2A1B0AE03D001E246E /* TeacherTestGroupCell.xib in Resources */,
 				8BBB61B91B06464300381DAC /* Images.xcassets in Resources */,
 				8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */,
@@ -1200,6 +1219,7 @@
 				8BBB61581B06464300381DAC /* UserListTableViewController.m in Sources */,
 				8BBB61591B06464300381DAC /* StudyDetailViewController.m in Sources */,
 				8BBB615A1B06464300381DAC /* MeViewController.m in Sources */,
+				8BFD753C1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m in Sources */,
 				8BBB615B1B06464300381DAC /* CommentCell.m in Sources */,
 				8BBB615C1B06464300381DAC /* FXBlurView.m in Sources */,
 				8BBB61E81B06D4AA00381DAC /* SIMenuButton.m in Sources */,
@@ -1210,6 +1230,8 @@
 				8BBB61601B06464300381DAC /* DetailImageViewController.m in Sources */,
 				8BBB61611B06464300381DAC /* ClassJsonParser.m in Sources */,
 				8BBB61EC1B06D4AA00381DAC /* SINavigationMenuView.m in Sources */,
+				8B662D2C1B0C48C000F6D342 /* TestViewController.m in Sources */,
+				8BFD75401B0CB55B005CEC39 /* AccuracyBarView.m in Sources */,
 				8BBB61621B06464300381DAC /* StudyHostViewController.m in Sources */,
 				8BBB61631B06464300381DAC /* MoreViewController.m in Sources */,
 				8BBB61641B06464300381DAC /* AboutUsViewController.m in Sources */,
@@ -1230,7 +1252,6 @@
 				8BBB61F51B07147B00381DAC /* CreateClassTableViewController.m in Sources */,
 				8BBB61741B06464300381DAC /* LoginViewController.m in Sources */,
 				8BBB61751B06464300381DAC /* Quiz.m in Sources */,
-				8BBB61761B06464300381DAC /* AnswerSheetCell.m in Sources */,
 				8BBB61771B06464300381DAC /* PullUpRefreshView.m in Sources */,
 				8BBB61781B06464300381DAC /* LoginNetworkUtils.m in Sources */,
 				8BBB61791B06464300381DAC /* ExplainCell.m in Sources */,
@@ -1239,6 +1260,7 @@
 				8BF4DC2D1B0B121C001E246E /* TestGroupsTableViewController.m in Sources */,
 				8BBB617C1B06464300381DAC /* CircleImageView.m in Sources */,
 				8BBB617D1B06464300381DAC /* TestDetailView.m in Sources */,
+				8BFD75381B0CB460005CEC39 /* TestStatisticsTableViewController.m in Sources */,
 				8BBB617F1B06464300381DAC /* LoginJsonParser.m in Sources */,
 				8BBB61801B06464300381DAC /* EditedPhotoView.m in Sources */,
 				8BBB61821B06464300381DAC /* MediaViewController.m in Sources */,
@@ -1256,9 +1278,7 @@
 				8BBB618B1B06464300381DAC /* OptionCell.m in Sources */,
 				8BBB618C1B06464300381DAC /* main.m in Sources */,
 				8BBB61ED1B06D4AA00381DAC /* UIColor+Extension.m in Sources */,
-				8BBB618D1B06464300381DAC /* QuizCollectionCell.m in Sources */,
 				8BBB618E1B06464300381DAC /* ConditionViewController.m in Sources */,
-				8BBB618F1B06464300381DAC /* TestScoreCell.m in Sources */,
 				8BBB61901B06464300381DAC /* ArticleInfoDAO.m in Sources */,
 				8BBB61911B06464300381DAC /* MeNetworkUtils.m in Sources */,
 				8BBB61921B06464300381DAC /* ArticleCell.m in Sources */,

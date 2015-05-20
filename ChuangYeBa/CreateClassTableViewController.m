@@ -55,15 +55,24 @@
     if ([self isInfoLegal]) {
         NSNumberFormatter *numberFormater = [[NSNumberFormatter alloc] init];
         NSNumber *studentNum = [numberFormater numberFromString:_maxStudentTextField.text];
+#warning 重要！功能还不完善
         self.userInfo.universityName = @"北京大学";
         [ClassNetworkUtils submitToCreateClassWithClassName:_classNoTextField.text universityName:_userInfo.universityName studentNum:studentNum teacherId:_userInfo.userId andCallback:^(id obj) {
-            [self.navigationController popViewControllerAnimated:YES];
+            NSDictionary *dic = obj;
+            NSNumber *error = [obj objectForKey:@"error"];
+            if ([error isEqual:@1]) {
+                [ClassNetworkUtils requestClassInfoByClassNo:[dic objectForKey:@"number"] andCallback:^(id obj) {
+                    ClassInfo *ci = [ClassJsonParser parseClassInfo:[obj objectForKey:@"oneClass"]];
+                    NSDictionary *aClass = @{@"classInfo":ci};
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"UserCreateClass" object:self userInfo:aClass];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+            }
         }];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完成信息填写" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
         [alert show];
     }
-    
 }
 
 #pragma mark - Table view data source

@@ -54,6 +54,7 @@
 
 - (void)onShowMenu
 {
+    self.table = nil;
     if (!self.table) {
         UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
         CGRect frame = mainWindow.frame;
