@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     self.title = @"关于我们";
-    NSURL * url = [NSURL URLWithString: @"http://192.168.1.100:8080/startup/"];
+    NSURL * url = [NSURL URLWithString: @"http://192.168.1.104:8080/startup/more/aboutUs"];
     NSURLRequest * request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     //self.webView.delegate = self;

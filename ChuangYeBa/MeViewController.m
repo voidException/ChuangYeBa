@@ -113,6 +113,8 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
             [actionSheet showInView:self.view];
         } else if (indexPath.row == 1) {
             [self performSegueWithIdentifier:@"ShowAboutUs" sender:self];
+        } else if (indexPath.row == 2) {
+            [self performSegueWithIdentifier:@"ShowFeedback" sender:self];
         }
     }
 }

@@ -99,6 +99,10 @@ static NSString *cellIdentifier = @"Cell";
     return 1;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -109,6 +113,7 @@ static NSString *cellIdentifier = @"Cell";
     //return self.studentArray.count;
     return [[self.studentDic allKeys] count];
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -193,10 +198,8 @@ static NSString *cellIdentifier = @"Cell";
     }
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
-}
 
+#pragma mark - Alertview delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
@@ -215,6 +218,11 @@ static NSString *cellIdentifier = @"Cell";
                     if (sum == delStuArr.count) {
                         [self.studentDic removeObjectsForKeys:[self.deleteDic allKeys]];
                         [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                        // 退出编辑状态
+                        [self.tableView setEditing:NO animated:YES];
+                        self.editing = NO;
+                        [self.deleteDic removeAllObjects];
+                        [self.deleteIndexPath removeAllObjects];
                     }
                 }];
             }

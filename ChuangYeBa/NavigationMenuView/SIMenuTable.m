@@ -58,8 +58,6 @@ static NSString *classListCellIdentifier = @"ClassListCell";
         header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.table addSubview:header];
         
-        
-
     }
     return self;
 }

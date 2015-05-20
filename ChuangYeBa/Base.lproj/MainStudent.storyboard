@@ -855,10 +855,10 @@
             </objects>
             <point key="canvasLocation" x="-1081.5" y="1647"/>
         </scene>
-        <!--View Controller-->
+        <!--Feedback View Controller-->
         <scene sceneID="f0u-pd-AGc">
             <objects>
-                <viewController id="wxk-ae-qkq" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="wxk-ae-qkq" customClass="FeedbackViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KRJ-9m-5tj"/>
                         <viewControllerLayoutGuide type="bottom" id="UUY-Sz-0pT"/>
@@ -866,8 +866,46 @@
                     <view key="view" contentMode="scaleToFill" id="gnB-gw-0xW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUC-AK-JJ7">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bUC-AK-JJ7" firstAttribute="leading" secondItem="gnB-gw-0xW" secondAttribute="leading" id="KJe-5d-oks"/>
+                            <constraint firstItem="bUC-AK-JJ7" firstAttribute="top" secondItem="gnB-gw-0xW" secondAttribute="top" constant="64" id="qAi-gz-b1D"/>
+                            <constraint firstAttribute="bottom" secondItem="bUC-AK-JJ7" secondAttribute="bottom" id="sjU-b8-Hbm"/>
+                            <constraint firstAttribute="trailing" secondItem="bUC-AK-JJ7" secondAttribute="trailing" id="xoD-bE-jad"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="bUC-AK-JJ7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="KJe-5d-oks"/>
+                                <exclude reference="qAi-gz-b1D"/>
+                                <exclude reference="sjU-b8-Hbm"/>
+                                <exclude reference="xoD-bE-jad"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="bUC-AK-JJ7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="KJe-5d-oks"/>
+                                <include reference="qAi-gz-b1D"/>
+                                <include reference="sjU-b8-Hbm"/>
+                                <include reference="xoD-bE-jad"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="webView" destination="bUC-AK-JJ7" id="uMt-mK-00x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KqF-By-yS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

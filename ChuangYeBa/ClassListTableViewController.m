@@ -13,23 +13,29 @@
 #import "UserInfo.h"
 #import "ClassNetworkUtils.h"
 #import <MBProgressHUD.h>
+#import "ClassBriefView.h"
+#import "TeacherTestGroupCell.h"
 
-@interface ClassListTableViewController () <SINavigationMenuDelegate>
+static NSString *testGroupCellIdentifier = @"TestGroupCell";
+
+@interface ClassListTableViewController () <SINavigationMenuDelegate,TeacherTestGroupDelegate>
 
 // UI相关属性
 @property (strong, nonatomic) SINavigationMenuView *menu;
 @property (strong, nonatomic) UIButton *settingButton;
 @property (strong, nonatomic) UIButton *refreshButton;
+@property (strong, nonatomic) UIButton *addButton;
 @property (strong, nonatomic) CircleButton *leftButton;
+@property (strong, nonatomic) ClassBriefView *headerView;
+
 
 // 数据相关
 @property (strong, nonatomic) UserInfo *userInfo;
+// 题组信息
+@property (strong, nonatomic) NSMutableDictionary *testGroups;
+// 班级信息
 @property (strong, nonatomic) NSMutableArray *classInfos;
 @property (strong, nonatomic) ClassInfo *selectedClassInfo;
-
-
-
-
 
 @end
 
@@ -37,26 +43,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
+    // 初始化数据
     self.userInfo = [UserInfo loadUserInfoFromLocal];
+    self.selectedClassInfo = [ClassInfo loadClassInfoFromLocal];
     self.classInfos = [[NSMutableArray alloc] init];
+    self.testGroups = [[NSMutableDictionary alloc] init];
+    // 初始化UI
     [self initUI];
-    if (self.navigationItem) {
-        CGRect frame = CGRectMake(0.0, 0.0, 200.0, self.navigationController.navigationBar.bounds.size.height);
-        self.menu = [[SINavigationMenuView alloc] initWithFrame:frame title:@"全部班级"];
-        [self.menu displayMenuInView:self.tabBarController.view];
-        self.menu.items = @[];
-        self.menu.delegate = self;
-        self.navigationItem.titleView = self.menu;
-    }
+    // 开始第一次请求
+    [self requestTestGroupsFromServer];
     [self requestClassInfosFromServer];
+    
+    // 注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserAddedTestGroups" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserCreateClass" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -64,27 +64,32 @@
     if (!_selectedClassInfo) {
         self.settingButton.enabled = NO;
     }
-    [self.settingButton setAlpha:0.0];
+    [self.refreshButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
-    [self.navigationController.navigationBar addSubview:self.settingButton];
+    [self.addButton setAlpha:0.0];
+    [self.navigationController.navigationBar addSubview:self.refreshButton];
     [self.navigationController.navigationBar addSubview:self.leftButton];
+    [self.navigationController.navigationBar addSubview:self.addButton];
     [UIView animateWithDuration:0.3 animations:^{
-        [self.settingButton setAlpha:1.0];
+        //[self.settingButton setAlpha:1.0];
         [self.leftButton setAlpha:1.0];
+        [self.addButton setAlpha:1.0];
+        [self.refreshButton setAlpha:1.0];
     }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [UIView animateWithDuration:0.3 animations:^{
-        [self.settingButton setAlpha:0.0];
         [self.leftButton setAlpha:0.0];
+        [self.addButton setAlpha:0.0];
         [self.refreshButton setAlpha:0.0];
     } completion:^(BOOL finished) {
-        [self.settingButton removeFromSuperview];
         [self.leftButton removeFromSuperview];
+        [self.addButton removeFromSuperview];
         [self.refreshButton removeFromSuperview];
     }];
+    
 }
 
 
@@ -96,6 +101,17 @@
 
 #pragma mark - Private Method
 - (void)initUI {
+    // 初始化tableview相关属性
+    self.clearsSelectionOnViewWillAppear = NO;
+    [self.tableView registerNib:[UINib nibWithNibName:@"TeacherTestGroupCell" bundle:nil] forCellReuseIdentifier:testGroupCellIdentifier];
+    
+    // 初始化tableView的头视图
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassBriefView" owner:nil options:nil];
+    self.headerView = [nib objectAtIndex:0];
+    self.tableView.tableHeaderView = _headerView;
+    _headerView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnSettingButton:)];
+    [_headerView addGestureRecognizer:tapGesture];
     
     // 初始化导航条的属性
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
@@ -115,6 +131,11 @@
     [self.refreshButton setImage:[[UIImage imageNamed:@"refreshButton"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [self.refreshButton addTarget:self action:@selector(clickOnRefreshButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    // 初始化右侧导航条加入题组按钮
+    self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 2 * (buttonWidth + 7), 7, buttonWidth, buttonWidth)];
+    [self.addButton setImage:[[UIImage imageNamed:@"checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.addButton addTarget:self action:@selector(clickOnAddButton:) forControlEvents:UIControlEventTouchUpInside];
+    
     // 初始化左导航条按钮
     self.leftButton = [[CircleButton alloc] initWithFrame:CGRectMake(7, 7, 30, 30)];
     self.leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -123,11 +144,19 @@
     }];
     [self.leftButton addTarget:self action:@selector(clickOnLeftButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    // 初始化下拉菜单
+    if (self.navigationItem) {
+        CGRect frame = CGRectMake(0.0, 0.0, 200.0, self.navigationController.navigationBar.bounds.size.height);
+        self.menu = [[SINavigationMenuView alloc] initWithFrame:frame title:@"全部班级"];
+        [self.menu displayMenuInView:self.tabBarController.view];
+        self.menu.items = @[];
+        self.menu.delegate = self;
+        self.navigationItem.titleView = self.menu;
+    }
 }
 
 - (void)requestClassInfosFromServer {
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
-    
     [ClassNetworkUtils requestClassInfosWithTeacherId:_userInfo.userId andCallback:^(id obj) {
         if (obj) {
             HUD.mode = MBProgressHUDModeCustomView;
@@ -159,31 +188,79 @@
     }];
 }
 
+- (void)requestTestGroupsFromServer {
+    [_testGroups removeAllObjects];
+    [self.tableView reloadData];
+    [ClassNetworkUtils requestTestGroupByClassId:_selectedClassInfo.classId andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            NSNumber *error = [dic objectForKey:@"error"];
+            // 如果正确返回题组
+            if ([error isEqual:@1]) {
+                // 清空保存testGroup的字典
+                
+                NSArray *testGroupArr = [dic objectForKey:@"itemTest"];
+                if (testGroupArr.count) {
+                    for (NSDictionary *testGroup in testGroupArr) {
+                        TestGroup *tg = [ClassJsonParser parseTestGropu:testGroup];
+                        [_testGroups setObject:tg forKey:tg.itemId];
+                    }
+                    [self.tableView reloadData];
+                }
+            }
+        }
+    }];
+}
+
 #pragma mark - Action
 - (void)clickOnSettingButton:(id)sender {
-    //[self.menu onHandleMenuTap:sender];
     [self.menu onHideMenu];
     [self performSegueWithIdentifier:@"ShowClassSetting" sender:self];
 }
 
 - (void)clickOnRefreshButton:(id)sender {
     [self requestClassInfosFromServer];
+    [self requestTestGroupsFromServer];
 }
 
 - (void)clickOnLeftButton:(id)sender {
-    //[self.menu onHandleMenuTap:sender];
     [self.menu onHideMenu];
     [self performSegueWithIdentifier:@"ShowUserDetail" sender:self];
 }
 
+- (void)clickOnAddButton:(id)sender {
+    [self performSegueWithIdentifier:@"ShowAllTestGroups" sender:self];
+}
 
 
+#pragma mark - Teacher TestGroup cell delegate
+- (void)teacherTestGroupCell:(TeacherTestGroupCell *)cell clickOnButtonAtIndex:(NSInteger)index {
+    // 点击添加题组按键
+    if (index == 0) {
+        NSLog(@"0");
+    }
+    //
+    else if (index == 1) {
+        NSLog(@"1");
+    }
+    // 点击删除按钮
+    else if (index == 2) {
+        NSLog(@"2");
+        [ClassNetworkUtils submitDeleteTestGroupByClassId:_selectedClassInfo.classId itemId:cell.testGroup.itemId andCallback:^(id obj) {
+            NSLog(@"删除itemId = %@成功", cell.testGroup.itemId);
+            [_testGroups removeObjectForKey:cell.testGroup.itemId];
+            [self.tableView reloadData];
+        }];
+    }
+}
 
 #pragma mark - SINavigationView delegate
 - (void)didSelectItemAtIndex:(NSUInteger)index {
     self.selectedClassInfo = _classInfos[index];
     [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
     self.settingButton.enabled = YES;
+    [self requestTestGroupsFromServer];
+    [self.headerView setNeedsLayout];
 }
 
 - (void)clickOnFooterButton {
@@ -193,48 +270,49 @@
 
 - (void)clickOnMenuButtonAtActiveState:(BOOL)isActive {
     if (isActive) {
-        [self.navigationController.navigationBar addSubview:self.refreshButton];
-        [self.refreshButton setAlpha:0.0];
         [UIView animateWithDuration:0.3 animations:^{
-            [self.refreshButton setAlpha:1.0];
-            [self.settingButton setAlpha:0.0];
+            [self.addButton setAlpha:0.0];
         } completion:^(BOOL finished) {
-            [self.settingButton setEnabled:NO];
+            [self.addButton setEnabled:NO];
         }];
     } else {
         [UIView animateWithDuration:0.3 animations:^{
-            [self.settingButton setAlpha:1.0];
-            [self.refreshButton setAlpha:0.0];
+            [self.addButton setAlpha:1.0];
         } completion:^(BOOL finished) {
-            [self.settingButton setEnabled:YES];
-            [self.refreshButton removeFromSuperview];
+            [self.addButton setEnabled:YES];
         }];
     }
 }
 
+#pragma mark - Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 92;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 16;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return [[_testGroups allKeys] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    TeacherTestGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:testGroupCellIdentifier];
+    cell.delegate = self;
+    NSArray *arr = [_testGroups allValues];
+    cell.testGroup = arr[indexPath.section];
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -275,6 +353,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id destinationVC = [segue destinationViewController];
     if ([segue.identifier isEqualToString:@"ShowClassSetting"]) {
+        [destinationVC setValue:_selectedClassInfo forKey:@"classInfo"];
+    } else if ([segue.identifier isEqualToString:@"ShowAllTestGroups"]) {
+        [destinationVC setValue:[_testGroups allKeys] forKey:@"addedTestGroupId"];
         [destinationVC setValue:_selectedClassInfo forKey:@"classInfo"];
     }
     

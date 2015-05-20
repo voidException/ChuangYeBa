@@ -57,7 +57,6 @@
         NSNumber *studentNum = [numberFormater numberFromString:_maxStudentTextField.text];
         self.userInfo.universityName = @"北京大学";
         [ClassNetworkUtils submitToCreateClassWithClassName:_classNoTextField.text universityName:_userInfo.universityName studentNum:studentNum teacherId:_userInfo.userId andCallback:^(id obj) {
-            
             [self.navigationController popViewControllerAnimated:YES];
         }];
     } else {
