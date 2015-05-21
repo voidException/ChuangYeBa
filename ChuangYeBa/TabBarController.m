@@ -21,14 +21,17 @@
     [super viewDidLoad];
     UITabBarItem *studyItem = [self.mainTabBar.items objectAtIndex:0];
     UITabBarItem *classItem = [self.mainTabBar.items objectAtIndex:1];
-    UITabBarItem *moreItem = [self.mainTabBar.items objectAtIndex:2];
-    UITabBarItem *meItem = [self.mainTabBar.items objectAtIndex:3];
+    // 暂时去掉更多的功能
+    //UITabBarItem *moreItem = [self.mainTabBar.items objectAtIndex:2];
+    UITabBarItem *meItem = [self.mainTabBar.items objectAtIndex:2];
     [studyItem setImage:[[UIImage imageNamed:@"studyTabIconNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [studyItem setSelectedImage:[[UIImage imageNamed:@"studyTabIconSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [classItem setImage:[[UIImage imageNamed:@"classTabIconNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [classItem setSelectedImage:[[UIImage imageNamed:@"classTabIconSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    /*
     [moreItem setImage:[[UIImage imageNamed:@"moreTabIconNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [moreItem setSelectedImage:[[UIImage imageNamed:@"moreTabIconSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+     */
     [meItem setImage:[[UIImage imageNamed:@"meTabIconNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [meItem setSelectedImage:[[UIImage imageNamed:@"meTabIconSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     

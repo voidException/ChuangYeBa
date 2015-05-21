@@ -15,6 +15,32 @@
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    self.backgroundColor = [UIColor clearColor];
+    
+    [self.publishButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGNormal"] forState:UIControlStateNormal];
+    [self.publishButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGSelected"] forState:UIControlStateSelected];
+    [self.publishButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGDisable"] forState:UIControlStateDisabled];
+    [self.resultButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGNormal"] forState:UIControlStateNormal];
+    [self.resultButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGSelected"] forState:UIControlStateHighlighted];
+    [self.resultButton setBackgroundImage:[UIImage imageNamed:@"blueButtonBGDisable"] forState:UIControlStateDisabled];
+    
+    [self.deleteButton setImage:[[UIImage imageNamed:@"deleteButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.deleteButton setImage:[[UIImage imageNamed:@"deleteButtonHighlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateHighlighted];
+    
+}
+
+- (void)drawRect:(CGRect)rect {
+    [[UIColor whiteColor] setFill];
+    float margin = 8.0;
+    CGRect whiteFrame = CGRectMake(margin, 0, self.frame.size.width - 2 * margin, self.frame.size.height);
+    UIRectFill(whiteFrame);
+    
+    [[UIColor clearColor] setStroke];
+    CGRect frame = CGRectMake(0, 52, self.frame.size.width, 1);
+    UIRectFrame(frame);
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -277,8 +277,15 @@ static NSString *serverIP = SERVER_IP;
     NSString *path = @"/startup/teacher/class/changeClassMessage";
     path = [serverIP stringByAppendingString:path];
     
-#warning 未填参数
-    NSDictionary *params = @{};
+    NSDictionary *params = @{@"classid":classInfo.classId,
+                             @"classroomname":classInfo.classroomName,
+                             @"studentnum":classInfo.classroomName,
+                             //@"realstudentnum":classInfo.realStudentNum,
+                             @"photo":classInfo.photoPath,
+                             //@"universityno":classInfo.universityNo,
+                             @"universityname":classInfo.universityName,
+                             //@"classno":classInfo.classNo
+                             };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
@@ -292,10 +299,9 @@ static NSString *serverIP = SERVER_IP;
         callback(responseObject);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ClassNetworkUtils failureAction:error];
+        callback(nil);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
-
 }
 
 // 请求接口4，获取班级题组

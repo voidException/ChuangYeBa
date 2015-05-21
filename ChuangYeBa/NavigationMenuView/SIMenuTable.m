@@ -57,7 +57,6 @@ static NSString *classListCellIdentifier = @"ClassListCell";
         header.backgroundColor = [UIColor whiteColor];
         header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.table addSubview:header];
-        
     }
     return self;
 }

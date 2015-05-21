@@ -18,30 +18,21 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.05];
         self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.layer.cornerRadius = 15.f;
+        self.layer.cornerRadius = 12.f;
         _accuracy = 0;
         [self addIndicatorView];
+        [self addAccuracyLabel];
     }
     return self;
 }
 
 #pragma mark - Property Setters
 
-- (void)setStatus:(AccuracyBarState)status
-{
-    if (status == _status) {
-        return;
-    }
-    _status = status;
-    [self animateIndicatorViewToStatus:status];
-}
-
 - (void)setAccuracy:(float)accuracy {
     if (accuracy == _accuracy) {
         return;
     }
     _accuracy = accuracy;
-    
     if (accuracy > 0.8 && accuracy <= 1) {
         self.status = AccuracyBarStateGreen;
     } else if (accuracy > 0.6 && accuracy <= 0.8) {
@@ -49,13 +40,31 @@
     } else {
         self.status = AccuracyBarStateRed;
     }
-    [self animateIndicatorViewToStatus:_status];
+}
+
+- (void)beginAnimate {
+    float accuracy = 0;
+    if (_wholeNum != 0) {
+        accuracy = (float)_accrateNum/_wholeNum;
+    } else {
+        accuracy = 0;
+    }
     
+    if (accuracy > 0.85 && accuracy <= 1) {
+        self.status = AccuracyBarStateGreen;
+    } else if (accuracy > 0.5 && accuracy <= 0.85) {
+        self.status = AccuracyBarStateYellow;
+    } else {
+        self.status = AccuracyBarStateRed;
+    }
+    
+    _accuracyLabel.text = [NSString stringWithFormat:@"%lu/%lu", _accrateNum, _wholeNum];
+   [self animateIndicatorViewToStatus:accuracy];
 }
 
 #pragma mark - Private Instance methods
 
-- (void)animateIndicatorViewToStatus:(AccuracyBarState)status
+- (void)animateIndicatorViewToStatus:(float)accuracy
 {
     [self.constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *constraint, NSUInteger idx, BOOL *stop) {
         if (constraint.firstAttribute == NSLayoutAttributeWidth) {
@@ -69,33 +78,26 @@
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeWidth
-                                                    multiplier:_accuracy
+                                                    multiplier:accuracy
                                                       constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeWidth
+                                                    multiplier:accuracy
+                                                      constant:-10.f]];
     
-    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.7 options:0 animations:^{
+    
+    [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.7 options:0 animations:^{
         [self layoutIfNeeded];
-        self.indicatorView.backgroundColor = [self colorForStatus:status];
+        self.indicatorView.backgroundColor = [self barColorForStatus:_status];
+        self.accuracyLabel.textColor = [self textColorForStates:_status];
     } completion:NULL];
     
 }
 
-/*
-- (CGFloat)multiplierForStatus:(AccuracyBarState)status
-{
-    switch (status) {
-        case AccuracyBarStateRed:
-            return 0.33f;
-        case AccuracyBarStateYellow:
-            return 0.66f;
-        case AccuracyBarStateGreen:
-            return 1.f;
-        default:
-            return 0.f;
-    }
-}
-*/
-
-- (UIColor *)colorForStatus:(AccuracyBarState)status
+- (UIColor *)barColorForStatus:(AccuracyBarState)status
 {
     switch (status) {
         case AccuracyBarStateRed:
@@ -104,6 +106,20 @@
             return [UIColor yellowColor];
         case AccuracyBarStateGreen:
             return [UIColor greenColor];
+        default:
+            return [UIColor whiteColor];
+    }
+}
+
+- (UIColor *)textColorForStates:(AccuracyBarState)status
+{
+    switch (status) {
+        case AccuracyBarStateRed:
+            return [UIColor whiteColor];
+        case AccuracyBarStateYellow:
+            return [UIColor blackColor];
+        case AccuracyBarStateGreen:
+            return [UIColor grayColor];
         default:
             return [UIColor whiteColor];
     }
@@ -147,6 +163,32 @@
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1.f
                                                       constant:0.f]];
+}
+
+- (void)addAccuracyLabel {
+    self.accuracyLabel = [UILabel new];
+    self.accuracyLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.accuracyLabel];
+    self.accuracyLabel.textColor = [UIColor grayColor];
+    self.accuracyLabel.font = [UIFont fontWithName:@"Heiti SC" size:18];
+    self.accuracyLabel.textAlignment = NSTextAlignmentRight;
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.f
+                                                      constant:0.f]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:1.f
+                                                      constant:0.f]];
+    
 }
 
 

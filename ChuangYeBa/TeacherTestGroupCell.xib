@@ -14,21 +14,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testGroupIcon" translatesAutoresizingMaskIntoConstraints="NO" id="sqT-Rx-Q8C">
-                        <rect key="frame" x="15" y="13" width="32" height="32"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testGroupIcon1" translatesAutoresizingMaskIntoConstraints="NO" id="sqT-Rx-Q8C">
+                        <rect key="frame" x="20" y="13" width="21" height="33"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="32" id="Ng8-3n-ufx"/>
-                            <constraint firstAttribute="width" constant="32" id="kaj-YG-O9f"/>
+                            <constraint firstAttribute="height" constant="33" id="Ng8-3n-ufx"/>
+                            <constraint firstAttribute="width" constant="21" id="kaj-YG-O9f"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swS-kT-LN0">
-                        <rect key="frame" x="80" y="18" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gjY-TH-Evy">
-                        <rect key="frame" x="15" y="61" width="60" height="30"/>
+                        <rect key="frame" x="24" y="55" width="60" height="30"/>
                         <state key="normal" title="发布题组">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -37,7 +31,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4E-N3-tUK">
-                        <rect key="frame" x="180" y="61" width="60" height="30"/>
+                        <rect key="frame" x="160" y="55" width="60" height="30"/>
                         <state key="normal" title="查看结果">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -46,27 +40,42 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VsH-y8-Q2w">
-                        <rect key="frame" x="282" y="61" width="30" height="30"/>
-                        <state key="normal" title="删除">
+                        <rect key="frame" x="270" y="55" width="30" height="30"/>
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="clickOnDeleteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Zjh-GQ-eyO"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="swS-kT-LN0">
+                        <rect key="frame" x="66" y="19" width="246" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sqT-Rx-Q8C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="DMB-aQ-WdM"/>
-                    <constraint firstAttribute="bottom" secondItem="e4E-N3-tUK" secondAttribute="bottom" id="EYH-Zg-hBu"/>
-                    <constraint firstItem="swS-kT-LN0" firstAttribute="leading" secondItem="sqT-Rx-Q8C" secondAttribute="trailing" constant="33" id="Eqk-8s-WHA"/>
-                    <constraint firstAttribute="trailing" secondItem="VsH-y8-Q2w" secondAttribute="trailing" constant="8" id="O3r-KZ-JQ3"/>
-                    <constraint firstItem="swS-kT-LN0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="PbS-ff-yl2"/>
-                    <constraint firstAttribute="bottom" secondItem="VsH-y8-Q2w" secondAttribute="bottom" id="aIC-Gj-32A"/>
-                    <constraint firstAttribute="bottom" secondItem="gjY-TH-Evy" secondAttribute="bottom" id="gCx-2s-089"/>
+                    <constraint firstItem="VsH-y8-Q2w" firstAttribute="centerY" secondItem="e4E-N3-tUK" secondAttribute="centerY" id="7OO-Js-F4W"/>
+                    <constraint firstItem="e4E-N3-tUK" firstAttribute="centerY" secondItem="gjY-TH-Evy" secondAttribute="centerY" id="Af9-IU-8By"/>
+                    <constraint firstItem="sqT-Rx-Q8C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="DMB-aQ-WdM"/>
+                    <constraint firstAttribute="bottom" secondItem="e4E-N3-tUK" secondAttribute="bottom" constant="4" id="EYH-Zg-hBu"/>
+                    <constraint firstItem="swS-kT-LN0" firstAttribute="leading" secondItem="sqT-Rx-Q8C" secondAttribute="trailing" constant="25" id="Eqk-8s-WHA"/>
+                    <constraint firstAttribute="trailing" secondItem="VsH-y8-Q2w" secondAttribute="trailing" constant="20" id="O3r-KZ-JQ3"/>
+                    <constraint firstItem="swS-kT-LN0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="19" id="PbS-ff-yl2"/>
+                    <constraint firstAttribute="bottom" secondItem="VsH-y8-Q2w" secondAttribute="bottom" constant="6" id="aIC-Gj-32A"/>
+                    <constraint firstAttribute="bottom" secondItem="gjY-TH-Evy" secondAttribute="bottom" constant="6" id="gCx-2s-089"/>
                     <constraint firstItem="sqT-Rx-Q8C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="gOe-QQ-U0r"/>
-                    <constraint firstItem="VsH-y8-Q2w" firstAttribute="leading" secondItem="e4E-N3-tUK" secondAttribute="trailing" constant="42" id="gUx-9N-mLA"/>
-                    <constraint firstItem="gjY-TH-Evy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="yoR-Mq-vl4"/>
+                    <constraint firstItem="VsH-y8-Q2w" firstAttribute="leading" secondItem="e4E-N3-tUK" secondAttribute="trailing" constant="50" id="gUx-9N-mLA"/>
+                    <constraint firstAttribute="trailing" secondItem="swS-kT-LN0" secondAttribute="trailing" constant="8" id="wcX-BJ-BLS"/>
+                    <constraint firstItem="gjY-TH-Evy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="yoR-Mq-vl4"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="EYH-Zg-hBu"/>
+                        <exclude reference="aIC-Gj-32A"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="deleteButton" destination="VsH-y8-Q2w" id="IbN-bC-5Zf"/>
@@ -79,6 +88,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="testGroupIcon" width="46" height="46"/>
+        <image name="testGroupIcon1" width="21" height="33"/>
     </resources>
 </document>

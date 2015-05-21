@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>班级号</string>
+		<key>placeholder</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>班级名称</string>
+		<key>placeholder</key>
+		<string>班级名称</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>学校名称</string>
+		<key>placeholder</key>
+		<string>学校名称</string>
+	</dict>
+</array>
+</plist>

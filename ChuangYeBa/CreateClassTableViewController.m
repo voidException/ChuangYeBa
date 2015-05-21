@@ -12,13 +12,13 @@
 
 @interface CreateClassTableViewController ()
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (weak, nonatomic) IBOutlet UITextField *classNoTextField;
+@property (weak, nonatomic) IBOutlet UITextField *classNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *maxStudentTextField;
+@property (weak, nonatomic) IBOutlet UITextField *schoolNameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 
 - (IBAction)clickOnCreateButton:(id)sender;
-
 
 @end
 
@@ -33,6 +33,7 @@
     [self.createButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateDisabled];
     
     self.userInfo = [UserInfo loadUserInfoFromLocal];
+    self.schoolNameTextField.text = _userInfo.universityName;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,7 +43,7 @@
 
 #pragma mark - Private Method
 - (BOOL)isInfoLegal {
-    if (_classNoTextField.text.length == 0) {
+    if (_classNameTextField.text.length == 0) {
         return NO;
     } else if (_maxStudentTextField.text.length == 0) {
         return NO;
@@ -55,9 +56,7 @@
     if ([self isInfoLegal]) {
         NSNumberFormatter *numberFormater = [[NSNumberFormatter alloc] init];
         NSNumber *studentNum = [numberFormater numberFromString:_maxStudentTextField.text];
-#warning 重要！功能还不完善
-        self.userInfo.universityName = @"北京大学";
-        [ClassNetworkUtils submitToCreateClassWithClassName:_classNoTextField.text universityName:_userInfo.universityName studentNum:studentNum teacherId:_userInfo.userId andCallback:^(id obj) {
+        [ClassNetworkUtils submitToCreateClassWithClassName:_classNameTextField.text universityName:_schoolNameTextField.text studentNum:studentNum teacherId:_userInfo.userId andCallback:^(id obj) {
             NSDictionary *dic = obj;
             NSNumber *error = [obj objectForKey:@"error"];
             if ([error isEqual:@1]) {
@@ -82,7 +81,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 

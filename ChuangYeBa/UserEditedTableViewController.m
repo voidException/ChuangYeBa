@@ -138,7 +138,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
             // 先保存用户信息到local
             [UserInfo saveUserInfoToLocal:copyUserInfo];
             // 再发送更新用户信息的通知
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateClassInfo" object:self];
             
             
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
@@ -150,10 +150,8 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
             //[HUD show:YES];
             [HUD hide:YES afterDelay:1.0];
 
-            
-            //[self.navigationController popViewControllerAnimated:YES];
         } else {
-            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
             // Set custom view mode
             HUD.mode = MBProgressHUDModeCustomView;
             //HUD.delegate = self;

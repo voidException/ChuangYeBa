@@ -126,11 +126,10 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
     [self.submitButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateNormal];
     [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     
-#warning 一般 很奇怪这里为什么没法修改？
-    [self.lastButton setImage:[UIImage imageNamed:@"lastButtonIconSelected"] forState:UIControlStateSelected];
-    [self.nextButton setImage:[UIImage imageNamed:@"nextButtonIconSelected"] forState:UIControlStateSelected];
-    [self.lastButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateSelected];
-    [self.nextButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateSelected];
+    [self.lastButton setImage:[UIImage imageNamed:@"lastButtonIconSelected"] forState:UIControlStateHighlighted];
+    [self.nextButton setImage:[UIImage imageNamed:@"nextButtonIconSelected"] forState:UIControlStateHighlighted];
+    [self.lastButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateHighlighted];
+    [self.nextButton setTitleColor:[UIColor THEME_BLUE] forState:UIControlStateHighlighted];
     
 }
 

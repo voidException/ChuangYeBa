@@ -10,25 +10,34 @@
 
 @implementation AccuracyStatisticsCell
 
-- (void)awakeFromNib {
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self addAccuracyBarView];
-    
-    _quizStatistics = [[NSDictionary alloc] init];
-    
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [self addAccuracyBarView];
+        
+        self.quizStatistics = [[NSDictionary alloc] init];
+        self.textLabel.textColor = [UIColor grayColor];
+        self.textLabel.font = [UIFont fontWithName:@"Heiti SC" size:16];
+    }
+    return self;
 }
 
-- (void)showAccuracy {
-    NSNumber *accrateNum = [_quizStatistics objectForKey:@"accurateNum"];
-    NSNumber *wholeNum = [_quizStatistics objectForKey:@"wholeNum"];
-    NSNumber *testNo = [_quizStatistics objectForKey:@"testNo"];
-    
-    if ([wholeNum integerValue] != 0) {
-        _accuracy = (float)[accrateNum integerValue]/[wholeNum integerValue];
-    } else {
-        _accuracy = 0;
+- (void)setQuizStatistics:(NSDictionary *)quizStatistics {
+    if (quizStatistics == _quizStatistics) {
+        return;
     }
-    _accuracyBarView.accuracy = _accuracy;
+    _quizStatistics = quizStatistics;
+    
+    _accuracyBarView.accrateNum = [[_quizStatistics objectForKey:@"accurateNum"] integerValue];
+    _accuracyBarView.wholeNum = [[_quizStatistics objectForKey:@"wholeNum"]integerValue];
+    NSNumber *testNo = [_quizStatistics objectForKey:@"testNo"];
+    self.textLabel.text = [NSString stringWithFormat:@"%@.", testNo];
+}
+
+- (void)beginAnimate {
+    [_accuracyBarView beginAnimate];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -50,12 +59,11 @@
                                views:views]];
     
     [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"V:|-[_accuracyBarView]-|"
+                               constraintsWithVisualFormat:@"V:|-10-[_accuracyBarView]-10-|"
                                options:0
                                metrics:nil
                                views:views]];
     
 }
-
 
 @end

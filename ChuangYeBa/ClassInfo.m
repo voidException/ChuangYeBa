@@ -101,4 +101,19 @@
     [aCoder encodeObject:self.realStudentNum forKey:@"realStudentNum"];
 }
 
+#pragma mark - Copying delegate
+- (id)copyWithZone:(NSZone *)zone {
+    ClassInfo *copy = [[[self class] allocWithZone:zone] init];
+    copy.classId = self.classId;
+    copy.classNo = self.classNo;
+    copy.universityName = self.universityName;
+    copy.universityNo = self.universityNo;
+    copy.classroomName = self.classroomName;
+    copy.teacher = self.teacher;
+    copy.photoPath = self.photoPath;
+    copy.studentNum = self.studentNum;
+    copy.realStudentNum = self.realStudentNum;
+    return copy;
+}
+
 @end

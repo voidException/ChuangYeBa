@@ -12,11 +12,10 @@
 @interface AccuracyStatisticsCell : UITableViewCell
 
 @property (strong, nonatomic) AccuracyBarView *accuracyBarView;
-
 @property (strong, nonatomic) NSDictionary *quizStatistics;
-
+@property (strong, nonatomic) UILabel *accuracyLabel;
 @property (nonatomic) float accuracy;
 
-- (void)showAccuracy;
+- (void)beginAnimate;
 
 @end

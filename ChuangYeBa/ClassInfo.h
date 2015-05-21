@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "UserInfo.h"
 
-@interface ClassInfo : NSObject
+@interface ClassInfo : NSObject <NSCopying>
 
 @property (nonatomic, strong) UserInfo *teacher;
 // 表中的

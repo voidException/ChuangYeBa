@@ -18,7 +18,7 @@
 
 static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
-@interface ClassListTableViewController () <SINavigationMenuDelegate,TeacherTestGroupDelegate>
+@interface ClassListTableViewController () <SINavigationMenuDelegate,TeacherTestGroupDelegate, UIActionSheetDelegate>
 
 // UI相关属性
 @property (strong, nonatomic) SINavigationMenuView *menu;
@@ -33,6 +33,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 @property (strong, nonatomic) UserInfo *userInfo;
 // 题组信息
 @property (strong, nonatomic) NSMutableDictionary *testGroups;
+@property (strong, nonatomic) TestGroup *selectedTestGroup;
 // 班级信息
 @property (strong, nonatomic) NSMutableArray *classInfos;
 @property (strong, nonatomic) ClassInfo *selectedClassInfo;
@@ -132,7 +133,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     
     // 初始化右侧导航条加入题组按钮
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 2 * (buttonWidth + 7), 7, buttonWidth, buttonWidth)];
-    [self.addButton setImage:[[UIImage imageNamed:@"checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.addButton setImage:[[UIImage imageNamed:@"addTestGroupButtonNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [self.addButton addTarget:self action:@selector(clickOnAddButton:) forControlEvents:UIControlEventTouchUpInside];
     
     // 初始化左导航条按钮
@@ -258,7 +259,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
                 [cell setState:TestGroupStateUnpublish];
                 cell.testGroup.activity = @0;
             }
-            
         }];
     }
     // 点击查看结果
@@ -267,6 +267,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
             if (obj) {
                 NSDictionary *dic = obj;
                 _testStatistics = [dic objectForKey:@"itemAccurateNumVo"];
+                _selectedTestGroup = cell.testGroup;
                 [self performSegueWithIdentifier:@"ShowTestStatistics" sender:self];
             }
             
@@ -274,12 +275,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     }
     // 点击删除按钮
     else if (index == 2) {
-        NSLog(@"2");
-        [ClassNetworkUtils submitDeleteTestGroupByClassId:_selectedClassInfo.classId itemId:cell.testGroup.itemId andCallback:^(id obj) {
-            NSLog(@"删除itemId = %@成功", cell.testGroup.itemId);
-            [_testGroups removeObjectForKey:cell.testGroup.itemId];
-            [self.tableView reloadData];
-        }];
+        self.selectedTestGroup = cell.testGroup;
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认删除该题组吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil, nil];
+        actionSheet.tag = 0;
+        [actionSheet showInView:self.view];
     }
 }
 
@@ -344,6 +343,19 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     return cell;
 }
 
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 0) {
+        if (buttonIndex == 0) {
+            [ClassNetworkUtils submitDeleteTestGroupByClassId:_selectedClassInfo.classId itemId:self.selectedTestGroup.itemId andCallback:^(id obj) {
+                [_testGroups removeObjectForKey:self.selectedTestGroup.itemId];
+                [self.tableView reloadData];
+            }];
+        }
+    }
+}
+
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id destinationVC = [segue destinationViewController];
@@ -354,6 +366,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         [destinationVC setValue:_selectedClassInfo forKey:@"classInfo"];
     } else if ([segue.identifier isEqualToString:@"ShowTestStatistics"]) {
         [destinationVC setValue:_testStatistics forKey:@"testStatistics"];
+        [destinationVC setValue:_selectedTestGroup forKey:@"testGroup"];
     }
     
 }

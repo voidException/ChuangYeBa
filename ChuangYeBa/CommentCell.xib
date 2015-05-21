@@ -46,14 +46,13 @@
                         <color key="textColor" red="0.65098039215686276" green="0.65098039215686276" blue="0.65098039215686276" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-w0-OhD">
-                        <rect key="frame" x="279" y="50" width="33" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-w0-OhD">
+                        <rect key="frame" x="300" y="58" width="12" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="33" id="ABq-nr-H3m"/>
-                            <constraint firstAttribute="height" constant="30" id="cVU-MZ-c8r"/>
+                            <constraint firstAttribute="width" constant="12" id="ABq-nr-H3m"/>
+                            <constraint firstAttribute="height" constant="22" id="cVU-MZ-c8r"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="删除">
+                        <state key="normal" image="deleteButtonNormal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -116,4 +115,7 @@
             <point key="canvasLocation" x="200" y="309"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="deleteButtonNormal" width="12" height="16"/>
+    </resources>
 </document>

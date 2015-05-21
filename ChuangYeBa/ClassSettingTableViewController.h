@@ -16,7 +16,10 @@
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
+@property (strong, nonatomic) UIButton *footerButton;
 
 - (IBAction)clickOnExitClassButton:(id)sender;
+
+- (void)clickOnFooterButton:(id)sender;
 
 @end

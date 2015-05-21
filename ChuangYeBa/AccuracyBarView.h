@@ -18,7 +18,11 @@ typedef NS_ENUM(NSInteger, AccuracyBarState) {
 
 @property(nonatomic) UIView *indicatorView;
 @property (nonatomic) AccuracyBarState status;
+@property (strong, nonatomic) UILabel *accuracyLabel;
 @property (nonatomic) float accuracy;
+@property (nonatomic) NSInteger accrateNum;
+@property (nonatomic) NSInteger wholeNum;
 
+- (void)beginAnimate;
 
 @end

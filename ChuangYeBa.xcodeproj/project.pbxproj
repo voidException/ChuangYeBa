@@ -12,6 +12,7 @@
 		8B05B6021AEB5C330058B012 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B05E5F51AD9688300E87347 /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
 		8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
+		8B1DDF6F1B0DCEEF002156CA /* ClassEditedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */; };
 		8B276A791AFBB47E005C9FF7 /* EditedPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */; };
 		8B276A7B1AFBB49E005C9FF7 /* EditedPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */; };
 		8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34B1761AE8C0E500A39F8F /* TestStateCell.m */; };
@@ -42,6 +43,7 @@
 		8B451B081ADFED74002C4CA9 /* CommentInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451B071ADFED74002C4CA9 /* CommentInputView.m */; };
 		8B5AA2381B0B4468004995B9 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */; };
 		8B5AA23A1B0B5D0F004995B9 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */; };
+		8B6446BA1B0DD70100A561C1 /* classDetailList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B6446B91B0DD70100A561C1 /* classDetailList.plist */; };
 		8B662D2C1B0C48C000F6D342 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B6918811AED116C00D616DC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
 		8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */; };
@@ -233,6 +235,8 @@
 		8B05E5F21AD9688300E87347 /* OptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionCell.h; path = ChuangYeBa/OptionCell.h; sourceTree = "<group>"; };
 		8B05E5F31AD9688300E87347 /* OptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionCell.m; path = ChuangYeBa/OptionCell.m; sourceTree = "<group>"; };
 		8B05E5F41AD9688300E87347 /* OptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionCell.xib; path = ChuangYeBa/OptionCell.xib; sourceTree = "<group>"; };
+		8B1DDF6D1B0DCEEF002156CA /* ClassEditedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassEditedTableViewController.h; sourceTree = "<group>"; };
+		8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassEditedTableViewController.m; sourceTree = "<group>"; };
 		8B276A771AFBB47E005C9FF7 /* EditedPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditedPhotoView.h; path = ChuangYeBa/EditedPhotoView.h; sourceTree = "<group>"; };
 		8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditedPhotoView.m; path = ChuangYeBa/EditedPhotoView.m; sourceTree = "<group>"; };
 		8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditedPhotoView.xib; path = ChuangYeBa/EditedPhotoView.xib; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 		8B451B071ADFED74002C4CA9 /* CommentInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentInputView.m; path = ChuangYeBa/CommentInputView.m; sourceTree = "<group>"; };
 		8B5AA2361B0B4468004995B9 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackViewController.h; path = ChuangYeBa/FeedbackViewController.h; sourceTree = "<group>"; };
 		8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackViewController.m; path = ChuangYeBa/FeedbackViewController.m; sourceTree = "<group>"; };
+		8B6446B91B0DD70100A561C1 /* classDetailList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = classDetailList.plist; path = Plist/classDetailList.plist; sourceTree = "<group>"; };
 		8B69187F1AED116C00D616DC /* TestDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailView.h; path = ChuangYeBa/TestDetailView.h; sourceTree = "<group>"; };
 		8B6918801AED116C00D616DC /* TestDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailView.m; path = ChuangYeBa/TestDetailView.m; sourceTree = "<group>"; };
 		8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = userDetailListTeacher.plist; path = Plist/userDetailListTeacher.plist; sourceTree = "<group>"; };
@@ -759,6 +764,7 @@
 		8BB6ED2A1B0593CE00FB1932 /* Plist */ = {
 			isa = PBXGroup;
 			children = (
+				8B6446B91B0DD70100A561C1 /* classDetailList.plist */,
 				8BB6ED2B1B0593E100FB1932 /* appSetting.plist */,
 				8BB6ED2C1B0593E100FB1932 /* setting.plist */,
 				8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */,
@@ -886,6 +892,8 @@
 				8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */,
 				8BDA58AC1AD8E1C200E59EE8 /* ClassSettingTableViewController.h */,
 				8BDA58AD1AD8E1C200E59EE8 /* ClassSettingTableViewController.m */,
+				8B1DDF6D1B0DCEEF002156CA /* ClassEditedTableViewController.h */,
+				8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */,
 			);
 			name = ClassSetting;
 			sourceTree = "<group>";
@@ -1076,6 +1084,7 @@
 				8BBB61A11B06464300381DAC /* EditedPhotoView.xib in Resources */,
 				8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */,
 				8BBB61A21B06464300381DAC /* CommentInputView.xib in Resources */,
+				8B6446BA1B0DD70100A561C1 /* classDetailList.plist in Resources */,
 				8BF4DC251B0AD23A001E246E /* ClassBriefView.xib in Resources */,
 				8BBB61A41B06464300381DAC /* StudyContentCell.xib in Resources */,
 				8BBB61A51B06464300381DAC /* ClassInfoCell.xib in Resources */,
@@ -1290,6 +1299,7 @@
 				8BBB61981B06464300381DAC /* ConditionShowSegue.m in Sources */,
 				8BBB61EA1B06D4AA00381DAC /* SIMenuConfiguration.m in Sources */,
 				8BBB61991B06464300381DAC /* CommentInputView.m in Sources */,
+				8B1DDF6F1B0DCEEF002156CA /* ClassEditedTableViewController.m in Sources */,
 				8BBB619C1B06464300381DAC /* UserInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

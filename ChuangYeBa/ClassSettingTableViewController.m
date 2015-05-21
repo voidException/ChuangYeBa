@@ -29,6 +29,10 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     
     [self loadClassInfoFormLocal];
     [self requestClassInfoFormServer];
+    
+#ifdef TEACHER_VERSION
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestClassInfoFormServer) name:@"UpdateClassInfo" object:nil];
+#endif
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,6 +48,19 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.leftBarButtonItem = btn;
+    
+    
+#ifdef TEACHER_VERSION
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+    self.footerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 14, 45)];
+    self.footerButton.center = footerView.center;
+    [self.footerButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
+    [self.footerButton setTintColor:[UIColor whiteColor]];
+    [self.footerButton setTitle:@"编辑班级信息" forState:UIControlStateNormal];
+    [footerView addSubview:self.footerButton];
+    [self.footerButton addTarget:self action:@selector(clickOnFooterButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.tableFooterView = footerView;
+#endif
 }
 
 - (void)loadClassInfoFormLocal {
@@ -92,13 +109,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
 }
-
-#elif TEACHER_VERSION
-- (void)submitQuitClassToServer {
-    
-}
 #endif
-
 
 #pragma mark - Action
 - (void)clickOnBackButton {
@@ -108,6 +119,10 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 - (IBAction)clickOnExitClassButton:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出班级" otherButtonTitles:nil, nil];
     [actionSheet showInView:self.view];
+}
+
+- (void)clickOnFooterButton:(id)sender {
+    [self performSegueWithIdentifier:@"ShowClassEdited" sender:self];
 }
 
 #pragma mark - Tbale view delegaet
@@ -214,13 +229,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     } else return nil;
 }
 
-#pragma mark - Action Sheet Delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self submitQuitClassToServer];
-    }
-}
-
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowUserList"]) {
@@ -229,44 +237,6 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         [destinationVC setValue:self.studentDic forKey:@"studentDic"];
     }
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
-
 
 
 @end
