@@ -7,17 +7,23 @@
 //
 
 #import "ClassSettingTableViewController.h"
+#import <MobileCoreServices/UTCoreTypes.h>
+#import "MeNetworkUtils.h"
+#import <MBProgressHUD.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString *classInfoCellIdentifier = @"ClassInfoCell";
+static NSString *bucket = @"startupimg";
 
-@interface ClassSettingTableViewController ()
+@interface ClassSettingTableViewController () <ClassInfoCellDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) NSMutableDictionary *studentDic;
+@property (strong, nonatomic) UIImage *userChoosePhoto;
 
 @end
 
 @implementation ClassSettingTableViewController
-@synthesize classInfo;
+//@synthesize classInfo;
 @synthesize userInfo;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,11 +33,12 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     // 初始化数组
     self.studentDic = [[NSMutableDictionary alloc] init];
     
-    [self loadClassInfoFormLocal];
+    self.classInfo = [ClassInfo loadClassInfoFromLocal];
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
     [self requestClassInfoFormServer];
     
 #ifdef TEACHER_VERSION
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestClassInfoFormServer) name:@"UpdateClassInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadClassInfo:) name:@"UpdateClassInfo" object:nil];
 #endif
 }
 
@@ -63,19 +70,9 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 #endif
 }
 
-- (void)loadClassInfoFormLocal {
-    self.classInfo = [[ClassInfo alloc] init];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"classInfo"];
-    self.classInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-    userInfo = [UserInfo loadUserInfoFromLocal];
-}
-
-- (void)saveClassInfoToLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
-    [ud setObject:udObject forKey:@"classInfo"];
-    [ud synchronize];
+- (void)reloadClassInfo:(NSNotification *)notif {
+    self.classInfo = [ClassInfo loadClassInfoFromLocal];
+    [self.tableView reloadData];
 }
 
 - (void)requestClassInfoFormServer {
@@ -84,7 +81,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
             NSDictionary *dic = obj;
             self.classInfo = [ClassJsonParser parseClassInfo:[dic objectForKey:@"oneClass"]];
             self.classInfo.teacher = [LoginJsonParser parseUserInfoInLogin:[dic objectForKey:@"teacher"] isTeacher:YES];
-            [self saveClassInfoToLocal];
+            [ClassInfo saveClassInfoToLocal:self.classInfo];
             NSArray *userListArr = [dic objectForKey:@"studentTwoVo"];
             for (NSDictionary *userInfoDic in userListArr) {
                 UserInfo *aUser = [ClassJsonParser parseUserInfo:userInfoDic];
@@ -97,7 +94,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 #ifdef STUDENT_VERSION
 - (void)submitQuitClassToServer {
-    [ClassNetworkUtils submitQuitClassWithUserId:userInfo.userId andClassId:classInfo.classId andCallback:^(id obj) {
+    [ClassNetworkUtils submitQuitClassWithUserId:self.userInfo.userId andClassId:self.classInfo.classId andCallback:^(id obj) {
         NSLog(@"%@", obj);
         // 修改UserDeaults中的isUserAddedClass的值，修改为NO
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -197,16 +194,20 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     if (indexPath.section == 0) {
         ClassInfoCell *classInfoCell = [tableView dequeueReusableCellWithIdentifier:classInfoCellIdentifier];
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-        NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
+        NSString *classNoString = [formatter stringFromNumber:self.classInfo.classNo];
         classInfoCell.classNoLabel.text = classNoString;
-        classInfoCell.classNameLabel.text = classInfo.classroomName;
+        classInfoCell.classNameLabel.text = self.classInfo.classroomName;
+        [classInfoCell.photo sd_setImageWithURL:[NSURL URLWithString:_classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"PKUIcon"]];
         
 #ifdef STUDENT_VERSION
-        classInfoCell.teacherNameLabel.text = classInfo.teacher.name;
+        classInfoCell.teacherNameLabel.text = self.classInfo.teacher.name;
 #elif TEACHER_VERSION
-        classInfoCell.teacherNameLabel.text = userInfo.name;
+        classInfoCell.teacherNameLabel.text = self.userInfo.name;
 #endif
-        classInfoCell.universityNameLabel.text = classInfo.universityName;
+        classInfoCell.universityNameLabel.text = self.classInfo.universityName;
+#ifdef TEACHER_VERSION
+        classInfoCell.delegate = self;
+#endif
 
         return classInfoCell;
     } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
@@ -229,6 +230,13 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     } else return nil;
 }
 
+#pragma mark - ClassInfoCell delegate
+- (void)clickOnPhoto:(ClassInfoCell *)classInfoCell {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从系统相册中选择", nil];
+    actionSheet.tag = 0;
+    [actionSheet showInView:self.view];
+}
+
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowUserList"]) {
@@ -237,6 +245,141 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
         [destinationVC setValue:self.studentDic forKey:@"studentDic"];
     }
 }
+
+
+#ifdef TEACHER_VERSION
+
+#pragma mark - 照片上传相关
+
+#pragma mark - ActionSheet delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+            break;
+        case 1:
+            [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+        default:
+            break;
+    }
+}
+
+// 压缩图片方法，用于处理选择的图片
+- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    
+    CGFloat originalAspect = original.size.width / original.size.height;
+    CGFloat targetAspect = size.width / size.height;
+    CGRect targetRect;
+    
+    if (originalAspect > targetAspect) {
+        // original is wider than target
+        targetRect.size.width = size.width;
+        targetRect.size.height = size.height * targetAspect / originalAspect;
+        targetRect.origin.x = 0;
+        targetRect.origin.y = (size.height - targetRect.size.height) * 0.5;
+    } else if (originalAspect < targetAspect) {
+        // original is narrower than target
+        targetRect.size.width = size.width * originalAspect / targetAspect;
+        targetRect.size.height = size.height;
+        targetRect.origin.x = (size.width - targetRect.size.width) * 0.5;
+        targetRect.origin.y = 0;
+    } else {
+        // original and target have same aspect ratio
+        targetRect = CGRectMake(0, 0, size.width, size.height);
+    }
+    
+    [original drawInRect:targetRect];
+    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return final;
+}
+
+
+// 取系统相册和相机资源的方法
+- (void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
+{
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if ([UIImagePickerController
+         isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        NSString *requiredMediaType = (NSString *)kUTTypeImage;
+        NSArray *arrayMediaType = [NSArray arrayWithObjects:requiredMediaType, nil];
+        [picker setMediaTypes:arrayMediaType];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    } else {
+        UIAlertView *alert =
+        [[UIAlertView alloc] initWithTitle:@"Error accessing media"
+                                   message:@"Unsupported media source."
+                                  delegate:nil
+                         cancelButtonTitle:@"Drat!"
+                         otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+
+
+#pragma mark - Image Picker Controller delegate methods
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    ClassInfoCell *cell = (ClassInfoCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    self.userChoosePhoto = [self shrinkImage:chosenImage
+                                      toSize:cell.photo.bounds.size];
+    [self requestUploadTokenFromServer];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)requestUploadTokenFromServer {
+    // 请求上传照片的Token
+    [MeNetworkUtils requestTokenForUploadTokenWithBucket:bucket andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            // 在这里errorMessage键传的是Token的值
+            NSString *token = [dic objectForKey:@"errorMessage"];
+            // 把用户选择的照片上传
+            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"class" date:[NSDate date] ownerId:_classInfo.classId andCallback:^(id obj) {
+                NSDictionary *dic = obj;
+                NSString *key = [dic objectForKey:@"key"];
+                [self.classInfo setPhotoPathWithStorageURL:key];
+                
+                // 提交更改用户信息到服务器，告知服务器保存新的图片地址
+                [ClassNetworkUtils submitModifiedClassInfo:self.classInfo andCallback:^(id obj) {
+                    if (obj) {
+                        [ClassInfo saveClassInfoToLocal:self.classInfo];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateClassInfo" object:nil];
+                        [self.tableView reloadData];
+                        
+                        MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+                        [self.navigationController.view addSubview:HUD];
+                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+                        HUD.mode = MBProgressHUDModeCustomView;
+                        HUD.animationType = MBProgressHUDAnimationZoomIn;
+                        HUD.labelText = @"上传照片成功啦";
+                        [HUD show:YES];
+                        [HUD hide:YES afterDelay:1.0];
+                            
+                    }
+                }];
+            }];
+        }
+    }];
+}
+        
+
+#endif
 
 
 @end

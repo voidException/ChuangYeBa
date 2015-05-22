@@ -11,13 +11,13 @@
 @implementation ClassListCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    _photoImage.layer.masksToBounds = YES;
+    _photoImage.layer.cornerRadius = 5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
 - (void)drawRect:(CGRect)rect {

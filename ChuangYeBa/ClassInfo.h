@@ -29,4 +29,6 @@
 
 + (void)saveClassInfoToLocal:(ClassInfo *)classInfo;
 
+- (void)setPhotoPathWithStorageURL:(NSString *)key;
+
 @end

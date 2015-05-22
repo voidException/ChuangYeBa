@@ -62,6 +62,7 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
     // 初始化头视图
     float margin = 8.0;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    headerView.backgroundColor = [UIColor whiteColor];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(margin, 15, self.view.frame.size.width - 2 * margin, 30)];
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     titleLabel.numberOfLines = 1;
@@ -85,8 +86,6 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
             NSDictionary *dic = obj;
             // 接受错误信息
             NSNumber *error = [dic objectForKey:@"error"];
-            NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-            
             if ([error integerValue] == 1) {
                 // 给题组赋值
                 NSArray *quizsArr = [dic objectForKey:@"test"];
@@ -101,9 +100,6 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
                     [self.quizs addObject:qz];
                 }
                 [self performSegueWithIdentifier:@"ShowTestGroup" sender:self];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-                [alert show];
             }
         }];
     }

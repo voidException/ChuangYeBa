@@ -27,6 +27,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 @property (strong, nonatomic) UIButton *addButton;
 @property (strong, nonatomic) CircleButton *leftButton;
 @property (strong, nonatomic) ClassBriefView *headerView;
+@property (strong, nonatomic) UIView *blankView;
 
 
 // 数据相关
@@ -60,12 +61,14 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // 注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserAddedTestGroups" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userCreateClass:) name:@"UserCreateClass" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadClassBrief:) name:@"UpdateClassInfo" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (!_selectedClassInfo) {
-        self.settingButton.enabled = NO;
+        self.refreshButton.enabled = NO;
+        self.addButton.enabled = NO;
     }
     [self.refreshButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
@@ -74,7 +77,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [self.navigationController.navigationBar addSubview:self.leftButton];
     [self.navigationController.navigationBar addSubview:self.addButton];
     [UIView animateWithDuration:0.3 animations:^{
-        //[self.settingButton setAlpha:1.0];
         [self.leftButton setAlpha:1.0];
         [self.addButton setAlpha:1.0];
         [self.refreshButton setAlpha:1.0];
@@ -153,6 +155,28 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         self.menu.delegate = self;
         self.navigationItem.titleView = self.menu;
     }
+    
+    if (!_selectedClassInfo) {
+        _headerView.hidden = YES;
+        self.blankView = [[UIView alloc] initWithFrame:self.view.frame];
+        _blankView.backgroundColor = [UIColor clearColor];
+        [self.view insertSubview:_blankView atIndex:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 100)];
+        label.text = @"请选择班级";
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont boldSystemFontOfSize:20];
+        [label sizeToFit];
+        label.center = self.view.center;
+        label.center = CGPointMake(_blankView.center.x, self.view.center.y - 20);
+        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"classBlankBG"]];
+        image.center = CGPointMake(_blankView.center.x, self.view.center.y - 100);
+        [_blankView addSubview:image];
+        [_blankView addSubview:label];
+    }
+}
+
+- (void)reloadClassBrief:(NSNotification *)notif {
+    [self.headerView setNeedsLayout];
 }
 
 - (void)userCreateClass:(NSNotification *)notif {
@@ -171,7 +195,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
             HUD.animationType = MBProgressHUDAnimationZoomIn;
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
             HUD.labelText = @"加载班级成功";
-            [HUD hide:YES afterDelay:1.0];
+            [HUD hide:YES afterDelay:0.5];
             NSDictionary *dic = obj;
             NSNumber *error = [dic objectForKey:@"error"];
             // error = 2 成功返回老师的班级
@@ -285,6 +309,15 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 #pragma mark - SINavigationView delegate
 - (void)didSelectItemAtIndex:(NSUInteger)index {
     self.selectedClassInfo = _classInfos[index];
+    if (_selectedClassInfo) {
+        if (_blankView) {
+            _addButton.enabled = YES;
+            _refreshButton.enabled = YES;
+            _headerView.hidden = NO;
+            [_blankView removeFromSuperview];
+            _blankView = nil;
+        }
+    }
     [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
     [self requestTestGroupsFromServer];
     [self.headerView setNeedsLayout];
@@ -306,7 +339,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         [UIView animateWithDuration:0.3 animations:^{
             [self.addButton setAlpha:1.0];
         } completion:^(BOOL finished) {
-            [self.addButton setEnabled:YES];
+            if (_selectedClassInfo) {
+                [self.addButton setEnabled:YES];
+            }
         }];
     }
 }

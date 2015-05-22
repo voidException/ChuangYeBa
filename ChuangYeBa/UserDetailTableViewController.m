@@ -28,11 +28,8 @@ static NSString *bucket = @"startupimg";
 @property (strong, nonatomic) UIButton *rightButton;
 @property (strong, nonatomic) EditedPhotoView *headerView;
 
-
 @property (nonatomic, strong) UIImage *userChoosePhoto;
 
-// TEMP????
-@property (nonatomic, strong) NSMutableArray *photoArray;
 @end
 
 @implementation UserDetailTableViewController
@@ -40,9 +37,6 @@ static NSString *bucket = @"startupimg";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    // temp
-    self.photoArray = [[NSMutableArray alloc] init];
     
     [self loadUserInfoFromLocal];
     [self initUI];
@@ -145,13 +139,14 @@ static NSString *bucket = @"startupimg";
 
 
 - (void)loadUserInfoFromLocal {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    self.userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
     NSArray *arrSection0 = @[_userInfo.name, _userInfo.email];
+#ifdef STUDENT_VERSION
     NSArray *arrSection1 = @[_userInfo.userNo, _userInfo.sex, _userInfo.school, _userInfo.department];
+#elif TEACHER_VERSION
+    NSArray *arrSection1 = @[_userInfo.universityName, _userInfo.tel];
+#endif
     self.userInfoList = @[arrSection0, arrSection1];
-    
 }
 
 - (void)loadHeaderView {
@@ -236,50 +231,6 @@ static NSString *bucket = @"startupimg";
 - (void)updatePhotoDisplay {
     self.headerView.photoImage.image = self.userChoosePhoto;
 }
-
-- (void)requestUploadTokenFromServer {
-    // 请求上传照片的Token
-    [MeNetworkUtils requestTokenForUploadTokenWithBucket:bucket andCallback:^(id obj) {
-        if (obj) {
-            NSDictionary *dic = obj;
-            // 在这里errorMessage键传的是Token的值
-            NSString *token = [dic objectForKey:@"errorMessage"];
-            
-            // 把用户选择的照片上传
-#ifdef STUDENT_VERSION
-            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"student" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
-#elif TEACHER_VERSION
-            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"teacher" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
-#endif
-                NSDictionary *dic = obj;
-                NSString *key = [dic objectForKey:@"key"];
-                [self.userInfo setPhotoPathWithStorageURL:key];
-                
-                // 提交更改用户信息到服务器，告知服务器保存新的图片地址
-                [MeNetworkUtils submitModifiedUserInfo:self.userInfo andCallback:^(id obj) {
-                    if (obj) {
-                        [UserInfo saveUserInfoToLocal:self.userInfo];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
-                        
-                        MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-                        [self.navigationController.view addSubview:HUD];
-                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
-                        // Set custom view mode
-                        HUD.mode = MBProgressHUDModeCustomView;
-                        HUD.animationType = MBProgressHUDAnimationZoomIn;
-                        //HUD.delegate = self;
-                        HUD.labelText = @"上传照片成功啦";
-                        [HUD show:YES];
-                        [HUD hide:YES afterDelay:1.0];
-
-                    }
-                }];
-            }];
-        }
-    }];
-}
-
-
 
 #pragma mark - Action
 - (void)clickOnPhoto:(EditedPhotoView *)editedPhotoView {
@@ -366,48 +317,48 @@ static NSString *bucket = @"startupimg";
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)requestUploadTokenFromServer {
+    // 请求上传照片的Token
+    [MeNetworkUtils requestTokenForUploadTokenWithBucket:bucket andCallback:^(id obj) {
+        if (obj) {
+            NSDictionary *dic = obj;
+            // 在这里errorMessage键传的是Token的值
+            NSString *token = [dic objectForKey:@"errorMessage"];
+            
+            // 把用户选择的照片上传
+#ifdef STUDENT_VERSION
+            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"student" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+#elif TEACHER_VERSION
+                [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"teacher" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+#endif
+                    NSDictionary *dic = obj;
+                    NSString *key = [dic objectForKey:@"key"];
+                    [self.userInfo setPhotoPathWithStorageURL:key];
+                    
+                    // 提交更改用户信息到服务器，告知服务器保存新的图片地址
+                    [MeNetworkUtils submitModifiedUserInfo:self.userInfo andCallback:^(id obj) {
+                        if (obj) {
+                            [UserInfo saveUserInfoToLocal:self.userInfo];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
+                            
+                            MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+                            [self.navigationController.view addSubview:HUD];
+                            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+                            // Set custom view mode
+                            HUD.mode = MBProgressHUDModeCustomView;
+                            HUD.animationType = MBProgressHUDAnimationZoomIn;
+                            //HUD.delegate = self;
+                            HUD.labelText = @"上传照片成功啦";
+                            [HUD show:YES];
+                            [HUD hide:YES afterDelay:1.0];
+                            
+                        }
+                    }];
+                }];
+            }
+        }];
 }
-*/
+        
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

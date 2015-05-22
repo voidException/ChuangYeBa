@@ -18,7 +18,6 @@
 
 @implementation StudyHostViewController
 
-
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -103,8 +102,13 @@
     
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
+    if ([[UIScreen mainScreen] bounds].size.width == 320) {
+        label.font = [UIFont systemFontOfSize:13.0];
+        
+    } else {
+        label.font = [UIFont systemFontOfSize:15.0];
+    }
     
-    label.font = [UIFont systemFontOfSize:15.0];
     NSDictionary *dic = self.categoryArray[index];
     label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
@@ -116,7 +120,12 @@
 - (UIView *)viewPager:(ViewPagerController *)viewPager activeViewForTabAtIndex:(NSUInteger)index {
     UILabel *label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:18.0];
+    if ([[UIScreen mainScreen] bounds].size.width == 320) {
+        label.font = [UIFont systemFontOfSize:16.0];
+        
+    } else {
+        label.font = [UIFont systemFontOfSize:18.0];
+    }
     NSDictionary *dic = self.categoryArray[index];
     label.text = [dic objectForKey:@"title"];
     label.textAlignment = NSTextAlignmentCenter;
@@ -144,10 +153,18 @@
             return 1.0;
             break;
         case ViewPagerOptionTabHeight:
-            return 43.0;
+            if ([[UIScreen mainScreen] bounds].size.width == 320) {
+                return 35.0;
+            } else {
+                return 43.0;
+            }
             break;
         case ViewPagerOptionTabWidth:
-            return 75.0;
+            if ([[UIScreen mainScreen] bounds].size.width == 320) {
+                return 64.0;
+            } else {
+                return 75.0;
+            }
             break;
             
         default:

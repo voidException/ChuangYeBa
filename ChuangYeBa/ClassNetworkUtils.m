@@ -32,6 +32,7 @@ static NSString *serverIP = SERVER_IP;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ClassNetworkUtils failureAction:error];
+        callback(nil);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
@@ -277,14 +278,11 @@ static NSString *serverIP = SERVER_IP;
     NSString *path = @"/startup/teacher/class/changeClassMessage";
     path = [serverIP stringByAppendingString:path];
     
-    NSDictionary *params = @{@"classid":classInfo.classId,
-                             @"classroomname":classInfo.classroomName,
-                             @"studentnum":classInfo.classroomName,
-                             //@"realstudentnum":classInfo.realStudentNum,
-                             @"photo":classInfo.photoPath,
-                             //@"universityno":classInfo.universityNo,
-                             @"universityname":classInfo.universityName,
-                             //@"classno":classInfo.classNo
+    NSDictionary *params = @{@"classId":classInfo.classId,
+                             @"className":classInfo.classroomName,
+                             @"maxStudentNum":classInfo.studentNum,
+                             @"photoPath":classInfo.photoPath,
+                             @"universityName":classInfo.universityName,
                              };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

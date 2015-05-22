@@ -14,7 +14,7 @@
 
 static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 
-@interface ClassEditedTableViewController () <MBProgressHUDDelegate>
+@interface ClassEditedTableViewController () <MBProgressHUDDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UIButton *footerButton;
@@ -46,6 +46,8 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     NSString *plistPath = [bundle pathForResource:@"classDetailList" ofType:@"plist"];
     self.detailList = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
+    self.title = @"修改班级信息";
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"EditedInfoCell" bundle:nil] forCellReuseIdentifier:editedInfoCellIdentifier];
     
     self.tableView.userInteractionEnabled = YES;
@@ -56,9 +58,12 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     // 初始化headerView
     float margin = 8.0;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, margin, self.view.frame.size.width - 2 * margin, 40)];
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(margin, 0, self.view.frame.size.width - 2 * margin, 40)];
+    headerLabel.textColor = [UIColor grayColor];
+        headerLabel.text = @"  请直接点击输入框修改班级信息:";
+    headerLabel.font = [UIFont systemFontOfSize:16.0];
     [headerView addSubview:headerLabel];
-    headerLabel.text = @"请直接点击输入框修改班级信息";
+    self.tableView.tableHeaderView = headerView;
     
     // 初始化footerView
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
@@ -71,16 +76,24 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     [self.footerButton addTarget:self action:@selector(clickOnFooterButton:) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.tableFooterView = footerView;
     
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnCancelButton:)];
+    self.navigationItem.leftBarButtonItem = leftButton;
+    
 }
 
 #pragma mark - Action
+- (void)clickOnCancelButton:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认要取消修改吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.tag = 0;
+    [alert show];
+}
+
 - (void)clickOnFooterButton:(id)sender {
     
     MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     HUD.delegate = self;
     HUD.labelText = @"正在提交";
-    HUD.minSize = CGSizeMake(135.f, 135.f);
     [HUD show:YES];
     
     HUD.animationType = MBProgressHUDAnimationZoomIn;
@@ -93,20 +106,16 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
             NSNumber *error = [dic objectForKey:@"error"];
             if ([error isEqualToNumber:@1]) {
                 [ClassInfo saveClassInfoToLocal:copyClassInfo];
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateClassInfo" object:nil];
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
-                // Set custom view mode
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.animationType = MBProgressHUDAnimationZoomIn;
                 HUD.labelText = @"修改成功";
-                //[HUD show:YES];
                 [HUD hide:YES afterDelay:1.0];
             }
         } else {
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
-            // Set custom view mode
             HUD.mode = MBProgressHUDModeCustomView;
-            //HUD.delegate = self;
             HUD.labelText = @"网络错误";
             [HUD hide:YES afterDelay:1.0];
         }
@@ -161,49 +170,12 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - Alert view delegate 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 0) {
+        if (buttonIndex == 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

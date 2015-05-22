@@ -12,12 +12,15 @@
 
 - (void)awakeFromNib {
     
+#ifdef TEACHER_VERSION
+    self.sexImage.hidden = YES;
+#endif
+    
     self.backgroundColor = [UIColor greenColor];
     self.photoImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnPhoto)];
     [self.photoImage addGestureRecognizer:tapGesture];
 
-    //self.frame = CGRectMake(0, 0, self.superview.frame.size.width, 225);
 }
 - (void)clickOnPhoto {
     [self.delegate clickOnPhoto:self];

@@ -16,7 +16,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [self addAccuracyBarView];
-        
+        self.backgroundColor = [UIColor clearColor];
         self.quizStatistics = [[NSDictionary alloc] init];
         self.textLabel.textColor = [UIColor grayColor];
         self.textLabel.font = [UIFont fontWithName:@"Heiti SC" size:16];

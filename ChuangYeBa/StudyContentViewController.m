@@ -143,12 +143,6 @@ static NSInteger const kPageSize = 8;
 }
 
 - (void)loadUserInfoFromLocal {
-    /*
-    userInfo = [[UserInfo alloc] init];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSData *udObject = [ud objectForKey:@"userInfo"];
-    userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:udObject];
-     */
     self.userInfo = [[UserInfo alloc] initWithUserDefault];
     if (self.userInfo) {
         [self.tableView.footer beginRefreshing];
@@ -240,12 +234,14 @@ static NSInteger const kPageSize = 8;
     studyContentCell.titleLabel.text = article.title;
     
     NSString *path = article.miniPhotoURL;
-    //[studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholder"]];
-    [studyContentCell.mainImage sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:path] andPlaceholderImage:[UIImage imageNamed:@"studyContentPlaceholder"] options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholder"]];
+    /*
+    [studyContentCell.mainImage sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:path] andPlaceholderImage:[UIImage imageNamed:@"studyContentPlaceholder"] options:SDWebImageHandleCookies progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         NSLog(@"cacheType = %lu", cacheType);
     }];
+    */
     
     studyContentCell.likeLabel.text = [NSString stringWithFormat:@"%@", article.likes];
     studyContentCell.commentLabel.text = [NSString stringWithFormat:@"%@", article.comments];

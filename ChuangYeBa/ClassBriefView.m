@@ -13,7 +13,8 @@
 @implementation ClassBriefView
 
 - (void)awakeFromNib {
-    
+    _photoImage.layer.masksToBounds = YES;
+    _photoImage.layer.cornerRadius = 5;
 }
 
 - (void)layoutSubviews {

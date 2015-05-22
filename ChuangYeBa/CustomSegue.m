@@ -23,7 +23,7 @@
     [window insertSubview:secondVC.view aboveSubview:firstVC.view];
     
     
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         firstVC.tabBarController.view.frame = CGRectOffset(firstVC.view.frame, - screenWidth, 0.0);
         secondVC.view.frame = CGRectOffset(secondVC.view.frame, - screenWidth, 0.0);
     } completion:^(BOOL finished) {

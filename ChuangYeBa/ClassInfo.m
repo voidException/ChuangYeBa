@@ -7,6 +7,7 @@
 //
 
 #import "ClassInfo.h"
+#import "GlobalDefine.h"
 
 @implementation ClassInfo
 
@@ -26,7 +27,7 @@
         [ud setObject:udObject forKey:@"classInfo"];
         [ud synchronize];
     } else {
-        
+        NSLog(@"没有成功保存classInfo,因为要保存的classInfo为空");
     }
 }
 
@@ -38,6 +39,12 @@
     [ud synchronize];
 }
 */
+
+- (void)setPhotoPathWithStorageURL:(NSString *)key {
+    NSString *url = STORAGE_URL;
+    NSString *str = [NSString stringWithFormat:@"%@%@", url, key];
+    _photoPath = str;
+}
 
 #pragma mark - Setter
 - (void)setPhotoPath:(NSString *)photoPath {

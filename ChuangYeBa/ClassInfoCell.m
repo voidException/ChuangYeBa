@@ -11,8 +11,15 @@
 @implementation ClassInfoCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    self.userInteractionEnabled = NO;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.photo.layer.masksToBounds = YES;
+    self.photo.layer.cornerRadius = 5;
+#ifdef TEACHER_VERSION
+    self.photo.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnPhoto:)];
+    [self.photo addGestureRecognizer:tapGesture];
+#endif
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -21,7 +28,12 @@
     // Configure the view for the selected state
 }
 
+- (void)clickOnPhoto:(id)sender {
+    [self.delegate clickOnPhoto:self];
+}
+
 - (void)drawRect:(CGRect)rect {
+    // 绘制虚线
     CGContextRef context =UIGraphicsGetCurrentContext();
     CGContextBeginPath(context);
     CGContextSetLineWidth(context, 2.0);
@@ -33,7 +45,6 @@
     CGContextMoveToPoint(context, 94.0, 136.0);
     CGContextAddLineToPoint(context, self.frame.size.width, 134.0);
     CGContextStrokePath(context);
-    //CGContextClosePath(context);
 }
 
 @end

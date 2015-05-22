@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"关于我们";
+    self.title = @"意见反馈";
     NSURL * url = [NSURL URLWithString: @"http://192.168.1.104:8080/startup/more/advise"];
     NSURLRequest * request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];

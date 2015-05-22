@@ -146,8 +146,13 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
             }
         }];
         userInfoCell.nameLabel.text = self.userInfo.name;
+#ifdef STUDENT_VERSION
         userInfoCell.numberLabel.text = [NSString stringWithFormat:@"学号：%@", self.userInfo.userNo];
+#elif TEACHER_VERSION
+        userInfoCell.numberLabel.text = [NSString stringWithFormat:@"学校：%@", self.userInfo.universityName];
+#endif
         return userInfoCell;
+
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (cell == nil) {

@@ -347,8 +347,6 @@ static NSInteger const kPageSize = 2;
 - (IBAction)clickOnLikeButton:(id)sender {
     if (isLiked) {
         isLiked = NO;
-        
-        
         [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
         
     } else {
@@ -377,7 +375,6 @@ static NSInteger const kPageSize = 2;
     if (isDownloaded) {
         isDownloaded = NO;
         [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
-        
     } else {
         isDownloaded = YES;
         [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadClicked"] forState:UIControlStateNormal];
