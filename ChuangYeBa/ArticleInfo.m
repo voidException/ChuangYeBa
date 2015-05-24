@@ -58,7 +58,7 @@
     paragraphStyle.lineSpacing = lineSpacing;
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:fontOfSize], NSParagraphStyleAttributeName:paragraphStyle};
     
-    CGRect frame = [string boundingRectWithSize:CGSizeMake(screenWidth - widthOffset, 999) options:NSStringDrawingUsesLineFragmentOrigin  attributes:attributes context:nil];
+    CGRect frame = [string boundingRectWithSize:CGSizeMake(screenWidth - widthOffset, 9999) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributes context:nil];
     // 加上文本高度
     float height = frame.size.height;
     // 文本高度应该加上一点点边？？
