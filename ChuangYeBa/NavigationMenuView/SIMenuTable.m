@@ -7,7 +7,7 @@
 //
 
 #import "SIMenuTable.h"
-#import "SIMenuCell.h"
+//#import "SIMenuCell.h"
 #import "ClassListCell.h"
 #import "SIMenuConfiguration.h"
 #import <QuartzCore/QuartzCore.h>
@@ -93,10 +93,12 @@ static NSString *classListCellIdentifier = @"ClassListCell";
             self.table.frame = startFrame;
         } completion:^(BOOL finished) {
 //            [self.table deselectRowAtIndexPath:currentIndexPath animated:NO];
+            /*
             SIMenuCell *cell = (SIMenuCell *)[self.table cellForRowAtIndexPath:currentIndexPath];
             [cell setSelected:NO withCompletionBlock:^{
 
             }];
+             */
             currentIndexPath = nil;
             [self removeFooter];
             [self.table removeFromSuperview];
