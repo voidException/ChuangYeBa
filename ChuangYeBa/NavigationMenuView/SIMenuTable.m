@@ -14,6 +14,7 @@
 #import "UIColor+Extension.h"
 #import "SICellSelection.h"
 #import "ClassInfo.h"
+#import "BorderRadiusButton.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString *classListCellIdentifier = @"ClassListCell";
@@ -128,12 +129,10 @@ static NSString *classListCellIdentifier = @"ClassListCell";
     buttonView.backgroundColor = [UIColor whiteColor];
     [footer addSubview:buttonView];
     
-    
-    UIButton *footerButton = [[UIButton alloc] initWithFrame:CGRectMake(12, 20, [SIMenuConfiguration menuWidth] - 24, 45)];
+    float buttonMargin = 13.0;
+    BorderRadiusButton *footerButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(12, 20, [SIMenuConfiguration menuWidth] - 2 * buttonMargin, 0)];
     footerButton.center = buttonView.center;
-    [footerButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
     [footerButton setTitle:@"创建班级" forState:UIControlStateNormal];
-    [footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [footerButton addTarget:self action:@selector(clickOnFooterButton:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:footerButton];
     

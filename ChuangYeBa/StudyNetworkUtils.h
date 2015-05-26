@@ -33,4 +33,7 @@ typedef void (^Callback)(id obj);
 // 增加一条赞
 + (void)submitAddLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback;
 
+// 删除一条赞
++ (void)submitDelLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback;
+
 @end

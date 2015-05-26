@@ -21,7 +21,6 @@
 @synthesize isUserAddedClass;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -41,11 +40,6 @@
 }
 
 #pragma mark - Private Method
-- (void)initUI {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-}
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

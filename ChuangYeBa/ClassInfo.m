@@ -31,14 +31,13 @@
     }
 }
 
-// 删除本地的用户信息
-/*
-+ (void)deleteUserInfoFromLocal {
+// 删除本地的班级信息
++ (void)deleteClassInfoFromLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud removeObjectForKey:@"classInfo"];
     [ud synchronize];
 }
-*/
+
 
 - (void)setPhotoPathWithStorageURL:(NSString *)key {
     NSString *url = STORAGE_URL;
@@ -79,6 +78,8 @@
         _realStudentNum = realStudentNum;
     }
 }
+
+
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder {

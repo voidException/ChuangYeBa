@@ -26,6 +26,6 @@
 @property (copy, nonatomic) NSNumber *collects;
 @property (strong, nonatomic) NSDate *publishDate;
 
-- (float)getHeightOfArticleString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset;
+- (NSInteger)getHeightOfArticleString:(NSString *)string lineSpacing:(NSUInteger)lineSpacing fontOfSize:(NSUInteger)fontOfSize widthOffset:(float)widthOffset;
 
 @end

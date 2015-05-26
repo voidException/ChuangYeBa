@@ -55,6 +55,8 @@
 		8B9C6E661ACD2FF100A4EF54 /* StudyContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E651ACD2FF100A4EF54 /* StudyContentViewController.m */; };
 		8B9C6E691ACD3AF500A4EF54 /* StudyContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E681ACD3AF500A4EF54 /* StudyContentCell.m */; };
 		8B9E7A4C1AE39B8A00C69273 /* MediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */; };
+		8BA7F36F1B1304AC0039F2B5 /* BorderRadiusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7F36E1B1304AC0039F2B5 /* BorderRadiusButton.m */; };
+		8BA7F3701B1306130039F2B5 /* BorderRadiusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7F36E1B1304AC0039F2B5 /* BorderRadiusButton.m */; };
 		8BB23BA21AE5311B00621F91 /* ClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BA11AE5311B00621F91 /* ClassTableViewController.m */; };
 		8BB23BA61AE531D300621F91 /* TestGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB23BA41AE531D300621F91 /* TestGroupCell.m */; };
 		8BB23BA71AE531D300621F91 /* TestGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB23BA51AE531D300621F91 /* TestGroupCell.xib */; };
@@ -187,6 +189,8 @@
 		8BE5BD1C1B036C7C006B47DA /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE5BD1B1B036C7C006B47DA /* CircleButton.m */; };
 		8BE66F0F1AEDFEA80075D9E9 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */; };
 		8BE66F131AEE7A4A0075D9E9 /* StudyJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */; };
+		8BE9A73C1B145C2600368B6C /* contentCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BE9A73B1B145C2600368B6C /* contentCategory.plist */; };
+		8BE9A73D1B145C2600368B6C /* contentCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BE9A73B1B145C2600368B6C /* contentCategory.plist */; };
 		8BEC85631B0433180017448C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEC85621B0433180017448C /* FXBlurView.m */; };
 		8BED43B11AFC5C63002CC15C /* EditedInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BED43B01AFC5C63002CC15C /* EditedInfoCell.xib */; };
 		8BED43B41AFC8889002CC15C /* UserDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED43B31AFC8889002CC15C /* UserDetailTableViewController.m */; };
@@ -304,6 +308,8 @@
 		8B9C6E681ACD3AF500A4EF54 /* StudyContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyContentCell.m; path = ChuangYeBa/StudyContentCell.m; sourceTree = "<group>"; };
 		8B9E7A4A1AE39B8A00C69273 /* MediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaViewController.h; path = ChuangYeBa/MediaViewController.h; sourceTree = "<group>"; };
 		8B9E7A4B1AE39B8A00C69273 /* MediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaViewController.m; path = ChuangYeBa/MediaViewController.m; sourceTree = "<group>"; };
+		8BA7F36D1B1304AC0039F2B5 /* BorderRadiusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BorderRadiusButton.h; path = ChuangYeBa/BorderRadiusButton.h; sourceTree = "<group>"; };
+		8BA7F36E1B1304AC0039F2B5 /* BorderRadiusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BorderRadiusButton.m; path = ChuangYeBa/BorderRadiusButton.m; sourceTree = "<group>"; };
 		8BB23BA01AE5311B00621F91 /* ClassTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassTableViewController.h; path = ChuangYeBa/ClassTableViewController.h; sourceTree = "<group>"; };
 		8BB23BA11AE5311B00621F91 /* ClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassTableViewController.m; path = ChuangYeBa/ClassTableViewController.m; sourceTree = "<group>"; };
 		8BB23BA31AE531D300621F91 /* TestGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestGroupCell.h; path = ChuangYeBa/TestGroupCell.h; sourceTree = "<group>"; };
@@ -398,6 +404,7 @@
 		8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListTableViewController.m; path = ChuangYeBa/UserListTableViewController.m; sourceTree = "<group>"; };
 		8BE66F111AEE7A4A0075D9E9 /* StudyJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyJsonParser.h; path = ChuangYeBa/StudyJsonParser.h; sourceTree = "<group>"; };
 		8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyJsonParser.m; path = ChuangYeBa/StudyJsonParser.m; sourceTree = "<group>"; };
+		8BE9A73B1B145C2600368B6C /* contentCategory.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = contentCategory.plist; path = Plist/contentCategory.plist; sourceTree = "<group>"; };
 		8BEC85611B0433180017448C /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FXBlurView.h; path = ChuangYeBa/FXBlurView.h; sourceTree = "<group>"; };
 		8BEC85621B0433180017448C /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FXBlurView.m; path = ChuangYeBa/FXBlurView.m; sourceTree = "<group>"; };
 		8BED43B01AFC5C63002CC15C /* EditedInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditedInfoCell.xib; path = ChuangYeBa/EditedInfoCell.xib; sourceTree = "<group>"; };
@@ -770,6 +777,7 @@
 				8BB6ED2D1B0593E100FB1932 /* studyCategory.plist */,
 				8BB6ED2E1B0593E100FB1932 /* userDetailListStudent.plist */,
 				8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */,
+				8BE9A73B1B145C2600368B6C /* contentCategory.plist */,
 			);
 			name = Plist;
 			sourceTree = "<group>";
@@ -881,6 +889,8 @@
 				8BF03BEF1AF7488B00D8C932 /* PullUpRefreshView.m */,
 				8BEC85611B0433180017448C /* FXBlurView.h */,
 				8BEC85621B0433180017448C /* FXBlurView.m */,
+				8BA7F36D1B1304AC0039F2B5 /* BorderRadiusButton.h */,
+				8BA7F36E1B1304AC0039F2B5 /* BorderRadiusButton.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1099,6 +1109,7 @@
 				8BBB61AF1B06464300381DAC /* TestGroupCell.xib in Resources */,
 				8BBB61B01B06464300381DAC /* MediaCell.xib in Resources */,
 				8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */,
+				8BE9A73D1B145C2600368B6C /* contentCategory.plist in Resources */,
 				8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */,
 				8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */,
 				8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */,
@@ -1130,6 +1141,7 @@
 				8BB6ED321B0593E100FB1932 /* userDetailListStudent.plist in Resources */,
 				8BF780CA1AFB934B0048F5A4 /* UserInfoCell.xib in Resources */,
 				8B451B031ADFAC7F002C4CA9 /* CountingCell.xib in Resources */,
+				8BE9A73C1B145C2600368B6C /* contentCategory.plist in Resources */,
 				8BB23BA71AE531D300621F91 /* TestGroupCell.xib in Resources */,
 				8B451AFE1ADFA8E3002C4CA9 /* MediaCell.xib in Resources */,
 				8B34B1791AE8C0FD00A39F8F /* TestStateCell.xib in Resources */,
@@ -1227,6 +1239,7 @@
 				8B00E0741B077B1E0062222D /* ClassSettingTableViewController.m in Sources */,
 				8BBB61581B06464300381DAC /* UserListTableViewController.m in Sources */,
 				8BBB61591B06464300381DAC /* StudyDetailViewController.m in Sources */,
+				8BA7F3701B1306130039F2B5 /* BorderRadiusButton.m in Sources */,
 				8BBB615A1B06464300381DAC /* MeViewController.m in Sources */,
 				8BFD753C1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m in Sources */,
 				8BBB615B1B06464300381DAC /* CommentCell.m in Sources */,
@@ -1341,6 +1354,7 @@
 				8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */,
 				8BE0A5601AD62AC1006B348E /* Quiz.m in Sources */,
 				8B356C601AE8D7B9004CC161 /* AnswerSheetCell.m in Sources */,
+				8BA7F36F1B1304AC0039F2B5 /* BorderRadiusButton.m in Sources */,
 				8BF03BF01AF7488B00D8C932 /* PullUpRefreshView.m in Sources */,
 				8B9C6E601ACD196400A4EF54 /* LoginNetworkUtils.m in Sources */,
 				8BEDFEEF1ADA19B7004C5845 /* ExplainCell.m in Sources */,

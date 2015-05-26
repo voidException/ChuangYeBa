@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *articleList;
 
 // 当前的VC属于哪一个分类Tag
-@property (nonatomic) NSInteger tag;
+@property (nonatomic) NSInteger tagNo;
 // 当前的Page
 @property (nonatomic) NSInteger page;
 // 每下拉刷新出现的个数

@@ -11,6 +11,11 @@
 
 @interface AddClassTableViewController ()
 
+@property (strong, nonatomic) MBProgressHUD *hud;
+@property (weak, nonatomic) IBOutlet UITextField *classNoTextField;
+@property (strong, nonatomic) ClassInfo *classInfo;
+@property (strong, nonatomic) BorderRadiusButton *findClassButton;
+
 @end
 
 @implementation AddClassTableViewController
@@ -18,10 +23,17 @@
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.buttonView.frame = CGRectMake(0, 0, self.view.frame.size.width, 250);
+
+    float buttonMargin = 13.0;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 75)];
+    self.findClassButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - buttonMargin * 2, 0)];
+    self.findClassButton.center = footerView.center;
+    [self.findClassButton setTitle:@"加入班级" forState:UIControlStateNormal];
+    [footerView addSubview:self.findClassButton];
+    [self.findClassButton addTarget:self action:@selector(clickOnAddClassButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.findClassButton setTitleColor:[UIColor colorWithWhite:1.f alpha:.5f] forState:UIControlStateDisabled];
+    self.tableView.tableFooterView = footerView;
     
-    [self.findClassButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateDisabled];
-    [self.findClassButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateDisabled];
     if (self.classNoTextField.text.length) {
         self.findClassButton.enabled = YES;
     } else {
@@ -42,7 +54,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
 
 #pragma mark - Private Method
@@ -76,8 +87,8 @@
 }
 
 #pragma mark - Action
-- (IBAction)clickOnAddClassButton:(id)sender {
-    self.hud = [MBProgressHUD showHUDAddedTo:self.buttonView animated:YES];
+- (void)clickOnAddClassButton:(id)sender {
+    self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.tableView.userInteractionEnabled = NO;
     self.hud.removeFromSuperViewOnHide = YES;
     [self sendingDataToServer];

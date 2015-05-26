@@ -12,15 +12,18 @@
 #import <SDWebImageManager.h>
 #import "ArticleInfoDAO.h"
 #import <MBProgressHUD.h>
+#import "GlobalDefine.h"
 
 static NSInteger const kPageSize = 8;
+
+static NSString *studyContentCellIndentifier = @"StudyContentCell";
 
 @interface StudyContentViewController ()
 
 @end
 
 @implementation StudyContentViewController
-@synthesize tag;
+@synthesize tagNo;
 @synthesize page;
 @synthesize pageSize;
 @synthesize articleInfo;
@@ -43,7 +46,7 @@ static NSInteger const kPageSize = 8;
     self.articleList = [[NSMutableArray alloc] init];
     
     // TEST
-    NSLog(@"tag = %ld", (long)tag);
+    NSLog(@"tag = %ld", (long)tagNo);
     page = 1;
     pageSize = kPageSize;
     
@@ -79,7 +82,7 @@ static NSInteger const kPageSize = 8;
 - (void)initUI {
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"StudyContentCell" bundle:nil] forCellReuseIdentifier:studyContentCellIndentifier];
     // 增加下啦刷新
     [self.tableView addLegendHeaderWithRefreshingBlock:^{
         // YES说明是下拉刷新
@@ -99,7 +102,7 @@ static NSInteger const kPageSize = 8;
 
 - (void)loadArticleListCache {
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-    self.articleList = [dao findAll:tag];
+    self.articleList = [dao findAll:tagNo];
     if (!self.articleList.count) {
         // 防止
         if (self.userInfo) {
@@ -136,9 +139,9 @@ static NSInteger const kPageSize = 8;
     NSInteger max = 7;
     if (self.articleList.count > max) {
         NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[self.articleList objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, max)]]];
-        [dao create:arr tag:tag];
+        [dao create:arr tag:tagNo];
     } else {
-        [dao create:self.articleList tag:tag];
+        [dao create:self.articleList tag:tagNo];
     }
 }
 
@@ -169,7 +172,7 @@ static NSInteger const kPageSize = 8;
         requestPageSize = kPageSize;
     }
     
-    [StudyNetworkUtils requestArticlesWichToken:userInfo.email userId:userInfo.userId tag:tag page:requestPage pageSize:requestPageSize andCallback:^(id obj){
+    [StudyNetworkUtils requestArticlesWichToken:userInfo.email userId:userInfo.userId tag:tagNo page:requestPage pageSize:requestPageSize andCallback:^(id obj){
         
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
@@ -210,16 +213,18 @@ static NSInteger const kPageSize = 8;
 
 #pragma mark - Table View delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    if (iPhone4 || iPhone5) {
+        return 77;
+    } else {
+        return 90;
+    }
 }
 
 #pragma mark -  Table View DataSource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // 发送通知
-    NSLog(@"send notif");
     ArticleInfo *article = self.articleList[indexPath.row];
     NSNumber *articleId = article.articleId;
-    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:articleId,@"articleId", nil];
+    NSDictionary *dic = @{@"articleId":articleId, @"tagNo":[NSNumber numberWithInteger:tagNo]};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowStudyDetail" object:self userInfo:dic];
 }
 
@@ -228,7 +233,7 @@ static NSInteger const kPageSize = 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *studyContentCellIndentifier = @"StudyContentCell";
+    
     StudyContentCell *studyContentCell = [tableView dequeueReusableCellWithIdentifier:studyContentCellIndentifier];
     ArticleInfo *article = self.articleList[indexPath.row];
     studyContentCell.titleLabel.text = article.title;

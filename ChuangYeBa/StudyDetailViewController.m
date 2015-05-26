@@ -37,6 +37,7 @@ static NSInteger const kPageSize = 2;
 //@property (strong, nonatomic) PullUpRefreshView *refreshView;
 @property (strong, nonatomic) CommentCell *deletingCommentCell;
 @property (assign, nonatomic) StudyDetailState state;
+@property (copy, nonatomic) NSString *category;
 
 @property (strong, nonatomic) UIButton *refreshButton;
 
@@ -119,7 +120,7 @@ static NSInteger const kPageSize = 2;
     
     [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
     
-    [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIcon"] forState:UIControlStateNormal];
+    [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconNormal"] forState:UIControlStateNormal];
     [self.commentButton setBackgroundImage:[UIImage imageNamed:@"commentBG"] forState:UIControlStateNormal];
     
     // 增加上拉刷新
@@ -133,6 +134,10 @@ static NSInteger const kPageSize = 2;
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnLeftButton)];
     swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipeGesture];
+    
+    
+    
+    
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -141,13 +146,6 @@ static NSInteger const kPageSize = 2;
 
 - (void)loadMoreData {
     [self.tableView.footer endRefreshing];
-}
-
-- (void)setState:(StudyDetailState)state {
-    if (_state == state) {
-        return;
-    }
-    _state = state;
 }
 
 - (void)requestCommentsFromServer:(BOOL)isPullupRefresh {
@@ -274,13 +272,10 @@ static NSInteger const kPageSize = 2;
 
 - (void)submitCommentToServer {
     NSDate *nowDate = [NSDate date];
-    NSLog(@"%@", self.commentInputView.textView.text);
     [StudyNetworkUtils submitCommentWithArticleId:self.articleInfo userInfo:self.userInfo commitDate:nowDate content:self.commentInputView.textView.text andCallback:^(id obj){
         NSDictionary *dic = obj;
-        
         // 注意：在这里error返回的居然是当前的评论数，WTF，真TM逗！
         NSNumber *error = [dic objectForKey:@"error"];
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
         if ([error integerValue] > 0) {
             // 重新请求一次评论的列表并且刷新
             [self requestCommentsFromServer:NO];
@@ -289,14 +284,10 @@ static NSInteger const kPageSize = 2;
             [self removeActivityBackgroundView];
             [self.commentInputView.textView resignFirstResponder];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交评论失败" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
-}
-
-- (void)submitDeleteCommentToServer:(CommentCell *)commentCell {
-    
 }
 
 
@@ -338,6 +329,7 @@ static NSInteger const kPageSize = 2;
 
 - (IBAction)clickOnCommentButton:(id)sender {
     [self.commentInputView.textView becomeFirstResponder];
+    //[self addActivityBackgroundView];
 }
 
 - (void)clickOnBlurView {
@@ -346,13 +338,22 @@ static NSInteger const kPageSize = 2;
 
 - (IBAction)clickOnLikeButton:(id)sender {
     if (isLiked) {
-        isLiked = NO;
-        [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
-        
+        [StudyNetworkUtils submitDelLoveWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
+            isLiked = NO;
+            self.articleInfo.likes = obj;
+            [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
+            // 给计算赞和评论的小区的赞label位置减1
+            CountingCell *cell = [[CountingCell alloc] init];
+            if (self.state == StudyDetailStateNormal) {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+            } else {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            }
+            cell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
+        }];
     } else {
-        isLiked = YES;
         [StudyNetworkUtils submitAddLoveWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
-            
+            isLiked = YES;
             // 更新ArticleInfo中的赞的数量
             self.articleInfo.likes = obj;
             
@@ -372,13 +373,19 @@ static NSInteger const kPageSize = 2;
 }
 
 - (IBAction)clickOnDownloadButton:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂不支持，敬请期待喔！^_^" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+    [alert show];
+    
+    /* 功能暂不支持
     if (isDownloaded) {
         isDownloaded = NO;
-        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
+        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconNormal"] forState:UIControlStateNormal];
+        self.downLoadButton.selected = YES;
     } else {
         isDownloaded = YES;
-        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadClicked"] forState:UIControlStateNormal];
+        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconSelected"] forState:UIControlStateNormal];
     }
+     */
 
 }
 
@@ -392,16 +399,12 @@ static NSInteger const kPageSize = 2;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            NSLog(@"%f", [self.articleInfo getHeightOfArticleString:self.articleInfo.title
-                                                         lineSpacing:4.0
-                                                          fontOfSize:23.0
-                                                         widthOffset:16]);
-            return [self.articleInfo getHeightOfArticleString:self.articleInfo.title
+            return (NSInteger)[self.articleInfo getHeightOfArticleString:self.articleInfo.title
                                                   lineSpacing:4.0
                                                    fontOfSize:23.0
                                                   widthOffset:16] + 16;
         } else if (indexPath.row == 1) {
-            return [self.articleInfo getHeightOfArticleString:self.articleInfo.content
+            return (NSInteger)[self.articleInfo getHeightOfArticleString:self.articleInfo.content
                                                   lineSpacing:4
                                                    fontOfSize:17.0
                                                   widthOffset:24];
@@ -423,7 +426,7 @@ static NSInteger const kPageSize = 2;
     } else {
         NSInteger row = [indexPath row];
         CommentInfo *ci = self.comments[row];
-        NSInteger height = [self.articleInfo getHeightOfArticleString:ci.content
+        NSInteger height = (NSInteger)[self.articleInfo getHeightOfArticleString:ci.content
                                               lineSpacing:2.0
                                                fontOfSize:15.0
                                               widthOffset:80] + 48;
@@ -509,8 +512,11 @@ static NSInteger const kPageSize = 2;
 - (ArticleTitleCell *)tableView:(UITableView *)tableView articleTitleCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ArticleTitleCell *articleTitleCell = [tableView dequeueReusableCellWithIdentifier:articleTitleCellIdentifier];
     articleTitleCell.title.text = self.articleInfo.title;
-    articleTitleCell.category.text = @"自我管理";
-    articleTitleCell.publishDate.text = @"05-14 5:04";
+    articleTitleCell.category.text = _category;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    NSString *publishDate = [dateFormatter stringFromDate:self.articleInfo.publishDate];
+    articleTitleCell.publishDate.text = publishDate;
     return articleTitleCell;
 }
 
@@ -584,20 +590,19 @@ static NSInteger const kPageSize = 2;
 // 添加透明指示栏
 - (void)addActivityBackgroundView {
     if (self.activityBackgroundView == nil) {
-        
         self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
         self.activityBackgroundView.tintColor = [UIColor blackColor];
-        
-        self.activityBackgroundView.blurRadius = 10;
-        
+        self.activityBackgroundView.blurRadius = 0;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBlurView)];
         self.activityBackgroundView.userInteractionEnabled = YES;
         [self.activityBackgroundView addGestureRecognizer:tapGesture];
-        
+        self.activityBackgroundView.blurRadius = 20;
         [self.view addSubview:self.activityBackgroundView];
+        /*
         [UIView animateWithDuration:0.5 animations:^{
-            self.activityBackgroundView.blurRadius = 40;
+            self.activityBackgroundView.blurRadius = 20;
         }];
+         */
         
     }
     if (![self.activityBackgroundView isDescendantOfView:self.view]) {

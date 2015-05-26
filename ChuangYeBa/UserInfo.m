@@ -148,6 +148,14 @@
     }
 }
 
+- (void)setTel:(NSString *)aTel {
+    if ([aTel class] == [NSNull class]) {
+        tel = @"";
+    } else {
+        tel = aTel;
+    }
+}
+
 
 #pragma Coding delegate
 - (id)initWithCoder:(NSCoder *)aDecoder {

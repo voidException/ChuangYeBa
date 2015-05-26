@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>74</key>
+	<string>热门</string>
+	<key>76</key>
+	<string>最新发布</string>
+	<key>11</key>
+	<string>规划启蒙</string>
+	<key>21</key>
+	<string>自我认知</string>
+	<key>31</key>
+	<string>环境认知</string>
+	<key>41</key>
+	<string>制定目标</string>
+	<key>51</key>
+	<string>决策行动</string>
+	<key>61</key>
+	<string>方法技巧</string>
+</dict>
+</plist>

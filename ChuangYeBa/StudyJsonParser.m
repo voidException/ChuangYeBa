@@ -33,7 +33,9 @@
     articleInfo.content = [dic objectForKey:@"content"];
     articleInfo.likes = [dic objectForKey:@"love"];
     articleInfo.miniPhotoURL = [dic objectForKey:@"miniphotourl"];
-    articleInfo.publishDate = [dic objectForKey:@"publishtime"];
+    NSNumber *stringTime = [dic objectForKey:@"publishtime"];
+    NSTimeInterval time = [stringTime doubleValue]/1000;
+    articleInfo.publishDate = [NSDate dateWithTimeIntervalSince1970:time];
     articleInfo.realURL = [dic objectForKey:@"realurl"];
     articleInfo.title = [dic objectForKey:@"title"];
     articleInfo.viceTitle = [dic objectForKey:@"vicetitle"];
@@ -44,15 +46,20 @@
 // 解析一条评论
 + (CommentInfo *)parseCommentInfo:(NSDictionary *)dic {
     CommentInfo *commentInfo = [[CommentInfo alloc] init];
-    commentInfo.commentId = [dic objectForKey:@"commentid"];
-    commentInfo.content = [dic objectForKey:@"content"];
-    commentInfo.userName = [dic objectForKey:@"username"];
-    commentInfo.userId = [dic objectForKey:@"userid"];
-    NSString *stringTime = [dic objectForKey:@"stringtime"];
+    
+    NSDictionary *commentDic = [dic objectForKey:@"comments"];
+    commentInfo.commentId = [commentDic objectForKey:@"commentid"];
+    commentInfo.content = [commentDic objectForKey:@"content"];
+    commentInfo.userName = [commentDic objectForKey:@"username"];
+    NSNumber *fixUserId = [commentDic objectForKey:@"userid"];
+    NSInteger interger = [fixUserId integerValue]/10;
+    commentInfo.userId = [NSNumber numberWithInteger:interger];
+    
+    NSString *stringTime = [dic objectForKey:@"timeString"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     commentInfo.commentTime = [dateFormatter dateFromString:stringTime];
-    commentInfo.userPhotoPath = [dic objectForKey:@"photoUrl"];
+    commentInfo.userPhotoPath = [dic objectForKey:@"userPhotoPath"];
     return commentInfo;
 }
 

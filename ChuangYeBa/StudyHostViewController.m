@@ -8,11 +8,15 @@
 
 #import "StudyHostViewController.h"
 #import "ArticleInfoDAO.h"
+#import "GlobalDefine.h"
 
 @interface StudyHostViewController ()
 
 @property (strong, nonatomic) NSNumber *articleId;
+@property (strong, nonatomic) NSNumber *tagNo;
 @property (strong, nonatomic) NSMutableArray *contentViewControllers;
+@property (nonatomic, strong) NSArray *categoryArray;
+@property (nonatomic, strong) NSDictionary *categoryDictionary;
 
 @end
 
@@ -31,6 +35,8 @@
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *plistPath = [bundle pathForResource:@"studyCategory" ofType:@"plist"];
     self.categoryArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    plistPath = [bundle pathForResource:@"contentCategory" ofType:@"plist"];
+    self.categoryDictionary = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
     
     // 添加ShowStudyDetail的通知接受
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStudyDetail:) name:@"ShowStudyDetail" object:nil];
@@ -58,10 +64,8 @@
 
 #pragma mark - Private Method
 - (void)initUI {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
     
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 
@@ -70,9 +74,22 @@
     for (int i = 0; i < self.categoryArray.count; i++) {
         StudyContentViewController *studyContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudyContentViewController"];
         NSDictionary *dic = self.categoryArray[i];
-        studyContentViewController.tag = [[dic objectForKey:@"tag"] integerValue];
+        studyContentViewController.tagNo = [[dic objectForKey:@"tag"] integerValue];
         [self.contentViewControllers addObject:studyContentViewController];
     }
+}
+
+
+
+#pragma mark - 处理通知
+- (void)showStudyDetail:(NSNotification *)notification {
+    // 接受通知
+    self.articleId = [notification.userInfo objectForKey:@"articleId"];
+    self.tagNo = [notification.userInfo objectForKey:@"tagNo"];
+    self.hidesBottomBarWhenPushed = YES;
+    [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
+    
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - Navigation
@@ -80,23 +97,14 @@
     if ([segue.identifier isEqualToString:@"ShowStudyDetail"]) {
         id destinationVC = [segue destinationViewController];
         [destinationVC setValue:self.articleId forKey:@"articleId"];
+        NSString *category = [self.categoryDictionary objectForKey:[NSString stringWithFormat:@"%@", self.tagNo]];
+        [destinationVC setValue:category forKey:@"category"];
     }
-}
-
-
-#pragma mark - 处理通知
-- (void)showStudyDetail:(NSNotification *)notification {
-    // 接受通知
-    self.articleId = [notification.userInfo objectForKey:@"articleId"];
-    self.hidesBottomBarWhenPushed = YES;
-    [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
-    
-    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - ViewPagerDataSource
 - (NSUInteger)numberOfTabsForViewPager:(ViewPagerController *)viewPager {
-    return 6;
+    return self.contentViewControllers.count;
 }
 - (UIView *)viewPager:(ViewPagerController *)viewPager viewForTabAtIndex:(NSUInteger)index {
     

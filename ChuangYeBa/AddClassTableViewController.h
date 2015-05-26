@@ -12,17 +12,10 @@
 #import <MBProgressHUD.h>
 #import "UserInfo.h"
 #import "ClassInfo.h"
+#import "BorderRadiusButton.h"
 
 @interface AddClassTableViewController : UITableViewController
 
-@property (strong, nonatomic) MBProgressHUD *hud;
-//@property (strong, nonatomic) UserInfo *userInfo;
-@property (weak, nonatomic) IBOutlet UITextField *classNoTextField;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
-@property (strong, nonatomic) ClassInfo *classInfo;
-@property (weak, nonatomic) IBOutlet UIButton *findClassButton;
-
-- (IBAction)clickOnAddClassButton:(id)sender;
 
 
 @end

@@ -11,14 +11,13 @@
 #import "ClassInfoCell.h"
 #import "ClassInfo.h"
 #import "UserInfo.h"
+#import "BorderRadiusButton.h"
 
 @interface ClassSettingTableViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (strong, nonatomic) UIButton *footerButton;
-
-- (IBAction)clickOnExitClassButton:(id)sender;
+@property (strong, nonatomic) BorderRadiusButton *footerButton;
 
 - (void)clickOnFooterButton:(id)sender;
 

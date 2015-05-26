@@ -7,10 +7,14 @@
 //
 
 #import "AddClassConfirmTableViewController.h"
+#import "BorderRadiusButton.h"
 
 static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 @interface AddClassConfirmTableViewController ()
+
+@property (strong, nonatomic) BorderRadiusButton *addClassButton;
+
 
 @end
 
@@ -22,7 +26,17 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     [super viewDidLoad];
     
     self.title = @"加入班级";
-    self.buttonView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 150);
+    //self.buttonView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 150);
+    
+    float buttonMargin = 13.0;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 75)];
+    self.addClassButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - buttonMargin * 2, 0)];
+    self.addClassButton.center = footerView.center;
+    [self.addClassButton setTitle:@"加入班级" forState:UIControlStateNormal];
+    [footerView addSubview:self.addClassButton];
+    [self.addClassButton addTarget:self action:@selector(clickOnAddClassButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.tableFooterView = footerView;
+    
     // 注册xib，班级信息的小区
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
     self.userInfo = [[UserInfo alloc] initWithUserDefault];
@@ -42,7 +56,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
 - (void)saveClassInfoToLocal {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    self.userInfo.roomno = @"1";
+    self.userInfo.roomno = classInfo.classNo;
     [UserInfo saveUserInfoToLocal:self.userInfo];
     NSData *udObject = [NSKeyedArchiver archivedDataWithRootObject:self.classInfo];
     [ud setObject:udObject forKey:@"classInfo"];
@@ -50,7 +64,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 }
 
 #pragma mark - Action
-- (IBAction)clickOnAddClassButton:(id)sender {
+- (void)clickOnAddClassButton:(id)sender {
     
     [ClassNetworkUtils requestAddClassByStudentId:self.userInfo.userId andClassNo:classInfo.classNo andCallback:^(id obj) {
         if (obj) {

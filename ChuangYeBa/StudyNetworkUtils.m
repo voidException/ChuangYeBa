@@ -55,7 +55,17 @@ static NSString *serverIP = SERVER_IP;
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *dateString = [dateFormatter stringFromDate:commiteDate];
     
-    NSDictionary *param = @{@"articleid":articleInfo.articleId, @"userid":userInfo.userId, @"commenttime":dateString, @"stuname":userInfo.name, @"content":content};
+#ifdef STUDENT_VERSION
+    NSInteger interger = [userInfo.userId integerValue];
+    interger = interger * 10 + 1;
+    NSNumber *modifiedUserId = [NSNumber numberWithInteger:interger];
+#elif TEACHER_VERSION
+    NSInteger interger = [userInfo.userId integerValue];
+    interger = interger * 10 + 2;
+    NSNumber *modifiedUserId = [NSNumber numberWithInteger:interger];
+#endif
+    
+    NSDictionary *param = @{@"articleId":articleInfo.articleId, @"userId":modifiedUserId, @"commentTime":dateString, @"userName":userInfo.name, @"content":content};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
@@ -106,14 +116,17 @@ static NSString *serverIP = SERVER_IP;
     
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"获取一评论列表%@", responseObject);
-        
         // 在这里直接解析评论
+        
         NSDictionary *dic = responseObject;
-        NSArray *commentArr = [dic objectForKey:@"comments"];
+        NSArray *commentArr = [dic objectForKey:@"commentsVos"];
         NSMutableArray *comments = [[NSMutableArray alloc] init];
-        for (NSDictionary *commentDic in commentArr) {
-            CommentInfo *commentInfo = [StudyJsonParser parseCommentInfo:commentDic];
-            [comments addObject:commentInfo];
+        NSNumber *error = [dic objectForKey:@"error"];
+        if ([error isEqualToNumber:@1]) {
+            for (NSDictionary *commentDic in commentArr) {
+                CommentInfo *commentInfo = [StudyJsonParser parseCommentInfo:commentDic];
+                [comments addObject:commentInfo];
+            }
         }
         callback(comments);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -130,7 +143,16 @@ static NSString *serverIP = SERVER_IP;
     NSString *path = @"/startup/learn/article/delComment";
     path = [serverIP stringByAppendingString:path];
     
-    NSDictionary *param = @{@"token":token, @"iD":userId, @"commentiD":commentId};
+#ifdef STUDENT_VERSION
+    NSInteger interger = [userId integerValue];
+    interger = interger * 10 + 1;
+    NSNumber *modifiedUserId = [NSNumber numberWithInteger:interger];
+#elif TEACHER_VERSION
+    NSInteger interger = [userId integerValue];
+    interger = interger * 10 + 2;
+    NSNumber *modifiedUserId = [NSNumber numberWithInteger:interger];
+#endif
+    NSDictionary *param = @{@"token":token, @"iD":modifiedUserId, @"commentiD":commentId};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
@@ -159,7 +181,7 @@ static NSString *serverIP = SERVER_IP;
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"成功增加一条赞 %@", responseObject);
         NSDictionary *dic = responseObject;
-        NSNumber *loves = [dic objectForKey:@"love"];
+        NSNumber *loves = [dic objectForKey:@"number"];
         callback(loves);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -168,5 +190,29 @@ static NSString *serverIP = SERVER_IP;
     }];
 
 }
+
++ (void)submitDelLoveWithToken:(NSString *)token userId:(NSNumber *)userId articleId:(NSNumber *)articleId andCallback:(Callback)callback {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    NSString *path = @"/startup/learn/article/deleteLove";
+    path = [serverIP stringByAppendingString:path];
+    
+    NSDictionary *param = @{@"token":token, @"iD":userId, @"articleiD":articleId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"成功删除赞 %@", responseObject);
+        NSDictionary *dic = responseObject;
+        NSNumber *loves = [dic objectForKey:@"number"];
+        callback(loves);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"删除赞失败, %@", [error localizedDescription]);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+    
+}
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TabBarController.h"
 #import "CustomSegueUnwind.h"
+#import "GlobalDefine.h"
 
 @interface TabBarController ()
 
@@ -34,6 +35,14 @@
      */
     [meItem setImage:[[UIImage imageNamed:@"meTabIconNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [meItem setSelectedImage:[[UIImage imageNamed:@"meTabIconSelected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor CYBBlueColor]];
+    if (iPhone4 || iPhone5) {
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    } else {
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    }
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
 }

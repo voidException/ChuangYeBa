@@ -9,6 +9,7 @@
 #import "UserEditedTableViewController.h"
 #import "EditedInfoCell.h"
 #import "UserInfo.h"
+#import "BorderRadiusButton.h"
 #import "EditedPhotoView.h"
 #import "MeNetworkUtils.h"
 #import <MBProgressHUD.h>
@@ -53,12 +54,10 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     self.detailList = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
     float screenWidth = self.view.frame.size.width;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 86)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75)];
     float buttonMargin = 13.0;
-    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
+    BorderRadiusButton *exitButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
     exitButton.center = footerView.center;
-    [exitButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
-    [exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [exitButton setTitle:@"保存修改" forState:UIControlStateNormal];
     [exitButton addTarget:self action:@selector(clickOnSaveButton:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:exitButton];

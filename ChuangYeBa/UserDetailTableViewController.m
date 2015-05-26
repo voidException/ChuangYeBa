@@ -16,6 +16,7 @@
 #import "MeNetworkUtils.h"
 #import "GlobalDefine.h"
 #import <MBProgressHUD.h>
+#import "BorderRadiusButton.h"
 
 static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 static NSString *bucket = @"startupimg";
@@ -107,15 +108,13 @@ static NSString *bucket = @"startupimg";
     [self.rightButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
     
     float screenWidth = self.view.frame.size.width;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 93)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75)];
     float buttonMargin = 13.0;
-    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
-    exitButton.center = footerView.center;
-    [exitButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
-    [exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [exitButton setTitle:@"修改信息" forState:UIControlStateNormal];
-    [exitButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:exitButton];
+    BorderRadiusButton *modifiedButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 45)];
+    modifiedButton.center = footerView.center;
+    [modifiedButton setTitle:@"修改信息" forState:UIControlStateNormal];
+    [modifiedButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:modifiedButton];
     self.tableView.tableFooterView = footerView;
 }
 

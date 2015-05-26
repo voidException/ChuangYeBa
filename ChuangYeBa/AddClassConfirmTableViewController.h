@@ -16,9 +16,6 @@
 
 @property (strong, nonatomic) ClassInfo *classInfo;
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
-
-- (IBAction)clickOnAddClassButton:(id)sender;
-
+//@property (weak, nonatomic) IBOutlet UIView *buttonView;
 
 @end

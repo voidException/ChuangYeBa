@@ -30,10 +30,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     }
     
     [self initUI];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    // 注册xib的cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"TestGroupCell" bundle:nil] forCellReuseIdentifier:testGroupCellIdentifier];
 
     
     // 初始化数组
@@ -92,6 +89,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (void)initUI {
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // 注册xib的cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"TestGroupCell" bundle:nil] forCellReuseIdentifier:testGroupCellIdentifier];
+    
     // 初始化右导航条按钮
     float buttonWidth = 30;
     self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
@@ -118,7 +119,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
     self.navigationItem.leftBarButtonItem = item;
-    //self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)requestClassInfoFromServer {

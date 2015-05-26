@@ -13,6 +13,6 @@
 
 @interface StudyHostViewController : ViewPagerController <ViewPagerDataSource, ViewPagerDelegate>
 
-@property (nonatomic, strong) NSArray *categoryArray;
+
 
 @end

@@ -10,6 +10,7 @@
 #import "EditedInfoCell.h"
 #import "ClassInfo.h"
 #import "ClassNetworkUtils.h"
+#import "BorderRadiusButton.h"
 #import <MBProgressHUD.h>
 
 static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
@@ -17,7 +18,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 @interface ClassEditedTableViewController () <MBProgressHUDDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) ClassInfo *classInfo;
-@property (strong, nonatomic) UIButton *footerButton;
+@property (strong, nonatomic) BorderRadiusButton *footerButton;
 @property (strong, nonatomic) NSArray *detailList;
 @property (strong, nonatomic) NSMutableDictionary *textFields;
 
@@ -66,11 +67,9 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     self.tableView.tableHeaderView = headerView;
     
     // 初始化footerView
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    self.footerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 14, 45)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 75)];
+    self.footerButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 14, 45)];
     self.footerButton.center = footerView.center;
-    [self.footerButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
-    [self.footerButton setTintColor:[UIColor whiteColor]];
     [self.footerButton setTitle:@"保存修改" forState:UIControlStateNormal];
     [footerView addSubview:self.footerButton];
     [self.footerButton addTarget:self action:@selector(clickOnFooterButton:) forControlEvents:UIControlEventTouchUpInside];

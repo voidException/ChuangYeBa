@@ -62,13 +62,30 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestTestGroupsFromServer) name:@"UserAddedTestGroups" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userCreateClass:) name:@"UserCreateClass" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadClassBrief:) name:@"UpdateClassInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoginIn:) name:@"UpdateUserInfo" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
+
     if (!_selectedClassInfo) {
         self.refreshButton.enabled = NO;
         self.addButton.enabled = NO;
+        _headerView.hidden = YES;
+        self.blankView = [[UIView alloc] initWithFrame:self.view.frame];
+        _blankView.backgroundColor = [UIColor clearColor];
+        [self.view insertSubview:_blankView atIndex:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 100)];
+        label.text = @"请选择班级";
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont boldSystemFontOfSize:20];
+        [label sizeToFit];
+        label.center = self.view.center;
+        label.center = CGPointMake(_blankView.center.x, self.view.center.y - 20);
+        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"classBlankBG"]];
+        image.center = CGPointMake(_blankView.center.x, self.view.center.y - 100);
+        [_blankView addSubview:image];
+        [_blankView addSubview:label];
     }
     [self.refreshButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
@@ -115,13 +132,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnSettingButton:)];
     [_headerView addGestureRecognizer:tapGesture];
     
-    // 初始化导航条的属性
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     // 初始化右导航条设置按钮
     float buttonWidth = 30;
     self.settingButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - buttonWidth - 7, 7, buttonWidth, buttonWidth)];
@@ -156,23 +167,6 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         self.navigationItem.titleView = self.menu;
     }
     
-    if (!_selectedClassInfo) {
-        _headerView.hidden = YES;
-        self.blankView = [[UIView alloc] initWithFrame:self.view.frame];
-        _blankView.backgroundColor = [UIColor clearColor];
-        [self.view insertSubview:_blankView atIndex:1];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 100)];
-        label.text = @"请选择班级";
-        label.textColor = [UIColor whiteColor];
-        label.font = [UIFont boldSystemFontOfSize:20];
-        [label sizeToFit];
-        label.center = self.view.center;
-        label.center = CGPointMake(_blankView.center.x, self.view.center.y - 20);
-        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"classBlankBG"]];
-        image.center = CGPointMake(_blankView.center.x, self.view.center.y - 100);
-        [_blankView addSubview:image];
-        [_blankView addSubview:label];
-    }
 }
 
 - (void)reloadClassBrief:(NSNotification *)notif {
@@ -184,6 +178,13 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [ClassInfo saveClassInfoToLocal:_selectedClassInfo];
     [self requestClassInfosFromServer];
     [self requestTestGroupsFromServer];
+    [self.headerView setNeedsLayout];
+}
+
+- (void)userLoginIn:(NSNotification *)notif {
+    self.selectedClassInfo = nil;
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
+    [self requestClassInfosFromServer];
     [self.headerView setNeedsLayout];
 }
 

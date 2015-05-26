@@ -7,11 +7,28 @@
 //
 
 #import "StudyContentCell.h"
+#import "GlobalDefine.h"
 
 @implementation StudyContentCell
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+        //self.contentView addConstraint:[]
+        //[self setNeedsUpdateConstraints];
+    }
+    return self;
+}
+
+
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (iPhone4 || iPhone5) {
+        self.titleLabel.font = [UIFont systemFontOfSize:16];
+        self.introductionLabel.font = [UIFont systemFontOfSize:12];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,7 +40,11 @@
 - (void)layoutSubviews {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.introductionLabel.text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineSpacing:4.0];
+    if (iPhone5 || iPhone4) {
+        [paragraphStyle setLineSpacing:1.0];
+    } else {
+        [paragraphStyle setLineSpacing:4.0];
+    }
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.introductionLabel.text.length)];
     self.introductionLabel.attributedText = attributedString;
 }

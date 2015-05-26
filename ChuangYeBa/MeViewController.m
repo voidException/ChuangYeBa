@@ -8,8 +8,11 @@
 
 #import "MeViewController.h"
 #import "UserInfo.h"
+#import "ClassInfo.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ArticleInfoDAO.h"
+#import "BorderRadiusButton.h"
+#import "GlobalDefine.h"
 
 static NSString *userInfoCellIdentifier = @"UserInfoCell";
 
@@ -52,18 +55,12 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     self.title = @"我";
     [self.tableView registerNib:[UINib nibWithNibName:@"UserInfoCell" bundle:nil] forCellReuseIdentifier:userInfoCellIdentifier];
     
-    // 设置导航条
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:44.0/255 green:149.0/255 blue:255.0/255 alpha:1];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
     //float screenWidth = self.view.frame.size.width;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 93)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75)];
     float buttonMargin = 13.0;
-    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 44)];
+    BorderRadiusButton *exitButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 2 * buttonMargin, 0)];
     exitButton.center = footerView.center;
-    [exitButton setBackgroundImage:[UIImage imageNamed:@"exitButtonBG"] forState:UIControlStateNormal];
-    [exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    exitButton.buttonColor = [UIColor CYBRedColor];
     [exitButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
     [exitButton addTarget:self action:@selector(clickOnLogoutButton:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:exitButton];
@@ -176,9 +173,13 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     if (actionSheet.tag == 0) {
         if (buttonIndex == 0) {
             NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            [ud removeObjectForKey:@"userInfo"];
             NSNumber *isUserDidLogin = [[NSNumber alloc]initWithBool:NO];
             [ud setObject:isUserDidLogin forKey:@"isUserDidLogin"];
+            [ud synchronize];
+            [UserInfo deleteUserInfoFromLocal];
+#ifdef TEACHER_VERSION
+            [ClassInfo deleteClassInfoFromLocal];
+#endif
             [self performSegueWithIdentifier:@"ShowLoginFromLogout" sender:self];
         }
     } else if (actionSheet.tag == 1) {

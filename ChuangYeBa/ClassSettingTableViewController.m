@@ -11,11 +11,19 @@
 #import "MeNetworkUtils.h"
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "GlobalDefine.h"
 
 static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 static NSString *bucket = @"startupimg";
 
-@interface ClassSettingTableViewController () <ClassInfoCellDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ClassSettingTableViewController ()
+<UIActionSheetDelegate
+,UIImagePickerControllerDelegate
+,UINavigationControllerDelegate
+#ifdef TEACHER_VERSION
+,ClassInfoCellDelegate
+#endif
+>
 
 @property (strong, nonatomic) NSMutableDictionary *studentDic;
 @property (strong, nonatomic) UIImage *userChoosePhoto;
@@ -57,17 +65,20 @@ static NSString *bucket = @"startupimg";
     self.navigationItem.leftBarButtonItem = btn;
     
     
-#ifdef TEACHER_VERSION
+    float buttonMargin = 13.0;
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    self.footerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 14, 45)];
+    self.footerButton = [[BorderRadiusButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 2 * buttonMargin, 0)];
     self.footerButton.center = footerView.center;
-    [self.footerButton setBackgroundImage:[UIImage imageNamed:@"loginButtonBG"] forState:UIControlStateNormal];
-    [self.footerButton setTintColor:[UIColor whiteColor]];
+#ifdef STUDENT_VERSION
+    [self.footerButton setButtonColor:[UIColor CYBRedColor]];
+    [self.footerButton setTitle:@"删除并退出" forState:UIControlStateNormal];
+#elif TEACHER_VERSION
     [self.footerButton setTitle:@"编辑班级信息" forState:UIControlStateNormal];
+#endif
     [footerView addSubview:self.footerButton];
     [self.footerButton addTarget:self action:@selector(clickOnFooterButton:) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.tableFooterView = footerView;
-#endif
+
 }
 
 - (void)reloadClassInfo:(NSNotification *)notif {
@@ -113,14 +124,17 @@ static NSString *bucket = @"startupimg";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)clickOnExitClassButton:(id)sender {
+#ifdef STUDENT_VERSION
+- (void)clickOnFooterButton:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出班级" otherButtonTitles:nil, nil];
     [actionSheet showInView:self.view];
 }
 
+#elif TEACHER_VERSION
 - (void)clickOnFooterButton:(id)sender {
     [self performSegueWithIdentifier:@"ShowClassEdited" sender:self];
 }
+#endif
 
 #pragma mark - Tbale view delegaet
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,13 +244,6 @@ static NSString *bucket = @"startupimg";
     } else return nil;
 }
 
-#pragma mark - ClassInfoCell delegate
-- (void)clickOnPhoto:(ClassInfoCell *)classInfoCell {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从系统相册中选择", nil];
-    actionSheet.tag = 0;
-    [actionSheet showInView:self.view];
-}
-
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowUserList"]) {
@@ -246,12 +253,15 @@ static NSString *bucket = @"startupimg";
     }
 }
 
+#ifdef STUDENT_VERSION
+#pragma mark - Action Sheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self submitQuitClassToServer];
+    }
+}
 
-#ifdef TEACHER_VERSION
-
-#pragma mark - 照片上传相关
-
-#pragma mark - ActionSheet delegate
+#elif TEACHER_VERSION
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
@@ -377,7 +387,14 @@ static NSString *bucket = @"startupimg";
         }
     }];
 }
-        
+
+#pragma mark - ClassInfoCell delegate
+- (void)clickOnPhoto:(ClassInfoCell *)classInfoCell {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从系统相册中选择", nil];
+    actionSheet.tag = 0;
+    [actionSheet showInView:self.view];
+}
+
 
 #endif
 
