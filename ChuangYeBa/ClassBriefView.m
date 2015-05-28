@@ -28,12 +28,17 @@
     }
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetRGBStrokeColor(context, 0.5, 0.5, 0.5, 0.5);//线条颜色
+    CGContextSetLineWidth(context, 0.5);
+    CGContextMoveToPoint(context, 0, self.showGradeButton.frame.origin.y + 0.5);
+    CGContextAddLineToPoint(context, self.frame.size.width, self.showGradeButton.frame.origin.y + 0.5);
+    CGContextStrokePath(context);
 }
-*/
 
+
+- (IBAction)clickOnShowGradeButton:(id)sender {
+    [self.delegate clickOnShowGradeButton:self];
+}
 @end

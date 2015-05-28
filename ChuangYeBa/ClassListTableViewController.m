@@ -18,7 +18,7 @@
 
 static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
-@interface ClassListTableViewController () <SINavigationMenuDelegate,TeacherTestGroupDelegate, UIActionSheetDelegate>
+@interface ClassListTableViewController () <SINavigationMenuDelegate,TeacherTestGroupDelegate, ClassBriefViewDelegate, UIActionSheetDelegate>
 
 // UI相关属性
 @property (strong, nonatomic) SINavigationMenuView *menu;
@@ -128,6 +128,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassBriefView" owner:nil options:nil];
     self.headerView = [nib objectAtIndex:0];
     self.tableView.tableHeaderView = _headerView;
+    _headerView.delegate = self;
     _headerView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnSettingButton:)];
     [_headerView addGestureRecognizer:tapGesture];
@@ -265,6 +266,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [self performSegueWithIdentifier:@"ShowAllTestGroups" sender:self];
 }
 
+#pragma mark - ClassBriefView delegate
+- (void)clickOnShowGradeButton:(ClassBriefView *)classBriefView {
+    [self performSegueWithIdentifier:@"ShowGradeList" sender:self];
+}
 
 #pragma mark - Teacher TestGroup cell delegate
 - (void)teacherTestGroupCell:(TeacherTestGroupCell *)cell clickOnButtonAtIndex:(NSInteger)index {

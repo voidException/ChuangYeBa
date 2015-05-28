@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="VN1-dU-EOv" customClass="ClassBriefView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PKUIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lnI-x4-pg8">
@@ -39,19 +39,40 @@
                 <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nextButtonIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xYj-ma-kAH">
                     <rect key="frame" x="302" y="29" width="10" height="18"/>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72V-CC-sq0">
+                    <rect key="frame" x="0.0" y="74" width="320" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="RKp-Qc-APC"/>
+                    </constraints>
+                    <state key="normal" title="查看学生成绩单">
+                        <color key="titleColor" red="0.65098039220000004" green="0.65098039220000004" blue="0.65098039220000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickOnShowGradeButton:" destination="VN1-dU-EOv" eventType="touchUpInside" id="kVP-Mh-JzQ"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nextButtonIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aUP-LY-lDh">
+                    <rect key="frame" x="302" y="85" width="10" height="18"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="lnI-x4-pg8" firstAttribute="leading" secondItem="VN1-dU-EOv" secondAttribute="leading" constant="14" id="3jS-7q-H6G"/>
+                <constraint firstAttribute="trailing" secondItem="72V-CC-sq0" secondAttribute="trailing" id="CxZ-vC-cD1"/>
                 <constraint firstItem="0Qc-I9-QAx" firstAttribute="centerY" secondItem="hK6-eP-sGU" secondAttribute="centerY" id="Eqn-KR-7H6"/>
-                <constraint firstAttribute="centerY" secondItem="xYj-ma-kAH" secondAttribute="centerY" id="Jbr-0e-UPa"/>
+                <constraint firstAttribute="bottom" secondItem="72V-CC-sq0" secondAttribute="bottom" id="FYZ-HH-k3v"/>
+                <constraint firstAttribute="centerY" secondItem="xYj-ma-kAH" secondAttribute="centerY" constant="19" id="Jbr-0e-UPa"/>
                 <constraint firstAttribute="trailing" secondItem="xYj-ma-kAH" secondAttribute="trailing" constant="8" id="Jio-km-Q4t"/>
+                <constraint firstItem="72V-CC-sq0" firstAttribute="leading" secondItem="VN1-dU-EOv" secondAttribute="leading" id="X54-9V-9ft"/>
                 <constraint firstItem="hK6-eP-sGU" firstAttribute="top" secondItem="Vcf-Mi-Lv0" secondAttribute="bottom" constant="16" id="XBi-Mi-RN4"/>
                 <constraint firstItem="Vcf-Mi-Lv0" firstAttribute="leading" secondItem="lnI-x4-pg8" secondAttribute="trailing" constant="20" id="ZA9-9w-QDo"/>
                 <constraint firstItem="Vcf-Mi-Lv0" firstAttribute="top" secondItem="VN1-dU-EOv" secondAttribute="top" constant="10" id="fPO-pI-wVT"/>
+                <constraint firstItem="72V-CC-sq0" firstAttribute="centerY" secondItem="aUP-LY-lDh" secondAttribute="centerY" id="g0P-a6-Z9N"/>
                 <constraint firstAttribute="trailing" secondItem="0Qc-I9-QAx" secondAttribute="trailing" constant="50" id="hAu-jD-CA0"/>
-                <constraint firstAttribute="centerY" secondItem="lnI-x4-pg8" secondAttribute="centerY" id="hNB-HD-o9f"/>
+                <constraint firstAttribute="centerY" secondItem="lnI-x4-pg8" secondAttribute="centerY" constant="19" id="hNB-HD-o9f"/>
                 <constraint firstItem="hK6-eP-sGU" firstAttribute="leading" secondItem="Vcf-Mi-Lv0" secondAttribute="leading" id="mCx-0y-Zjw"/>
+                <constraint firstItem="72V-CC-sq0" firstAttribute="trailing" secondItem="aUP-LY-lDh" secondAttribute="trailing" constant="8" id="nk3-aN-Gh2"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -60,8 +81,9 @@
                 <outlet property="classNoLabel" destination="hK6-eP-sGU" id="JQO-Q5-zQy"/>
                 <outlet property="photoImage" destination="lnI-x4-pg8" id="Lu5-kS-ojV"/>
                 <outlet property="schoolLabel" destination="0Qc-I9-QAx" id="s2b-bP-Njn"/>
+                <outlet property="showGradeButton" destination="72V-CC-sq0" id="343-D1-1kV"/>
             </connections>
-            <point key="canvasLocation" x="420" y="105"/>
+            <point key="canvasLocation" x="420" y="124"/>
         </view>
     </objects>
     <resources>

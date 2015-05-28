@@ -1127,6 +1127,7 @@
                         <segue destination="giM-Ty-qcl" kind="show" identifier="ShowAllTestGroups" id="bkO-4T-CBo"/>
                         <segue destination="DAi-qb-qIb" kind="show" identifier="ShowTestGroup" id="2hg-EI-qY5"/>
                         <segue destination="tj6-LI-tF2" kind="show" identifier="ShowTestStatistics" id="WH2-Su-vVE"/>
+                        <segue destination="lAC-bs-FLP" kind="show" identifier="ShowGradeList" id="BeU-Dx-LpB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pmc-sQ-8YW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1155,6 +1156,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTI-zF-tqn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2538" y="-1428"/>
+        </scene>
+        <!--Grade List Table View Controller-->
+        <scene sceneID="o06-Ko-CSJ">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="lAC-bs-FLP" customClass="GradeListTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p1a-cO-Hs2">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="lAC-bs-FLP" id="tNe-Lj-3Go"/>
+                            <outlet property="delegate" destination="lAC-bs-FLP" id="eCX-Nf-VEe"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LWu-kJ-NCP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2937" y="-736.5"/>
         </scene>
         <!--Class Edited Table View Controller-->
         <scene sceneID="DQF-Te-QKe">
@@ -2355,7 +2373,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZCo-Bb-vxg"/>
-        <segue reference="UYw-eG-TdW"/>
-        <segue reference="qBo-Lo-KfN"/>
+        <segue reference="zdK-PK-5mB"/>
+        <segue reference="2hg-EI-qY5"/>
     </inferredMetricsTieBreakers>
 </document>

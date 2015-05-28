@@ -13,6 +13,9 @@
 		8B05E5F51AD9688300E87347 /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
 		8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
 		8B1DDF6F1B0DCEEF002156CA /* ClassEditedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */; };
+		8B21ED2F1B157269002D22BB /* GradeListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21ED2D1B157198002D22BB /* GradeListTableViewController.m */; };
+		8B21ED331B1572EA002D22BB /* GradeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21ED311B1572EA002D22BB /* GradeListCell.m */; };
+		8B21ED341B1572EA002D22BB /* GradeListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B21ED321B1572EA002D22BB /* GradeListCell.xib */; };
 		8B276A791AFBB47E005C9FF7 /* EditedPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */; };
 		8B276A7B1AFBB49E005C9FF7 /* EditedPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */; };
 		8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34B1761AE8C0E500A39F8F /* TestStateCell.m */; };
@@ -241,6 +244,11 @@
 		8B05E5F41AD9688300E87347 /* OptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionCell.xib; path = ChuangYeBa/OptionCell.xib; sourceTree = "<group>"; };
 		8B1DDF6D1B0DCEEF002156CA /* ClassEditedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassEditedTableViewController.h; sourceTree = "<group>"; };
 		8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassEditedTableViewController.m; sourceTree = "<group>"; };
+		8B21ED2C1B157198002D22BB /* GradeListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradeListTableViewController.h; path = ChuangYeBa/GradeListTableViewController.h; sourceTree = "<group>"; };
+		8B21ED2D1B157198002D22BB /* GradeListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradeListTableViewController.m; path = ChuangYeBa/GradeListTableViewController.m; sourceTree = "<group>"; };
+		8B21ED301B1572EA002D22BB /* GradeListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeListCell.h; sourceTree = "<group>"; };
+		8B21ED311B1572EA002D22BB /* GradeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeListCell.m; sourceTree = "<group>"; };
+		8B21ED321B1572EA002D22BB /* GradeListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GradeListCell.xib; sourceTree = "<group>"; };
 		8B276A771AFBB47E005C9FF7 /* EditedPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditedPhotoView.h; path = ChuangYeBa/EditedPhotoView.h; sourceTree = "<group>"; };
 		8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditedPhotoView.m; path = ChuangYeBa/EditedPhotoView.m; sourceTree = "<group>"; };
 		8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditedPhotoView.xib; path = ChuangYeBa/EditedPhotoView.xib; sourceTree = "<group>"; };
@@ -926,6 +934,8 @@
 				8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */,
 				8BF4DC2B1B0B121C001E246E /* TestGroupsTableViewController.h */,
 				8BF4DC2C1B0B121C001E246E /* TestGroupsTableViewController.m */,
+				8B21ED2C1B157198002D22BB /* GradeListTableViewController.h */,
+				8B21ED2D1B157198002D22BB /* GradeListTableViewController.m */,
 			);
 			name = TeacherMain;
 			sourceTree = "<group>";
@@ -953,6 +963,9 @@
 				8BF4DC261B0AE03D001E246E /* TeacherTestGroupCell.h */,
 				8BF4DC271B0AE03D001E246E /* TeacherTestGroupCell.m */,
 				8BF4DC281B0AE03D001E246E /* TeacherTestGroupCell.xib */,
+				8B21ED301B1572EA002D22BB /* GradeListCell.h */,
+				8B21ED311B1572EA002D22BB /* GradeListCell.m */,
+				8B21ED321B1572EA002D22BB /* GradeListCell.xib */,
 			);
 			name = TeacherMain;
 			sourceTree = "<group>";
@@ -1099,6 +1112,7 @@
 				8BBB61A41B06464300381DAC /* StudyContentCell.xib in Resources */,
 				8BBB61A51B06464300381DAC /* ClassInfoCell.xib in Resources */,
 				8BBB61A61B06464300381DAC /* EditedInfoCell.xib in Resources */,
+				8B21ED341B1572EA002D22BB /* GradeListCell.xib in Resources */,
 				8BBB61A71B06464300381DAC /* OptionCell.xib in Resources */,
 				8BBB61F21B06F03B00381DAC /* ClassListCell.xib in Resources */,
 				8BBB61A81B06464300381DAC /* QuestionCell.xib in Resources */,
@@ -1273,6 +1287,7 @@
 				8BBB61731B06464300381DAC /* ClassInfo.m in Sources */,
 				8BBB61F51B07147B00381DAC /* CreateClassTableViewController.m in Sources */,
 				8BBB61741B06464300381DAC /* LoginViewController.m in Sources */,
+				8B21ED331B1572EA002D22BB /* GradeListCell.m in Sources */,
 				8BBB61751B06464300381DAC /* Quiz.m in Sources */,
 				8BBB61771B06464300381DAC /* PullUpRefreshView.m in Sources */,
 				8BBB61781B06464300381DAC /* LoginNetworkUtils.m in Sources */,
@@ -1300,6 +1315,7 @@
 				8BBB618B1B06464300381DAC /* OptionCell.m in Sources */,
 				8BBB618C1B06464300381DAC /* main.m in Sources */,
 				8BBB61ED1B06D4AA00381DAC /* UIColor+Extension.m in Sources */,
+				8B21ED2F1B157269002D22BB /* GradeListTableViewController.m in Sources */,
 				8BBB618E1B06464300381DAC /* ConditionViewController.m in Sources */,
 				8BBB61901B06464300381DAC /* ArticleInfoDAO.m in Sources */,
 				8BBB61911B06464300381DAC /* MeNetworkUtils.m in Sources */,
