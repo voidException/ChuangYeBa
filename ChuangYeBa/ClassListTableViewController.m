@@ -72,20 +72,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         self.refreshButton.enabled = NO;
         self.addButton.enabled = NO;
         _headerView.hidden = YES;
-        self.blankView = [[UIView alloc] initWithFrame:self.view.frame];
-        _blankView.backgroundColor = [UIColor clearColor];
         [self.view insertSubview:_blankView atIndex:1];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 100)];
-        label.text = @"请选择班级";
-        label.textColor = [UIColor whiteColor];
-        label.font = [UIFont boldSystemFontOfSize:20];
-        [label sizeToFit];
-        label.center = self.view.center;
-        label.center = CGPointMake(_blankView.center.x, self.view.center.y - 20);
-        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"classBlankBG"]];
-        image.center = CGPointMake(_blankView.center.x, self.view.center.y - 100);
-        [_blankView addSubview:image];
-        [_blankView addSubview:label];
     }
     [self.refreshButton setAlpha:0.0];
     [self.leftButton setAlpha:0.0];
@@ -168,6 +155,21 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
         self.navigationItem.titleView = self.menu;
     }
     
+    // 初始化空视图
+    self.blankView = [[UIView alloc] initWithFrame:self.view.frame];
+    _blankView.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 100)];
+    label.text = @"请选择班级";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:20];
+    [label sizeToFit];
+    label.center = self.view.center;
+    label.center = CGPointMake(_blankView.center.x, self.view.center.y - 20);
+    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"classBlankBG"]];
+    image.center = CGPointMake(_blankView.center.x, self.view.center.y - 100);
+    [_blankView addSubview:image];
+    [_blankView addSubview:label];
+    
 }
 
 - (void)reloadClassBrief:(NSNotification *)notif {
@@ -183,10 +185,17 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 }
 
 - (void)userLoginIn:(NSNotification *)notif {
+    // 这些代码主要是为了清空上一个老师的内容的显示，并且刷新新的内容进来
     self.selectedClassInfo = nil;
+    [self.testGroups removeAllObjects];
+    [self.classInfos removeAllObjects];
+    self.menu.items = self.classInfos;
+    self.menu.table.items = self.classInfos;
+    [self.menu.table reloadData];
     self.userInfo = [UserInfo loadUserInfoFromLocal];
     [self requestClassInfosFromServer];
     [self.headerView setNeedsLayout];
+    [self.tableView reloadData];
 }
 
 - (void)requestClassInfosFromServer {
@@ -321,7 +330,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
             _refreshButton.enabled = YES;
             _headerView.hidden = NO;
             [_blankView removeFromSuperview];
-            _blankView = nil;
+            //_blankView = nil;
         }
     }
     [ClassInfo saveClassInfoToLocal:_selectedClassInfo];

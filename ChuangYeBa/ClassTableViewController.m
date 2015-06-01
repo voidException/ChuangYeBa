@@ -8,6 +8,7 @@
 
 #import "ClassTableViewController.h"
 #import <SDWebImage/UIButton+WebCache.h>
+#import "GlobalDefine.h"
 
 static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
@@ -109,9 +110,15 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // 初始化导航条中部的分段控件
     NSArray *segmentedTitle = @[@"最新发布", @"我的考试"];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentedTitle];
-    self.segmentedControl.frame = CGRectMake(0, 0, 230, 30);
-    [self.segmentedControl setWidth:115 forSegmentAtIndex:0];
-    [self.segmentedControl setWidth:115 forSegmentAtIndex:1];
+    if (iPhone4 || iPhone5) {
+        self.segmentedControl.frame = CGRectMake(0, 0, 180, 30);
+        [self.segmentedControl setWidth:90 forSegmentAtIndex:0];
+        [self.segmentedControl setWidth:90 forSegmentAtIndex:1];
+    } else {
+        self.segmentedControl.frame = CGRectMake(0, 0, 230, 30);
+        [self.segmentedControl setWidth:115 forSegmentAtIndex:0];
+        [self.segmentedControl setWidth:115 forSegmentAtIndex:1];
+    }
     self.segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 22);
     self.segmentedControl.selectedSegmentIndex = 0;
     [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];

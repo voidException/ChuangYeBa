@@ -28,7 +28,7 @@ static NSString *commentCellIdentifier = @"CommentCell";
 
 static NSInteger const kCommentInputViewHeight = 164;
 
-static NSInteger const kPageSize = 2;
+static NSInteger const kPageSize = 8;
 
 
 @interface StudyDetailViewController ()
@@ -109,6 +109,7 @@ static NSInteger const kPageSize = 2;
     // 初始化自定义导航条
     self.customBar = [[LineNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     //self.leftButton = [[UIBarButtonItem alloc] initWithTitle:@"学习" style:UIBarButtonItemStylePlain target:self action:@selector(clickOnLeftButton)];
+    
     self.leftButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"lastButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(clickOnLeftButton)];
     self.customItem = [[UINavigationItem alloc] initWithTitle:@"学习详情"];
     self.customBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
@@ -134,10 +135,6 @@ static NSInteger const kPageSize = 2;
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnLeftButton)];
     swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipeGesture];
-    
-    
-    
-    
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -202,9 +199,7 @@ static NSInteger const kPageSize = 2;
         self.refreshButton = nil;
     }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.removeFromSuperViewOnHide = YES;
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [StudyNetworkUtils requestArticleDetailWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
         [hud hide:YES];
         if (obj) {
@@ -254,8 +249,6 @@ static NSInteger const kPageSize = 2;
             [_refreshButton addTarget:self action:@selector(requestArticleInfoFromServer) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:_refreshButton];
             
-            
-            
             MBProgressHUD *errorHud = [[MBProgressHUD alloc] initWithView:self.view];
             [self.view addSubview:errorHud];
             errorHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
@@ -281,8 +274,22 @@ static NSInteger const kPageSize = 2;
             [self requestCommentsFromServer:NO];
             // 隐藏评论席位,并清空TextView
             self.commentInputView.textView.text = @"";
+            
             [self removeActivityBackgroundView];
             [self.commentInputView.textView resignFirstResponder];
+            
+            /*
+            CountingCell *cell;
+            if (self.state == StudyDetailStateNormal) {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+            } else {
+                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            }
+            cell.commentCountingLabel.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"number"]];
+             */
+            self.articleInfo.comments = [dic objectForKey:@"number"];
+            
+            [self.tableView reloadData];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交评论失败" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
             [alert show];
@@ -342,14 +349,18 @@ static NSInteger const kPageSize = 2;
             isLiked = NO;
             self.articleInfo.likes = obj;
             [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
             // 给计算赞和评论的小区的赞label位置减1
+            /*
             CountingCell *cell = [[CountingCell alloc] init];
             if (self.state == StudyDetailStateNormal) {
                 cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
             } else {
                 cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
             }
+             
             cell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
+             */
         }];
     } else {
         [StudyNetworkUtils submitAddLoveWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
@@ -429,7 +440,7 @@ static NSInteger const kPageSize = 2;
         NSInteger height = (NSInteger)[self.articleInfo getHeightOfArticleString:ci.content
                                               lineSpacing:2.0
                                                fontOfSize:15.0
-                                              widthOffset:80] + 48;
+                                              widthOffset:81] + 48;
         
         if (height <= 84) {
             return 84;
@@ -483,8 +494,6 @@ static NSInteger const kPageSize = 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%lu", self.tableView.subviews.count);
-    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             return [self tableView:tableView articleTitleCellForRowAtIndexPath:indexPath];
@@ -564,6 +573,8 @@ static NSInteger const kPageSize = 2;
     // 如果不是自己发送的，那么不要现实删除按键
     if (![self.userInfo.userId isEqual:commentCell.commentInfo.userId]) {
         [commentCell.deleteButton setHidden:YES];
+    } else {
+        [commentCell.deleteButton setHidden:NO];
     }
     return commentCell;
 }
@@ -640,6 +651,8 @@ static NSInteger const kPageSize = 2;
         [StudyNetworkUtils submitDeleteCommentWithToken:self.userInfo.email userId:self.userInfo.userId commentId:self.deletingCommentCell.commentInfo.commentId andCallback:^(id obj) {
             NSNumber *error = [obj objectForKey:@"error"];
             if ([error isEqual:@1]) {
+                NSInteger interger = self.articleInfo.comments.integerValue - 1;
+                self.articleInfo.comments = [NSNumber numberWithInteger:interger];
                 [self.tableView reloadData];
                 [self.comments removeObjectAtIndex:self.deletingCommentCell.indexPath.row];
                 [self.tableView deleteRowsAtIndexPaths:@[self.deletingCommentCell.indexPath] withRowAnimation:UITableViewRowAnimationFade];

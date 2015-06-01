@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -22,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="什么是生涯？" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYf-MS-vrU">
-                        <rect key="frame" x="114" y="14" width="245" height="22"/>
+                        <rect key="frame" x="114" y="12" width="245" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="0.3411764705882353" green="0.3411764705882353" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -62,7 +63,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学生生涯是职业生涯积累也是一个过程发送到发送到发送到…" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfe-Al-aj2">
-                        <rect key="frame" x="114" y="42" width="245" height="34"/>
+                        <rect key="frame" x="114" y="42" width="255" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.68235294117647061" green="0.68235294117647061" blue="0.68235294117647061" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -71,9 +72,12 @@
                 <constraints>
                     <constraint firstItem="vny-Dn-Sh4" firstAttribute="leading" secondItem="YKb-k1-0Hf" secondAttribute="trailing" constant="5" id="3pH-rZ-4XY"/>
                     <constraint firstAttribute="bottom" secondItem="vny-Dn-Sh4" secondAttribute="bottom" constant="2" id="4nQ-I9-vW3"/>
+                    <constraint firstAttribute="centerY" secondItem="HYf-MS-vrU" secondAttribute="centerY" constant="19.5" id="9nL-Me-kgk"/>
                     <constraint firstAttribute="trailingMargin" secondItem="HYf-MS-vrU" secondAttribute="trailing" constant="8" id="EE7-iO-2ge"/>
                     <constraint firstItem="HYf-MS-vrU" firstAttribute="leading" secondItem="4tF-VG-EZk" secondAttribute="trailing" constant="14" id="FuY-m0-a3C"/>
                     <constraint firstItem="HYf-MS-vrU" firstAttribute="top" secondItem="Rnc-c3-Ps0" secondAttribute="top" constant="14" id="HgR-ql-y9G"/>
+                    <constraint firstItem="4tF-VG-EZk" firstAttribute="centerY" secondItem="kfe-Al-aj2" secondAttribute="top" constant="2" id="Iu1-58-5wc"/>
+                    <constraint firstItem="4tF-VG-EZk" firstAttribute="top" secondItem="HYf-MS-vrU" secondAttribute="top" constant="-1" id="J3O-dM-BN4"/>
                     <constraint firstAttribute="trailing" secondItem="YKb-k1-0Hf" secondAttribute="trailing" constant="-1" id="P71-Eo-3sl"/>
                     <constraint firstItem="YKb-k1-0Hf" firstAttribute="leading" secondItem="RHt-8g-mo0" secondAttribute="trailing" constant="-1" id="QJJ-p3-4Zg"/>
                     <constraint firstAttribute="bottomMargin" secondItem="RHt-8g-mo0" secondAttribute="bottom" constant="2" id="Xmw-AR-JpZ"/>
@@ -82,15 +86,20 @@
                     <constraint firstItem="HYf-MS-vrU" firstAttribute="leading" secondItem="kfe-Al-aj2" secondAttribute="leading" id="Ztr-QV-sFa"/>
                     <constraint firstAttribute="bottom" secondItem="YKb-k1-0Hf" secondAttribute="bottom" constant="8" id="frd-v3-SRL"/>
                     <constraint firstItem="4tF-VG-EZk" firstAttribute="top" secondItem="Rnc-c3-Ps0" secondAttribute="top" constant="11" id="hNL-YR-XMB"/>
+                    <constraint firstAttribute="centerY" secondItem="kfe-Al-aj2" secondAttribute="centerY" constant="-14.5" id="jbe-mF-Z88"/>
                     <constraint firstItem="4tF-VG-EZk" firstAttribute="leading" secondItem="Rnc-c3-Ps0" secondAttribute="leading" constant="11" id="kiS-Wt-NvE"/>
                     <constraint firstAttribute="bottom" secondItem="4tF-VG-EZk" secondAttribute="bottom" constant="11" id="lq0-UC-kmf"/>
                     <constraint firstAttribute="bottom" secondItem="7GB-bt-ykE" secondAttribute="bottom" constant="8" id="qM4-yq-rke"/>
                     <constraint firstAttribute="trailing" secondItem="vny-Dn-Sh4" secondAttribute="trailing" constant="12" id="qvD-vJ-40A"/>
                     <constraint firstItem="kfe-Al-aj2" firstAttribute="top" secondItem="HYf-MS-vrU" secondAttribute="bottom" constant="6" id="tCw-eX-bBk"/>
-                    <constraint firstItem="HYf-MS-vrU" firstAttribute="trailing" secondItem="kfe-Al-aj2" secondAttribute="trailing" id="vRD-Qc-Km7"/>
+                    <constraint firstItem="HYf-MS-vrU" firstAttribute="trailing" secondItem="kfe-Al-aj2" secondAttribute="trailing" constant="-10" id="vRD-Qc-Km7"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="9nL-Me-kgk"/>
+                        <exclude reference="HgR-ql-y9G"/>
+                        <exclude reference="jbe-mF-Z88"/>
+                        <exclude reference="tCw-eX-bBk"/>
                         <exclude reference="Xmw-AR-JpZ"/>
                         <exclude reference="P71-Eo-3sl"/>
                     </mask>

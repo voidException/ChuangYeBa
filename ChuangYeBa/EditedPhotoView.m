@@ -15,8 +15,9 @@
 #ifdef TEACHER_VERSION
     self.sexImage.hidden = YES;
 #endif
-    
-    self.backgroundColor = [UIColor greenColor];
+    self.nameLabel.shadowOffset = CGSizeMake(0.4, 0.4);
+    self.nameLabel.shadowColor = [UIColor colorWithWhite:0.341 alpha:1.000];
+    self.backgroundColor = [UIColor clearColor];
     self.photoImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnPhoto)];
     [self.photoImage addGestureRecognizer:tapGesture];
@@ -40,11 +41,12 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 
+/*
 - (void)drawRect:(CGRect)rect {
     UIImage *viewBG = [UIImage imageNamed:@"editedPhotoViewBG"];
     
     [viewBG drawAsPatternInRect:rect];
 }
-
+*/
 
 @end

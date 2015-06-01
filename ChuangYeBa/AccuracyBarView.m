@@ -18,7 +18,8 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.05];
         self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.layer.cornerRadius = 12.f;
+        self.layer.cornerRadius = 10.f;
+        self.clipsToBounds = YES;
         _accuracy = 0;
         [self addIndicatorView];
         [self addAccuracyLabel];
@@ -80,15 +81,23 @@
                                                      attribute:NSLayoutAttributeWidth
                                                     multiplier:accuracy
                                                       constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
+    if (accuracy < 0.1) {
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeWidth
+                                                        multiplier:0.2
+                                                          constant:0]];
+    } else {
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
                                                      attribute:NSLayoutAttributeWidth
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeWidth
                                                     multiplier:accuracy
-                                                      constant:-10.f]];
-    
-    
+                                                      constant:-5.f]];
+    }
     [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.7 options:0 animations:^{
         [self layoutIfNeeded];
         self.indicatorView.backgroundColor = [self barColorForStatus:_status];
@@ -101,11 +110,11 @@
 {
     switch (status) {
         case AccuracyBarStateRed:
-            return [UIColor redColor];
+            return [UIColor colorWithRed:0.989 green:0.378 blue:0.328 alpha:1.000];
         case AccuracyBarStateYellow:
-            return [UIColor yellowColor];
+            return [UIColor colorWithRed:1.000 green:0.706 blue:0.000 alpha:1.000];
         case AccuracyBarStateGreen:
-            return [UIColor greenColor];
+            return [UIColor colorWithRed:0.620 green:0.902 blue:0.000 alpha:1.000];
         default:
             return [UIColor whiteColor];
     }
@@ -117,9 +126,9 @@
         case AccuracyBarStateRed:
             return [UIColor whiteColor];
         case AccuracyBarStateYellow:
-            return [UIColor blackColor];
+            return [UIColor whiteColor];
         case AccuracyBarStateGreen:
-            return [UIColor grayColor];
+            return [UIColor whiteColor];
         default:
             return [UIColor whiteColor];
     }
@@ -129,7 +138,6 @@
 {
     self.indicatorView = [UIView new];
     self.indicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.indicatorView.layer.cornerRadius = self.layer.cornerRadius;
     [self addSubview:self.indicatorView];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorView
@@ -170,7 +178,9 @@
     self.accuracyLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.accuracyLabel];
     self.accuracyLabel.textColor = [UIColor grayColor];
-    self.accuracyLabel.font = [UIFont fontWithName:@"Heiti SC" size:18];
+    self.accuracyLabel.font = [UIFont fontWithName:@"Heiti SC" size:15];
+    self.accuracyLabel.shadowOffset = CGSizeMake(0.2, 0.2);
+    self.accuracyLabel.shadowColor = [UIColor whiteColor];
     self.accuracyLabel.textAlignment = NSTextAlignmentRight;
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.accuracyLabel
@@ -188,7 +198,6 @@
                                                      attribute:NSLayoutAttributeLeft
                                                     multiplier:1.f
                                                       constant:0.f]];
-    
 }
 
 

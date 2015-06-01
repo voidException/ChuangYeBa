@@ -7,30 +7,74 @@
 //
 
 #import "AboutUsViewController.h"
+#import "GlobalDefine.h"
+#import <NJKWebViewProgress.h>
+#import <NJKWebViewProgressView.h>
 
-@interface AboutUsViewController ()
+static NSString *serverIP = SERVER_IP;
+
+@interface AboutUsViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) NJKWebViewProgress *progressProxy;
+@property (strong, nonatomic) NJKWebViewProgressView *progressView;
 
 @end
 
-@implementation AboutUsViewController
+@implementation AboutUsViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"关于我们";
-    NSURL * url = [NSURL URLWithString: @"http://192.168.1.104:8080/startup/more/aboutUs"];
-    NSURLRequest * request = [NSURLRequest requestWithURL:url];
-    [self.webView loadRequest:request];
-    //self.webView.delegate = self;
-
-    // Do any additional setup after loading the view.
+    
+    _progressProxy = [[NJKWebViewProgress alloc] init];
+    _webView.delegate = _progressProxy;
+    _progressProxy.webViewProxyDelegate = self;
+    _progressProxy.progressDelegate = self;
+    
+    CGFloat progressBarHeight = 2.f;
+    CGRect navigaitonBarBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0, navigaitonBarBounds.size.height - progressBarHeight, navigaitonBarBounds.size.width, progressBarHeight);
+    _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self requestWebsite];
+    [self.navigationController.navigationBar addSubview:_progressView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_progressView removeFromSuperview];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)requestWebsite {
+    NSString *path = @"/startup/more/aboutUs";
+    path = [serverIP stringByAppendingString:path];
+    NSURL * url = [NSURL URLWithString:path];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+    [_webView loadRequest:request];
+}
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_progressView setProgress:progress animated:YES];
 }
 
 /*

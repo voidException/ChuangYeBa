@@ -11,8 +11,9 @@
 @implementation MediaCell
 
 - (void)awakeFromNib {
-    // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self.mediaButton setBackgroundImage:[UIImage imageNamed:@"studyContentPlaceholder"] forState:UIControlStateNormal];
+    
     
 }
 

@@ -55,23 +55,29 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
 - (void)initUI {
     self.title = @"答题报告";
     
+    self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
     // 初始化tableView
     self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 初始化头视图
     float margin = 8.0;
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(margin, 15, self.view.frame.size.width - 2 * margin, 30)];
-    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    titleLabel.numberOfLines = 1;
-    [headerView addSubview:titleLabel];
-    titleLabel.text = _testGroup.itemTitle;
-    titleLabel.adjustsFontSizeToFitWidth = YES;
-    NSLog(@"%@", _testGroup.itemTitle);
+    UITextView *titleTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 2 * margin, 0)];
+    //titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    //titleLabel.numberOfLines = 2;
+    titleTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
     
-    self.tableView.tableHeaderView = headerView;
+    titleTextView.font = [UIFont systemFontOfSize:16];
+    titleTextView.text = _testGroup.itemTitle;
+    titleTextView.backgroundColor = [UIColor whiteColor];
+    titleTextView.textColor = [UIColor grayColor];
+    //titleLabel.adjustsFontSizeToFitWidth = YES;
+    [titleTextView sizeToFit];
+    NSLog(@"%@", _testGroup.itemTitle);
+    self.tableView.tableHeaderView = titleTextView;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)requestQuizsFromServer {
@@ -105,6 +111,11 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
     }
 }
 
+#pragma mark - Action
+- (void)clickOnBackButton:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger interger = [indexPath row] + 1;
@@ -116,6 +127,9 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 12;
+}
 
 #pragma mark - Table view data source
 

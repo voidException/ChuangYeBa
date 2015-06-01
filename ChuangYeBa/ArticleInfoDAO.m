@@ -45,7 +45,7 @@ static ArticleInfoDAO *sharedManager = nil;
 
 - (NSString *)applicationDocumentsDirectoryFile:(NSInteger)tag {
     NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *fileNameWithTag = [FILE_NAME stringByAppendingString:[NSString stringWithFormat:@"%u",tag]];
+    NSString *fileNameWithTag = [FILE_NAME stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)tag]];
     NSString *path = [documentDirectory stringByAppendingPathComponent:fileNameWithTag];
     return path;
 }

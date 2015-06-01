@@ -59,7 +59,7 @@
                                views:views]];
     
     [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"V:|-10-[_accuracyBarView]-10-|"
+                               constraintsWithVisualFormat:@"V:|-12-[_accuracyBarView]-12-|"
                                options:0
                                metrics:nil
                                views:views]];

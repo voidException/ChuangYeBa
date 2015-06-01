@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sexImage;
 
 
-
 @property (copy, nonatomic) NSString *sex;
 
 @property (weak, nonatomic) id <EditedPhotoViewDelegate> delegate;

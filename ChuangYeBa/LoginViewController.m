@@ -22,8 +22,10 @@
     [super viewDidLoad];
     
     // 添加临时登陆信息
+#ifdef DEBUG
     self.email.text = @"zachary0513@126.com";
     self.password.text = @"1111111";
+#endif
     
     // 初始化TextField的委托对象
     self.email.delegate = self;

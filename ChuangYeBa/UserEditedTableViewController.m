@@ -125,7 +125,6 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
     
     HUD.delegate = self;
     HUD.labelText = @"正在提交";
-    HUD.minSize = CGSizeMake(135.f, 135.f);
     [HUD show:YES];
     HUD.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -138,7 +137,7 @@ static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
             [UserInfo saveUserInfoToLocal:copyUserInfo];
             // 再发送更新用户信息的通知
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateClassInfo" object:self];
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:self];
             
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
             // Set custom view mode

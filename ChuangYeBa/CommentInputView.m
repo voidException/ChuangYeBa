@@ -13,6 +13,7 @@
 
 - (void)awakeFromNib {
     self.textView.delegate = self;
+    
     [self.sendButton setTitleColor:[UIColor colorWithRed:55.0/255 green:55.0/255 blue:55.0/255 alpha:1] forState:UIControlStateNormal];
     [self.cancelButton setTitleColor:[UIColor colorWithRed:55.0/255 green:55.0/255 blue:55.0/255 alpha:1] forState:UIControlStateNormal];
     [self.sendButton setTitleColor:[UIColor colorWithRed:124.0/255 green:124.0/255 blue:124.0/255 alpha:1] forState:UIControlStateDisabled];

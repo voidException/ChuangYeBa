@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学生创业就业相关国家政策及法规标准考试试题" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-SM-txh">
-                        <rect key="frame" x="87" y="8" width="218" height="57"/>
+                        <rect key="frame" x="78" y="8" width="227" height="57"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testGroupIcon" highlightedImage="testGroupIconHighLight" translatesAutoresizingMaskIntoConstraints="NO" id="D7B-A0-l27">
-                        <rect key="frame" x="23" y="14" width="46" height="46"/>
+                        <rect key="frame" x="14" y="14" width="46" height="46"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="46" id="fFd-sy-fmA"/>
                             <constraint firstAttribute="height" constant="46" id="xt2-4T-wjP"/>
@@ -38,6 +38,7 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="bn1-SM-txh" secondAttribute="trailing" constant="15" id="2jt-nW-2ht"/>
                     <constraint firstItem="D7B-A0-l27" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="8j5-9E-hOL"/>
+                    <constraint firstItem="D7B-A0-l27" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="AUk-63-b3z"/>
                     <constraint firstItem="bn1-SM-txh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Al1-0c-K1q"/>
                     <constraint firstItem="D7B-A0-l27" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Hre-H2-EQG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mdQ-Cg-77O" secondAttribute="bottom" constant="-8" id="Jfg-Oe-TwZ"/>
@@ -48,6 +49,7 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="8j5-9E-hOL"/>
                         <exclude reference="Hre-H2-EQG"/>
                     </mask>
                 </variation>

@@ -12,11 +12,12 @@
 #import "ClassNetworkUtils.h"
 #import "ClassJsonParser.h"
 #import "Quiz.h"
+#import "BorderRadiusButton.h"
 
 @interface TestDetailViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIButton *showTestResultButton;
-@property (weak, nonatomic) IBOutlet UIButton *startTestButton;
+@property (weak, nonatomic) IBOutlet BorderRadiusButton *showTestResultButton;
+@property (weak, nonatomic) IBOutlet BorderRadiusButton *startTestButton;
 @property (weak, nonatomic) IBOutlet UILabel *publishTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *testCategoryLabel;

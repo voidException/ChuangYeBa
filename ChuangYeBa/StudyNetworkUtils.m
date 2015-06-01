@@ -66,7 +66,7 @@ static NSString *serverIP = SERVER_IP;
 #endif
     
     NSDictionary *param = @{@"articleId":articleInfo.articleId, @"userId":modifiedUserId, @"commentTime":dateString, @"userName":userInfo.name, @"content":content};
-    
+    NSLog(@"%@", content);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];

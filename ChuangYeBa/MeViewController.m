@@ -96,7 +96,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
     if (indexPath.section == 0) {
         return 88;
     } else {
-        return 57;
+        return 48;
     }
 }
 
@@ -158,7 +158,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
         NSInteger row = [indexPath row];
         NSDictionary *dic = [self.settingArray objectAtIndex:row];
         cell.textLabel.text = [dic objectForKey:@"title"];
-        cell.textLabel.font = [UIFont systemFontOfSize:20];
+        cell.textLabel.font = [UIFont systemFontOfSize:17];
         if (row == 0) {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu KB", ([[SDImageCache sharedImageCache] getSize] / 1000)];
         }

@@ -529,7 +529,7 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="92g-Uv-OxA" secondAttribute="bottom" id="G5S-hZ-dEO"/>
                             <constraint firstItem="92g-Uv-OxA" firstAttribute="top" secondItem="8aN-Lo-C2I" secondAttribute="top" id="gCM-aM-14t">
-                                <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="92g-Uv-OxA" secondAttribute="trailing" id="hLG-si-fMr"/>
                             <constraint firstItem="92g-Uv-OxA" firstAttribute="leading" secondItem="8aN-Lo-C2I" secondAttribute="leading" id="xUN-4T-TVp"/>
@@ -586,7 +586,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bUC-AK-JJ7" firstAttribute="leading" secondItem="gnB-gw-0xW" secondAttribute="leading" id="KJe-5d-oks"/>
-                            <constraint firstItem="bUC-AK-JJ7" firstAttribute="top" secondItem="gnB-gw-0xW" secondAttribute="top" constant="64" id="qAi-gz-b1D"/>
+                            <constraint firstItem="bUC-AK-JJ7" firstAttribute="top" secondItem="gnB-gw-0xW" secondAttribute="top" id="qAi-gz-b1D"/>
                             <constraint firstAttribute="bottom" secondItem="bUC-AK-JJ7" secondAttribute="bottom" id="sjU-b8-Hbm"/>
                             <constraint firstAttribute="trailing" secondItem="bUC-AK-JJ7" secondAttribute="trailing" id="xoD-bE-jad"/>
                         </constraints>
@@ -1161,7 +1161,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIU-zc-3ve">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIU-zc-3ve" customClass="BorderRadiusButton">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6Gz-xs-Q6f">
@@ -1170,7 +1170,7 @@
                                     <constraint firstAttribute="width" secondItem="KIU-zc-3ve" secondAttribute="height" multiplier="82:20" id="d7R-JG-PCr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="查看分数" backgroundImage="loginButtonBG">
+                                <state key="normal" title="查看分数">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1193,7 +1193,7 @@
                                     <action selector="clickOnTestResultButton:" destination="RNi-tv-RBW" eventType="touchUpInside" id="Rla-41-UTy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qW3-1p-k7w">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qW3-1p-k7w" customClass="BorderRadiusButton">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qW3-1p-k7w" secondAttribute="height" multiplier="82:20" id="gaF-ad-VbV"/>
@@ -1202,7 +1202,7 @@
                                     </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="开始考试" backgroundImage="loginButtonBG">
+                                <state key="normal" title="开始考试">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2524,9 +2524,9 @@
         <image name="testDetailButtonDisableBG" width="157" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qBo-Lo-KfN"/>
-        <segue reference="9lk-td-3Wt"/>
-        <segue reference="NjU-tj-9B7"/>
         <segue reference="ZCo-Bb-vxg"/>
+        <segue reference="9lk-td-3Wt"/>
+        <segue reference="cbf-4c-GZF"/>
+        <segue reference="qBo-Lo-KfN"/>
     </inferredMetricsTieBreakers>
 </document>

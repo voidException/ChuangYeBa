@@ -39,10 +39,13 @@ static NSString *cellIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - Private Method
 - (void)initUI {
     self.title = @"成绩单";
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"GradeListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)requestTestGradesFromServer {
@@ -54,31 +57,48 @@ static NSString *cellIdentifier = @"Cell";
     }];
 }
 
+#pragma mark - Action
+- (void)clickOnBackButton:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 36;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     UILabel *photoLabel = [[UILabel alloc] init];
-    titleView.backgroundColor = [UIColor colorWithWhite:0.756 alpha:1.000];
+    titleView.backgroundColor = [UIColor colorWithRed:243.0/255 green:244.0/255 blue:244.0/255 alpha:1.];
+    
     photoLabel.text = @"头像";
     [photoLabel sizeToFit];
-    [photoLabel setTextAlignment:NSTextAlignmentCenter];
+    [photoLabel setTextAlignment:NSTextAlignmentLeft];
+    photoLabel.font = [UIFont systemFontOfSize:15.0];
+    photoLabel.textColor = [UIColor grayColor];
+    
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.text = @"姓名";
     [nameLabel sizeToFit];
-    [nameLabel setTextAlignment:NSTextAlignmentCenter];
+    [nameLabel setTextAlignment:NSTextAlignmentLeft];
+    nameLabel.font = [UIFont systemFontOfSize:15.0];
+    nameLabel.textColor = [UIColor grayColor];
+    
     UILabel *noLabel = [[UILabel alloc] init];
     noLabel.text = @"学号";
     [noLabel sizeToFit];
     [noLabel setTextAlignment:NSTextAlignmentCenter];
+    noLabel.font = [UIFont systemFontOfSize:15.0];
+    noLabel.textColor = [UIColor grayColor];
+    
     UILabel *gradeLabel = [[UILabel alloc] init];
     gradeLabel.text = @"平均成绩";
     [gradeLabel sizeToFit];
     [gradeLabel setTextAlignment:NSTextAlignmentCenter];
+    gradeLabel.font = [UIFont systemFontOfSize:15.0];
+    gradeLabel.textColor = [UIColor grayColor];
     
     [titleView addSubview:photoLabel];
     [titleView addSubview:nameLabel];
@@ -92,7 +112,7 @@ static NSString *cellIdentifier = @"Cell";
     
     NSDictionary *views = NSDictionaryOfVariableBindings(photoLabel, nameLabel, noLabel, gradeLabel);
 
-    NSArray *hConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[photoLabel]-13-[nameLabel]-30-[noLabel]-48-[gradeLabel]-17-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views];
+    NSArray *hConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[photoLabel(==37)]-13-[nameLabel]-30-[noLabel]-48-[gradeLabel]-17-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views];
     NSArray *vConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[photoLabel]" options:0 metrics:nil views:views];
     [titleView addConstraints:hConstraint];
     [titleView addConstraints:vConstraint];
@@ -119,7 +139,11 @@ static NSString *cellIdentifier = @"Cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GradeListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     NSDictionary *dic = _gradeArray[indexPath.row];
-    [cell.photoImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"stuPhoto"]] placeholderImage:[UIImage imageNamed: @"photoPlaceholderSmall"]];
+    NSString *urlString = [dic objectForKey:@"stuPhoto"];
+    if ([urlString class] == [NSNull class]) {
+        urlString = @"";
+    }
+    [cell.photoImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed: @"photoPlaceholderSmall"]];
     cell.nameLabel.text = [dic objectForKey:@"stuName"];
     cell.noLabel.text = [NSString stringWithFormat:@"%@", [dic objectForKey:@"stuNo"]];
     cell.gradeLabel.text = [NSString stringWithFormat:@"%@分",[dic objectForKey:@"stuGrade"]];

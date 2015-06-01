@@ -564,7 +564,9 @@
                             <constraint firstAttribute="trailing" secondItem="ImS-cu-nVA" secondAttribute="trailing" id="53i-HM-7zt"/>
                             <constraint firstAttribute="bottom" secondItem="ImS-cu-nVA" secondAttribute="bottom" id="7gl-Yd-Hha"/>
                             <constraint firstItem="ImS-cu-nVA" firstAttribute="leading" secondItem="gnB-gw-0xW" secondAttribute="leading" id="GSF-0D-EBy"/>
-                            <constraint firstItem="ImS-cu-nVA" firstAttribute="top" secondItem="gnB-gw-0xW" secondAttribute="top" id="cxG-nF-sOU"/>
+                            <constraint firstItem="ImS-cu-nVA" firstAttribute="top" secondItem="gnB-gw-0xW" secondAttribute="top" id="cxG-nF-sOU">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -589,7 +591,6 @@
                             </mask>
                         </variation>
                     </view>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="ImS-cu-nVA" id="1Mp-4e-9bz"/>
                     </connections>
@@ -1162,6 +1163,7 @@
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="lAC-bs-FLP" customClass="GradeListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p1a-cO-Hs2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -2372,8 +2374,8 @@
         <image name="submitTestButtonDisableBG" width="75" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZCo-Bb-vxg"/>
         <segue reference="zdK-PK-5mB"/>
-        <segue reference="2hg-EI-qY5"/>
+        <segue reference="UYw-eG-TdW"/>
+        <segue reference="ZCo-Bb-vxg"/>
     </inferredMetricsTieBreakers>
 </document>

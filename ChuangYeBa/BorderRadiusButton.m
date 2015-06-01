@@ -18,6 +18,7 @@ static float const kAspectRatio = 45.0/341;
     if (self) {
         self.layer.cornerRadius = 3.0f;
         [self setButtonColor:[UIColor CYBBlueColor]];
+        NSLog(@"%u", self.enabled);
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithWhite:1.f alpha:.9f] forState:UIControlStateHighlighted];
     }
@@ -43,6 +44,17 @@ static float const kAspectRatio = 45.0/341;
         self.frame = fixFrame;
     }
     return self;
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    [super setEnabled:enabled];
+    if (!enabled) {
+        [self setButtonColor:[UIColor whiteColor]];
+        self.layer.borderColor = [UIColor grayColor].CGColor;
+    } else {
+        [self setButtonColor:[UIColor CYBBlueColor]];
+        self.layer.borderColor = [UIColor clearColor].CGColor;
+    }
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state {

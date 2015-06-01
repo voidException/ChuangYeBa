@@ -23,6 +23,11 @@
     [super viewDidLoad];
     // 初始化标题
     self.title = @"注册";
+    _email.placeholder = @"name@example.com";
+    _userName.placeholder = @"请键入真实姓名";
+    _userNo.placeholder = @"请键入真实学号";
+    _password.placeholder = @"6-16位数字和字母";
+    _passwordConfirm.placeholder = @"请重新键入密码";
     
     // 初始化buttonView的高度
     self.buttonView.frame = CGRectMake(0, 0, self.view.frame.size.width, 80);
@@ -41,12 +46,13 @@
     // 初始化委托对象
     self.email.delegate = self;
     
-    // TEST USE
+#ifdef DEBUG
     self.email.text = @"zachary@126.com";
     self.userName.text = @"小明";
     self.userNo.text = @"111111112";
     self.password.text = @"1111111";
     self.passwordConfirm.text = @"1111111";
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -20,6 +20,7 @@
 
 static NSString *editedInfoCellIdentifier = @"EditedInfoCell";
 static NSString *bucket = @"startupimg";
+static NSInteger kImageOriginHight = 225;
 
 @interface UserDetailTableViewController () <EditedPhotoViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -28,6 +29,7 @@ static NSString *bucket = @"startupimg";
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) UIButton *rightButton;
 @property (strong, nonatomic) EditedPhotoView *headerView;
+@property (strong, nonatomic) UIImageView *headerBackgroundImage;
 
 @property (nonatomic, strong) UIImage *userChoosePhoto;
 
@@ -96,7 +98,16 @@ static NSString *bucket = @"startupimg";
     self.headerView = [nib objectAtIndex:0];
     self.headerView.delegate = self;
     [self loadHeaderView];
-    self.tableView.tableHeaderView = _headerView;
+    self.headerBackgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editedPhotoViewBG"]];
+    self.headerBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.headerBackgroundImage.frame = CGRectMake(0, -kImageOriginHight, self.view.frame.size.width, kImageOriginHight);
+    [self.tableView addSubview:self.headerBackgroundImage];
+    [self.tableView addSubview:self.headerView];
+    self.headerView.frame = CGRectMake(0, -kImageOriginHight, self.view.frame.size.width, kImageOriginHight);
+    self.tableView.contentInset = UIEdgeInsetsMake(kImageOriginHight, 0, 0, 0);
+    
+    
+    [self.tableView.tableHeaderView insertSubview:self.headerBackgroundImage atIndex:0];
     
     // 注册修改信息的小区
     [self.tableView registerNib:[UINib nibWithNibName:@"EditedInfoCell" bundle:nil] forCellReuseIdentifier:editedInfoCellIdentifier];
@@ -326,36 +337,49 @@ static NSString *bucket = @"startupimg";
             
             // 把用户选择的照片上传
 #ifdef STUDENT_VERSION
-            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"student" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+            NSString *owner = @"student";
 #elif TEACHER_VERSION
-                [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:@"teacher" date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+            NSString *owner = @"teacher";
 #endif
-                    NSDictionary *dic = obj;
-                    NSString *key = [dic objectForKey:@"key"];
-                    [self.userInfo setPhotoPathWithStorageURL:key];
-                    
-                    // 提交更改用户信息到服务器，告知服务器保存新的图片地址
-                    [MeNetworkUtils submitModifiedUserInfo:self.userInfo andCallback:^(id obj) {
-                        if (obj) {
-                            [UserInfo saveUserInfoToLocal:self.userInfo];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
-                            
-                            MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-                            [self.navigationController.view addSubview:HUD];
-                            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
-                            // Set custom view mode
-                            HUD.mode = MBProgressHUDModeCustomView;
-                            HUD.animationType = MBProgressHUDAnimationZoomIn;
-                            //HUD.delegate = self;
-                            HUD.labelText = @"上传照片成功啦";
-                            [HUD show:YES];
-                            [HUD hide:YES afterDelay:1.0];
-                            
-                        }
-                    }];
+
+            [MeNetworkUtils uploadPhotoToServer:_userChoosePhoto token:token owner:owner date:[NSDate date] ownerId:_userInfo.userId andCallback:^(id obj) {
+
+                NSDictionary *dic = obj;
+                NSString *key = [dic objectForKey:@"key"];
+                [self.userInfo setPhotoPathWithStorageURL:key];
+                
+                // 提交更改用户信息到服务器，告知服务器保存新的图片地址
+                [MeNetworkUtils submitModifiedUserInfo:self.userInfo andCallback:^(id obj) {
+                    if (obj) {
+                        [UserInfo saveUserInfoToLocal:self.userInfo];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUserInfo" object:nil];
+                        
+                        MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+                        [self.navigationController.view addSubview:HUD];
+                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+                        // Set custom view mode
+                        HUD.mode = MBProgressHUDModeCustomView;
+                        HUD.animationType = MBProgressHUDAnimationZoomIn;
+                        //HUD.delegate = self;
+                        HUD.labelText = @"上传照片成功啦";
+                        [HUD show:YES];
+                        [HUD hide:YES afterDelay:1.0];
+                    }
                 }];
-            }
-        }];
+            }];
+        }
+    }];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat yOffset  = scrollView.contentOffset.y;
+    if (yOffset < -kImageOriginHight) {
+        CGRect f = self.headerBackgroundImage.frame;
+        f.origin.y = yOffset;
+        f.size.height =  -yOffset;
+        self.headerBackgroundImage.frame = f;
+    }
+
 }
         
 
