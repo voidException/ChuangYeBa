@@ -264,7 +264,9 @@ static NSInteger const kPageSize = 8;
 }
 
 - (void)submitCommentToServer {
+    //NSString *string = [self.commentInputView.textView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSDate *nowDate = [NSDate date];
+    [self.commentInputView.textView resignFirstResponder];
     [StudyNetworkUtils submitCommentWithArticleId:self.articleInfo userInfo:self.userInfo commitDate:nowDate content:self.commentInputView.textView.text andCallback:^(id obj){
         NSDictionary *dic = obj;
         // 注意：在这里error返回的居然是当前的评论数，WTF，真TM逗！
@@ -276,8 +278,6 @@ static NSInteger const kPageSize = 8;
             self.commentInputView.textView.text = @"";
             
             [self removeActivityBackgroundView];
-            [self.commentInputView.textView resignFirstResponder];
-            
             /*
             CountingCell *cell;
             if (self.state == StudyDetailStateNormal) {
@@ -291,8 +291,20 @@ static NSInteger const kPageSize = 8;
             
             [self.tableView reloadData];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交评论失败" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
+            [self.commentInputView.textView becomeFirstResponder];
+            MBProgressHUD *errorHud = [[MBProgressHUD alloc] init];
+            [self.view addSubview:errorHud];
+            errorHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errormark"]];
+            // Set custom view mode
+            errorHud.mode = MBProgressHUDModeCustomView;
+            errorHud.animationType = MBProgressHUDAnimationZoomIn;
+            //HUD.delegate = self;
+            errorHud.labelText = @"网络出错了>_<";
+            [errorHud show:YES];
+            [errorHud hide:YES afterDelay:1.0];
+            //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交评论失败" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+            //[alert show];
+            
         }
     }];
 }
@@ -322,12 +334,10 @@ static NSInteger const kPageSize = 8;
 // 键盘消失后调整视图
 - (void)keyboardWillDisappear:(NSNotification *)notification
 {
+    [self removeActivityBackgroundView];
     CGFloat keyboardHeight = [self keyboardEndFrameHeight:[notification userInfo]];
     [UIView animateWithDuration:1.0 animations:^{
         self.commentInputView.frame = CGRectOffset(self.commentInputView.frame, 0, keyboardHeight + kCommentInputViewHeight);
-        //self.activityBackgroundView.blurRadius = 0;
-    } completion:^(BOOL finished) {
-        [self removeActivityBackgroundView];
     }];
 }
 
@@ -538,7 +548,7 @@ static NSInteger const kPageSize = 8;
 - (MediaCell *)tableView:(UITableView *)tableView mediaCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaCell *mediaCell = [tableView dequeueReusableCellWithIdentifier:mediaCellIdentifier];
     mediaCell.delegate = self;
-    [mediaCell.mediaButton sd_setBackgroundImageWithURL:[NSURL URLWithString:_articleInfo.miniPhotoURL] forState:UIControlStateNormal];
+    [mediaCell.mediaButton sd_setBackgroundImageWithURL:[NSURL URLWithString:_articleInfo.miniPhotoURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"studyContentPlaceholderBig"]];
     switch ([self.articleInfo.articleType integerValue]) {
         case 71:
             [mediaCell setState:MediaCellStateNormal];
@@ -603,12 +613,13 @@ static NSInteger const kPageSize = 8;
     if (self.activityBackgroundView == nil) {
         self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
         self.activityBackgroundView.tintColor = [UIColor blackColor];
-        self.activityBackgroundView.blurRadius = 0;
+        self.activityBackgroundView.blurRadius = 20;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBlurView)];
+        [self.view addSubview:self.activityBackgroundView];
         self.activityBackgroundView.userInteractionEnabled = YES;
         [self.activityBackgroundView addGestureRecognizer:tapGesture];
-        self.activityBackgroundView.blurRadius = 20;
-        [self.view addSubview:self.activityBackgroundView];
+
+        
         /*
         [UIView animateWithDuration:0.5 animations:^{
             self.activityBackgroundView.blurRadius = 20;
@@ -616,10 +627,11 @@ static NSInteger const kPageSize = 8;
          */
         
     }
+    /*
     if (![self.activityBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.activityBackgroundView];
     }
-    
+    */
 }
 
 // 移除透明指示栏
