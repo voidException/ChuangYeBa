@@ -286,10 +286,9 @@ static NSString *testStateCellIdentifier = @"TestStateCell";
 - (TestStateCell *)tableView:(UITableView *)tableView testStateCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestStateCell *testStateCell = [tableView dequeueReusableCellWithIdentifier:testStateCellIdentifier];
     testStateCell.typeLabel.text = @"单项选择练习";
-    testStateCell.currentLabel.text = [NSString stringWithFormat:@"%lu", quizNo];
-    testStateCell.totalLabel.text = [NSString stringWithFormat:@"%lu", self.quizs.count];
+    testStateCell.currentLabel.text = [NSString stringWithFormat:@"%ld", quizNo];
+    testStateCell.totalLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.quizs.count];
     return testStateCell;
-
 }
 
 - (QuestionCell *)tableView:(UITableView *)tableView questionCellForRowAtIndexPath:(NSIndexPath *)indexPath {

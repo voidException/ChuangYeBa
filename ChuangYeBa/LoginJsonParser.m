@@ -39,8 +39,12 @@
         } else {
             userInfo.sex = @"女";
         }
-#warning inColleageDate 没有配置
-        //userInfo.inCollegeDate =
+        if ([[dic objectForKey:@"incollege"] class] == [NSNull class]) {
+            userInfo.inCollegeDate = nil;
+        } else {
+            NSTimeInterval timeInterval = [[dic objectForKey:@"incollege"] integerValue];
+            userInfo.inCollegeDate = [NSDate dateWithTimeIntervalSince1970:timeInterval/1000];
+        }
         userInfo.email = [dic objectForKey:@"email"];
         userInfo.password = [dic objectForKey:@"passwords"];
         userInfo.photoPath = [dic objectForKey:@"photo"];
@@ -60,14 +64,12 @@
     } else {
         sex = @YES;
     }
-    NSString *dateString = @"";
-    if (userInfo.inCollegeDate == nil) {
-        NSDate *nowDate = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        // 目前数据库只能支持到年月日，如果加时分秒服务器会无法返回
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        dateString = [dateFormatter stringFromDate:nowDate];
-    }
+    NSDate *nowDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 目前数据库只能支持到年月日，如果加时分秒服务器会无法返回
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateString = [dateFormatter stringFromDate:nowDate];
+    
     if (userInfo.photoPath.length > 1) {
         userInfo.isPhotoUpload = @YES;
     } else {

@@ -151,7 +151,6 @@
 		8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFB1ADF8A44002C4CA9 /* CommentCell.xib */; };
 		8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */; };
 		8BBB61B71B06464300381DAC /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2C1B0593E100FB1932 /* setting.plist */; };
-		8BBB61B91B06464300381DAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
 		8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */; };
 		8BBB61CC1B06D2FD00381DAC /* ClassListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61CB1B06D2FD00381DAC /* ClassListTableViewController.m */; };
 		8BBB61E71B06D4AA00381DAC /* SICellSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB61D61B06D4AA00381DAC /* SICellSelection.m */; };
@@ -171,7 +170,6 @@
 		8BCF39991ACCE09C0071C016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
 		8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF399B1ACCE09C0071C016 /* AppDelegate.m */; };
 		8BCF39A21ACCE09C0071C016 /* MainStudent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */; };
-		8BCF39A41ACCE09C0071C016 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
 		8BCF39A71ACCE09C0071C016 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
 		8BCF39B31ACCE09C0071C016 /* ChuangYeBaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39B21ACCE09C0071C016 /* ChuangYeBaTests.m */; };
 		8BD01A931ACF71E100E339D6 /* EditedPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A921ACF71E100E339D6 /* EditedPhotoCell.m */; };
@@ -192,6 +190,8 @@
 		8BE5BD1C1B036C7C006B47DA /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE5BD1B1B036C7C006B47DA /* CircleButton.m */; };
 		8BE66F0F1AEDFEA80075D9E9 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F0E1AEDFEA80075D9E9 /* UserListTableViewController.m */; };
 		8BE66F131AEE7A4A0075D9E9 /* StudyJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */; };
+		8BE96CF31B1C1C3600EBE2EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
+		8BE96CF41B1C1C3B00EBE2EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A31ACCE09C0071C016 /* Images.xcassets */; };
 		8BE9A73C1B145C2600368B6C /* contentCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BE9A73B1B145C2600368B6C /* contentCategory.plist */; };
 		8BE9A73D1B145C2600368B6C /* contentCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BE9A73B1B145C2600368B6C /* contentCategory.plist */; };
 		8BEC85631B0433180017448C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEC85621B0433180017448C /* FXBlurView.m */; };
@@ -367,7 +367,7 @@
 		8BBF360A1AE161EA0029072C /* StudyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyDetailViewController.h; path = ChuangYeBa/StudyDetailViewController.h; sourceTree = "<group>"; };
 		8BBF360B1AE161EA0029072C /* StudyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyDetailViewController.m; path = ChuangYeBa/StudyDetailViewController.m; sourceTree = "<group>"; };
 		8BCF39931ACCE09C0071C016 /* CYBStudent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYBStudent.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BCF39971ACCE09C0071C016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BCF39971ACCE09C0071C016 /* ChuangYeBaStudent-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChuangYeBaStudent-Info.plist"; sourceTree = "<group>"; };
 		8BCF39981ACCE09C0071C016 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BCF399A1ACCE09C0071C016 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8BCF399B1ACCE09C0071C016 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -825,7 +825,6 @@
 				8BCF39941ACCE09C0071C016 /* Products */,
 				D3E02882DC6A9EDA35380982 /* Pods */,
 				9FB07484698B67F4D94AC67A /* Frameworks */,
-				8BBB61BF1B06464300381DAC /* ChuangYeBaTeacher-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -863,7 +862,8 @@
 		8BCF39961ACCE09C0071C016 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8BCF39971ACCE09C0071C016 /* Info.plist */,
+				8BCF39971ACCE09C0071C016 /* ChuangYeBaStudent-Info.plist */,
+				8BBB61BF1B06464300381DAC /* ChuangYeBaTeacher-Info.plist */,
 				8BCF39981ACCE09C0071C016 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -1128,6 +1128,7 @@
 				8BBB61B01B06464300381DAC /* MediaCell.xib in Resources */,
 				8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */,
 				8BE9A73D1B145C2600368B6C /* contentCategory.plist in Resources */,
+				8BE96CF31B1C1C3600EBE2EC /* Images.xcassets in Resources */,
 				8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */,
 				8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */,
 				8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */,
@@ -1135,7 +1136,6 @@
 				8BFD753D1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib in Resources */,
 				8BBB61B71B06464300381DAC /* setting.plist in Resources */,
 				8BF4DC2A1B0AE03D001E246E /* TeacherTestGroupCell.xib in Resources */,
-				8BBB61B91B06464300381DAC /* Images.xcassets in Resources */,
 				8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1153,6 +1153,7 @@
 				8BED43B11AFC5C63002CC15C /* EditedInfoCell.xib in Resources */,
 				8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */,
 				8BDA58B81AD94DF100E59EE8 /* QuestionCell.xib in Resources */,
+				8BE96CF41B1C1C3B00EBE2EC /* Images.xcassets in Resources */,
 				8BB6ED311B0593E100FB1932 /* studyCategory.plist in Resources */,
 				8B356C5C1AE8D5D2004CC161 /* TestScoreCell.xib in Resources */,
 				8BB6ED2F1B0593E100FB1932 /* appSetting.plist in Resources */,
@@ -1170,7 +1171,6 @@
 				8B451AE81ADF7B24002C4CA9 /* ArticleCell.xib in Resources */,
 				8BB6ED301B0593E100FB1932 /* setting.plist in Resources */,
 				8B356C611AE8D7B9004CC161 /* AnswerSheetCell.xib in Resources */,
-				8BCF39A41ACCE09C0071C016 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,7 +1469,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconTeacher;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1489,7 +1489,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89E62808823615B5B2634BAD /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconTeacher;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1587,7 +1587,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB3E4B5122327EC893F917B2 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStudent;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1595,7 +1595,7 @@
 					"COCOAPODS=1",
 					"STUDENT_VERSION=1",
 				);
-				INFOPLIST_FILE = ChuangYeBa/Info.plist;
+				INFOPLIST_FILE = "ChuangYeBa/ChuangYeBaStudent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = CYBStudent;
@@ -1607,7 +1607,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89E62808823615B5B2634BAD /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconStudent;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1615,7 +1615,7 @@
 					"COCOAPODS=1",
 					"STUDENT_VERSION=1",
 				);
-				INFOPLIST_FILE = ChuangYeBa/Info.plist;
+				INFOPLIST_FILE = "ChuangYeBa/ChuangYeBaStudent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = CYBStudent;

@@ -49,8 +49,13 @@ static float const kAspectRatio = 45.0/341;
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     if (!enabled) {
+#ifdef STUDENT_VERSION
+        [self setButtonColor:[UIColor CYBBlueColor]];
+        self.layer.borderColor = [UIColor clearColor].CGColor;
+#elif TEACHER_VERSION
         [self setButtonColor:[UIColor whiteColor]];
         self.layer.borderColor = [UIColor grayColor].CGColor;
+#endif
     } else {
         [self setButtonColor:[UIColor CYBBlueColor]];
         self.layer.borderColor = [UIColor clearColor].CGColor;
@@ -77,7 +82,6 @@ static float const kAspectRatio = 45.0/341;
             } else {
                 disableAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:18], NSForegroundColorAttributeName:[UIColor colorWithWhite:1.f alpha:.5f]};
             }
-            
             NSAttributedString *disableAttributedString = [[NSAttributedString alloc] initWithString:title attributes:disableAttributes];
             [self setAttributedTitle:disableAttributedString forState:UIControlStateDisabled];
             break;

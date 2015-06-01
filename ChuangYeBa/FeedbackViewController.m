@@ -46,6 +46,12 @@ static NSString *serverIP = SERVER_IP;
     [self.navigationController.navigationBar addSubview:_progressView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_progressView removeFromSuperview];
+}
+
+
 - (void)requestWebsite {
     NSString *path = @"/startup/more/advise";
     path = [serverIP stringByAppendingString:path];
