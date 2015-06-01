@@ -187,7 +187,7 @@ static NSString *classListCellIdentifier = @"ClassListCell";
     ClassInfo *classInfo = self.items[indexPath.row];
     cell.titleLabel.text = classInfo.classroomName;
     cell.subTitleLabel.text = [NSString stringWithFormat:@"%@人", classInfo.realStudentNum];
-    [cell.photoImage sd_setImageWithURL:[NSURL URLWithString:classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"PKUIcon" ]];
+    [cell.photoImage sd_setImageWithURL:[NSURL URLWithString:classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"classPhotoPlaceholder" ]];
     return cell;
     
     

@@ -74,6 +74,9 @@
     [toolbarButton setTitle:@"添加" forState:UIControlStateNormal];
     [self.navigationController.toolbar addSubview:toolbarButton];
     self.navigationController.toolbar.autoresizesSubviews = YES;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)requestAllTestGroupsFromServer {
@@ -94,6 +97,10 @@
 }
 
 #pragma mark - Action
+- (void)clickOnBackButton:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)clickOnAddButton:(id)sender {
     NSArray *arrValues = [_addDic allValues];
     __block NSInteger sum = 0;

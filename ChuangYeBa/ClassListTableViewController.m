@@ -69,7 +69,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     [super viewWillDisappear:animated];
 
     if (!_selectedClassInfo) {
-        self.refreshButton.enabled = NO;
+        //self.refreshButton.enabled = NO;
         self.addButton.enabled = NO;
         _headerView.hidden = YES;
         [self.view insertSubview:_blankView atIndex:1];
@@ -263,7 +263,9 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 
 - (void)clickOnRefreshButton:(id)sender {
     [self requestClassInfosFromServer];
-    [self requestTestGroupsFromServer];
+    if (self.selectedClassInfo) {
+        [self requestTestGroupsFromServer];
+    }
 }
 
 - (void)clickOnLeftButton:(id)sender {

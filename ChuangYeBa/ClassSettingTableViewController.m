@@ -58,6 +58,9 @@ static NSString *bucket = @"startupimg";
 #pragma mark - Private Method
 - (void)initUI {
     self.title = @"班级设置";
+    
+    self.clearsSelectionOnViewWillAppear = YES;
+
     self.tableView.tableFooterView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 60);
     // 注册XIB小区
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassInfoCell" bundle:nil] forCellReuseIdentifier:classInfoCellIdentifier];
@@ -211,7 +214,7 @@ static NSString *bucket = @"startupimg";
         NSString *classNoString = [formatter stringFromNumber:self.classInfo.classNo];
         classInfoCell.classNoLabel.text = classNoString;
         classInfoCell.classNameLabel.text = self.classInfo.classroomName;
-        [classInfoCell.photo sd_setImageWithURL:[NSURL URLWithString:_classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"PKUIcon"]];
+        [classInfoCell.photo sd_setImageWithURL:[NSURL URLWithString:_classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"classPhotoPlaceholder"]];
         
 #ifdef STUDENT_VERSION
         classInfoCell.teacherNameLabel.text = self.classInfo.teacher.name;
@@ -230,6 +233,7 @@ static NSString *bucket = @"startupimg";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
         }
         cell.textLabel.text = @"我的信息";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         return cell;
     } else if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]]) {
@@ -238,8 +242,14 @@ static NSString *bucket = @"startupimg";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
         }
         cell.textLabel.text = @"班级成员";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu人",(unsigned long)[[self.studentDic allKeys] count]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        if (![[self.studentDic allKeys] count]) {
+            cell.textLabel.textColor = [UIColor grayColor];
+        } else {
+            cell.textLabel.textColor = [UIColor blackColor];
+        }
         return cell;
     } else return nil;
 }

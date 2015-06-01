@@ -1138,7 +1138,7 @@
         <!--Class Setting Table View Controller-->
         <scene sceneID="t9W-Ax-xrS">
             <objects>
-                <tableViewController id="pOA-7T-aQ2" customClass="ClassSettingTableViewController" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="pOA-7T-aQ2" customClass="ClassSettingTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="mhn-ki-ojy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1183,7 +1183,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JHf-Lh-mb3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="TdB-HK-thZ" id="4i1-cK-kK6"/>
                             <outlet property="delegate" destination="TdB-HK-thZ" id="SSA-nm-q7F"/>
@@ -1219,7 +1219,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="KpO-GN-ELd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="tj6-LI-tF2" id="cyR-d3-Zwl"/>
                             <outlet property="delegate" destination="tj6-LI-tF2" id="qR5-fD-3Xg"/>
@@ -2374,8 +2374,8 @@
         <image name="submitTestButtonDisableBG" width="75" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zdK-PK-5mB"/>
-        <segue reference="UYw-eG-TdW"/>
         <segue reference="ZCo-Bb-vxg"/>
+        <segue reference="wee-3V-SQO"/>
+        <segue reference="UYw-eG-TdW"/>
     </inferredMetricsTieBreakers>
 </document>

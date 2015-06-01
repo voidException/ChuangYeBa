@@ -127,6 +127,10 @@ static NSInteger kImageOriginHight = 225;
     [modifiedButton addTarget:self action:@selector(clickOnRightButton) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:modifiedButton];
     self.tableView.tableFooterView = footerView;
+    
+    // 返回按钮
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    self.navigationItem.leftBarButtonItem = btn;
 }
 
 // 裁剪头像图片为圆形
@@ -251,6 +255,10 @@ static NSInteger kImageOriginHight = 225;
 
 - (void)clickOnRightButton {
     [self performSegueWithIdentifier:@"ShowUserEdited" sender:self];
+}
+
+- (void)clickOnBackButton:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

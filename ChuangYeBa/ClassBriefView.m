@@ -21,7 +21,7 @@
     [super layoutSubviews];
     _classInfo = [ClassInfo loadClassInfoFromLocal];
     if (_classInfo) {
-        [_photoImage sd_setImageWithURL:[NSURL URLWithString:_classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"PKUIcon"]];
+        [_photoImage sd_setImageWithURL:[NSURL URLWithString:_classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"classPhotoPlaceholder"]];
         _classNameLabel.text = _classInfo.classroomName;
         _classNoLabel.text = [NSString stringWithFormat:@"%@", _classInfo.classNo];
         _schoolLabel.text = _classInfo.universityName;

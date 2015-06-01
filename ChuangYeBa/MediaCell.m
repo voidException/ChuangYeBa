@@ -12,9 +12,6 @@
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self.mediaButton setBackgroundImage:[UIImage imageNamed:@"studyContentPlaceholder"] forState:UIControlStateNormal];
-    
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
