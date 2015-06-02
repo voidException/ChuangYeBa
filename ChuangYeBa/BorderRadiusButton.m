@@ -18,9 +18,10 @@ static float const kAspectRatio = 45.0/341;
     if (self) {
         self.layer.cornerRadius = 3.0f;
         [self setButtonColor:[UIColor CYBBlueColor]];
-        NSLog(@"%u", self.enabled);
+        [self setButtonDisableColor:[UIColor clearColor]];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithWhite:1.f alpha:.9f] forState:UIControlStateHighlighted];
+        [self setStyle:ButtonStyleBorder];
     }
     return self;
 }
@@ -42,20 +43,44 @@ static float const kAspectRatio = 45.0/341;
             fixFrame.size.height = height;
         }
         self.frame = fixFrame;
+        [self setStyle:ButtonStylePure];
     }
     return self;
 }
 
+/*
+- (void)setStyle:(ButtonStyle)style {
+    if (_style == style) {
+        return;
+    }
+    _style = style;
+    switch (style) {
+        case ButtonStyleBorder:
+            [self setButtonColor:[UIColor CYBBlueColor]];
+            self.layer.borderColor = [UIColor clearColor].CGColor;
+            break;
+        case ButtonStylePure:
+            self.layer.cornerRadius = 3.0f;
+            [self setButtonColor:[UIColor CYBBlueColor]];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor colorWithWhite:1.f alpha:.9f] forState:UIControlStateHighlighted];
+            break;
+    }
+}
+*/
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     if (!enabled) {
-#ifdef STUDENT_VERSION
-        [self setButtonColor:[UIColor CYBBlueColor]];
-        self.layer.borderColor = [UIColor clearColor].CGColor;
-#elif TEACHER_VERSION
-        [self setButtonColor:[UIColor whiteColor]];
-        self.layer.borderColor = [UIColor grayColor].CGColor;
-#endif
+        switch (_style) {
+            case ButtonStylePure:
+                [self setButtonColor:[UIColor CYBBlueColor]];
+                self.layer.borderColor = [UIColor clearColor].CGColor;
+                break;
+            case ButtonStyleBorder:
+                [self setButtonColor:[UIColor whiteColor]];
+                self.layer.borderColor = [UIColor grayColor].CGColor;
+                break;
+        }
     } else {
         [self setButtonColor:[UIColor CYBBlueColor]];
         self.layer.borderColor = [UIColor clearColor].CGColor;
@@ -89,7 +114,6 @@ static float const kAspectRatio = 45.0/341;
         default:
             break;
     }
-    
 }
 
 - (void)setButtonColor:(UIColor *)buttonColor {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -40,7 +40,11 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VsH-y8-Q2w">
-                        <rect key="frame" x="270" y="55" width="30" height="30"/>
+                        <rect key="frame" x="260" y="50" width="60" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="9k5-op-YeE"/>
+                            <constraint firstAttribute="height" constant="40" id="mPH-qX-nkJ"/>
+                        </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -61,12 +65,12 @@
                     <constraint firstItem="sqT-Rx-Q8C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="DMB-aQ-WdM"/>
                     <constraint firstAttribute="bottom" secondItem="e4E-N3-tUK" secondAttribute="bottom" constant="4" id="EYH-Zg-hBu"/>
                     <constraint firstItem="swS-kT-LN0" firstAttribute="leading" secondItem="sqT-Rx-Q8C" secondAttribute="trailing" constant="25" id="Eqk-8s-WHA"/>
-                    <constraint firstAttribute="trailing" secondItem="VsH-y8-Q2w" secondAttribute="trailing" constant="20" id="O3r-KZ-JQ3"/>
+                    <constraint firstAttribute="trailing" secondItem="VsH-y8-Q2w" secondAttribute="trailing" id="O3r-KZ-JQ3"/>
                     <constraint firstItem="swS-kT-LN0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="19" id="PbS-ff-yl2"/>
                     <constraint firstAttribute="bottom" secondItem="VsH-y8-Q2w" secondAttribute="bottom" constant="6" id="aIC-Gj-32A"/>
                     <constraint firstAttribute="bottom" secondItem="gjY-TH-Evy" secondAttribute="bottom" constant="6" id="gCx-2s-089"/>
                     <constraint firstItem="sqT-Rx-Q8C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="gOe-QQ-U0r"/>
-                    <constraint firstItem="VsH-y8-Q2w" firstAttribute="leading" secondItem="e4E-N3-tUK" secondAttribute="trailing" constant="50" id="gUx-9N-mLA"/>
+                    <constraint firstItem="VsH-y8-Q2w" firstAttribute="leading" secondItem="e4E-N3-tUK" secondAttribute="trailing" constant="40" id="gUx-9N-mLA"/>
                     <constraint firstAttribute="trailing" secondItem="swS-kT-LN0" secondAttribute="trailing" constant="8" id="wcX-BJ-BLS"/>
                     <constraint firstItem="gjY-TH-Evy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="yoR-Mq-vl4"/>
                 </constraints>

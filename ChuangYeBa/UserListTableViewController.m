@@ -48,7 +48,7 @@ static NSString *cellIdentifier = @"Cell";
 - (void)initUI {
     
     self.title = [NSString stringWithFormat:@"成员信息（%lu人）",[[self.studentDic allKeys] count]];
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.backBarButtonItem = btn;
     
     self.clearsSelectionOnViewWillAppear = NO;

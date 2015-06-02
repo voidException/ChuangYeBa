@@ -28,12 +28,10 @@ static NSString *serverIP = SERVER_IP;
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
     [manager POST:path parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = responseObject;
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-        NSLog(@"errorMessage = %@", errorMessage);
+#ifdef DEBUG
         // 测试，打印读取的结果
         NSLog(@"请求的结果为 = %@", responseObject);
-        
+#endif
         callback(responseObject);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
@@ -42,7 +40,6 @@ static NSString *serverIP = SERVER_IP;
         callback(nil);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
-
 }
 
 // 提交一条评论

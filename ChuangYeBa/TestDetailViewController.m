@@ -84,8 +84,6 @@
         NSDictionary *dic = obj;
         // 接受错误信息
         NSNumber *error = [dic objectForKey:@"error"];
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
-        
         if ([error integerValue] == 1) {
             // 给题组赋值
             NSArray *quizsArr = [dic objectForKey:@"test"];
@@ -102,9 +100,6 @@
             self.numOfTestLabel.text = [NSString stringWithFormat:@"题数：%lu题",self.quizs.count];
             self.testCategoryLabel.text = @"题目类型：单项选择题";
             self.totalScoreLabel.text = @"总分：100分";
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
         }
     }];
 }
@@ -121,14 +116,13 @@
         
         NSDictionary *dic = obj;
         NSNumber *error = [dic objectForKey:@"error"];
-        NSString *errorMessage = [dic objectForKey:@"errorMessage"];
+        //NSString *errorMessage = [dic objectForKey:@"errorMessage"];
         if ([error isEqual:@1]) {
             self.testResultArray = [dic objectForKey:@"testResult"];
             
             
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
+            
         }
     }];
 }

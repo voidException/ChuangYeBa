@@ -76,7 +76,7 @@ static NSString *accuracyCellIdentifier = @"AccuracyCell";
     NSLog(@"%@", _testGroup.itemTitle);
     self.tableView.tableHeaderView = titleTextView;
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
     self.navigationItem.leftBarButtonItem = backButton;
 }
 

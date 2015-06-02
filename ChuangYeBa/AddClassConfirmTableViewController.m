@@ -8,6 +8,7 @@
 
 #import "AddClassConfirmTableViewController.h"
 #import "BorderRadiusButton.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString *classInfoCellIdentifier = @"ClassInfoCell";
 
@@ -102,6 +103,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
     ClassInfoCell *classInfoCell = [tableView dequeueReusableCellWithIdentifier:classInfoCellIdentifier];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     NSString *classNoString = [formatter stringFromNumber:classInfo.classNo];
+    [classInfoCell.photo sd_setImageWithURL:[NSURL URLWithString:classInfo.photoPath] placeholderImage:[UIImage imageNamed:@"classPhotoPlaceholder"]];
     classInfoCell.classNoLabel.text = classNoString;
     classInfoCell.classNameLabel.text = classInfo.classroomName;
     classInfoCell.teacherNameLabel.text = classInfo.teacher.name;

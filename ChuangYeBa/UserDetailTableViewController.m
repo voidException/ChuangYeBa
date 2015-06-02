@@ -129,7 +129,7 @@ static NSInteger kImageOriginHight = 225;
     self.tableView.tableFooterView = footerView;
     
     // 返回按钮
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
     self.navigationItem.leftBarButtonItem = btn;
 }
 

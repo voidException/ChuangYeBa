@@ -135,6 +135,14 @@ static NSInteger const kPageSize = 8;
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnLeftButton)];
     swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipeGesture];
+    
+    // 添加FXBlurView
+    self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
+    self.activityBackgroundView.tintColor = [UIColor blackColor];
+    self.activityBackgroundView.blurRadius = 15;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBlurView)];
+    [self.activityBackgroundView addGestureRecognizer:tapGesture];
+    self.activityBackgroundView.userInteractionEnabled = YES;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -360,17 +368,6 @@ static NSInteger const kPageSize = 8;
             self.articleInfo.likes = obj;
             [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconNormal"] forState:UIControlStateNormal];
             [self.tableView reloadData];
-            // 给计算赞和评论的小区的赞label位置减1
-            /*
-            CountingCell *cell = [[CountingCell alloc] init];
-            if (self.state == StudyDetailStateNormal) {
-                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-            } else {
-                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-            }
-             
-            cell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
-             */
         }];
     } else {
         [StudyNetworkUtils submitAddLoveWithToken:self.userInfo.email userId:self.userInfo.userId articleId:self.articleId andCallback:^(id obj) {
@@ -380,15 +377,7 @@ static NSInteger const kPageSize = 8;
             
             // 改变likeButton的样子
             [self.likeButton setBackgroundImage:[UIImage imageNamed:@"likeIconSelected"] forState:UIControlStateNormal];
-            
-            // 给计算赞和评论的小区的赞label位置加1
-            CountingCell *cell = [[CountingCell alloc] init];
-            if (self.state == StudyDetailStateNormal) {
-                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-            } else {
-                cell = (CountingCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-            }
-            cell.likeCountingLabel.text = [NSString stringWithFormat:@"%@", self.articleInfo.likes];
+            [self.tableView reloadData];
         }];
     }
 }
@@ -396,7 +385,6 @@ static NSInteger const kPageSize = 8;
 - (IBAction)clickOnDownloadButton:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂不支持，敬请期待喔！^_^" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     [alert show];
-    
     /* 功能暂不支持
     if (isDownloaded) {
         isDownloaded = NO;
@@ -407,7 +395,6 @@ static NSInteger const kPageSize = 8;
         [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconSelected"] forState:UIControlStateNormal];
     }
      */
-
 }
 
 - (void)clickOnLeftButton {
@@ -610,23 +597,17 @@ static NSInteger const kPageSize = 8;
 
 // 添加透明指示栏
 - (void)addActivityBackgroundView {
-    if (self.activityBackgroundView == nil) {
-        self.activityBackgroundView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
-        self.activityBackgroundView.tintColor = [UIColor blackColor];
-        self.activityBackgroundView.blurRadius = 20;
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnBlurView)];
-        [self.view addSubview:self.activityBackgroundView];
-        self.activityBackgroundView.userInteractionEnabled = YES;
-        [self.activityBackgroundView addGestureRecognizer:tapGesture];
-
+    //if (self.activityBackgroundView == nil) {
         
+        [self.view addSubview:self.activityBackgroundView];
+        NSLog(@"%@",self.view.subviews);
         /*
         [UIView animateWithDuration:0.5 animations:^{
             self.activityBackgroundView.blurRadius = 20;
         }];
          */
         
-    }
+    //}
     /*
     if (![self.activityBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.activityBackgroundView];
@@ -641,7 +622,7 @@ static NSInteger const kPageSize = 8;
             [self.activityBackgroundView removeFromSuperview];
             
         }
-        self.activityBackgroundView = nil;
+        //self.activityBackgroundView = nil;
     }
 }
 

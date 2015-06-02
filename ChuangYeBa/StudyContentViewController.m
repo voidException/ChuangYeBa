@@ -184,19 +184,21 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
             
             NSDictionary *dic = obj;
             NSArray *articleListArr = [dic objectForKey:@"article"];
-            //NSArray *arr = [dic objectForKey:@"article"];
-            // 如果是下拉刷新整个文章列表
-            if (isPullDownReload) {
-                [self pullDownReload:articleListArr];
-            }
-            // 如果是上拉刷新增加文章列表
-            else {
-                if (articleListArr.count) {
-                    [self.tableView.footer endRefreshing];
-                    [self pullUpReload:articleListArr];
-                } else {
-                    [self.tableView.footer noticeNoMoreData];
+            NSNumber *error = [dic objectForKey:@"error"];
+            if ([error isEqual:@1]) {
+                // 如果是下拉刷新整个文章列表
+                if (isPullDownReload) {
+                    [self pullDownReload:articleListArr];
                 }
+                // 如果是上拉刷新增加文章列表
+                else {
+                    if (articleListArr.count) {
+                        [self.tableView.footer endRefreshing];
+                        [self pullUpReload:articleListArr];
+                    }
+                }
+            } else {
+                [self.tableView.footer noticeNoMoreData];
             }
         } else { // 请求失败
             MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];

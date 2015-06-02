@@ -44,7 +44,7 @@ static NSString *cellIdentifier = @"Cell";
 - (void)initUI {
     self.title = @"成绩单";
     [self.tableView registerNib:[UINib nibWithNibName:@"GradeListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"lastButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
     self.navigationItem.leftBarButtonItem = backButton;
 }
 

@@ -35,6 +35,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
 // 题组信息
 @property (strong, nonatomic) NSMutableDictionary *testGroups;
 @property (strong, nonatomic) TestGroup *selectedTestGroup;
+@property (strong, nonatomic) NSMutableArray *quizs;
 // 班级信息
 @property (strong, nonatomic) NSMutableArray *classInfos;
 @property (strong, nonatomic) ClassInfo *selectedClassInfo;
@@ -255,6 +256,12 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     }];
 }
 
+- (void)requestQuizsFromServer {
+
+    
+}
+
+
 #pragma mark - Action
 - (void)clickOnSettingButton:(id)sender {
     [self.menu onHideMenu];
@@ -376,6 +383,39 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     return 1;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //NSArray *arr = [_testGroups allValues];
+    TeacherTestGroupCell *cell = (TeacherTestGroupCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    _selectedTestGroup = cell.testGroup;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [ClassNetworkUtils requestQuizsByitemId:_selectedTestGroup.itemId andCallback:^(id obj){
+        // 隐藏HUD
+        [hud hide:YES];
+        // 接回调对象
+        NSDictionary *dic = obj;
+        // 接受错误信息
+        NSNumber *error = [dic objectForKey:@"error"];
+        if ([error integerValue] == 1) {
+            // 给题组赋值
+            NSArray *quizsArr = [dic objectForKey:@"test"];
+            
+            if (!self.quizs) {
+                self.quizs = [[NSMutableArray alloc] init];
+            } else {
+                [self.quizs removeAllObjects];
+            }
+            // 从接收到的JSON对象解析出每个题目的信息，保存到quizs数组当中
+            [self.quizs removeAllObjects];
+            for (NSDictionary *quizsDic in quizsArr) {
+                Quiz *qz = [ClassJsonParser parseQuiz:quizsDic];
+                [self.quizs addObject:qz];
+            }
+            [self performSegueWithIdentifier:@"ShowTestGroup" sender:self];
+        }
+    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -419,8 +459,14 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     } else if ([segue.identifier isEqualToString:@"ShowTestStatistics"]) {
         [destinationVC setValue:_testStatistics forKey:@"testStatistics"];
         [destinationVC setValue:_selectedTestGroup forKey:@"testGroup"];
+    } else if ([segue.identifier isEqualToString:@"ShowTestGroup"]) {
+        // 把下载的题组信息传递给TestTVC
+        [destinationVC setValue:self.quizs forKey:@"quizs"];
+        // 把测试题组号传递给TestTVC，为了封装提交的测试结果
+        [destinationVC setValue:_selectedTestGroup.itemId forKey:@"itemId"];
+        [destinationVC setValue:[NSNumber numberWithBool:YES] forKey:@"isShowExplain"];
+        [destinationVC setValue:@1 forKey:@"numQuizNo"];
     }
-    
 }
 
 

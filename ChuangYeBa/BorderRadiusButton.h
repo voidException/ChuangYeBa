@@ -16,6 +16,7 @@ typedef enum {
 @interface BorderRadiusButton : UIButton
 
 @property (strong, nonatomic) UIColor *buttonColor;
+@property (strong, nonatomic) UIColor *buttonDisableColor;
 @property (nonatomic) ButtonStyle style;
 
 @end
