@@ -51,7 +51,7 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     pageSize = kPageSize;
     
     // 从本地读取用户信息
-    [self loadUserInfoFromLocal];
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
     
     // 从本地读取存储的cache
     [self loadArticleListCache];
@@ -121,8 +121,6 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
         [self.articleList addObject:article];
     }
     [self.tableView reloadData];
-    
-    
 }
 
 - (void)pullDownReload:(NSArray *)articleListArr{
@@ -142,13 +140,6 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
         [dao create:arr tag:tagNo];
     } else {
         [dao create:self.articleList tag:tagNo];
-    }
-}
-
-- (void)loadUserInfoFromLocal {
-    self.userInfo = [[UserInfo alloc] initWithUserDefault];
-    if (self.userInfo) {
-        [self.tableView.footer beginRefreshing];
     }
 }
 

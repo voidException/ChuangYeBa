@@ -176,8 +176,15 @@ static NSString *bucket = @"startupimg";
             [self performSegueWithIdentifier:@"ShowUserList" sender:self];
             
             // 设置返回按钮
-            UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:nil];
+            UIBarButtonItem *btn = [[UIBarButtonItem alloc] init];
+            
+            //[btn setBackButtonBackgroundImage:[[UIImage imageNamed:@"backButtonIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+            btn.title = @"";
+            UIImage* image = [UIImage imageNamed:@"backButtonIcon"];
+            [btn setBackButtonBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0, image.size.width, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+            //[btn setBackButtonTitlePositionAdjustment:UIOffsetMake(-400.f, 0) forBarMetrics:UIBarMetricsDefault];
             self.navigationItem.backBarButtonItem = btn;
+            
         }
     }
 }

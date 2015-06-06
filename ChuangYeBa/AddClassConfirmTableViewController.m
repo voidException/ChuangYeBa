@@ -73,7 +73,7 @@ static NSString *classInfoCellIdentifier = @"ClassInfoCell";
             NSNumber *error = [dic objectForKey:@"error"];
             NSString *errorMessage = [dic objectForKey:@"errorMessage"];
             
-            if ([error isEqual:@3]||[error isEqual:@2]) {
+            if ([error isEqual:@4]||[error isEqual:@2]) {
                 // 保存教室的信息到本地同时修改isUserAddedClass的值
                 [self saveClassInfoToLocal];
                 [self.navigationController popToRootViewControllerAnimated:YES];

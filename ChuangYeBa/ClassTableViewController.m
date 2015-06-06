@@ -194,6 +194,8 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
                 NSNumber *number = [[NSNumber alloc]initWithBool:NO];
                 [ud setObject:number forKey:@"isUserAddedClass"];
                 [ud removeObjectForKey:@"classInfo"];
+                _userInfo.roomno = @"0";
+                [UserInfo saveUserInfoToLocal:_userInfo];
                 [ud synchronize];
                 // 返回上级菜单
                 // 普通情况下直接调用popToRootViewControllerAnimated即可
