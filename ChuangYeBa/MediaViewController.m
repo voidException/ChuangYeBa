@@ -37,9 +37,23 @@
     [super viewDidLoad];
     [self initUI];
     isClickOnDone = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    //检查本地文件是否已存在
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@",documentDirectory, _articleInfo.realURL];
+    
+    //检查附件是否存在
+    if ([fileManager fileExistsAtPath:fileName]) {
+        NSString *header = @"file://";
+        _articleInfo.realURL = [header stringByAppendingString:fileName];
+    }
+    
     if (!isClickOnDone) {
         // ArticleType = 2 为长图文章 = 3为视频文章 = 1为纯文字文章
         if ([_articleInfo.articleType integerValue] == 72) {
@@ -74,6 +88,13 @@
     return YES;
 }
 
+/*
+- (NSString *)applicationDocumentsDirectoryFile:(NSString *)fileName {
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:fileName];
+    return path;
+}
+*/
 
 #pragma mark - Action
 - (void)longPressImage {
@@ -83,6 +104,9 @@
 
 #pragma mark - 视频读取相关
 - (void)loadVideo:(NSString *)videoName {
+    
+    
+    
     if (_moviePlayer == nil) {
         NSURL *url = [NSURL URLWithString:videoName];
         _moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:url];
@@ -123,6 +147,8 @@
     isClickOnDone = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 #pragma mark - 长图读取相关
 - (void)downloadLongImage:(NSString *)imageName {

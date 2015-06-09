@@ -25,6 +25,7 @@ static NSString *cellIdentifier = @"Cell";
 @property (strong, nonatomic) NSMutableDictionary *deleteIndexPath;
 @property (strong, nonatomic) ClassInfo *classInfo;
 
+@property (strong, nonatomic) UIButton *toolbarButton;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
@@ -38,9 +39,17 @@ static NSString *cellIdentifier = @"Cell";
     
     self.deleteDic = [[NSMutableDictionary alloc] init];
     self.deleteIndexPath = [[NSMutableDictionary alloc] init];
+    
     [self initUI];
     [self filterContentForSearchText:@"" scope:-1];
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    //if ([keyPath isEqualToString:@"deletedDic"]) {
+        NSLog(@"KVO ACTIVE");
+    //}
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -54,20 +63,22 @@ static NSString *cellIdentifier = @"Cell";
 #pragma mark - Private Method
 - (void)initUI {
     
-    self.title = [NSString stringWithFormat:@"成员信息（%lu人）",[[self.studentDic allKeys] count]];
+    self.title = [NSString stringWithFormat:@"成员信息（%lu人）",(unsigned long)[[self.studentDic allKeys] count]];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton)];
     self.navigationItem.backBarButtonItem = btn;
     self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.tableHeaderView = _searchBar;
+    //_searchBar.barTintColor = [UIColor colorWithWhite:0.756 alpha:1.000];
+    
 #ifdef TEACHER_VERSION
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UIButton *toolbarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 86, 30)];
+    _toolbarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 86, 30)];
     //toolbarButton.center = self.navigationController.toolbar.center;
-    toolbarButton.center = CGPointMake(self.view.frame.size.width/2, 44/2);
-    [toolbarButton addTarget:self action:@selector(clickOnDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
-    [toolbarButton setBackgroundImage:[UIImage imageNamed:@"exitButtonBG"] forState:UIControlStateNormal];
-    [toolbarButton setTitle:@"删除" forState:UIControlStateNormal];
-    [self.navigationController.toolbar addSubview:toolbarButton];
+    _toolbarButton.center = CGPointMake(self.view.frame.size.width/2, 44/2);
+    [_toolbarButton addTarget:self action:@selector(clickOnDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_toolbarButton setBackgroundImage:[UIImage imageNamed:@"exitButtonBG"] forState:UIControlStateNormal];
+    [_toolbarButton setTitle:@"删除" forState:UIControlStateNormal];
+    [self.navigationController.toolbar addSubview:_toolbarButton];
     self.navigationController.toolbar.autoresizesSubviews = YES;
 
 #endif
@@ -216,6 +227,9 @@ static NSString *cellIdentifier = @"Cell";
     [super setEditing:editing animated:animated];
     if (editing) {
         // 进入编辑状态
+        if (![_deleteDic count]) {
+            _toolbarButton.enabled = NO;
+        }
         [_deleteDic removeAllObjects];
         [_deleteIndexPath removeAllObjects];
         [self.navigationController setToolbarHidden:NO animated:animated];
@@ -230,11 +244,20 @@ static NSString *cellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 在全部学生显示的状态下
+    
     if (tableView.editing) {
+       // NSLog(@"%lu", [self.deleteDic count]);
+        
         NSArray *arr = [self.studentDic allValues];
         UserInfo *student = arr[indexPath.row];
         [self.deleteDic setObject:student forKey:student.userId];
         [self.deleteIndexPath setObject:indexPath forKey:student.userId];
+        if ([[self.deleteDic allKeys] count]) {
+            _toolbarButton.enabled = YES;
+        } else {
+            _toolbarButton.enabled = NO;
+        }
+
     }
     // 在筛选状态下
     else {
@@ -242,16 +265,22 @@ static NSString *cellIdentifier = @"Cell";
         [self.deleteDic setObject:student forKey:student.userId];
         [self.deleteIndexPath setObject:indexPath forKey:student.userId];
         [self clickOnDeleteButton:self];
-        NSLog(@"s = %lu, r = %lu", indexPath.section, indexPath.row);
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.editing) {
+        
         NSArray *arr = [self.studentDic allValues];
         UserInfo *student = arr[indexPath.row];
         [self.deleteDic removeObjectForKey:student.userId];
         [self.deleteIndexPath removeObjectForKey:student.userId];
+        if ([[self.deleteDic allKeys] count]) {
+            _toolbarButton.enabled = YES;
+        } else {
+            _toolbarButton.enabled = NO;
+        }
     }
 }
 
@@ -272,7 +301,7 @@ static NSString *cellIdentifier = @"Cell";
     }
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSUInteger)scope;
+- (void)filterContentForSearchText:(NSString *)searchText scope:(NSUInteger)scope;
 {
     
     if([searchText length]==0)
@@ -282,14 +311,12 @@ static NSString *cellIdentifier = @"Cell";
         return;
     }
     
-    
-    
     NSPredicate *scopePredicate;
     NSArray *tempArray;
     switch (scope) {
         case 0: //正常查询
-            scopePredicate = [NSPredicate predicateWithFormat:@"(SELF.userNo contains %@) OR (SELF.name contains[d] %@)",searchText];
-            tempArray =[self.filterStudentArray filteredArrayUsingPredicate:scopePredicate];
+            scopePredicate = [NSPredicate predicateWithFormat:@"SELF.userNo contains %@ OR SELF.name contains[d] %@", searchText, searchText];
+            tempArray =[[self.studentDic allValues] filteredArrayUsingPredicate:scopePredicate];
             self.filterStudentArray = [NSMutableArray arrayWithArray:tempArray];
             break;
         default:
@@ -310,40 +337,5 @@ static NSString *cellIdentifier = @"Cell";
     [self filterContentForSearchText:searchString scope:0];
     return YES;
 }
-
-/*
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
- 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

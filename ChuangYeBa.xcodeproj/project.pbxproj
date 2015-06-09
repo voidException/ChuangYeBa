@@ -12,6 +12,7 @@
 		8B05B6021AEB5C330058B012 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B05E5F51AD9688300E87347 /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05E5F31AD9688300E87347 /* OptionCell.m */; };
 		8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05E5F41AD9688300E87347 /* OptionCell.xib */; };
+		8B0F00D71B248C0D00B5972E /* DownloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F00D61B248C0D00B5972E /* DownloadTableViewController.m */; };
 		8B1DDF6F1B0DCEEF002156CA /* ClassEditedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */; };
 		8B21ED2F1B157269002D22BB /* GradeListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21ED2D1B157198002D22BB /* GradeListTableViewController.m */; };
 		8B21ED331B1572EA002D22BB /* GradeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21ED311B1572EA002D22BB /* GradeListCell.m */; };
@@ -50,6 +51,11 @@
 		8B662D2C1B0C48C000F6D342 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
 		8B6918811AED116C00D616DC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
 		8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */; };
+		8B873CB61B2576F9003C3B79 /* DownloadProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */; };
+		8B873CB71B2576F9003C3B79 /* DownloadProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */; };
+		8B873CB81B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */; };
+		8B873CB91B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */; };
+		8B873CBA1B2576FE003C3B79 /* DownloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F00D61B248C0D00B5972E /* DownloadTableViewController.m */; };
 		8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
 		8B9C6E5C1ACD193E00A4EF54 /* ClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E591ACD193E00A4EF54 /* ClassInfo.m */; };
 		8B9C6E5D1ACD193E00A4EF54 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5B1ACD193E00A4EF54 /* UserInfo.m */; };
@@ -242,6 +248,8 @@
 		8B05E5F21AD9688300E87347 /* OptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionCell.h; path = ChuangYeBa/OptionCell.h; sourceTree = "<group>"; };
 		8B05E5F31AD9688300E87347 /* OptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionCell.m; path = ChuangYeBa/OptionCell.m; sourceTree = "<group>"; };
 		8B05E5F41AD9688300E87347 /* OptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionCell.xib; path = ChuangYeBa/OptionCell.xib; sourceTree = "<group>"; };
+		8B0F00D51B248C0D00B5972E /* DownloadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadTableViewController.h; path = ChuangYeBa/DownloadTableViewController.h; sourceTree = "<group>"; };
+		8B0F00D61B248C0D00B5972E /* DownloadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadTableViewController.m; path = ChuangYeBa/DownloadTableViewController.m; sourceTree = "<group>"; };
 		8B1DDF6D1B0DCEEF002156CA /* ClassEditedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassEditedTableViewController.h; sourceTree = "<group>"; };
 		8B1DDF6E1B0DCEEF002156CA /* ClassEditedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassEditedTableViewController.m; sourceTree = "<group>"; };
 		8B21ED2C1B157198002D22BB /* GradeListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradeListTableViewController.h; path = ChuangYeBa/GradeListTableViewController.h; sourceTree = "<group>"; };
@@ -300,6 +308,9 @@
 		8B69187F1AED116C00D616DC /* TestDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailView.h; path = ChuangYeBa/TestDetailView.h; sourceTree = "<group>"; };
 		8B6918801AED116C00D616DC /* TestDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailView.m; path = ChuangYeBa/TestDetailView.m; sourceTree = "<group>"; };
 		8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = userDetailListTeacher.plist; path = Plist/userDetailListTeacher.plist; sourceTree = "<group>"; };
+		8B873CB31B2576F9003C3B79 /* DownloadProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadProgressCell.h; path = ChuangYeBa/DownloadProgressCell.h; sourceTree = "<group>"; };
+		8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadProgressCell.m; path = ChuangYeBa/DownloadProgressCell.m; sourceTree = "<group>"; };
+		8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadProgressCell.xib; path = ChuangYeBa/DownloadProgressCell.xib; sourceTree = "<group>"; };
 		8B9C6E521ACD14DA00A4EF54 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ChuangYeBa/LoginViewController.h; sourceTree = "<group>"; };
 		8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ChuangYeBa/LoginViewController.m; sourceTree = "<group>"; };
 		8B9C6E581ACD193E00A4EF54 /* ClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassInfo.h; path = ChuangYeBa/ClassInfo.h; sourceTree = "<group>"; };
@@ -679,6 +690,11 @@
 				8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */,
 				8B5AA2361B0B4468004995B9 /* FeedbackViewController.h */,
 				8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */,
+				8B0F00D51B248C0D00B5972E /* DownloadTableViewController.h */,
+				8B0F00D61B248C0D00B5972E /* DownloadTableViewController.m */,
+				8B873CB31B2576F9003C3B79 /* DownloadProgressCell.h */,
+				8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */,
+				8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */,
 			);
 			name = Me;
 			sourceTree = "<group>";
@@ -1111,6 +1127,7 @@
 				8BBB61A11B06464300381DAC /* EditedPhotoView.xib in Resources */,
 				8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */,
 				8BBB61A21B06464300381DAC /* CommentInputView.xib in Resources */,
+				8B873CB91B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */,
 				8B6446BA1B0DD70100A561C1 /* classDetailList.plist in Resources */,
 				8BF4DC251B0AD23A001E246E /* ClassBriefView.xib in Resources */,
 				8BBB61A41B06464300381DAC /* StudyContentCell.xib in Resources */,
@@ -1158,6 +1175,7 @@
 				8B356C5C1AE8D5D2004CC161 /* TestScoreCell.xib in Resources */,
 				8BB6ED2F1B0593E100FB1932 /* appSetting.plist in Resources */,
 				8BB6ED321B0593E100FB1932 /* userDetailListStudent.plist in Resources */,
+				8B873CB81B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */,
 				8BF780CA1AFB934B0048F5A4 /* UserInfoCell.xib in Resources */,
 				8B451B031ADFAC7F002C4CA9 /* CountingCell.xib in Resources */,
 				8BE9A73C1B145C2600368B6C /* contentCategory.plist in Resources */,
@@ -1253,6 +1271,7 @@
 			files = (
 				8BF4DC231B0AD21A001E246E /* ClassBriefView.m in Sources */,
 				8B5AA23A1B0B5D0F004995B9 /* FeedbackViewController.m in Sources */,
+				8B873CB71B2576F9003C3B79 /* DownloadProgressCell.m in Sources */,
 				8BBB61E71B06D4AA00381DAC /* SICellSelection.m in Sources */,
 				8B00E0741B077B1E0062222D /* ClassSettingTableViewController.m in Sources */,
 				8BBB61581B06464300381DAC /* UserListTableViewController.m in Sources */,
@@ -1262,6 +1281,7 @@
 				8BFD753C1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m in Sources */,
 				8BBB615B1B06464300381DAC /* CommentCell.m in Sources */,
 				8BBB615C1B06464300381DAC /* FXBlurView.m in Sources */,
+				8B873CBA1B2576FE003C3B79 /* DownloadTableViewController.m in Sources */,
 				8BBB61E81B06D4AA00381DAC /* SIMenuButton.m in Sources */,
 				8BBB615D1B06464300381DAC /* MediaCell.m in Sources */,
 				8BBB61CC1B06D2FD00381DAC /* ClassListTableViewController.m in Sources */,
@@ -1357,6 +1377,7 @@
 				8BF8F26D1B0268D30004EC08 /* AboutUsViewController.m in Sources */,
 				8B451AE61ADF5A9D002C4CA9 /* StudyNetworkUtils.m in Sources */,
 				8B451AD71ADB8170002C4CA9 /* FindPasswordTableViewController.m in Sources */,
+				8B0F00D71B248C0D00B5972E /* DownloadTableViewController.m in Sources */,
 				8B9C6E691ACD3AF500A4EF54 /* StudyContentCell.m in Sources */,
 				8BD4C07E1ACEB7AB004D96AF /* MoreDetailViewController.m in Sources */,
 				8BBB61F91B07452800381DAC /* LoginNavigationController.m in Sources */,
@@ -1388,6 +1409,7 @@
 				8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */,
 				8B9E7A4C1AE39B8A00C69273 /* MediaViewController.m in Sources */,
 				8B9C6E661ACD2FF100A4EF54 /* StudyContentViewController.m in Sources */,
+				8B873CB61B2576F9003C3B79 /* DownloadProgressCell.m in Sources */,
 				8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */,
 				8BD01A931ACF71E100E339D6 /* EditedPhotoCell.m in Sources */,
 				8BED43B71AFC8D24002CC15C /* UserEditedTableViewController.m in Sources */,

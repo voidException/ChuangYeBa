@@ -14,6 +14,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/UIButton+WebCache.h>
 #import "LineNavigationBar.h"
+#import "ArticleInfoDAO.h"
 
 typedef enum {
     StudyDetailStateNormal = 1,
@@ -34,7 +35,6 @@ static NSInteger const kPageSize = 8;
 @interface StudyDetailViewController ()
 
 @property (strong, nonatomic) NSNumber *articleId;
-//@property (strong, nonatomic) PullUpRefreshView *refreshView;
 @property (strong, nonatomic) CommentCell *deletingCommentCell;
 @property (assign, nonatomic) StudyDetailState state;
 @property (copy, nonatomic) NSString *category;
@@ -66,10 +66,33 @@ static NSInteger const kPageSize = 8;
     
     // 读取用户信息
     self.userInfo = [UserInfo loadUserInfoFromLocal];
-    // 读取文章信息 读取文章信息后再请求评论列表
-    [self requestArticleInfoFromServer];
     
     
+    // 先读取本地缓存
+    ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+    NSInteger aTag = 10000 + [_articleId integerValue];
+    NSMutableArray *arr = [dao findAll:aTag];
+    if (arr.count) {
+        NSLog(@"读取成功");
+        self.articleInfo = [arr firstObject];
+        if ([self.articleInfo.articleType isEqual:@71]) {
+            [self setState:StudyDetailStateNoneMedia];
+        } else {
+            [self setState:StudyDetailStateNormal];
+        }
+        // 有文章就显示评论的上拉刷新
+        self.tableView.footer.hidden = NO;
+        // 有文章就显示底端的评论条
+        self.toolBar.hidden = NO;
+    } else {
+        // 读取文章信息 读取文章信息后再请求评论列表
+        [self requestArticleInfoFromServer];
+    }
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,6 +13,7 @@
 #import "ArticleInfoDAO.h"
 #import "BorderRadiusButton.h"
 #import "GlobalDefine.h"
+#import "DownloadTableViewController.h"
 
 static NSString *userInfoCellIdentifier = @"UserInfoCell";
 
@@ -112,6 +113,9 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
             [self performSegueWithIdentifier:@"ShowAboutUs" sender:self];
         } else if (indexPath.row == 2) {
             [self performSegueWithIdentifier:@"ShowFeedback" sender:self];
+        } else if (indexPath.row == 3) {
+            DownloadTableViewController *dTVC = [DownloadTableViewController sharedDownloadController];
+            [self showViewController:dTVC sender:self];
         }
     }
 }

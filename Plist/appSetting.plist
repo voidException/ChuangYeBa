@@ -20,5 +20,11 @@
 		<key>imageName</key>
 		<string>feedback</string>
 	</dict>
+	<dict>
+		<key>title</key>
+		<string>离线下载</string>
+		<key>imageName</key>
+		<string>feedback</string>
+	</dict>
 </array>
 </plist>

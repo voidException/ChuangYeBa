@@ -98,6 +98,10 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     self.tableView.footer.hidden = YES;
 }
 
+- (void)loadUserInfoFromLocal {
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
+    [self.tableView.header beginRefreshing];
+}
 
 
 - (void)loadArticleListCache {

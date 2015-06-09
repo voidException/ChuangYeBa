@@ -35,7 +35,7 @@
         <!--Study Detail View Controller-->
         <scene sceneID="TO4-fF-JTz">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XEC-lG-d9I" customClass="StudyDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StudyDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="XEC-lG-d9I" customClass="StudyDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KfA-fF-SUk"/>
                         <viewControllerLayoutGuide type="bottom" id="VEz-Ex-NID"/>

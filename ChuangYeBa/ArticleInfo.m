@@ -21,6 +21,7 @@
 @synthesize likes;
 @synthesize collects;
 @synthesize publishDate;
+@synthesize content;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self =[super init]) {
@@ -33,6 +34,7 @@
         comments = [aDecoder decodeObjectForKey:@"comments"];
         likes = [aDecoder decodeObjectForKey:@"likes"];
         collects = [aDecoder decodeObjectForKey:@"collects"];
+        content = [aDecoder decodeObjectForKey:@"content"];
         publishDate = [aDecoder decodeObjectForKey:@"publishDate"];
     }
     return self;
@@ -48,6 +50,7 @@
     [aCoder encodeObject:comments forKey:@"comments"];
     [aCoder encodeObject:likes forKey:@"likes"];
     [aCoder encodeObject:collects forKey:@"collects"];
+    [aCoder encodeObject:content forKey:@"content"];
     [aCoder encodeObject:publishDate forKey:@"publishDate"];
 }
 
