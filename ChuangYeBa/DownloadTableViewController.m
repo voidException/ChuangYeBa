@@ -22,6 +22,7 @@ static NSString *cellIdentifier = @"DownloadCell";
 
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) ArticleInfo *articleInfo;
+@property (strong, nonatomic) NSMutableArray *array;
 
 @end
 
@@ -51,6 +52,8 @@ static NSString *cellIdentifier = @"DownloadCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     _userInfo = [UserInfo loadUserInfoFromLocal];
     [self.tableView registerNib:[UINib nibWithNibName:@"DownloadProgressCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
@@ -78,6 +81,10 @@ static NSString *cellIdentifier = @"DownloadCell";
     [sdVC setValue:@78 forKey:@"articleId"];
     [self showViewController:sdVC sender:self];
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
 }
 
 #pragma mark - Table view data source

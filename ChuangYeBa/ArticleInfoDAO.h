@@ -14,13 +14,13 @@
 + (ArticleInfoDAO *)shareManager;
 
 
-//插入Note方法
-- (int)create:(NSMutableArray *)model tag:(NSInteger)tag;
+//插入Article方法
+- (void)create:(NSMutableArray *)articleList flieName:(NSString *)fileName;
 
-//删除Note方法
-- (int)clean;
+//删除Article方法
+- (void)clean:(NSString *)fileName;
 
 //查询所有数据方法
-- (NSMutableArray *)findAll:(NSInteger)tag;
+- (NSMutableArray *)findAll:(NSString *)fileName;
 
 @end

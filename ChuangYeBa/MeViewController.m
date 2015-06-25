@@ -190,7 +190,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
         if (buttonIndex == 0) {
             ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
              [[SDImageCache sharedImageCache] clearDisk];
-            [dao clean];
+            [dao clean:nil];
             NSArray *arr = @[[NSIndexPath indexPathForRow:0 inSection:1]];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
         }

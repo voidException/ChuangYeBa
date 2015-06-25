@@ -106,7 +106,8 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
 
 - (void)loadArticleListCache {
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-    self.articleList = [dao findAll:tagNo];
+    NSString *fileName = [NSString stringWithFormat:@"AriticleListCache%lu.archive", tagNo];
+    self.articleList = [dao findAll:fileName];
     if (!self.articleList.count) {
         // 防止
         if (self.userInfo) {
@@ -139,11 +140,12 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     // 创建文章列表缓存（最多7条）(以后文章多了改成20条)
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
     NSInteger max = 7;
+    NSString *fileName = [NSString stringWithFormat:@"AriticleListCache%lu.archive", tagNo];
     if (self.articleList.count > max) {
         NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[self.articleList objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, max)]]];
-        [dao create:arr tag:tagNo];
+        [dao create:arr flieName:fileName];
     } else {
-        [dao create:self.articleList tag:tagNo];
+        [dao create:self.articleList flieName:fileName];
     }
 }
 

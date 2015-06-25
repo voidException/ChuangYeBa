@@ -43,14 +43,22 @@ static ArticleInfoDAO *sharedManager = nil;
      */
 }
 
+/*
 - (NSString *)applicationDocumentsDirectoryFile:(NSInteger)tag {
     NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *fileNameWithTag = [FILE_NAME stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)tag]];
     NSString *path = [documentDirectory stringByAppendingPathComponent:fileNameWithTag];
     return path;
 }
+ */
 
+- (NSString *)applicationDocumentsDirectoryFile:(NSString *)fileName {
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:fileName];
+    return path;
+}
 
+/*
 //插入缓存方法
 - (int)create:(NSMutableArray *)articleList tag:(NSInteger)tag {
     NSString *path = [self applicationDocumentsDirectoryFile:tag];
@@ -62,11 +70,23 @@ static ArticleInfoDAO *sharedManager = nil;
     [theData writeToFile:path atomically:YES];
     return 0;
 }
+ */
+
+//插入缓存方法
+- (void)create:(NSMutableArray *)articleList flieName:(NSString *)fileName {
+    NSString *path = [self applicationDocumentsDirectoryFile:fileName];
+    NSMutableData *theData = [NSMutableData data];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                 initForWritingWithMutableData:theData];
+    [archiver encodeObject:articleList forKey:ARCHIVE_KEY];
+    [archiver finishEncoding];
+    [theData writeToFile:path atomically:YES];
+}
 
 //删除Note方法
-- (int)clean {
-    NSInteger tag = 11;
-    NSString *path = [self applicationDocumentsDirectoryFile:tag];
+- (void)clean:(NSString *)fileName {
+#warning 未完成
+    NSString *path = [self applicationDocumentsDirectoryFile:fileName];
     NSMutableArray *array = [[NSMutableArray alloc] init];
     NSMutableData * theData = [NSMutableData data];
     NSKeyedArchiver * archiver = [[NSKeyedArchiver alloc]
@@ -74,13 +94,12 @@ static ArticleInfoDAO *sharedManager = nil;
     [archiver encodeObject:array forKey:ARCHIVE_KEY];
     [archiver finishEncoding];
     [theData writeToFile:path atomically:YES];
-    return 0;
 }
 
 
 //查询所有数据方法
--(NSMutableArray *)findAll:(NSInteger)tag {
-    NSString *path = [self applicationDocumentsDirectoryFile:tag];
+- (NSMutableArray *)findAll:(NSString *)fileName {
+    NSString *path = [self applicationDocumentsDirectoryFile:fileName];
     NSMutableArray *listData = [[NSMutableArray alloc] init];
     NSData * theData =[NSData dataWithContentsOfFile:path];
     if([theData length] > 0) {

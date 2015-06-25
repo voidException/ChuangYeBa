@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) ArticleInfo *articleInfo;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 - (void)addDownloadTaskWithArticleId:(NSNumber *)articleId;
 

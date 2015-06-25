@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib {
     _userInfo = [UserInfo loadUserInfoFromLocal];
+    _progressView.progress = 0.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -33,7 +34,6 @@
                 _articleInfo = [StudyJsonParser parseArticleInfo:[dic objectForKey:@"article"]];
                 [self downloadMediaWithURL:_articleInfo.realURL];
             }
-            
         }
     }];
 }
@@ -43,15 +43,16 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *aSavePath = documentDirectory;
-    NSString *aFileName = [NSString stringWithFormat:@"%@", _articleInfo.articleId];
+    NSString *aFileName = [NSString stringWithFormat:@"media-%@", _articleInfo.articleId];
     NSString *aExtension = [stringURL pathExtension];
     //检查本地文件是否已存在
     NSString *fileName = [NSString stringWithFormat:@"%@/%@.%@",aSavePath, aFileName, aExtension];
     //检查附件是否存在
     if ([fileManager fileExistsAtPath:fileName]) {
 #ifdef DEBUG
-        NSLog(@"视频已经存在");
+        NSLog(@"媒体已经存在");
 #endif
+        _progressView.progress = 1.0f;
     }else{
         //创建附件存储目录
         if (![fileManager fileExistsAtPath:aSavePath]) {
@@ -76,13 +77,16 @@
 #ifdef DEBUG
             NSLog(@"下载完成");
 #endif
+            NSData *data = responseObject;
             // 下载完成后保存
             _articleInfo.realURL = [NSString stringWithFormat:@"%@.%@", aFileName, aExtension];
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            [arr addObject:_articleInfo];
+            NSMutableArray *articles = [[NSMutableArray alloc] init];
+            // 从文章列表中读出全部文章，然后加入新的文章并且保存
             ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-            NSInteger aTag = 10000 + [_articleInfo.articleId integerValue];
-            [dao create:arr tag:aTag];
+            NSString *fileName = @"OfflineArticles.archive";
+            articles = [dao findAll:fileName];
+            [articles insertObject:_articleInfo atIndex:0];
+            [dao create:articles flieName:fileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 #ifdef DEBUG
             NSLog(@"下载失败%@", [error localizedDescription]);

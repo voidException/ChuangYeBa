@@ -71,7 +71,7 @@ static NSInteger const kPageSize = 8;
     // 先读取本地缓存
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
     NSInteger aTag = 10000 + [_articleId integerValue];
-    NSMutableArray *arr = [dao findAll:aTag];
+    NSMutableArray *arr = [dao findAll:nil];
     if (arr.count) {
         NSLog(@"读取成功");
         self.articleInfo = [arr firstObject];

@@ -37,7 +37,6 @@
     [super viewDidLoad];
     [self initUI];
     isClickOnDone = NO;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

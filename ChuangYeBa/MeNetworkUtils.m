@@ -36,7 +36,6 @@ static NSString *serverIP = SERVER_IP;
         callback(nil);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
-
 }
 
 + (void)requestTokenForUploadTokenWithBucket:(NSString *)bucket andCallback:(Callback)callback {
@@ -56,7 +55,6 @@ static NSString *serverIP = SERVER_IP;
         NSLog(@"修改用户信息失败, %@", [error localizedDescription]);
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
-
 }
 
 + (void)uploadPhotoToServer:(UIImage *)image token:(NSString *)token owner:(NSString *)owner date:(NSDate *)date ownerId:(NSNumber *)ownerId andCallback:(Callback)callback {
