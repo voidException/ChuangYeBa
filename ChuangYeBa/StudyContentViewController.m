@@ -99,6 +99,10 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
 }
 
 
+- (void)loadUserInfoFromLocal {
+    self.userInfo = [UserInfo loadUserInfoFromLocal];
+}
+
 
 - (void)loadArticleListCache {
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
