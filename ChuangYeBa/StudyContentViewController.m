@@ -101,6 +101,7 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
 
 - (void)loadUserInfoFromLocal {
     self.userInfo = [UserInfo loadUserInfoFromLocal];
+    [self.tableView.header beginRefreshing];
 }
 
 
