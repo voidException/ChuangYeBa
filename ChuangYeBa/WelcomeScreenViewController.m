@@ -22,21 +22,29 @@
     
     float screenWidth = self.view.frame.size.width;
     float screenHeight = self.view.frame.size.height;
-    _scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    NSLog(@"%f, %f", screenWidth, screenHeight);
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     _scrollView.contentSize = CGSizeMake(4 * screenWidth, screenHeight);
     _scrollView.pagingEnabled = YES;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.delegate = self;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"WelcomeScreen" bundle:nil];
-    UIViewController *screen1 = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreen1"];
-    UIViewController *screen2 = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreen2"];
-    UIViewController *screen3 = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreen3"];
-    UIViewController *screen4 = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreen4"];
-    screen1.view.frame = CGRectMake(0 * screenWidth, 0, screenWidth, screenHeight);
-    screen2.view.frame = CGRectMake(1 * screenWidth, 0, screenWidth, screenHeight);
-    screen3.view.frame = CGRectMake(2 * screenWidth, 0, screenWidth, screenHeight);
-    screen4.view.frame = CGRectMake(3 * screenWidth, 0, screenWidth, screenHeight);
     
+    UIImageView *image1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcomeScreen1"]];
+    UIImageView *image2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcomeScreen2"]];
+    UIImageView *image3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcomeScreen3"]];
+    UIImageView *image4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcomeScreen4"]];
+    
+    image1.contentMode = UIViewContentModeScaleAspectFill;
+    image2.contentMode = UIViewContentModeScaleAspectFill;
+    image3.contentMode = UIViewContentModeScaleAspectFill;
+    image4.contentMode = UIViewContentModeScaleAspectFill;
+    image1.frame = CGRectMake(0 * screenWidth, 0, screenWidth, screenHeight);
+    image2.frame = CGRectMake(1 * screenWidth, 0, screenWidth, screenHeight);
+    image3.frame = CGRectMake(2 * screenWidth, 0, screenWidth, screenHeight);
+    image4.frame = CGRectMake(3 * screenWidth, 0, screenWidth, screenHeight);
+    image4.userInteractionEnabled = YES;
+
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 132, 35)];
     [button addTarget:self action:@selector(clickOnButton:) forControlEvents:UIControlEventTouchUpInside];
     button.center = CGPointMake(self.view.center.x, screenHeight - 115);
@@ -45,12 +53,13 @@
     button.layer.borderWidth = 1.f;
     button.layer.borderColor = [UIColor whiteColor].CGColor;
     [button setTitle:@"立即体验" forState:UIControlStateNormal];
-    [screen4.view addSubview:button];
-    
-    [_scrollView addSubview:screen1.view];
-    [_scrollView addSubview:screen2.view];
-    [_scrollView addSubview:screen3.view];
-    [_scrollView addSubview:screen4.view];
+
+    [image4 addSubview:button];
+    [_scrollView addSubview:image1];
+    [_scrollView addSubview:image2];
+    [_scrollView addSubview:image3];
+    [_scrollView addSubview:image4];
+
     [self.view addSubview:_scrollView];
     
     _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];

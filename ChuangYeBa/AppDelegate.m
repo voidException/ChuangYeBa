@@ -35,7 +35,7 @@
         self.window.rootViewController = rootViewController;
         [self.window makeKeyAndVisible];
     } else {
-        application.statusBarHidden = NO;
+        //application.statusBarHidden = NO;
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"WelcomeScreen" bundle:nil];
         UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreenViewController"];
         self.window.rootViewController = rootViewController;
