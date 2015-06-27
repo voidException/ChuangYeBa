@@ -65,8 +65,9 @@
     _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     _pageControl.center = CGPointMake(self.view.center.x, screenHeight - 20);
     _pageControl.numberOfPages = 4;
-    _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.500 alpha:0.500];
+    _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.500 alpha:0.350];
     _pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
+    _pageControl.userInteractionEnabled = NO;
     
     [self.view addSubview:_pageControl];
 }
