@@ -129,11 +129,11 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     _segmentedControl = [[NYSegmentedControl alloc] initWithItems:segmentedTitle];
     
     _segmentedControl.titleTextColor = [UIColor whiteColor];
-    _segmentedControl.titleFont = [UIFont systemFontOfSize:15.0f];
+    _segmentedControl.titleFont = [UIFont systemFontOfSize:16.0f];
     _segmentedControl.selectedTitleTextColor = [UIColor CYBBlueColor];
-    _segmentedControl.selectedTitleFont = [UIFont systemFontOfSize:15.0f];
+    _segmentedControl.selectedTitleFont = [UIFont systemFontOfSize:16.0f];
     _segmentedControl.segmentIndicatorBackgroundColor = [UIColor whiteColor];
-    _segmentedControl.backgroundColor = [UIColor CYBBlueColor];
+    _segmentedControl.backgroundColor = [UIColor clearColor];
     _segmentedControl.borderWidth = 1.0f;
     _segmentedControl.segmentIndicatorBorderWidth = 0.0f;
     _segmentedControl.segmentIndicatorInset = 0.0f;
@@ -142,7 +142,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     _segmentedControl.cornerRadius = CGRectGetHeight(_segmentedControl.frame) / 2.0f;
     _segmentedControl.borderColor = [UIColor whiteColor];
     if (iPhone4 || iPhone5) {
-        _segmentedControl.frame = CGRectMake(0, 0, 180, 32);
+        _segmentedControl.frame = CGRectMake(0, 0, 200, 32);
     } else {
         _segmentedControl.frame = CGRectMake(0, 0, 230, 32);
     }
