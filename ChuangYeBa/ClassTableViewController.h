@@ -12,6 +12,7 @@
 #import "TestGroupCell.h"
 #import "TestGroup.h"
 #import "CircleButton.h"
+#import <NYSegmentedControl.h>
 // 请求
 #import "ClassNetworkUtils.h"
 // 模型
@@ -21,7 +22,8 @@
 
 @interface ClassTableViewController : UITableViewController
 
-@property (strong, nonatomic) UISegmentedControl *segmentedControl;
+//@property (strong, nonatomic) UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) NYSegmentedControl *segmentedControl;
 @property (strong, nonatomic) UIButton *rightButton;
 @property (strong, nonatomic) CircleButton *leftButton;
 
