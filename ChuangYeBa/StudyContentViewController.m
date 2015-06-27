@@ -103,12 +103,6 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     [self.tableView.header beginRefreshing];
 }
 
-- (void)loadUserInfoFromLocal {
-    self.userInfo = [UserInfo loadUserInfoFromLocal];
-    [self.tableView.header beginRefreshing];
-}
-
-
 - (void)loadArticleListCache {
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
     self.articleList = [dao findAll:tagNo];
