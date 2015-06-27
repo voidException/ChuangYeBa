@@ -20,6 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    
     UITabBarItem *studyItem = [self.mainTabBar.items objectAtIndex:0];
     UITabBarItem *classItem = [self.mainTabBar.items objectAtIndex:1];
     // 暂时去掉更多的功能

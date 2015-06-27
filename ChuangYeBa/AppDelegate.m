@@ -16,7 +16,31 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    // 此为找到plist文件中得版本号所对应的键
+    //NSString *key = @"CFBundleShortVersionString";
+    NSString *key = @"CFBundleShortVersionString";
+    // 从plist中取出版本号
+    NSString *version = [NSBundle mainBundle].infoDictionary[key];
+    // 从沙盒中取出上次存储的版本号
+    NSString *saveVersion = [[NSUserDefaults  standardUserDefaults] objectForKey:key];
+    if([version isEqualToString:saveVersion]) {
+#ifdef STUDENT_VERSION
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStudent" bundle:nil];
+#elif TEACHER_VERSION
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainTeacher" bundle:nil];
+#endif
+        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+        self.window.rootViewController = rootViewController;
+        [self.window makeKeyAndVisible];
+    } else {
+        //application.statusBarHidden = NO;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"WelcomeScreen" bundle:nil];
+        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeScreenViewController"];
+        self.window.rootViewController = rootViewController;
+        [self.window makeKeyAndVisible];
+    }
     return YES;
 }
 
