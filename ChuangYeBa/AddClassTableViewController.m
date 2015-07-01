@@ -56,6 +56,10 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Private Method
 - (void)sendingDataToServer {
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];

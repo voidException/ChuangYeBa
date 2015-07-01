@@ -9,12 +9,14 @@
 #import "DownloadTableViewController.h"
 #import "UserInfo.h"
 #import "ArticleInfo.h"
-#import "StudyNetworkUtils.h"
-#import "StudyJsonParser.h"
-#import <AFNetworking.h>
+
 #import "DownloadProgressCell.h"
-#import "ArticleInfoDAO.h"
 #import "StudyDetailViewController.h"
+
+#import "DownloadManager.h"
+#import "DownloadTask.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString *cellIdentifier = @"DownloadCell";
 
@@ -22,23 +24,12 @@ static NSString *cellIdentifier = @"DownloadCell";
 
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) ArticleInfo *articleInfo;
-@property (strong, nonatomic) NSMutableArray *array;
+@property (strong, nonatomic) NSMutableDictionary *downloadingDic;
 
 @end
 
 @implementation DownloadTableViewController
 
-
-+ (DownloadTableViewController *)sharedDownloadController
-{
-    static DownloadTableViewController *sharedDTVC;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedDTVC = [[self alloc] init];
-    });
-    
-    return sharedDTVC;
-}
 
 - (instancetype)init {
     self = [super init];
@@ -51,11 +42,12 @@ static NSString *cellIdentifier = @"DownloadCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
+
     _userInfo = [UserInfo loadUserInfoFromLocal];
     [self.tableView registerNib:[UINib nibWithNibName:@"DownloadProgressCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    DownloadManager *manager = [DownloadManager shareManager];
+    _downloadingDic = manager.taskInfos;
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -69,22 +61,18 @@ static NSString *cellIdentifier = @"DownloadCell";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Public Method
-- (void)addDownloadTaskWithArticleId:(NSNumber *)articleId {
-    
-}
-
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStudent" bundle:nil];
     StudyDetailViewController *sdVC = [storyboard instantiateViewControllerWithIdentifier:@"StudyDetailViewController"];
-    [sdVC setValue:@78 forKey:@"articleId"];
+    NSArray *arr = [_downloadingDic allKeys];
+    [sdVC setValue:arr[indexPath.row] forKey:@"articleId"];
     [self showViewController:sdVC sender:self];
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 90;
 }
 
 #pragma mark - Table view data source
@@ -94,35 +82,55 @@ static NSString *cellIdentifier = @"DownloadCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [_downloadingDic count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DownloadProgressCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    [cell addDownloadTaskWithArticleId:@78];
+    NSArray *arr = [_downloadingDic allValues];
+    
+    __block DownloadTask *aTask = arr[indexPath.row];
+    cell.titleLabel.text = aTask.articleInfo.title;
+    [cell.mainImage sd_setImageWithURL:[NSURL URLWithString:aTask.articleInfo.miniPhotoURL] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholderSmall"]];
+    cell.mainImage.image = [UIImage imageNamed:@"studyContentPlaceholderSmall"];
+    DownloadTask __weak *weakTask = aTask;
+    aTask.initProgress = ^(long long totalBytesRead, long long totalBytesExpectedToRead){
+        float progress = (float)totalBytesRead / totalBytesExpectedToRead;
+        cell.progressView.progress = progress;
+        cell.progressLabel.text = [NSString stringWithFormat:@"%.0f%%", progress * 100];
+        cell.sizeLabel.text = [NSString stringWithFormat:@"%.1f M / %.1f M", totalBytesRead / pow(10, 6), totalBytesExpectedToRead / pow(10, 6)];
+        cell.speedLabel.text = [NSString stringWithFormat:@"%@/S", weakTask.speed];
+    };
+    
+    aTask.taskFailed = ^(){
+        NSLog(@"块属性——下载失败");
+    };
     return cell;
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        
+        NSArray *arr = [_downloadingDic allKeys];
+        [[DownloadManager shareManager] deleteWithArticleId:arr[indexPath.row]];
+        [_downloadingDic removeObjectForKey:arr[indexPath.row]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

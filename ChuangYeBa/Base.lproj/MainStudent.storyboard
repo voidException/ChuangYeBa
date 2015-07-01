@@ -1737,7 +1737,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="SIJ-UJ-gJp">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ID0-j2-X3d" customClass="TabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="ID0-j2-X3d" customClass="TabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="S3c-zO-wtc">

@@ -55,6 +55,12 @@ static NSString *bucket = @"startupimg";
     // Dispose of any resources that can be recreated.
 }
 
+#ifdef TEACHER_VERSION
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#endif
+
 #pragma mark - Private Method
 - (void)initUI {
     self.title = @"班级设置";

@@ -10,8 +10,5 @@
 
 @interface DownloadTableViewController : UITableViewController
 
-+ (DownloadTableViewController *)sharedDownloadController;
-
-- (void)addDownloadTaskWithArticleId:(NSNumber *)articleId;
 
 @end

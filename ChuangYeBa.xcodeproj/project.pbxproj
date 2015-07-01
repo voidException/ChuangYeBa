@@ -19,6 +19,7 @@
 		8B21ED341B1572EA002D22BB /* GradeListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B21ED321B1572EA002D22BB /* GradeListCell.xib */; };
 		8B276A791AFBB47E005C9FF7 /* EditedPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B276A781AFBB47E005C9FF7 /* EditedPhotoView.m */; };
 		8B276A7B1AFBB49E005C9FF7 /* EditedPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B276A7A1AFBB49E005C9FF7 /* EditedPhotoView.xib */; };
+		8B28855B1B42E0580095B684 /* DownloadProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */; };
 		8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B34B1761AE8C0E500A39F8F /* TestStateCell.m */; };
 		8B34B1791AE8C0FD00A39F8F /* TestStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */; };
 		8B356C551AE8D4D4004CC161 /* TestResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C541AE8D4D4004CC161 /* TestResultTableViewController.m */; };
@@ -29,6 +30,7 @@
 		8B356C651AE8E631004CC161 /* QuizCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C631AE8E631004CC161 /* QuizCollectionCell.m */; };
 		8B356C661AE8E631004CC161 /* QuizCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */; };
 		8B356C691AE9E296004CC161 /* TestDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B356C681AE9E296004CC161 /* TestDetailViewController.m */; };
+		8B44A4BB1B3C162900E93B78 /* LaunchScreenStudent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B44A4BD1B3C162900E93B78 /* LaunchScreenStudent.xib */; };
 		8B451AD71ADB8170002C4CA9 /* FindPasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */; };
 		8B451ADA1ADB9559002C4CA9 /* RegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451AD91ADB9559002C4CA9 /* RegisterTableViewController.m */; };
 		8B451ADD1ADCBC31002C4CA9 /* ClassNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B451ADC1ADCBC31002C4CA9 /* ClassNetworkUtils.m */; };
@@ -49,13 +51,20 @@
 		8B5AA23A1B0B5D0F004995B9 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */; };
 		8B6446BA1B0DD70100A561C1 /* classDetailList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B6446B91B0DD70100A561C1 /* classDetailList.plist */; };
 		8B662D2C1B0C48C000F6D342 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05B6011AEB5C330058B012 /* TestViewController.m */; };
+		8B678CE81B43E06100AC3120 /* DownloadTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B678CE71B43E06100AC3120 /* DownloadTaskInfo.m */; };
+		8B678CE91B43E06100AC3120 /* DownloadTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B678CE71B43E06100AC3120 /* DownloadTaskInfo.m */; };
+		8B678CEC1B43E39E00AC3120 /* DownloadTaskInfoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B678CEB1B43E39E00AC3120 /* DownloadTaskInfoDAO.m */; };
+		8B678CED1B43E39E00AC3120 /* DownloadTaskInfoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B678CEB1B43E39E00AC3120 /* DownloadTaskInfoDAO.m */; };
 		8B6918811AED116C00D616DC /* TestDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6918801AED116C00D616DC /* TestDetailView.m */; };
 		8B867AD91B09828700454F2F /* userDetailListTeacher.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */; };
 		8B873CB61B2576F9003C3B79 /* DownloadProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */; };
 		8B873CB71B2576F9003C3B79 /* DownloadProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */; };
-		8B873CB81B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */; };
 		8B873CB91B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */; };
 		8B873CBA1B2576FE003C3B79 /* DownloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F00D61B248C0D00B5972E /* DownloadTableViewController.m */; };
+		8B8B6E7A1B42D01E0011B1EE /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B6E771B42D01E0011B1EE /* DownloadManager.m */; };
+		8B8B6E7B1B42D01E0011B1EE /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B6E771B42D01E0011B1EE /* DownloadManager.m */; };
+		8B8B6E7C1B42D01E0011B1EE /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B6E791B42D01E0011B1EE /* DownloadTask.m */; };
+		8B8B6E7D1B42D01E0011B1EE /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B6E791B42D01E0011B1EE /* DownloadTask.m */; };
 		8B9C6E541ACD14DA00A4EF54 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */; };
 		8B9C6E5C1ACD193E00A4EF54 /* ClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E591ACD193E00A4EF54 /* ClassInfo.m */; };
 		8B9C6E5D1ACD193E00A4EF54 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C6E5B1ACD193E00A4EF54 /* UserInfo.m */; };
@@ -153,7 +162,7 @@
 		8BBB61B01B06464300381DAC /* MediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFD1ADFA8E3002C4CA9 /* MediaCell.xib */; };
 		8BBB61B11B06464300381DAC /* TestStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B34B1781AE8C0FD00A39F8F /* TestStateCell.xib */; };
 		8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDFEEE1ADA19B7004C5845 /* ExplainCell.xib */; };
-		8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
+		8BBB61B31B06464300381DAC /* LaunchScreenTeacher.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreenTeacher.xib */; };
 		8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AFB1ADF8A44002C4CA9 /* CommentCell.xib */; };
 		8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B451AE71ADF7B24002C4CA9 /* ArticleCell.xib */; };
 		8BBB61B71B06464300381DAC /* setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6ED2C1B0593E100FB1932 /* setting.plist */; };
@@ -176,7 +185,6 @@
 		8BCF39991ACCE09C0071C016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39981ACCE09C0071C016 /* main.m */; };
 		8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF399B1ACCE09C0071C016 /* AppDelegate.m */; };
 		8BCF39A21ACCE09C0071C016 /* MainStudent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */; };
-		8BCF39A71ACCE09C0071C016 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */; };
 		8BCF39B31ACCE09C0071C016 /* ChuangYeBaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCF39B21ACCE09C0071C016 /* ChuangYeBaTests.m */; };
 		8BD01A931ACF71E100E339D6 /* EditedPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A921ACF71E100E339D6 /* EditedPhotoCell.m */; };
 		8BD01A961ACF71F500E339D6 /* EditedInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD01A951ACF71F500E339D6 /* EditedInfoCell.m */; };
@@ -224,6 +232,10 @@
 		8BF8F26A1B01DF6E0004EC08 /* StudyContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF8F2691B01DF6E0004EC08 /* StudyContentCell.xib */; };
 		8BF8F26D1B0268D30004EC08 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */; };
 		8BF8F2701B02E3FC0004EC08 /* LineNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8F26F1B02E3FC0004EC08 /* LineNavigationBar.m */; };
+		8BFD3FBD1B3CE3EA007F5529 /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BFD3FBC1B3CE3EA007F5529 /* WelcomeScreen.storyboard */; };
+		8BFD3FBE1B3CE3EA007F5529 /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BFD3FBC1B3CE3EA007F5529 /* WelcomeScreen.storyboard */; };
+		8BFD3FC11B3CE903007F5529 /* WelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD3FC01B3CE903007F5529 /* WelcomeScreenViewController.m */; };
+		8BFD3FC21B3CE903007F5529 /* WelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD3FC01B3CE903007F5529 /* WelcomeScreenViewController.m */; };
 		8BFD75381B0CB460005CEC39 /* TestStatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD75371B0CB460005CEC39 /* TestStatisticsTableViewController.m */; };
 		8BFD753C1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD753A1B0CB4D7005CEC39 /* AccuracyStatisticsCell.m */; };
 		8BFD753D1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFD753B1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib */; };
@@ -276,6 +288,8 @@
 		8B356C641AE8E631004CC161 /* QuizCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuizCollectionCell.xib; path = ChuangYeBa/QuizCollectionCell.xib; sourceTree = "<group>"; };
 		8B356C671AE9E296004CC161 /* TestDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailViewController.h; path = ChuangYeBa/TestDetailViewController.h; sourceTree = "<group>"; };
 		8B356C681AE9E296004CC161 /* TestDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailViewController.m; path = ChuangYeBa/TestDetailViewController.m; sourceTree = "<group>"; };
+		8B44A4BC1B3C162900E93B78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenStudent.xib; sourceTree = "<group>"; };
+		8B44A4BF1B3C163000E93B78 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreenStudent.strings"; sourceTree = "<group>"; };
 		8B451AD51ADB8170002C4CA9 /* FindPasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPasswordTableViewController.h; path = ChuangYeBa/FindPasswordTableViewController.h; sourceTree = "<group>"; };
 		8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPasswordTableViewController.m; path = ChuangYeBa/FindPasswordTableViewController.m; sourceTree = "<group>"; };
 		8B451AD81ADB9559002C4CA9 /* RegisterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterTableViewController.h; path = ChuangYeBa/RegisterTableViewController.h; sourceTree = "<group>"; };
@@ -305,12 +319,20 @@
 		8B5AA2361B0B4468004995B9 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackViewController.h; path = ChuangYeBa/FeedbackViewController.h; sourceTree = "<group>"; };
 		8B5AA2371B0B4468004995B9 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackViewController.m; path = ChuangYeBa/FeedbackViewController.m; sourceTree = "<group>"; };
 		8B6446B91B0DD70100A561C1 /* classDetailList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = classDetailList.plist; path = Plist/classDetailList.plist; sourceTree = "<group>"; };
+		8B678CE61B43E06100AC3120 /* DownloadTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadTaskInfo.h; path = ChuangYeBa/DownloadTaskInfo.h; sourceTree = "<group>"; };
+		8B678CE71B43E06100AC3120 /* DownloadTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadTaskInfo.m; path = ChuangYeBa/DownloadTaskInfo.m; sourceTree = "<group>"; };
+		8B678CEA1B43E39E00AC3120 /* DownloadTaskInfoDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadTaskInfoDAO.h; path = ChuangYeBa/DownloadTaskInfoDAO.h; sourceTree = "<group>"; };
+		8B678CEB1B43E39E00AC3120 /* DownloadTaskInfoDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadTaskInfoDAO.m; path = ChuangYeBa/DownloadTaskInfoDAO.m; sourceTree = "<group>"; };
 		8B69187F1AED116C00D616DC /* TestDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetailView.h; path = ChuangYeBa/TestDetailView.h; sourceTree = "<group>"; };
 		8B6918801AED116C00D616DC /* TestDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestDetailView.m; path = ChuangYeBa/TestDetailView.m; sourceTree = "<group>"; };
 		8B867AD71B097E2900454F2F /* userDetailListTeacher.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = userDetailListTeacher.plist; path = Plist/userDetailListTeacher.plist; sourceTree = "<group>"; };
 		8B873CB31B2576F9003C3B79 /* DownloadProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadProgressCell.h; path = ChuangYeBa/DownloadProgressCell.h; sourceTree = "<group>"; };
 		8B873CB41B2576F9003C3B79 /* DownloadProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadProgressCell.m; path = ChuangYeBa/DownloadProgressCell.m; sourceTree = "<group>"; };
 		8B873CB51B2576F9003C3B79 /* DownloadProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadProgressCell.xib; path = ChuangYeBa/DownloadProgressCell.xib; sourceTree = "<group>"; };
+		8B8B6E761B42D01E0011B1EE /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		8B8B6E771B42D01E0011B1EE /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadManager.m; sourceTree = "<group>"; };
+		8B8B6E781B42D01E0011B1EE /* DownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadTask.h; sourceTree = "<group>"; };
+		8B8B6E791B42D01E0011B1EE /* DownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadTask.m; sourceTree = "<group>"; };
 		8B9C6E521ACD14DA00A4EF54 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ChuangYeBa/LoginViewController.h; sourceTree = "<group>"; };
 		8B9C6E531ACD14DA00A4EF54 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ChuangYeBa/LoginViewController.m; sourceTree = "<group>"; };
 		8B9C6E581ACD193E00A4EF54 /* ClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassInfo.h; path = ChuangYeBa/ClassInfo.h; sourceTree = "<group>"; };
@@ -384,7 +406,7 @@
 		8BCF399B1ACCE09C0071C016 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8BCF39A11ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStudent.storyboard; sourceTree = "<group>"; };
 		8BCF39A31ACCE09C0071C016 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8BCF39A61ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		8BCF39A61ACCE09C0071C016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenTeacher.xib; sourceTree = "<group>"; };
 		8BCF39AC1ACCE09C0071C016 /* ChuangYeBaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChuangYeBaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCF39B11ACCE09C0071C016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BCF39B21ACCE09C0071C016 /* ChuangYeBaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChuangYeBaTests.m; sourceTree = "<group>"; };
@@ -447,7 +469,7 @@
 		8BF11C1F1AF9E9AD00F30649 /* ArticleInfoDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleInfoDAO.h; path = ChuangYeBa/ArticleInfoDAO.h; sourceTree = "<group>"; };
 		8BF11C201AF9E9AD00F30649 /* ArticleInfoDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleInfoDAO.m; path = ChuangYeBa/ArticleInfoDAO.m; sourceTree = "<group>"; };
 		8BF11C221AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainStudent.strings"; sourceTree = "<group>"; };
-		8BF11C231AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		8BF11C231AFA50AB00F30649 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreenTeacher.strings"; sourceTree = "<group>"; };
 		8BF29D121AFDAE3800543B37 /* CircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleImageView.h; path = ChuangYeBa/CircleImageView.h; sourceTree = "<group>"; };
 		8BF29D131AFDAE3800543B37 /* CircleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleImageView.m; path = ChuangYeBa/CircleImageView.m; sourceTree = "<group>"; };
 		8BF4DC211B0AD21A001E246E /* ClassBriefView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassBriefView.h; path = ChuangYeBa/ClassBriefView.h; sourceTree = "<group>"; };
@@ -468,6 +490,9 @@
 		8BF8F26C1B0268D30004EC08 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = ChuangYeBa/AboutUsViewController.m; sourceTree = "<group>"; };
 		8BF8F26E1B02E3FC0004EC08 /* LineNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineNavigationBar.h; path = ChuangYeBa/LineNavigationBar.h; sourceTree = "<group>"; };
 		8BF8F26F1B02E3FC0004EC08 /* LineNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineNavigationBar.m; path = ChuangYeBa/LineNavigationBar.m; sourceTree = "<group>"; };
+		8BFD3FBC1B3CE3EA007F5529 /* WelcomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreen.storyboard; sourceTree = "<group>"; };
+		8BFD3FBF1B3CE903007F5529 /* WelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeScreenViewController.h; path = ChuangYeBa/WelcomeScreenViewController.h; sourceTree = "<group>"; };
+		8BFD3FC01B3CE903007F5529 /* WelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeScreenViewController.m; path = ChuangYeBa/WelcomeScreenViewController.m; sourceTree = "<group>"; };
 		8BFD75361B0CB460005CEC39 /* TestStatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestStatisticsTableViewController.h; path = ChuangYeBa/TestStatisticsTableViewController.h; sourceTree = "<group>"; };
 		8BFD75371B0CB460005CEC39 /* TestStatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestStatisticsTableViewController.m; path = ChuangYeBa/TestStatisticsTableViewController.m; sourceTree = "<group>"; };
 		8BFD75391B0CB4D7005CEC39 /* AccuracyStatisticsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccuracyStatisticsCell.h; path = ChuangYeBa/AccuracyStatisticsCell.h; sourceTree = "<group>"; };
@@ -606,6 +631,10 @@
 				8BF11C201AF9E9AD00F30649 /* ArticleInfoDAO.m */,
 				8BF68F8A1AEF7ABF007D5F5D /* CommentInfo.h */,
 				8BF68F8B1AEF7ABF007D5F5D /* CommentInfo.m */,
+				8B678CE61B43E06100AC3120 /* DownloadTaskInfo.h */,
+				8B678CE71B43E06100AC3120 /* DownloadTaskInfo.m */,
+				8B678CEA1B43E39E00AC3120 /* DownloadTaskInfoDAO.h */,
+				8B678CEB1B43E39E00AC3120 /* DownloadTaskInfoDAO.m */,
 			);
 			name = M;
 			sourceTree = "<group>";
@@ -644,6 +673,8 @@
 				8B451AD61ADB8170002C4CA9 /* FindPasswordTableViewController.m */,
 				8B451AD81ADB9559002C4CA9 /* RegisterTableViewController.h */,
 				8B451AD91ADB9559002C4CA9 /* RegisterTableViewController.m */,
+				8BFD3FBF1B3CE903007F5529 /* WelcomeScreenViewController.h */,
+				8BFD3FC01B3CE903007F5529 /* WelcomeScreenViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -775,6 +806,10 @@
 				8B451AE21ADEB507002C4CA9 /* LoginJsonParser.m */,
 				8BE66F111AEE7A4A0075D9E9 /* StudyJsonParser.h */,
 				8BE66F121AEE7A4A0075D9E9 /* StudyJsonParser.m */,
+				8B8B6E761B42D01E0011B1EE /* DownloadManager.h */,
+				8B8B6E771B42D01E0011B1EE /* DownloadManager.m */,
+				8B8B6E781B42D01E0011B1EE /* DownloadTask.h */,
+				8B8B6E791B42D01E0011B1EE /* DownloadTask.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -862,7 +897,9 @@
 				8BCF39A01ACCE09C0071C016 /* MainStudent.storyboard */,
 				8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */,
 				8BCF39A31ACCE09C0071C016 /* Images.xcassets */,
-				8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */,
+				8BCF39A51ACCE09C0071C016 /* LaunchScreenTeacher.xib */,
+				8B44A4BD1B3C162900E93B78 /* LaunchScreenStudent.xib */,
+				8BFD3FBC1B3CE3EA007F5529 /* WelcomeScreen.storyboard */,
 				8BCF39961ACCE09C0071C016 /* Supporting Files */,
 				8BBF36091AE137410029072C /* GlobalDefine.h */,
 				8BF03BE51AF70DA700D8C932 /* CustomSegue.h */,
@@ -1126,6 +1163,7 @@
 				8BBB61A01B06464300381DAC /* ArticleTitleCell.xib in Resources */,
 				8BBB61A11B06464300381DAC /* EditedPhotoView.xib in Resources */,
 				8BBB61C81B064B6F00381DAC /* MainTeacher.storyboard in Resources */,
+				8BFD3FBE1B3CE3EA007F5529 /* WelcomeScreen.storyboard in Resources */,
 				8BBB61A21B06464300381DAC /* CommentInputView.xib in Resources */,
 				8B873CB91B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */,
 				8B6446BA1B0DD70100A561C1 /* classDetailList.plist in Resources */,
@@ -1147,7 +1185,7 @@
 				8BE9A73D1B145C2600368B6C /* contentCategory.plist in Resources */,
 				8BE96CF31B1C1C3600EBE2EC /* Images.xcassets in Resources */,
 				8BBB61B21B06464300381DAC /* ExplainCell.xib in Resources */,
-				8BBB61B31B06464300381DAC /* LaunchScreen.xib in Resources */,
+				8BBB61B31B06464300381DAC /* LaunchScreenTeacher.xib in Resources */,
 				8BBB61B51B06464300381DAC /* CommentCell.xib in Resources */,
 				8BBB61B61B06464300381DAC /* ArticleCell.xib in Resources */,
 				8BFD753D1B0CB4D7005CEC39 /* AccuracyStatisticsCell.xib in Resources */,
@@ -1167,7 +1205,9 @@
 				8BCF39A21ACCE09C0071C016 /* MainStudent.storyboard in Resources */,
 				8BF8F26A1B01DF6E0004EC08 /* StudyContentCell.xib in Resources */,
 				8BB23BB61AE641AA00621F91 /* ClassInfoCell.xib in Resources */,
+				8B28855B1B42E0580095B684 /* DownloadProgressCell.xib in Resources */,
 				8BED43B11AFC5C63002CC15C /* EditedInfoCell.xib in Resources */,
+				8BFD3FBD1B3CE3EA007F5529 /* WelcomeScreen.storyboard in Resources */,
 				8B05E5F61AD9688300E87347 /* OptionCell.xib in Resources */,
 				8BDA58B81AD94DF100E59EE8 /* QuestionCell.xib in Resources */,
 				8BE96CF41B1C1C3B00EBE2EC /* Images.xcassets in Resources */,
@@ -1175,7 +1215,7 @@
 				8B356C5C1AE8D5D2004CC161 /* TestScoreCell.xib in Resources */,
 				8BB6ED2F1B0593E100FB1932 /* appSetting.plist in Resources */,
 				8BB6ED321B0593E100FB1932 /* userDetailListStudent.plist in Resources */,
-				8B873CB81B2576F9003C3B79 /* DownloadProgressCell.xib in Resources */,
+				8B44A4BB1B3C162900E93B78 /* LaunchScreenStudent.xib in Resources */,
 				8BF780CA1AFB934B0048F5A4 /* UserInfoCell.xib in Resources */,
 				8B451B031ADFAC7F002C4CA9 /* CountingCell.xib in Resources */,
 				8BE9A73C1B145C2600368B6C /* contentCategory.plist in Resources */,
@@ -1183,7 +1223,6 @@
 				8B451AFE1ADFA8E3002C4CA9 /* MediaCell.xib in Resources */,
 				8B34B1791AE8C0FD00A39F8F /* TestStateCell.xib in Resources */,
 				8BEDFEF01ADA19B7004C5845 /* ExplainCell.xib in Resources */,
-				8BCF39A71ACCE09C0071C016 /* LaunchScreen.xib in Resources */,
 				8B356C661AE8E631004CC161 /* QuizCollectionCell.xib in Resources */,
 				8B451AFC1ADF8A44002C4CA9 /* CommentCell.xib in Resources */,
 				8B451AE81ADF7B24002C4CA9 /* ArticleCell.xib in Resources */,
@@ -1270,6 +1309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BF4DC231B0AD21A001E246E /* ClassBriefView.m in Sources */,
+				8B678CED1B43E39E00AC3120 /* DownloadTaskInfoDAO.m in Sources */,
 				8B5AA23A1B0B5D0F004995B9 /* FeedbackViewController.m in Sources */,
 				8B873CB71B2576F9003C3B79 /* DownloadProgressCell.m in Sources */,
 				8BBB61E71B06D4AA00381DAC /* SICellSelection.m in Sources */,
@@ -1298,13 +1338,17 @@
 				8BBB61651B06464300381DAC /* StudyNetworkUtils.m in Sources */,
 				8BBB61661B06464300381DAC /* FindPasswordTableViewController.m in Sources */,
 				8BBB61EB1B06D4AA00381DAC /* SIMenuTable.m in Sources */,
+				8BFD3FC21B3CE903007F5529 /* WelcomeScreenViewController.m in Sources */,
 				8BBB61671B06464300381DAC /* StudyContentCell.m in Sources */,
 				8BBB61681B06464300381DAC /* MoreDetailViewController.m in Sources */,
 				8BBB61691B06464300381DAC /* TestGroup.m in Sources */,
 				8BBB616A1B06464300381DAC /* ArticleTitleCell.m in Sources */,
 				8BBB616B1B06464300381DAC /* StudyJsonParser.m in Sources */,
+				8B8B6E7B1B42D01E0011B1EE /* DownloadManager.m in Sources */,
+				8B8B6E7D1B42D01E0011B1EE /* DownloadTask.m in Sources */,
 				8BBB616C1B06464300381DAC /* CommentInfo.m in Sources */,
 				8BBB616D1B06464300381DAC /* TestGroupCell.m in Sources */,
+				8B678CE91B43E06100AC3120 /* DownloadTaskInfo.m in Sources */,
 				8BBB616E1B06464300381DAC /* UserInfoCell.m in Sources */,
 				8BBB61E91B06D4AA00381DAC /* SIMenuCell.m in Sources */,
 				8BBB61701B06464300381DAC /* TabBarController.m in Sources */,
@@ -1366,15 +1410,18 @@
 				8BD4C0811ACEF6D2004D96AF /* MeViewController.m in Sources */,
 				8B5AA2381B0B4468004995B9 /* FeedbackViewController.m in Sources */,
 				8BE327911AD18FED007F79C3 /* CommentCell.m in Sources */,
+				8B678CEC1B43E39E00AC3120 /* DownloadTaskInfoDAO.m in Sources */,
 				8BEC85631B0433180017448C /* FXBlurView.m in Sources */,
 				8BDC80851AD2D62D006CE482 /* MediaCell.m in Sources */,
 				8BF03BEA1AF70DBE00D8C932 /* CustomSegueUnwind.m in Sources */,
+				8B678CE81B43E06100AC3120 /* DownloadTaskInfo.m in Sources */,
 				8B34B1771AE8C0E500A39F8F /* TestStateCell.m in Sources */,
 				8BDFE66A1AD361D00081310A /* DetailImageViewController.m in Sources */,
 				8B451AE01ADCCDAD002C4CA9 /* ClassJsonParser.m in Sources */,
 				8B9C6E631ACD2EBD00A4EF54 /* StudyHostViewController.m in Sources */,
 				8BD4C07B1ACEB79C004D96AF /* MoreViewController.m in Sources */,
 				8BF8F26D1B0268D30004EC08 /* AboutUsViewController.m in Sources */,
+				8B8B6E7C1B42D01E0011B1EE /* DownloadTask.m in Sources */,
 				8B451AE61ADF5A9D002C4CA9 /* StudyNetworkUtils.m in Sources */,
 				8B451AD71ADB8170002C4CA9 /* FindPasswordTableViewController.m in Sources */,
 				8B0F00D71B248C0D00B5972E /* DownloadTableViewController.m in Sources */,
@@ -1404,6 +1451,7 @@
 				8BED43B41AFC8889002CC15C /* UserDetailTableViewController.m in Sources */,
 				8BF29D141AFDAE3800543B37 /* CircleImageView.m in Sources */,
 				8B6918811AED116C00D616DC /* TestDetailView.m in Sources */,
+				8B8B6E7A1B42D01E0011B1EE /* DownloadManager.m in Sources */,
 				8B451AE31ADEB507002C4CA9 /* LoginJsonParser.m in Sources */,
 				8B276A791AFBB47E005C9FF7 /* EditedPhotoView.m in Sources */,
 				8BDA58AE1AD8E1C200E59EE8 /* ClassSettingTableViewController.m in Sources */,
@@ -1413,6 +1461,7 @@
 				8BCF399C1ACCE09C0071C016 /* AppDelegate.m in Sources */,
 				8BD01A931ACF71E100E339D6 /* EditedPhotoCell.m in Sources */,
 				8BED43B71AFC8D24002CC15C /* UserEditedTableViewController.m in Sources */,
+				8BFD3FC11B3CE903007F5529 /* WelcomeScreenViewController.m in Sources */,
 				8B451B021ADFAC7F002C4CA9 /* CountingCell.m in Sources */,
 				8B451ADD1ADCBC31002C4CA9 /* ClassNetworkUtils.m in Sources */,
 				8BF8F2701B02E3FC0004EC08 /* LineNavigationBar.m in Sources */,
@@ -1457,6 +1506,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8B44A4BD1B3C162900E93B78 /* LaunchScreenStudent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B44A4BC1B3C162900E93B78 /* Base */,
+				8B44A4BF1B3C163000E93B78 /* zh-Hans */,
+			);
+			name = LaunchScreenStudent.xib;
+			sourceTree = "<group>";
+		};
 		8BBB61C61B064B6F00381DAC /* MainTeacher.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1475,13 +1533,13 @@
 			name = MainStudent.storyboard;
 			sourceTree = "<group>";
 		};
-		8BCF39A51ACCE09C0071C016 /* LaunchScreen.xib */ = {
+		8BCF39A51ACCE09C0071C016 /* LaunchScreenTeacher.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8BCF39A61ACCE09C0071C016 /* Base */,
 				8BF11C231AFA50AB00F30649 /* zh-Hans */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreenTeacher.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -78,6 +78,10 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Private Method
 - (void)initUI {
     
@@ -243,7 +247,15 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     studyContentCell.likeLabel.text = [NSString stringWithFormat:@"%@", article.likes];
     studyContentCell.commentLabel.text = [NSString stringWithFormat:@"%@", article.comments];
     
-    studyContentCell.introductionLabel.text = article.viceTitle;
+    // 如果副标题超过25个字符，则需要截断
+    NSString *viceTitle = article.viceTitle;
+    NSUInteger maxLength = 27;
+    if (article.viceTitle.length > maxLength) {
+        viceTitle = [article.viceTitle stringByReplacingCharactersInRange: NSMakeRange(maxLength, article.viceTitle.length - maxLength) withString:@"..."];
+    }
+    studyContentCell.introductionLabel.text = viceTitle;
+    
+    
     return studyContentCell;
 }
 

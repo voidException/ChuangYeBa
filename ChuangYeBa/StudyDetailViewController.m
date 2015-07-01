@@ -15,6 +15,7 @@
 #import <SDWebImage/UIButton+WebCache.h>
 #import "LineNavigationBar.h"
 #import "ArticleInfoDAO.h"
+#import "DownloadManager.h"
 
 typedef enum {
     StudyDetailStateNormal = 1,
@@ -70,8 +71,8 @@ static NSInteger const kPageSize = 8;
     
     // 先读取本地缓存
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-    NSInteger aTag = 10000 + [_articleId integerValue];
-    NSMutableArray *arr = [dao findAll:nil];
+    NSString *fileName = [NSString stringWithFormat:@"OfflineArticles%@.archive", _articleId];
+    NSMutableArray *arr = [dao findAll:fileName];
     if (arr.count) {
         NSLog(@"读取成功");
         self.articleInfo = [arr firstObject];
@@ -406,8 +407,13 @@ static NSInteger const kPageSize = 8;
 }
 
 - (IBAction)clickOnDownloadButton:(id)sender {
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂不支持，敬请期待喔！^_^" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     [alert show];
+     */
+    
+    DownloadManager *manager = [DownloadManager shareManager];
+    [manager startWithArticleId:_articleInfo.articleId];
     /* 功能暂不支持
     if (isDownloaded) {
         isDownloaded = NO;

@@ -3,41 +3,103 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="DownloadProgressCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="KGk-i7-Jjw" customClass="DownloadProgressCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Zv-Uh-g6h">
-                        <rect key="frame" x="42" y="58" width="237" height="2"/>
+                        <rect key="frame" x="115" y="53" width="167" height="2"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="186" id="Odc-Y0-Gdo"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Odc-Y0-Gdo"/>
+                            </mask>
+                        </variation>
                     </progressView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-jE-x6N">
-                        <rect key="frame" x="42" y="24" width="42" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="studyContentPlaceholderSmall" translatesAutoresizingMaskIntoConstraints="NO" id="GM6-dJ-NwW">
+                        <rect key="frame" x="11" y="11" width="89" height="67"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="GM6-dJ-NwW" secondAttribute="height" multiplier="89:67" id="3rg-ED-hi1"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Co-55-Wix">
+                        <rect key="frame" x="114" y="12" width="198" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHG-9p-KOG">
+                        <rect key="frame" x="283" y="47" width="31" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300KB/S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Df-Eg-hac">
+                        <rect key="frame" x="114" y="70" width="46" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.2M / 3.2M" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcp-aZ-pRX">
+                        <rect key="frame" x="219" y="70" width="63" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="3p2-jE-x6N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="42" id="4WM-of-INW"/>
-                    <constraint firstItem="3p2-jE-x6N" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="Zce-q8-0md"/>
+                    <constraint firstAttribute="bottom" secondItem="GM6-dJ-NwW" secondAttribute="bottom" constant="11" id="6bG-Gu-zgJ"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="centerY" secondItem="XHG-9p-KOG" secondAttribute="centerY" constant="0.5" id="9Wc-Gj-JMJ"/>
+                    <constraint firstItem="GM6-dJ-NwW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Bg2-qF-qmc"/>
+                    <constraint firstAttribute="trailing" secondItem="XHG-9p-KOG" secondAttribute="trailing" constant="6" id="D9P-PA-AV2"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="3Df-Eg-hac" secondAttribute="leading" constant="1" id="Hh1-V2-R0h"/>
+                    <constraint firstAttribute="trailing" secondItem="2Co-55-Wix" secondAttribute="trailing" constant="8" id="JT4-LR-izo"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="top" secondItem="2Co-55-Wix" secondAttribute="bottom" constant="20" id="Qgf-4c-oza"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="trailing" secondItem="xcp-aZ-pRX" secondAttribute="trailing" id="UYU-uh-sn1"/>
+                    <constraint firstItem="2Co-55-Wix" firstAttribute="leading" secondItem="GM6-dJ-NwW" secondAttribute="trailing" constant="14" id="UyA-qj-vi3"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="trailing" secondItem="2Co-55-Wix" secondAttribute="trailing" constant="-30" id="Was-A3-goz"/>
+                    <constraint firstAttribute="bottom" secondItem="3Df-Eg-hac" secondAttribute="bottom" constant="5" id="ZM4-xB-Yym"/>
+                    <constraint firstItem="GM6-dJ-NwW" firstAttribute="top" secondItem="2Co-55-Wix" secondAttribute="top" constant="-1" id="dhl-f1-U1X"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="fm9-3X-MWJ"/>
+                    <constraint firstItem="2Co-55-Wix" firstAttribute="leading" secondItem="6Zv-Uh-g6h" secondAttribute="leading" constant="-1" id="hWq-xK-x68"/>
+                    <constraint firstAttribute="bottom" secondItem="xcp-aZ-pRX" secondAttribute="bottom" constant="5" id="iXM-gL-5UA"/>
                     <constraint firstAttribute="centerY" secondItem="6Zv-Uh-g6h" secondAttribute="centerY" constant="-19.5" id="jA7-3n-fjZ"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="34" id="nZE-mo-XYA"/>
+                    <constraint firstItem="GM6-dJ-NwW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="11" id="tyf-q3-9yL"/>
                     <constraint firstAttribute="centerX" secondItem="6Zv-Uh-g6h" secondAttribute="centerX" id="xkm-Nk-M9J"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="fm9-3X-MWJ"/>
+                        <exclude reference="jA7-3n-fjZ"/>
+                        <exclude reference="nZE-mo-XYA"/>
+                        <exclude reference="xkm-Nk-M9J"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mainImage" destination="GM6-dJ-NwW" id="jrD-q0-jaN"/>
+                <outlet property="progressLabel" destination="XHG-9p-KOG" id="dx9-TE-wZl"/>
                 <outlet property="progressView" destination="6Zv-Uh-g6h" id="V64-x0-8BC"/>
-                <outlet property="titleLabel" destination="3p2-jE-x6N" id="dra-X1-1vO"/>
+                <outlet property="sizeLabel" destination="xcp-aZ-pRX" id="Ebe-Px-GC8"/>
+                <outlet property="speedLabel" destination="3Df-Eg-hac" id="e8W-zO-YXo"/>
+                <outlet property="titleLabel" destination="2Co-55-Wix" id="JxE-vw-0jX"/>
             </connections>
-            <point key="canvasLocation" x="453" y="333"/>
+            <point key="canvasLocation" x="329" y="303"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="studyContentPlaceholderSmall" width="89" height="65"/>
+    </resources>
 </document>

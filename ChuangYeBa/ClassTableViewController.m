@@ -108,6 +108,7 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     }];
     [self.leftButton addTarget:self action:@selector(clickOnLeftButton) forControlEvents:UIControlEventTouchUpInside];
     // 初始化导航条中部的分段控件
+    /*
     NSArray *segmentedTitle = @[@"最新发布", @"我的考试"];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentedTitle];
     if (iPhone4 || iPhone5) {
@@ -122,7 +123,33 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     self.segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 22);
     self.segmentedControl.selectedSegmentIndex = 0;
     [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
+    */
+    // 初始化新导航条分段控件
+    NSArray *segmentedTitle = @[@"最新发布", @"我的考试"];
+    _segmentedControl = [[NYSegmentedControl alloc] initWithItems:segmentedTitle];
     
+    _segmentedControl.titleTextColor = [UIColor whiteColor];
+    _segmentedControl.titleFont = [UIFont systemFontOfSize:16.0f];
+    _segmentedControl.selectedTitleTextColor = [UIColor CYBBlueColor];
+    _segmentedControl.selectedTitleFont = [UIFont systemFontOfSize:16.0f];
+    _segmentedControl.segmentIndicatorBackgroundColor = [UIColor whiteColor];
+    _segmentedControl.backgroundColor = [UIColor clearColor];
+    _segmentedControl.borderWidth = 1.0f;
+    _segmentedControl.segmentIndicatorBorderWidth = 0.0f;
+    _segmentedControl.segmentIndicatorInset = 0.0f;
+    _segmentedControl.segmentIndicatorBorderColor = [UIColor whiteColor];
+    [_segmentedControl sizeToFit];
+    _segmentedControl.cornerRadius = CGRectGetHeight(_segmentedControl.frame) / 2.0f;
+    _segmentedControl.borderColor = [UIColor whiteColor];
+    if (iPhone4 || iPhone5) {
+        _segmentedControl.frame = CGRectMake(0, 0, 200, 32);
+    } else {
+        _segmentedControl.frame = CGRectMake(0, 0, 230, 32);
+    }
+    _segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 21.5);
+    _segmentedControl.selectedSegmentIndex = 0;
+    [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
+     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
     self.navigationItem.leftBarButtonItem = item;

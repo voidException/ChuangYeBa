@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class UserInfo;
-@class ArticleInfo;
 @interface DownloadProgressCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-@property (strong, nonatomic) UserInfo *userInfo;
-@property (strong, nonatomic) ArticleInfo *articleInfo;
+@property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-
-- (void)addDownloadTaskWithArticleId:(NSNumber *)articleId;
+@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 
 @end

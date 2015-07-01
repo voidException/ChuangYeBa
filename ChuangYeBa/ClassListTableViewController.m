@@ -106,6 +106,10 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Private Method
 - (void)initUI {
     // 初始化tableview相关属性
