@@ -19,59 +19,11 @@ static ArticleInfoDAO *sharedManager = nil;
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         sharedManager = [[self alloc] init];
-        [sharedManager createEditableCopyOfDatabaseIfNeeded];
     });
     return sharedManager;
 }
 
-- (void)createEditableCopyOfDatabaseIfNeeded {
-    /*
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *writableDBPath = [self applicationDocumentsDirectoryFile];
-    
-    BOOL dbexits = [fileManager fileExistsAtPath:writableDBPath];
-    if (!dbexits) {
-        NSString *path = [self applicationDocumentsDirectoryFile];
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        NSMutableData * theData = [NSMutableData data];
-        NSKeyedArchiver * archiver = [[NSKeyedArchiver alloc]
-                                      initForWritingWithMutableData:theData];
-        [archiver encodeObject:array forKey:ARCHIVE_KEY];
-        [archiver finishEncoding];
-        [theData writeToFile:path atomically:YES];
-    }
-     */
-}
-
-/*
-- (NSString *)applicationDocumentsDirectoryFile:(NSInteger)tag {
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *fileNameWithTag = [FILE_NAME stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)tag]];
-    NSString *path = [documentDirectory stringByAppendingPathComponent:fileNameWithTag];
-    return path;
-}
- */
-
-- (NSString *)applicationDocumentsDirectoryFile:(NSString *)fileName {
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *path = [documentDirectory stringByAppendingPathComponent:fileName];
-    return path;
-}
-
-/*
-//插入缓存方法
-- (int)create:(NSMutableArray *)articleList tag:(NSInteger)tag {
-    NSString *path = [self applicationDocumentsDirectoryFile:tag];
-    NSMutableData *theData = [NSMutableData data];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                  initForWritingWithMutableData:theData];
-    [archiver encodeObject:articleList forKey:ARCHIVE_KEY];
-    [archiver finishEncoding];
-    [theData writeToFile:path atomically:YES];
-    return 0;
-}
- */
-
+#pragma mark - Public Method
 //插入缓存方法
 - (void)create:(NSMutableArray *)articleList flieName:(NSString *)fileName {
     NSString *path = [self applicationDocumentsDirectoryFile:fileName];
@@ -85,15 +37,11 @@ static ArticleInfoDAO *sharedManager = nil;
 
 //删除Note方法
 - (void)clean:(NSString *)fileName {
-#warning 未完成
-    NSString *path = [self applicationDocumentsDirectoryFile:fileName];
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSMutableData * theData = [NSMutableData data];
-    NSKeyedArchiver * archiver = [[NSKeyedArchiver alloc]
-                                  initForWritingWithMutableData:theData];
-    [archiver encodeObject:array forKey:ARCHIVE_KEY];
-    [archiver finishEncoding];
-    [theData writeToFile:path atomically:YES];
+    fileName = [self applicationDocumentsDirectoryFile:fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:fileName]) {
+        [fileManager removeItemAtPath:fileName error:nil];
+    }
 }
 
 
@@ -109,6 +57,21 @@ static ArticleInfoDAO *sharedManager = nil;
         [archiver finishDecoding];
     }
     return listData;
+}
+
+
+#pragma mark - Private Method
+/**
+ *  组装文件路径和名称
+ *
+ *  @param fileName 文件名
+ *
+ *  @return 返回document路径下加上文件名的完整路径
+ */
+- (NSString *)applicationDocumentsDirectoryFile:(NSString *)fileName {
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:fileName];
+    return path;
 }
 
 @end

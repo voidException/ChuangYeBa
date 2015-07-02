@@ -9,22 +9,25 @@
 #import "DownloadTableViewController.h"
 #import "UserInfo.h"
 #import "ArticleInfo.h"
-
 #import "DownloadProgressCell.h"
 #import "StudyDetailViewController.h"
-
+#import "StudyContentCell.h"
 #import "DownloadManager.h"
 #import "DownloadTask.h"
-
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <NYSegmentedControl.h>
+#import "GlobalDefine.h"
 
-static NSString *cellIdentifier = @"DownloadCell";
+static NSString *downloadCellIdentifier = @"DownloadCell";
+static NSString *contentCellIdentifier = @"ContentCell";
 
-@interface DownloadTableViewController ()
+@interface DownloadTableViewController () <DownloadManagerDelegate>
 
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) ArticleInfo *articleInfo;
 @property (strong, nonatomic) NSMutableDictionary *downloadingDic;
+@property (strong, nonatomic) NSMutableArray *downloadedArr;
+@property (strong, nonatomic) NYSegmentedControl *segmentedControl;
 
 @end
 
@@ -34,41 +37,114 @@ static NSString *cellIdentifier = @"DownloadCell";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.title = @"离线下载";
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
 
+#pragma mark - View Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     _userInfo = [UserInfo loadUserInfoFromLocal];
-    [self.tableView registerNib:[UINib nibWithNibName:@"DownloadProgressCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     DownloadManager *manager = [DownloadManager shareManager];
+    manager.delegate = self;
     _downloadingDic = manager.taskInfos;
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _downloadedArr = manager.downloadedTaskInfos;
+    [self initUI];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.segmentedControl setAlpha:0.0];
+    [self.navigationController.navigationBar addSubview:self.segmentedControl];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.segmentedControl setAlpha:1.0];
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_segmentedControl setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [_segmentedControl removeFromSuperview];
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Private Method
+- (void)initUI {
+    // 初始化TableView的属性
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.clearsSelectionOnViewWillAppear = NO;
+    [self.tableView registerNib:[UINib nibWithNibName:@"DownloadProgressCell" bundle:nil] forCellReuseIdentifier:downloadCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"StudyContentCell" bundle:nil] forCellReuseIdentifier:contentCellIdentifier];
+    
+    // 初始化新导航条分段控件
+    NSArray *segmentedTitle = @[@"已下载", @"正在下载"];
+    _segmentedControl = [[NYSegmentedControl alloc] initWithItems:segmentedTitle];
+    
+    _segmentedControl.titleTextColor = [UIColor whiteColor];
+    _segmentedControl.titleFont = [UIFont systemFontOfSize:16.0f];
+    _segmentedControl.selectedTitleTextColor = [UIColor CYBBlueColor];
+    _segmentedControl.selectedTitleFont = [UIFont systemFontOfSize:16.0f];
+    _segmentedControl.segmentIndicatorBackgroundColor = [UIColor whiteColor];
+    _segmentedControl.backgroundColor = [UIColor clearColor];
+    _segmentedControl.borderWidth = 1.0f;
+    _segmentedControl.segmentIndicatorBorderWidth = 0.0f;
+    _segmentedControl.segmentIndicatorInset = 0.0f;
+    _segmentedControl.segmentIndicatorBorderColor = [UIColor whiteColor];
+    [_segmentedControl sizeToFit];
+    _segmentedControl.cornerRadius = CGRectGetHeight(_segmentedControl.frame) / 2.0f;
+    _segmentedControl.borderColor = [UIColor whiteColor];
+    if (iPhone4 || iPhone5) {
+        _segmentedControl.frame = CGRectMake(0, 0, 200, 32);
+    } else {
+        _segmentedControl.frame = CGRectMake(0, 0, 230, 32);
+    }
+    _segmentedControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2, 21.5);
+    _segmentedControl.selectedSegmentIndex = 0;
+    [self.segmentedControl addTarget:self action:@selector(doSomethingInSegment:) forControlEvents:UIControlEventValueChanged];
+    
+    // 返回按钮
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButtonIcon"] landscapeImagePhone:nil style:UIBarButtonItemStyleDone target:self action:@selector(clickOnBackButton:)];
+    self.navigationItem.leftBarButtonItem = btn;
+}
+
+#pragma mark - Action
+- (void)doSomethingInSegment:(NYSegmentedControl *)seg {
+    [self.tableView reloadData];
+}
+
+- (void)clickOnBackButton:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStudent" bundle:nil];
-    StudyDetailViewController *sdVC = [storyboard instantiateViewControllerWithIdentifier:@"StudyDetailViewController"];
-    NSArray *arr = [_downloadingDic allKeys];
-    [sdVC setValue:arr[indexPath.row] forKey:@"articleId"];
-    [self showViewController:sdVC sender:self];
-    
+    // 只有在已下载中才可以打开文章
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStudent" bundle:nil];
+        StudyDetailViewController *sdVC = [storyboard instantiateViewControllerWithIdentifier:@"StudyDetailViewController"];
+        ArticleInfo *ai = _downloadedArr[indexPath.row];
+        [sdVC setValue:ai.articleId forKey:@"articleId"];
+        [self showViewController:sdVC sender:self];
+    } else {
+        
+        NSArray *keyArr = [_downloadingDic allKeys];
+        NSArray *valueArr = [_downloadingDic allValues];
+        DownloadTask *aTask = valueArr[indexPath.row];
+        // 只有在错误状态或暂停状态（暂不支持）下才能重新开始任务
+        if ([aTask.state isEqual:@2]) {
+            [[DownloadManager shareManager] startTaskWithArticleId:keyArr[indexPath.row]];
+            //[[DownloadManager shareManager] retryTaskWithArticleId:keyArr[indexPath.row]];
+        }
+        
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,69 +158,109 @@ static NSString *cellIdentifier = @"DownloadCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_downloadingDic count];
+    switch (_segmentedControl.selectedSegmentIndex) {
+        case 0:
+            return [_downloadedArr count];
+            break;
+        case 1:
+            return [_downloadingDic count];
+            break;
+        default:
+            return 0;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DownloadProgressCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    NSArray *arr = [_downloadingDic allValues];
-    
-    __block DownloadTask *aTask = arr[indexPath.row];
-    cell.titleLabel.text = aTask.articleInfo.title;
-    [cell.mainImage sd_setImageWithURL:[NSURL URLWithString:aTask.articleInfo.miniPhotoURL] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholderSmall"]];
-    cell.mainImage.image = [UIImage imageNamed:@"studyContentPlaceholderSmall"];
-    DownloadTask __weak *weakTask = aTask;
-    aTask.initProgress = ^(long long totalBytesRead, long long totalBytesExpectedToRead){
-        float progress = (float)totalBytesRead / totalBytesExpectedToRead;
-        cell.progressView.progress = progress;
-        cell.progressLabel.text = [NSString stringWithFormat:@"%.0f%%", progress * 100];
-        cell.sizeLabel.text = [NSString stringWithFormat:@"%.1f M / %.1f M", totalBytesRead / pow(10, 6), totalBytesExpectedToRead / pow(10, 6)];
-        cell.speedLabel.text = [NSString stringWithFormat:@"%@/S", weakTask.speed];
-    };
-    
-    aTask.taskFailed = ^(){
-        NSLog(@"块属性——下载失败");
-    };
-    return cell;
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        StudyContentCell *studyContentCell = [tableView dequeueReusableCellWithIdentifier:contentCellIdentifier];
+        ArticleInfo *article = _downloadedArr[indexPath.row];
+        studyContentCell.titleLabel.text = article.title;
+        
+        NSString *path = article.miniPhotoURL;
+        [studyContentCell.mainImage sd_setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholderSmall"]];
+        
+        studyContentCell.likeLabel.text = [NSString stringWithFormat:@"%@", article.likes];
+        studyContentCell.commentLabel.text = [NSString stringWithFormat:@"%@", article.comments];
+        
+        // 如果副标题超过25个字符，则需要截断
+        NSString *viceTitle = article.viceTitle;
+        NSUInteger maxLength = 27;
+        if (article.viceTitle.length > maxLength) {
+            viceTitle = [article.viceTitle stringByReplacingCharactersInRange: NSMakeRange(maxLength, article.viceTitle.length - maxLength) withString:@"..."];
+        }
+        studyContentCell.introductionLabel.text = viceTitle;
+        return studyContentCell;
+
+    } else {
+        DownloadProgressCell *cell = [tableView dequeueReusableCellWithIdentifier:downloadCellIdentifier];
+        NSArray *arr = [_downloadingDic allValues];
+        __block DownloadTask *aTask = arr[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.titleLabel.text = aTask.articleInfo.title;
+        [cell.mainImage sd_setImageWithURL:[NSURL URLWithString:aTask.articleInfo.miniPhotoURL] placeholderImage:[UIImage imageNamed:@"studyContentPlaceholderSmall"]];
+        
+        // 如果下载状态是正在连接情况下
+        if ([aTask.state isEqual:@0]) {
+            cell.state = DownloadCellStateFailed;
+            
+        }
+        else if ([aTask.state isEqual:@2]) {
+            cell.state = DownloadCellStateFailed;
+            float progress = (float)[aTask.totalBytesRead longLongValue] / [aTask.totalBytesExpectedToRead longLongValue];
+            cell.progressView.progress = progress;
+            cell.progressLabel.text = [NSString stringWithFormat:@"%.0f%%", progress * 100];
+        }
+        // 如果下载状态是正在下载情况下
+        else if ([aTask.state isEqual:@1]) {
+            cell.state = DownloadCellStateDownloading;
+            DownloadTask __weak *weakTask = aTask;
+            aTask.initProgress = ^(long long totalBytesRead, long long totalBytesExpectedToRead){
+                float progress = (float)totalBytesRead / totalBytesExpectedToRead;
+                cell.progressView.progress = progress;
+                cell.progressLabel.text = [NSString stringWithFormat:@"%.0f%%", progress * 100];
+                cell.sizeLabel.text = [NSString stringWithFormat:@"%.1f M / %.1f M", totalBytesRead / pow(10, 6), totalBytesExpectedToRead / pow(10, 6)];
+                cell.speedLabel.text = [NSString stringWithFormat:@"%@/S", weakTask.speed];
+            };
+            aTask.taskFailed = ^(){
+                NSLog(@"块属性——下载失败");
+            };
+        }
+        return cell;
+    }
 }
 
-
-
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
-
-
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        NSArray *arr = [_downloadingDic allKeys];
-        [[DownloadManager shareManager] deleteWithArticleId:arr[indexPath.row]];
-        [_downloadingDic removeObjectForKey:arr[indexPath.row]];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [[DownloadManager shareManager] deleteDownloaedArticleAtIndex:indexPath.row];
+            [_downloadedArr removeObjectAtIndex:indexPath.row];
+        } else {
+            NSArray *arr = [_downloadingDic allKeys];
+            [[DownloadManager shareManager] deleteTaskWithArticleId:arr[indexPath.row]];
+            [_downloadingDic removeObjectForKey:arr[indexPath.row]];
+        }
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
+}
+
+#pragma mark - Download Manager Delegate
+- (void)downloadManagerFinishedOneTask:(DownloadTask *)downloadTask {
+    // 当下载完成后重新加载一次下载管理器中的内容,并且重新加载TableView
+    _downloadingDic = [DownloadManager shareManager].taskInfos;
+    _downloadedArr = [DownloadManager shareManager].downloadedTaskInfos;
+    [self.tableView reloadData];
 }
 
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)downloadManagerTaskStateChange:(DownloadTask *)downloadTask forState:(NSNumber *)state {
+    NSLog(@"in table view state change to %@", state);
+    [self.tableView reloadData];
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation

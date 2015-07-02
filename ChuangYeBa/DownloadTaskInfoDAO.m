@@ -38,7 +38,7 @@ static NSString *ARCHIVE_KEY = @"DownloadTaskInfos";
     [theData writeToFile:path atomically:YES];
 }
 
-- (void)deleteTaskInfo:(DownloadTask *)downloadTask forKey:(NSNumber *)key {
+- (void)deleteTaskInfoWithKey:(NSNumber *)key {
     NSString *path = [self applicationDocumentsDirectoryFile];
     NSMutableData *theData = [NSMutableData data];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]

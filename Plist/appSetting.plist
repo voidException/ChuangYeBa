@@ -24,7 +24,7 @@
 		<key>title</key>
 		<string>离线下载</string>
 		<key>imageName</key>
-		<string>feedback</string>
+		<string>offlineDownload</string>
 	</dict>
 </array>
 </plist>

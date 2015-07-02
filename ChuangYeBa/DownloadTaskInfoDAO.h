@@ -28,9 +28,9 @@
 /**
  *  删除一条下载任务信息
  *
- *  @param downloadTaskInfo 待删除的下载任务信息
+ *  @param key 下载任务的KEY
  */
-- (void)deleteTaskInfo:(DownloadTask *)downloadTask forKey:(NSNumber *)key;
+- (void)deleteTaskInfoWithKey:(NSNumber *)key;
 
 /**
  *  查询下载任务列表

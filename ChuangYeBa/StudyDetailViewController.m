@@ -47,7 +47,6 @@ static NSInteger const kPageSize = 8;
 @implementation StudyDetailViewController
 
 @synthesize isLiked;
-@synthesize isDownloaded;
 
 
 #pragma mark - Lifecycle
@@ -62,7 +61,7 @@ static NSInteger const kPageSize = 8;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
     
     // 初始化Bool参数，应该从网络和本地确定
-    isDownloaded = NO;
+    _isDownloaded = NO;
     isLiked = NO;
     
     // 读取用户信息
@@ -75,6 +74,8 @@ static NSInteger const kPageSize = 8;
     NSMutableArray *arr = [dao findAll:fileName];
     if (arr.count) {
         NSLog(@"读取成功");
+        _isDownloaded = YES;
+        
         self.articleInfo = [arr firstObject];
         if ([self.articleInfo.articleType isEqual:@71]) {
             [self setState:StudyDetailStateNoneMedia];
@@ -89,6 +90,15 @@ static NSInteger const kPageSize = 8;
         // 读取文章信息 读取文章信息后再请求评论列表
         [self requestArticleInfoFromServer];
     }
+    
+    // 初始化下载按键
+    if (_isDownloaded) {
+        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconSelected"] forState:UIControlStateNormal];
+    } else {
+        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconNormal"] forState:UIControlStateNormal];
+    }
+
+    
     
 }
 
@@ -407,23 +417,16 @@ static NSInteger const kPageSize = 8;
 }
 
 - (IBAction)clickOnDownloadButton:(id)sender {
-    /*
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂不支持，敬请期待喔！^_^" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-    [alert show];
-     */
     
-    DownloadManager *manager = [DownloadManager shareManager];
-    [manager startWithArticleId:_articleInfo.articleId];
-    /* 功能暂不支持
-    if (isDownloaded) {
-        isDownloaded = NO;
-        [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconNormal"] forState:UIControlStateNormal];
-        self.downLoadButton.selected = YES;
+    if (_isDownloaded) {
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文章已经下载了喔，下载状态请到“离线下载”中查看" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+         [alert show];
     } else {
-        isDownloaded = YES;
+        _isDownloaded = YES;
         [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconSelected"] forState:UIControlStateNormal];
+        DownloadManager *manager = [DownloadManager shareManager];
+        [manager startTaskWithArticleId:_articleInfo.articleId];
     }
-     */
 }
 
 - (void)clickOnLeftButton {

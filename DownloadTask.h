@@ -18,7 +18,19 @@ typedef void (^initProgress)(long long totalBytesRead, long long totalBytesExpec
 
 typedef void (^taskFailed)(void);
 
+@class DownloadTask;
+@protocol DownloadTaskDelegate <NSObject>
+
+- (void)downloadTask:(DownloadTask *)downloadTask forState:(NSNumber *)state;
+
+@end
+
 @interface DownloadTask : NSObject <NSCoding>
+
+/**
+ *  下载任务的委托
+ */
+@property (weak, nonatomic) id <DownloadTaskDelegate> delegate;
 
 /**
  *  当前下载的编号，TaskId即为下载文章的编号（articleInfo.articleId可能为空）
@@ -31,7 +43,7 @@ typedef void (^taskFailed)(void);
 @property (nonatomic, strong) ArticleInfo *articleInfo;
 
 /**
- *  当前下载的状态，0为成功，1为正在下载，2为暂停或取消
+ *  当前下载的状态，0为正在连接，1为正在下载，2为错误，3为成功，4为暂停（暂不支持）
  */
 @property (strong, nonatomic) NSNumber *state;
 
@@ -94,9 +106,16 @@ typedef void (^taskFailed)(void);
                              failure:(void (^)(NSError *error))failure;
 
 /**
- *  停止一个下载文章任务并且删除已经下载的媒体
+ *  删除一个下载文章任务并且删除已经下载的媒体
  *
  *  @param articleId 文章ID
+ */
+- (void)deleteDownloadTaskWithArticleId:(NSNumber *)articleId;
+
+/**
+ *  停止一个下载文章任务
+ *
+ *  @param articleId 停止一个文章的下载任务
  */
 - (void)stopDownloadTaskWithArticleId:(NSNumber *)articleId;
 

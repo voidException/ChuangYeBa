@@ -57,12 +57,20 @@
                         <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下载失败点击重试" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZP-CI-8MG">
+                        <rect key="frame" x="114" y="70" width="88" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="GM6-dJ-NwW" secondAttribute="bottom" constant="11" id="6bG-Gu-zgJ"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="centerY" secondItem="XHG-9p-KOG" secondAttribute="centerY" constant="0.5" id="9Wc-Gj-JMJ"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="AZP-CI-8MG" secondAttribute="leading" constant="1" id="Bbs-Y6-2Mm"/>
                     <constraint firstItem="GM6-dJ-NwW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Bg2-qF-qmc"/>
                     <constraint firstAttribute="trailing" secondItem="XHG-9p-KOG" secondAttribute="trailing" constant="6" id="D9P-PA-AV2"/>
+                    <constraint firstAttribute="bottom" secondItem="AZP-CI-8MG" secondAttribute="bottom" constant="5" id="GD0-QG-Bec"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="3Df-Eg-hac" secondAttribute="leading" constant="1" id="Hh1-V2-R0h"/>
                     <constraint firstAttribute="trailing" secondItem="2Co-55-Wix" secondAttribute="trailing" constant="8" id="JT4-LR-izo"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="top" secondItem="2Co-55-Wix" secondAttribute="bottom" constant="20" id="Qgf-4c-oza"/>
@@ -94,6 +102,7 @@
                 <outlet property="progressView" destination="6Zv-Uh-g6h" id="V64-x0-8BC"/>
                 <outlet property="sizeLabel" destination="xcp-aZ-pRX" id="Ebe-Px-GC8"/>
                 <outlet property="speedLabel" destination="3Df-Eg-hac" id="e8W-zO-YXo"/>
+                <outlet property="stateLabel" destination="AZP-CI-8MG" id="yfl-Dx-nhZ"/>
                 <outlet property="titleLabel" destination="2Co-55-Wix" id="JxE-vw-0jX"/>
             </connections>
             <point key="canvasLocation" x="329" y="303"/>
