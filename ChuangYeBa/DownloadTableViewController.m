@@ -24,7 +24,7 @@ static NSString *contentCellIdentifier = @"ContentCell";
 @interface DownloadTableViewController () <DownloadManagerDelegate>
 
 @property (strong, nonatomic) UserInfo *userInfo;
-@property (strong, nonatomic) ArticleInfo *articleInfo;
+@property (strong, nonatomic) ArticleInfo *selectedArticleInfo;
 @property (strong, nonatomic) NSMutableDictionary *downloadingDic;
 @property (strong, nonatomic) NSMutableArray *downloadedArr;
 @property (strong, nonatomic) NYSegmentedControl *segmentedControl;
@@ -36,6 +36,14 @@ static NSString *contentCellIdentifier = @"ContentCell";
 
 - (instancetype)init {
     self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
     }
@@ -55,7 +63,10 @@ static NSString *contentCellIdentifier = @"ContentCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.segmentedControl setAlpha:0.0];
+    // 当从下载点入文章返回时会执行两次viewWillAppear,增加此判断防止出现分段控件的闪烁
+    if (self.segmentedControl.alpha == 0.f) {
+        [self.segmentedControl setAlpha:0.0];
+    }
     [self.navigationController.navigationBar addSubview:self.segmentedControl];
     [UIView animateWithDuration:0.3 animations:^{
         [self.segmentedControl setAlpha:1.0];
@@ -128,11 +139,8 @@ static NSString *contentCellIdentifier = @"ContentCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 只有在已下载中才可以打开文章
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStudent" bundle:nil];
-        StudyDetailViewController *sdVC = [storyboard instantiateViewControllerWithIdentifier:@"StudyDetailViewController"];
-        ArticleInfo *ai = _downloadedArr[indexPath.row];
-        [sdVC setValue:ai.articleId forKey:@"articleId"];
-        [self showViewController:sdVC sender:self];
+        _selectedArticleInfo = _downloadedArr[indexPath.row];
+        [self performSegueWithIdentifier:@"ShowStudyDetail" sender:self];
     } else {
         
         NSArray *keyArr = [_downloadingDic allKeys];
@@ -141,9 +149,7 @@ static NSString *contentCellIdentifier = @"ContentCell";
         // 只有在错误状态或暂停状态（暂不支持）下才能重新开始任务
         if ([aTask.state isEqual:@2]) {
             [[DownloadManager shareManager] startTaskWithArticleId:keyArr[indexPath.row]];
-            //[[DownloadManager shareManager] retryTaskWithArticleId:keyArr[indexPath.row]];
         }
-        
     }
 }
 
@@ -152,7 +158,6 @@ static NSString *contentCellIdentifier = @"ContentCell";
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -262,14 +267,14 @@ static NSString *contentCellIdentifier = @"ContentCell";
     [self.tableView reloadData];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ShowStudyDetail"]) {
+        UIViewController *destinationVC = segue.destinationViewController;
+        [destinationVC setValue:_selectedArticleInfo.articleId forKey:@"articleId"];
+    }
 }
-*/
+
 
 @end

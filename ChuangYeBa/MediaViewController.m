@@ -83,27 +83,19 @@
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.insideView addSubview:self.imageView];
     self.imageView.userInteractionEnabled = YES;
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressImage)];
-    [self.scrollView addGestureRecognizer:longPress];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapImage:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.scrollView addGestureRecognizer:tapGesture];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return YES;
 }
 
-/*
-- (NSString *)applicationDocumentsDirectoryFile:(NSString *)fileName {
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *path = [documentDirectory stringByAppendingPathComponent:fileName];
-    return path;
-}
-*/
-
 #pragma mark - Action
-- (void)longPressImage {
+- (void)doubleTapImage:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 #pragma mark - 视频读取相关
 - (void)loadVideo:(NSString *)videoName {

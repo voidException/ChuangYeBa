@@ -114,8 +114,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
         } else if (indexPath.row == 2) {
             [self performSegueWithIdentifier:@"ShowFeedback" sender:self];
         } else if (indexPath.row == 3) {
-            DownloadTableViewController *dTVC = [[DownloadTableViewController alloc] init];
-            [self showViewController:dTVC sender:self];
+            [self performSegueWithIdentifier:@"ShowDownloadManager" sender:self];
         }
     }
 }
