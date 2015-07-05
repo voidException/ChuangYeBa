@@ -424,6 +424,14 @@ static NSInteger const kPageSize = 8;
     } else {
         _isDownloaded = YES;
         [self.downLoadButton setBackgroundImage:[UIImage imageNamed:@"downloadIconSelected"] forState:UIControlStateNormal];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+        // Set custom view mode
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.animationType = MBProgressHUDAnimationZoomIn;
+        //HUD.delegate = self;
+        hud.labelText = @"加入下载队列";
+        [hud hide:YES afterDelay:1.0];
         DownloadManager *manager = [DownloadManager shareManager];
         [manager startTaskWithArticleId:_articleInfo.articleId];
     }

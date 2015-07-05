@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -74,6 +74,7 @@
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="leading" secondItem="3Df-Eg-hac" secondAttribute="leading" constant="1" id="Hh1-V2-R0h"/>
                     <constraint firstAttribute="trailing" secondItem="2Co-55-Wix" secondAttribute="trailing" constant="8" id="JT4-LR-izo"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="top" secondItem="2Co-55-Wix" secondAttribute="bottom" constant="20" id="Qgf-4c-oza"/>
+                    <constraint firstItem="6Zv-Uh-g6h" firstAttribute="centerY" secondItem="GM6-dJ-NwW" secondAttribute="centerY" constant="9.5" id="UPb-Bu-4pV"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="trailing" secondItem="xcp-aZ-pRX" secondAttribute="trailing" id="UYU-uh-sn1"/>
                     <constraint firstItem="2Co-55-Wix" firstAttribute="leading" secondItem="GM6-dJ-NwW" secondAttribute="trailing" constant="14" id="UyA-qj-vi3"/>
                     <constraint firstItem="6Zv-Uh-g6h" firstAttribute="trailing" secondItem="2Co-55-Wix" secondAttribute="trailing" constant="-30" id="Was-A3-goz"/>
@@ -89,6 +90,7 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="Qgf-4c-oza"/>
                         <exclude reference="fm9-3X-MWJ"/>
                         <exclude reference="jA7-3n-fjZ"/>
                         <exclude reference="nZE-mo-XYA"/>

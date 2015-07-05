@@ -154,7 +154,11 @@ static NSString *contentCellIdentifier = @"ContentCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    if (iPhone4 || iPhone5) {
+        return 77;
+    } else {
+        return 90;
+    }
 }
 
 #pragma mark - Table view data source
@@ -225,7 +229,12 @@ static NSString *contentCellIdentifier = @"ContentCell";
                 cell.progressView.progress = progress;
                 cell.progressLabel.text = [NSString stringWithFormat:@"%.0f%%", progress * 100];
                 cell.sizeLabel.text = [NSString stringWithFormat:@"%.1f M / %.1f M", totalBytesRead / pow(10, 6), totalBytesExpectedToRead / pow(10, 6)];
-                cell.speedLabel.text = [NSString stringWithFormat:@"%@/S", weakTask.speed];
+                if (weakTask.speed) {
+                    cell.speedLabel.text = [NSString stringWithFormat:@"%@/s", weakTask.speed];
+                } else {
+                    cell.speedLabel.text = @"0KB/s";
+                }
+                
             };
             aTask.taskFailed = ^(){
                 NSLog(@"块属性——下载失败");

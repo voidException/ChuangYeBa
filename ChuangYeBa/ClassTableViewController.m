@@ -42,12 +42,12 @@ static NSString *testGroupCellIdentifier = @"TestGroupCell";
     NSLog(@"%f", self.tableView.frame.origin.y);
     
     // 增加下啦刷新
+    static NSString *dateKey = @"ClassHeaderDateKey";
     __weak typeof(self) weakSelf = self;
     [self.tableView addLegendHeaderWithRefreshingBlock:^{
         [weakSelf requestTestGroupsFromServer];
-    }];
+    } dateKey:dateKey];
     [self.tableView.header beginRefreshing];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

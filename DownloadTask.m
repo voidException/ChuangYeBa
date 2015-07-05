@@ -53,6 +53,7 @@
     
     UserInfo *userInfo = [UserInfo loadUserInfoFromLocal];
     [StudyNetworkUtils requestArticleDetailWithToken:userInfo.email userId:userInfo.userId articleId:articleId andCallback:^(id obj) {
+        // 如果请求失败了
         if (!obj) {
             /**
              *  执行failure块
@@ -64,155 +65,32 @@
             }
 
         }
+        // 如果请求成功
         else {
             NSDictionary *dic = obj;
             NSNumber *error = [dic objectForKey:@"error"];
             if ([error isEqual: @1]) {
-               
                 _articleInfo = [StudyJsonParser parseArticleInfo:[dic objectForKey:@"article"]];
-                // 记录开始下载的时间
-                _date = [NSDate date];
-                // 初始化上一秒大小变量
-                _lastSecondSize = 0;
-                
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *aSavePath = documentDirectory;
-                NSString *aFileName = [NSString stringWithFormat:@"media-%@",_articleInfo.articleId];
-                NSString *aExtension = [_articleInfo.realURL pathExtension];
-                //检查本地文件是否已存在
-                NSString *fileName = [NSString stringWithFormat:@"%@/%@.%@",aSavePath, aFileName, aExtension];
-                
-                
-                ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-                NSString *articleFileName = [NSString stringWithFormat:@"OfflineArticles%@.archive", _articleInfo.articleId];
-                NSMutableArray *articles = [[NSMutableArray alloc] init];
-                articles = [dao findAll:articleFileName];
-                /**
-                 *  用文章的本地化文件判断是否已经下载了
-                 */
-                if (articles.count) {
-#ifdef DEBUG
-                    NSLog(@"媒体已经存在");
-#endif
-                    // 状态为2（取消或者暂停）
-                    self.state = @2;
-                    return;
-                } else {
-                   // 创建附件存储目录
-                    if (![fileManager fileExistsAtPath:aSavePath]) {
-                        [fileManager createDirectoryAtPath:aSavePath withIntermediateDirectories:YES attributes:nil error:nil];
+                // 如果是纯文本文章，则直接保存文章内容
+                if ([_articleInfo.articleType isEqualToNumber:@71]) {
+                    [self saveArticleInfo:_articleInfo];
+                    //  执行success块
+                    if(success) {
+                        success();
                     }
-                    // 下载附件
-                    NSURL *url = [[NSURL alloc] initWithString:_articleInfo.realURL];
-                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-                    _operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-                    _operation.inputStream   = [NSInputStream inputStreamWithURL:url];
-                    _operation.outputStream  = [NSOutputStream outputStreamToFileAtPath:fileName append:NO];
-                    
-                    /**
-                     *  避免retain cycle
-                     */
-                    DownloadTask __weak *weakSelf = self;
-                    
-                    //下载进度控制
-                    [_operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+                    // 设置状态为3
+                    _state = @3;
 #ifdef DEBUG
-                        //NSLog(@"is download：%f", (float)totalBytesRead/totalBytesExpectedToRead);
+                    NSLog(@"下载完成");
 #endif
-                        weakSelf.totalBytesRead = [NSNumber numberWithLongLong:totalBytesRead];
-                        weakSelf.totalBytesExpectedToRead = [NSNumber numberWithLongLong:totalBytesExpectedToRead];
-                        
-                        //计算一秒中的速度
-                        long long thisSecondSize = totalBytesRead - weakSelf.lastSecondSize;
-                        //获取当前时间
-                        NSDate *currentDate = [NSDate date];
-                        //当前时间和上一秒时间做对比，大于等于一秒就去计算
-                        if ([currentDate timeIntervalSinceDate:_date] >= 1) {
-                            //时间差
-                            double time = [currentDate timeIntervalSinceDate:weakSelf.date];
-                            //计算速度
-                            long long speed = (long long)thisSecondSize/time;
-                            //把速度转成KB或M
-                            weakSelf.speed = [weakSelf formatByteCount:speed];
-                            //维护变量，把现在的接受大小记录为上一秒的大小，便于计算
-                            weakSelf.lastSecondSize = totalBytesRead;
-                            NSLog(@"date = %@, speed = %@", currentDate, weakSelf.speed);
-                            //维护变量，记录这次计算的时间
-                            weakSelf.date = currentDate;
-                        }
-                        
-                        if (weakSelf.initProgress != nil) {
-                            weakSelf.initProgress(totalBytesRead, totalBytesExpectedToRead);
-                        }
-                    }];
-                    //已完成下载
-                    [_operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-#ifdef DEBUG
-                        NSLog(@"下载完成");
-#endif
-                        // 下载成功，保存下载文件的路径 
-                        weakSelf.articleInfo.realURL = [NSString stringWithFormat:@"%@.%@", aFileName, aExtension];
-                        NSMutableArray *articles = [[NSMutableArray alloc] init];
-                        // 从文章列表中读出全部文章，然后加入新的文章并且保存
-                        ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-                        NSString *articleFileName = [NSString stringWithFormat:@"OfflineArticles%@.archive", weakSelf.articleInfo.articleId];
-                        articles = [dao findAll:articleFileName];
-#warning 可能有逻辑问题，待改进
-                        [articles insertObject:weakSelf.articleInfo atIndex:0];
-                        [dao create:articles flieName:articleFileName];
-                        /**
-                         *  执行success块
-                         */
-                        if(success) {
-                            success();
-                        }
-                        // 设置状态为3
-                        weakSelf.state = @3;
-                        
-                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-#ifdef DEBUG
-                        NSLog(@"下载失败%@", [error localizedDescription]);
-#endif
-                        // 下载失败删除下载文件
-                        if ([fileManager fileExistsAtPath:fileName]) {
-                            [fileManager removeItemAtPath:fileName error:nil];
-                        }
-                        
-                        if (weakSelf.taskFailed != nil) {
-                            weakSelf.taskFailed();
-                        }
-                        /**
-                         *  执行failure块
-                         */
-                        weakSelf.state = @2;
-                        if (failure) {
-                            failure(error);
-                        }
-                                            }];
-                    [_operation start];
-                    // 设置状态为1，表示开始下载
-                    self.state = @1;
+                }
+                // 如果是有媒体文件的文章，则先下载媒体文件，在存储文章内容
+                else {
+                    [self downloadMediaSuccess:success failure:failure];
                 }
             }
         }
     }];
-}
-
-
-- (void)setState:(NSNumber *)state {
-    _state = state;
-    [self.delegate downloadTask:self forState:_state];
-}
-
-- (NSString *)mediaPath {
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *aSavePath = documentDirectory;
-    NSString *aFileName = [NSString stringWithFormat:@"media-%@",_articleInfo.articleId];
-    NSString *aExtension = [_articleInfo.realURL pathExtension];
-    //检查本地文件是否已存在
-    NSString *fileName = [NSString stringWithFormat:@"%@/%@.%@",aSavePath, aFileName, aExtension];
-    return fileName;
 }
 
 - (void)deleteDownloadTaskWithArticleId:(NSNumber *)articleId {
@@ -243,8 +121,149 @@
     [_operation cancel];
 }
 
+#pragma mark - Setter
+- (void)setState:(NSNumber *)state {
+    _state = state;
+    [self.delegate downloadTask:self forState:_state];
+}
 
 #pragma mark - Private Method
+/**
+ *  私有方法，下载媒体文件
+ *
+ *  @param success 下载成果
+ *  @param failure 下载失败
+ */
+- (void)downloadMediaSuccess:(void (^)())success failure:(void (^)(NSError *))failure {
+    // 记录开始下载的时间
+    _date = [NSDate date];
+    // 初始化上一秒大小变量
+    _lastSecondSize = 0;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *aSavePath = documentDirectory;
+    NSString *aFileName = [NSString stringWithFormat:@"media-%@",_articleInfo.articleId];
+    NSString *aExtension = [_articleInfo.realURL pathExtension];
+    //检查本地文件是否已存在
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@.%@",aSavePath, aFileName, aExtension];
+    ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+    NSString *articleFileName = [NSString stringWithFormat:@"OfflineArticles%@.archive", _articleInfo.articleId];
+    NSMutableArray *articles = [[NSMutableArray alloc] init];
+    articles = [dao findAll:articleFileName];
+    // 用文章的本地化文件判断是否已经下载了
+    if (articles.count) {
+#ifdef DEBUG
+        NSLog(@"媒体已经存在");
+#endif
+        // 状态为2（取消或者暂停）
+        self.state = @2;
+        return;
+    } else {
+        // 创建附件存储目录
+        if (![fileManager fileExistsAtPath:aSavePath]) {
+            [fileManager createDirectoryAtPath:aSavePath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        
+        // 下载附件
+        NSURL *url = [[NSURL alloc] initWithString:_articleInfo.realURL];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        _operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        _operation.inputStream   = [NSInputStream inputStreamWithURL:url];
+        _operation.outputStream  = [NSOutputStream outputStreamToFileAtPath:fileName append:NO];
+        // 避免retain cycle
+        DownloadTask __weak *weakSelf = self;
+        //下载进度控制
+        [_operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+#ifdef DEBUG
+            //NSLog(@"is download：%f", (float)totalBytesRead/totalBytesExpectedToRead);
+#endif
+            weakSelf.totalBytesRead = [NSNumber numberWithLongLong:totalBytesRead];
+            weakSelf.totalBytesExpectedToRead = [NSNumber numberWithLongLong:totalBytesExpectedToRead];
+            
+            //计算一秒中的速度
+            long long thisSecondSize = totalBytesRead - weakSelf.lastSecondSize;
+            //获取当前时间
+            NSDate *currentDate = [NSDate date];
+            //当前时间和上一秒时间做对比，大于等于一秒就去计算
+            if ([currentDate timeIntervalSinceDate:_date] >= 1) {
+                //时间差
+                double time = [currentDate timeIntervalSinceDate:weakSelf.date];
+                //计算速度
+                long long speed = (long long)thisSecondSize/time;
+                //把速度转成KB或M
+                weakSelf.speed = [weakSelf formatByteCount:speed];
+                //维护变量，把现在的接受大小记录为上一秒的大小，便于计算
+                weakSelf.lastSecondSize = totalBytesRead;
+                NSLog(@"date = %@, speed = %@", currentDate, weakSelf.speed);
+                //维护变量，记录这次计算的时间
+                weakSelf.date = currentDate;
+            }
+            
+            if (weakSelf.initProgress != nil) {
+                weakSelf.initProgress(totalBytesRead, totalBytesExpectedToRead);
+            }
+        }];
+        //已完成下载
+        [_operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+#ifdef DEBUG
+            NSLog(@"下载完成");
+#endif
+            // 下载成功，保存下载文件的路径
+            weakSelf.articleInfo.realURL = [NSString stringWithFormat:@"%@.%@", aFileName, aExtension];
+            [weakSelf saveArticleInfo:weakSelf.articleInfo];
+            // 执行success块
+            if(success) {
+                success();
+            }
+            // 设置状态为3
+            weakSelf.state = @3;
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+#ifdef DEBUG
+            NSLog(@"下载失败%@", [error localizedDescription]);
+#endif
+            // 下载失败删除下载文件
+            if ([fileManager fileExistsAtPath:fileName]) {
+                [fileManager removeItemAtPath:fileName error:nil];
+            }
+            
+            if (weakSelf.taskFailed != nil) {
+                weakSelf.taskFailed();
+            }
+            /**
+             *  执行failure块
+             */
+            weakSelf.state = @2;
+            if (failure) {
+                failure(error);
+            }
+        }];
+        [_operation start];
+        // 设置状态为1，表示开始下载
+        self.state = @1;
+    }
+}
+
+- (NSString *)mediaPath {
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *aSavePath = documentDirectory;
+    NSString *aFileName = [NSString stringWithFormat:@"media-%@",_articleInfo.articleId];
+    NSString *aExtension = [_articleInfo.realURL pathExtension];
+    //检查本地文件是否已存在
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@.%@",aSavePath, aFileName, aExtension];
+    return fileName;
+}
+
+- (void)saveArticleInfo:(ArticleInfo *)aArticleInfo {
+    NSMutableArray *articles = [[NSMutableArray alloc] init];
+    // 从文章列表中读出全部文章，然后加入新的文章并且保存
+    ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
+    NSString *articleFileName = [NSString stringWithFormat:@"OfflineArticles%@.archive", aArticleInfo.articleId];
+    articles = [dao findAll:articleFileName];
+    [articles insertObject:aArticleInfo atIndex:0];
+    [dao create:articles flieName:articleFileName];
+}
+
 /**
  *  转换data的大小为NSString类型，同时带上单位符号
  *

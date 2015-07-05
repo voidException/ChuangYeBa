@@ -9,6 +9,7 @@
 #import "CreateClassTableViewController.h"
 #import "ClassNetworkUtils.h"
 #import "UserInfo.h"
+#import <MBProgressHUD.h>
 
 @interface CreateClassTableViewController ()
 @property (strong, nonatomic) UserInfo *userInfo;
@@ -54,9 +55,11 @@
 #pragma mark - Action
 - (IBAction)clickOnCreateButton:(id)sender {
     if ([self isInfoLegal]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
         NSNumberFormatter *numberFormater = [[NSNumberFormatter alloc] init];
         NSNumber *studentNum = [numberFormater numberFromString:_maxStudentTextField.text];
         [ClassNetworkUtils submitToCreateClassWithClassName:_classNameTextField.text universityName:_schoolNameTextField.text studentNum:studentNum teacherId:_userInfo.userId andCallback:^(id obj) {
+            [hud hide:YES];
             NSDictionary *dic = obj;
             NSNumber *error = [obj objectForKey:@"error"];
             if ([error isEqual:@1]) {

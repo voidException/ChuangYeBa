@@ -14,7 +14,7 @@
 #import <MBProgressHUD.h>
 #import "GlobalDefine.h"
 
-static NSInteger const kPageSize = 8;
+static NSInteger const kPageSize = 20;
 
 static NSString *studyContentCellIndentifier = @"StudyContentCell";
 
@@ -87,11 +87,12 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:@"StudyContentCell" bundle:nil] forCellReuseIdentifier:studyContentCellIndentifier];
-    // 增加下啦刷新
+    // 增加下啦刷新（并保存上次刷新时的时间）
+    NSString *dateKey = [NSString stringWithFormat:@"StudyContentHeaderDateKey%ld", (long)tagNo];
     [self.tableView addLegendHeaderWithRefreshingBlock:^{
         // YES说明是下拉刷新
         [self requestArticleListFromServer:YES];
-    }];
+    } dateKey:dateKey];
     // 增加上啦刷新
     [self.tableView addLegendFooterWithRefreshingBlock:^{
         NSLog(@"上啦刷新");
@@ -107,19 +108,31 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     [self.tableView.header beginRefreshing];
 }
 
-
+/**
+ *  读取本地缓存的文章列表
+ *  如果本地缓存的文章的日期比当前日期相聚一天以上，则主动刷新重新缓存
+ */
 - (void)loadArticleListCache {
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
     NSString *fileName = [NSString stringWithFormat:@"AriticleListCache%lu.archive", tagNo];
     self.articleList = [dao findAll:fileName];
+
+    // 检查本地是否有缓存，没有缓存则主动刷新，有缓存则判断是否缓存过时，过时了则主动刷新
     if (!self.articleList.count) {
-        // 防止
+        // 防止在用户没有登陆的情况下刷新列表造成崩溃
         if (self.userInfo) {
             [self.tableView.header beginRefreshing];
         }
     } else {
-        [self.tableView reloadData];
-        self.tableView.footer.hidden = NO;
+        NSDate *lastCachedDate = [[NSUserDefaults standardUserDefaults] objectForKey:self.tableView.header.dateKey];
+        NSTimeInterval secondsInterval = [lastCachedDate timeIntervalSinceNow];
+        if (secondsInterval < - 24 * 60 * 60) {
+            [self.tableView.header beginRefreshing];
+        } else {
+            // 由于重新加载了articleList，所以需要reloadData
+            [self.tableView reloadData];
+            self.tableView.footer.hidden = NO;
+        }
     }
 }
 
@@ -143,7 +156,7 @@ static NSString *studyContentCellIndentifier = @"StudyContentCell";
     
     // 创建文章列表缓存（最多7条）(以后文章多了改成20条)
     ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
-    NSInteger max = 7;
+    NSInteger max = 20;
     NSString *fileName = [NSString stringWithFormat:@"AriticleListCache%lu.archive", tagNo];
     if (self.articleList.count > max) {
         NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[self.articleList objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, max)]]];
