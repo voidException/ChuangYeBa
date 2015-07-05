@@ -1,0 +1,61 @@
+PODS:
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - ICViewPager (1.5.1)
+  - MBProgressHUD (0.9.1)
+  - MJRefresh (1.4.7)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
+  - NXTSegmentedControl (1.0.2)
+  - NYSegmentedControl (1.0.5)
+  - Qiniu (7.0.11.1):
+    - AFNetworking (~> 2.0)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.5.0)
+  - ICViewPager (~> 1.5.1)
+  - MBProgressHUD
+  - MJRefresh (~> 1.4.6)
+  - NJKWebViewProgress
+  - NXTSegmentedControl
+  - NYSegmentedControl
+  - Qiniu
+  - SDWebImage
+
+SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  ICViewPager: 032dc71a50fe898e185fae6112ded4bed0e0523c
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  MJRefresh: 6b140993028fa30f1fcb88e82925a7c7911415cf
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  NXTSegmentedControl: b7ee21a52451ee531bddb23e59f729a43306fc38
+  NYSegmentedControl: 6c0dd98de6814a4e294c772ce4ad8bffecc480db
+  Qiniu: 080a6728b969f6b0e77c9de574ede37e78b0912b
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+
+COCOAPODS: 0.36.3

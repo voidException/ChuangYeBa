@@ -40,6 +40,19 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    //检查本地文件是否已存在
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@",documentDirectory, _articleInfo.realURL];
+    
+    //检查附件是否存在
+    if ([fileManager fileExistsAtPath:fileName]) {
+        NSString *header = @"file://";
+        _articleInfo.realURL = [header stringByAppendingString:fileName];
+    }
+    
     if (!isClickOnDone) {
         // ArticleType = 2 为长图文章 = 3为视频文章 = 1为纯文字文章
         if ([_articleInfo.articleType integerValue] == 72) {
@@ -70,23 +83,25 @@
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.insideView addSubview:self.imageView];
     self.imageView.userInteractionEnabled = YES;
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressImage)];
-    [self.scrollView addGestureRecognizer:longPress];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapImage:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.scrollView addGestureRecognizer:tapGesture];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return YES;
 }
 
-
 #pragma mark - Action
-- (void)longPressImage {
+- (void)doubleTapImage:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 #pragma mark - 视频读取相关
 - (void)loadVideo:(NSString *)videoName {
+    
+    
+    
     if (_moviePlayer == nil) {
         NSURL *url = [NSURL URLWithString:videoName];
         _moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:url];
@@ -127,6 +142,8 @@
     isClickOnDone = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 #pragma mark - 长图读取相关
 - (void)downloadLongImage:(NSString *)imageName {

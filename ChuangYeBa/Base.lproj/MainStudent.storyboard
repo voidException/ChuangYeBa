@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ID0-j2-X3d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ID0-j2-X3d">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -35,7 +35,7 @@
         <!--Study Detail View Controller-->
         <scene sceneID="TO4-fF-JTz">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XEC-lG-d9I" customClass="StudyDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StudyDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="XEC-lG-d9I" customClass="StudyDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KfA-fF-SUk"/>
                         <viewControllerLayoutGuide type="bottom" id="VEz-Ex-NID"/>
@@ -481,6 +481,8 @@
                         <segue destination="Nng-mA-TyK" kind="show" identifier="ShowUserDetail" id="qBo-Lo-KfN"/>
                         <segue destination="8fp-FR-ELx" kind="show" identifier="ShowAboutUs" id="H8G-yX-let"/>
                         <segue destination="wxk-ae-qkq" kind="show" identifier="ShowFeedback" id="7JY-hl-WNy"/>
+                        <segue destination="XEC-lG-d9I" kind="custom" identifier="ShowStudyDetail" customClass="CustomSegue" id="YiT-KC-EXf"/>
+                        <segue destination="Wt1-iM-IWB" kind="show" identifier="ShowDownloadManager" id="qow-Pz-O1B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3S7-UI-6Ul" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -621,6 +623,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KqF-By-yS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-366" y="1089"/>
+        </scene>
+        <!--Download Table View Controller-->
+        <scene sceneID="0Rv-ga-3R8">
+            <objects>
+                <tableViewController id="Wt1-iM-IWB" customClass="DownloadTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rnU-qB-2yz">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Wt1-iM-IWB" id="iAI-IH-Hgv"/>
+                            <outlet property="delegate" destination="Wt1-iM-IWB" id="8TY-1t-EYI"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="XEC-lG-d9I" kind="custom" identifier="ShowStudyDetail" customClass="CustomSegue" id="0xV-fW-ROc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gwo-sc-cRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="414" y="1089"/>
         </scene>
         <!--User Edited Table View Controller-->
         <scene sceneID="Ejz-nD-qF9">
@@ -2554,9 +2576,10 @@
         <image name="testDetailButtonDisableBG" width="157" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wee-3V-SQO"/>
-        <segue reference="cbf-4c-GZF"/>
-        <segue reference="9lk-td-3Wt"/>
+        <segue reference="qBo-Lo-KfN"/>
         <segue reference="ZCo-Bb-vxg"/>
+        <segue reference="0xV-fW-ROc"/>
+        <segue reference="9lk-td-3Wt"/>
+        <segue reference="cbf-4c-GZF"/>
     </inferredMetricsTieBreakers>
 </document>

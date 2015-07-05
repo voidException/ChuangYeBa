@@ -13,6 +13,7 @@
 #import "ArticleInfoDAO.h"
 #import "BorderRadiusButton.h"
 #import "GlobalDefine.h"
+#import "DownloadTableViewController.h"
 
 static NSString *userInfoCellIdentifier = @"UserInfoCell";
 
@@ -112,6 +113,8 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
             [self performSegueWithIdentifier:@"ShowAboutUs" sender:self];
         } else if (indexPath.row == 2) {
             [self performSegueWithIdentifier:@"ShowFeedback" sender:self];
+        } else if (indexPath.row == 3) {
+            [self performSegueWithIdentifier:@"ShowDownloadManager" sender:self];
         }
     }
 }
@@ -186,7 +189,7 @@ static NSString *userInfoCellIdentifier = @"UserInfoCell";
         if (buttonIndex == 0) {
             ArticleInfoDAO *dao = [ArticleInfoDAO shareManager];
              [[SDImageCache sharedImageCache] clearDisk];
-            [dao clean];
+            [dao clean:nil];
             NSArray *arr = @[[NSIndexPath indexPathForRow:0 inSection:1]];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
         }

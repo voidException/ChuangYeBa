@@ -11,16 +11,35 @@
 
 @interface ArticleInfoDAO : NSObject
 
+/**
+ *  文章信息数据访问对象
+ *
+ *  @return 文章数据访问对象单例
+ */
 + (ArticleInfoDAO *)shareManager;
 
+/**
+ *  插入文章列表
+ *
+ *  @param articleList 待保存的文章列表数组
+ *  @param fileName    保存的文件名称
+ */
+- (void)create:(NSMutableArray *)articleList flieName:(NSString *)fileName;
 
-//插入Note方法
-- (int)create:(NSMutableArray *)model tag:(NSInteger)tag;
+/**
+ *  删除文章列表
+ *
+ *  @param fileName 文件名称
+ */
+- (void)clean:(NSString *)fileName;
 
-//删除Note方法
-- (int)clean;
-
-//查询所有数据方法
-- (NSMutableArray *)findAll:(NSInteger)tag;
+/**
+ *  查询所有数据
+ *
+ *  @param fileName 文件名称
+ *
+ *  @return 文章列表Array
+ */
+- (NSMutableArray *)findAll:(NSString *)fileName;
 
 @end
